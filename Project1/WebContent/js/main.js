@@ -1,5 +1,5 @@
-var isProduction = window.location.href.indexOf("localhost") < 0;
-var domainName = isProduction ? "https://api.jaredible.net": "http://localhost:8888";
+var isProduction = window.location.href.indexOf("localhost"); // remove false
+var domainName = "http://localhost:8888";
 var socket = io.connect(domainName);
 
 socket.on("message", function(message) {
@@ -13,20 +13,24 @@ socket.on("messages", function(messages) {
 socket.emit("messages");
 socket.emit("message", "Testing");
 
-isProduction = false;
-
-$(function() {	
-	if (isProduction) {
-		$.ajax({
-			url: domainName + "/notifier/notify",
-			method: "post",
-			data: {
-				"phone": "3146291836",
-				"message": "Hello World!"
-			},
-			success: function(data) {
-				console.log(data);
-			}
-		});
-	}
+$(function() {
+	UserInfo.getInfo(function(data) {
+		console.log(data);
+		if (isProduction) {
+			$.ajax({
+				url: domainName + "/notifier/notify",
+				method: "post",
+				data: {
+					"phone": "3146291836",
+					"message": "Hello World!",
+					"user-info": data
+				},
+				success: function(data) {
+					console.log(data);
+				}
+			});
+		}
+	}, function(err) {
+		console.log(err);
+	});
 });

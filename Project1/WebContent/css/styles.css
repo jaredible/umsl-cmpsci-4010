@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
-@import
-	url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 a, a:focus, a:hover {
 	color: #fff;
@@ -150,31 +149,20 @@ body {
 	right: 0;
 }
 
-a {
-	text-decoration: none !important;
-}
-
 label {
 	color: rgba(120, 144, 156, 1.0) !important;
 }
 
 .btn:focus, .btn:active:focus, .btn.active:focus {
 	outline: none !important;
-	box-shadow: 0 0px 0px rgba(120, 144, 156, 1.0) inset, 0 0 0px
-		rgba(120, 144, 156, 0.8);
+	box-shadow: 0 0px 0px rgba(120, 144, 156, 1.0) inset, 0 0 0px rgba(120, 144, 156, 0.8);
 }
 
-textarea:focus, input[type="text"]:focus, input[type="password"]:focus,
-	input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus,
-	input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus,
-	input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus,
-	input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus,
-	.uneditable-input:focus {
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
 	border-color: rgba(120, 144, 156, 1.0);
 	color: rgba(120, 144, 156, 1.0);
 	opacity: 0.9;
-	box-shadow: 0 0px 0px rgba(120, 144, 156, 1.0) inset, 0 0 10px
-		rgba(120, 144, 156, 0.3);
+	box-shadow: 0 0px 0px rgba(120, 144, 156, 1.0) inset, 0 0 10px rgba(120, 144, 156, 0.3);
 	outline: 0 none;
 }
 
@@ -241,4 +229,5 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus,
 	right: 0;
 	height: 100%;
 	position: absolute;
+	opacity: 0.06;
 }
