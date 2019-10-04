@@ -13,6 +13,8 @@ socket.on("messages", function(messages) {
 socket.emit("messages");
 socket.emit("message", "Testing");
 
+isProduction = false;
+
 $(function() {	
 	if (isProduction) {
 		$.ajax({

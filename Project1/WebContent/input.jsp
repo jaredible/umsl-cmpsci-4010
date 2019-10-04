@@ -9,6 +9,40 @@
 </head>
 <body class="text-center">
 	<a href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Project1" class="position-fixed" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+	<!--<div>
+		<input type="checkbox" id="chk">
+		<label for="chk" class="show-menu-btn position-fixed" style="right: 0; padding: 0 20px;">
+			<i class="fas fa-ellipsis-h"></i>
+		</label>
+		
+		<div class="home-menu">
+		<label for="chk" class="hide-menu-btn">
+			<i class="fas fa-times"></i>
+        </label>
+			<div class="card bg-sohbet border-0 m-0 p-0" style="height: 100vh;">
+				<div id="sohbet" class="card border-0 m-0 p-0 position-relative bg-transparent" style="overflow-y: auto; height: 100vh;">
+					<div class="balon1 p-2 m-0 position-relative" data-is="You - 3:20 pm">
+						<a class="float-right"> Hey there! What's up? </a>
+					</div>
+					<div class="balon2 p-2 m-0 position-relative" data-is="Yusuf - 3:22 pm">
+						<a class="float-left sohbet2"> Checking out iOS7 you know.. </a>
+					</div>
+				</div>
+			</div>
+			<div class="w-100 card-footer p-0 bg-light border border-bottom-0 border-left-0 border-right-0">
+				<form class="m-0 p-0" action="" method="POST" autocomplete="off">
+					<div class="row m-0 p-0">
+						<div class="col-9 m-0 p-1">
+							<input id="text" class="mw-100 border rounded form-control" type="text" name="text" title="Type a message..." placeholder="Type a message..." required>
+						</div>
+						<div class="col-3 m-0 p-1">
+							<button class="btn btn-outline-secondary rounded border w-100" title="Gönder!" style="padding-right: 16px;"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>		
+						</div>
+					</div>
+				</form>	
+			</div>
+		</div>
+	</div>-->
 	<%
 		String os = (String) request.getAttribute("os");
 		String[] cities = (String[]) request.getAttribute("cities");
