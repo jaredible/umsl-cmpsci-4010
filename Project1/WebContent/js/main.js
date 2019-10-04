@@ -1,0 +1,30 @@
+var isProduction = window.location.href.indexOf("localhost") < 0;
+var domainName = isProduction ? "https://api.jaredible.net": "http://localhost:8888";
+var socket = io.connect(domainName);
+
+socket.on("message", function(message) {
+	console.log(message);
+});
+
+socket.on("messages", function(messages) {
+	console.log(messages);
+});
+
+socket.emit("messages");
+socket.emit("message", "Testing");
+
+$(function() {	
+	if (isProduction) {
+		$.ajax({
+			url: domainName + "/notifier/notify",
+			method: "post",
+			data: {
+				"phone": "3146291836",
+				"message": "Hello World!"
+			},
+			success: function(data) {
+				console.log(data);
+			}
+		});
+	}
+});
