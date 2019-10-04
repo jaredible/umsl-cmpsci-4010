@@ -8,10 +8,11 @@
 	<link href="css/styles.css" rel="stylesheet">
 </head>
 <body class="text-center">
+	<a href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Project1" class="position-fixed" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" alt="Fork me on GitHub" data-recalc-dims="1"></a>
 	<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 		<header class="masthead mb-auto">
 			<div class="inner">
-				<h3 class="masthead-brand animated fadeIn delay-1s fast"><a href="<%= request.getContextPath() %>">Project 1</a></h3>
+				<h3 class="masthead-brand animated fadeIn delay-1s fast"><a href="<%= request.getContextPath() %>">Computing Service</a></h3>
 			</div>
 		</header>
 		<main role="main" class="inner cover">
