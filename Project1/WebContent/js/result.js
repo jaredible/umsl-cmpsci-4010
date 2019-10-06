@@ -10,7 +10,7 @@ $(function() {
 	console.log("Invoice: " + invoice);
 
 	if (result.toLowerCase().indexOf("prime") >= 0) {
-		$("#result").attr("title", "The only factors of " + number + " are 1 and itself.");
+		// $("#result").attr("title", "The only factors of " + number + " are 1 and itself.");
 	} else {
 		// TODO
 	}
