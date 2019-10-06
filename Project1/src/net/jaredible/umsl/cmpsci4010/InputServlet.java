@@ -1,4 +1,4 @@
-package edu.umsl.java.web;
+package net.jaredible.umsl.cmpsci4010;
 
 import java.io.IOException;
 
