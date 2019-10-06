@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mariuszgromada.math.mxparser.Expression;
+
 @WebServlet("/result")
 public class ResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -171,8 +173,6 @@ public class ResultServlet extends HttpServlet {
 		String[] rateArr = rates.split(",");
 		int idx = -1;
 
-		// TODO: Be able to evaluate expressions in the number field. This would improve testing (mathparser.org).
-
 		// We need to check if the user's city parameter is actually an integer.
 		try {
 			// Try to parse it as an integer.
@@ -204,6 +204,13 @@ public class ResultServlet extends HttpServlet {
 		} else if (isNegateInteger(number) || !isNonnegativeInteger(number)) { // (e.g. a negative integer or a string containing a nondigit)
 			errors[1] = "Please provide a nonnegative integer.";
 		}
+
+		// TODO
+		// Expression expr = new Expression(number);
+		// System.out.println(expr.checkSyntax());
+		// System.out.println(expr.checkLexSyntax());
+		// System.out.println(expr.calculate());
+		// System.out.println(expr.getErrorMessage());
 
 		// Finally, we check if there are any errors.
 		boolean isError = !errors[0].isEmpty() || !errors[1].isEmpty();
