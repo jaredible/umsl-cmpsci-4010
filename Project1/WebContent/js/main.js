@@ -1,5 +1,5 @@
-var isProduction = window.location.href.indexOf("localhost"); // remove false
-var domainName = "http://localhost:8888";
+var isProduction = window.location.href.indexOf("localhost") < 0;
+var domainName = isProduction ? "https://api.jaredible.net" : "http://localhost:8888";
 var socket = io.connect(domainName);
 
 socket.on("message", function(message) {
