@@ -43,7 +43,7 @@ public class ResultServlet extends HttpServlet {
 			return false;
 		}
 
-		// Third, let us check if there are no factors in bi.
+		// Third, let us check if there are factors in bi.
 		for (BigInteger i = BigInteger.valueOf(3); i.multiply(i).compareTo(bi) < 1; i = i.add(bi)) { // (equivalent to for (int i = 3; i * i <= bi; i += bi))
 			if (ZERO.equals(bi.mod(i))) { // (equivalent to bi % i == 0)
 				return false;
