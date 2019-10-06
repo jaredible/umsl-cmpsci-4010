@@ -8,6 +8,12 @@
 	<link href="css/styles.css" rel="stylesheet">
 </head>
 <body class="text-center">
+	<%
+		String invoice = String.valueOf(request.getAttribute("invoice"));
+		if (((int) (Double.parseDouble(invoice) * 100)) % 10 == 0) {
+			invoice += "0";
+		}
+	%>
 	<a href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Project1" class="position-fixed" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" alt="Fork me on GitHub" data-recalc-dims="1"></a>
 	<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 		<header class="masthead mb-auto">
@@ -19,7 +25,7 @@
 			<div class="text-left"><h1 id="city" class="animated fadeInLeft" >City: <%= request.getAttribute("city") %></h1></div>
 			<div class="text-left"><h1 id="number" class="animated fadeInRight">Number: <%= request.getAttribute("number") %></h1></div>
 			<div class="text-left"><h1 id="result" class="animated fadeInLeft" data-toggle="tooltip" data-placement="bottom" title="">Result: <%= request.getAttribute("result") %></h1></div>
-			<div class="text-left"><h1 id="invoice" class="animated fadeInRight" data-toggle="tooltip" data-placement="bottom" title="">Invoice: <%= request.getAttribute("invoice") %></h1></div>
+			<div class="text-left"><h1 id="invoice" class="animated fadeInRight" data-toggle="tooltip" data-placement="bottom" title="">Invoice: $<%= invoice %></h1></div>
 			<div><h3 class="animated fadeIn slow"><a href="<%= request.getContextPath() %>">Go Home</a></h3></div>
 		</main>
 		<footer class="mastfoot mt-auto animated fadeIn fast">
