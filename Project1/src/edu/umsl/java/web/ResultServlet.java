@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private static final BigInteger ZERO = BigInteger.valueOf(0);
 	private static final BigInteger ONE = BigInteger.valueOf(1);
