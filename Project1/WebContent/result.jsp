@@ -16,10 +16,10 @@
 			</div>
 		</header>
 		<main role="main" class="inner cover">
-			<div class="text-left"><h1 id="city" class="animated fadeInLeft">City: <%= request.getAttribute("city") %></h1></div>
+			<div class="text-left"><h1 id="city" class="animated fadeInLeft" >City: <%= request.getAttribute("city") %></h1></div>
 			<div class="text-left"><h1 id="number" class="animated fadeInRight">Number: <%= request.getAttribute("number") %></h1></div>
-			<div class="text-left"><h1 id="result" class="animated fadeInLeft">Result: <%= request.getAttribute("result") %></h1></div>
-			<div class="text-left"><h1 id="invoice" class="animated fadeInRight">Invoice: <%= request.getAttribute("invoice") %></h1></div>
+			<div class="text-left"><h1 id="result" class="animated fadeInLeft" data-toggle="tooltip" data-placement="bottom" title="">Result: <%= request.getAttribute("result") %></h1></div>
+			<div class="text-left"><h1 id="invoice" class="animated fadeInRight" data-toggle="tooltip" data-placement="bottom" title="">Invoice: <%= request.getAttribute("invoice") %></h1></div>
 			<div><h3 class="animated fadeIn slow"><a href="<%= request.getContextPath() %>">Go Home</a></h3></div>
 		</main>
 		<footer class="mastfoot mt-auto animated fadeIn fast">
@@ -32,16 +32,7 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-	<script>
-		var city = $("#city").html().split(":")[1];
-		var number = $("#number").html().split(":")[1];
-		var result = $("#result").html().split(":")[1];
-		var invoice = $("#invoice").html().split(":")[1];
-		
-		console.log(city);
-		console.log(number);
-		console.log(result);
-		console.log(invoice);
-	</script>
+	<script src="js/main.js"></script>
+	<script src="js/result.js"></script>
 </body>
 </html>

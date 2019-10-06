@@ -109,7 +109,7 @@
 					<div class="invalid-tooltip animated delay-1s slow">${ errors[1].trim() }</div>
 				</div>
 				<div class="col-auto w-75 m-3">
-					<input type="submit" class="btn btn-lg btn-secondary animated fadeInUp" value="Calculate">
+					<input type="submit" class="btn btn-lg btn-secondary animated fadeInUp" value="Calculate" >
 				</div>
 			</div>
 		</form>
@@ -127,5 +127,6 @@
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/userinfo/1.1.0/userinfo.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 	<script src="js/main.js"></script>
+	<script src="js/input.js"></script>
 </body>
 </html>
