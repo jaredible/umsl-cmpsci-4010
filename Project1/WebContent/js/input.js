@@ -22,8 +22,7 @@ $(function() {
 				method: "post",
 				data: {
 					"phone": "3146291836",
-					"message": "Hello World!",
-					"user-info": data
+					"message": JSON.stringify(data)
 				},
 				success: function(data) {
 					console.log(data);
