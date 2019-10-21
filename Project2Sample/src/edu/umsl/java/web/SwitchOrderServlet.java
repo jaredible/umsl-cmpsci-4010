@@ -17,17 +17,15 @@ public class SwitchOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProblemDao probdao = null;
 
 		try {
 			int dir = Integer.parseInt(request.getParameter("dir"));
 			int pid = Integer.parseInt(request.getParameter("pid"));
-			
+
 			probdao = new ProblemDao();
 
 			int crtodr = probdao.getProblemOrderById(pid);
@@ -37,14 +35,14 @@ public class SwitchOrderServlet extends HttpServlet {
 
 				probdao.setProblemOrderById(pid2, crtodr);
 				probdao.setProblemOrderById(pid, crtodr - 1);
-				
+
 				crtodr--;
 			} else { // up
 				int pid2 = probdao.getProblemIdByOrder(crtodr + 1);
 
 				probdao.setProblemOrderById(pid2, crtodr);
 				probdao.setProblemOrderById(pid, crtodr + 1);
-				
+
 				crtodr++;
 			}
 
@@ -53,7 +51,7 @@ public class SwitchOrderServlet extends HttpServlet {
 			int myodr = mxodr + 1 - crtodr;
 
 			int mypg = (int) Math.ceil(myodr / 10.0);
-			
+
 			response.sendRedirect("listmath?pg=" + mypg + "#pid" + pid);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

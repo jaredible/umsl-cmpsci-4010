@@ -21,11 +21,9 @@ public class ListMathServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProblemDao probdao = null;
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
@@ -47,13 +45,13 @@ public class ListMathServlet extends HttpServlet {
 
 		try {
 			probdao = new ProblemDao();
-			
+
 			int cnt = probdao.getProblemCount();
 
 			int totalpg = (int) Math.ceil(cnt / 10.0);
 
 			request.setAttribute("maxpg", totalpg);
-			
+
 			if (pg < 1) {
 				pg = 1;
 			} else if (pg > totalpg) {
@@ -67,7 +65,7 @@ public class ListMathServlet extends HttpServlet {
 			request.setAttribute("maxordernum", probdao.getMaxOrderNum());
 
 			request.setAttribute("crtpg", pg);
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
