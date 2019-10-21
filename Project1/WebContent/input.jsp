@@ -43,6 +43,8 @@
 			</div>
 		</div>
 	</div>-->
+	${book}
+	${sessionScope.book}
 	<%
 		String os = (String) request.getAttribute("os");
 		String[] cities = (String[]) request.getAttribute("cities");

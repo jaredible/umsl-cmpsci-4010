@@ -27,6 +27,9 @@ public class InputServlet extends HttpServlet {
 
 		request.setAttribute("os", os);
 		request.setAttribute("cities", getServletContext().getInitParameter("cities").split(","));
+		
+		request.setAttribute("book","java1");
+		request.getSession(true).setAttribute("book","java2");
 
 		request.getRequestDispatcher("input.jsp").forward(request, response);
 	}
