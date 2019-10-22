@@ -8,6 +8,7 @@ public class User {
 	private int age;
 	private String username;
 	private String email;
+	private String phoneNumber;
 	private String password;
 	private String role;
 	private boolean verified;
@@ -15,13 +16,14 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, String firstname, String lastname, int age, String username, String email, String password, String role, boolean verified) {
+	public User(int id, String firstname, String lastname, int age, String username, String email, String phoneNumber, String password, String role, boolean verified) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.age = age;
 		this.username = username;
 		this.email = email;
+		this.phoneNumber = phoneNumber;
 		this.password = password;
 		this.role = role;
 		this.verified = verified;
@@ -73,6 +75,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getPassword() {

@@ -48,6 +48,7 @@ public class RegisterServlet extends HttpServlet {
 		String age = request.getParameter("age");
 		String username = request.getParameter("username");
 		String email = request.getParameter("email");
+		String phoneNumber = request.getParameter("phone");
 		String password = request.getParameter("password");
 		String confirm = request.getParameter("confirm");
 
@@ -56,6 +57,7 @@ public class RegisterServlet extends HttpServlet {
 		System.out.println("age: " + age);
 		System.out.println("username: " + username);
 		System.out.println("email: " + email);
+		System.out.println("phone: " + phoneNumber);
 		System.out.println("password: " + password);
 		System.out.println("confirm: " + confirm);
 
@@ -81,6 +83,9 @@ public class RegisterServlet extends HttpServlet {
 		if (!validEmail(email)) {
 			errors.put("email", "Invalid email!");
 		}
+		if (!validPhoneNumber(phoneNumber)) {
+			errors.put("phone", "Invalid phone number!");
+		}
 		if (!validPassword(password)) {
 			errors.put("password", "Invalid password!");
 		}
@@ -93,7 +98,7 @@ public class RegisterServlet extends HttpServlet {
 		if (errors.isEmpty()) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", username);
-			userDAO.addUser(new User(0, firstname, lastname, Integer.parseInt(age), username, email, password, "default", true));
+			userDAO.addUser(new User(0, firstname, lastname, Integer.parseInt(age), username, email, phoneNumber, password, "default", true));
 			userDAO.login(username, password);
 			Cookie cookie = new Cookie("username", username);
 			cookie.setMaxAge(60 * 30); // 30 minutes
@@ -134,6 +139,10 @@ public class RegisterServlet extends HttpServlet {
 
 	private boolean validEmail(String email) {
 		return email.length() > 10;
+	}
+	
+	private boolean validPhoneNumber(String phoneNumber) {
+		return phoneNumber.length() > 0;
 	}
 
 	private boolean validPassword(String password) {
