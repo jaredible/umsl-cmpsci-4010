@@ -55,18 +55,21 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public List<Category> getList() {
 		List<Category> result = new ArrayList<Category>();
 
-		Connection c = DbConn.getConnection();
+		Connection conn = DbConn.getConnection();
 		String sql = "SELECT * FROM category";
+		
 		try {
-			PreparedStatement ps = c.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+			
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
 				result.add(new Category(id, name, description));
 			}
-			c.close();
+			
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -76,7 +79,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	
 	public static void main(String[] args) {
 		CategoryDAOImpl dao = new CategoryDAOImpl();
-		Category c = new Category(8, "Test1", "Test2");
+		Category c = new Category(9, "Test1", "Test2");
 		dao.addCategory(c);
 	}
 
