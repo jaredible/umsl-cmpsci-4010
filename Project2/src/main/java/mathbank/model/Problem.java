@@ -1,9 +1,16 @@
 package main.java.mathbank.model;
 
+import java.sql.Timestamp;
+
 public class Problem {
 
 	private int id;
 	private int categoryId;
+	private int createdByUserId;
+	private Timestamp createdTimestamp;
+	private int updatedByUserId;
+	private Timestamp updatedTimestamp;
+	private boolean updateable;
 	private String title;
 	private String body;
 	private String footer;
@@ -28,11 +35,51 @@ public class Problem {
 	}
 
 	public int getCategoryId() {
-		return this.categoryId;
+		return categoryId;
 	}
 
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public int getCreatedByUserId() {
+		return createdByUserId;
+	}
+
+	public void getCreatedByUserId(int createdByUserId) {
+		this.createdByUserId = createdByUserId;
+	}
+
+	public Timestamp getCreatedTimestamp() {
+		return createdTimestamp;
+	}
+
+	public void setCreatedTimestamp(Timestamp createdTimestamp) {
+		this.createdTimestamp = createdTimestamp;
+	}
+
+	public int getUpdatedByUserId() {
+		return createdByUserId;
+	}
+
+	public void getUpdatedByUserId(int updatedByUserId) {
+		this.updatedByUserId = updatedByUserId;
+	}
+
+	public Timestamp getUpdatedTimestamp() {
+		return updatedTimestamp;
+	}
+
+	public void setUpdatedTimestamp(Timestamp updatedTimestamp) {
+		this.updatedTimestamp = updatedTimestamp;
+	}
+
+	public boolean isUpdateable() {
+		return updateable;
+	}
+
+	public void setUpdateable(boolean updateable) {
+		this.updateable = updateable;
 	}
 
 	public String getTitle() {
