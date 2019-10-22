@@ -10,7 +10,7 @@ public class Problem {
 	private Timestamp createdTimestamp;
 	private int updatedByUserId;
 	private Timestamp updatedTimestamp;
-	private boolean updateable;
+	private boolean canUpdate;
 	private String title;
 	private String body;
 	private String footer;
@@ -18,9 +18,14 @@ public class Problem {
 	public Problem() {
 	}
 
-	public Problem(int id, int categoryId, String title, String body, String footer) {
+	public Problem(int id, int categoryId, int createdByUserId, Timestamp createdTimestamp, int updatedByUserId, Timestamp updatedTimestamp, boolean canUpdate, String title, String body, String footer) {
 		this.id = id;
 		this.categoryId = categoryId;
+		this.createdByUserId = createdByUserId;
+		this.createdTimestamp = createdTimestamp;
+		this.updatedByUserId = updatedByUserId;
+		this.updatedTimestamp = updatedTimestamp;
+		this.canUpdate = canUpdate;
 		this.title = title;
 		this.body = body;
 		this.footer = footer;
@@ -59,7 +64,7 @@ public class Problem {
 	}
 
 	public int getUpdatedByUserId() {
-		return createdByUserId;
+		return updatedByUserId;
 	}
 
 	public void getUpdatedByUserId(int updatedByUserId) {
@@ -74,12 +79,12 @@ public class Problem {
 		this.updatedTimestamp = updatedTimestamp;
 	}
 
-	public boolean isUpdateable() {
-		return updateable;
+	public boolean getCanUpdate() {
+		return canUpdate;
 	}
 
-	public void setUpdateable(boolean updateable) {
-		this.updateable = updateable;
+	public void setCanUpdate(boolean canUpdate) {
+		this.canUpdate = canUpdate;
 	}
 
 	public String getTitle() {
