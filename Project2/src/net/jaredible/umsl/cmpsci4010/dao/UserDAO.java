@@ -4,7 +4,7 @@ import net.jaredible.umsl.cmpsci4010.model.User;
 
 public interface UserDAO {
 
-	public boolean checkUser(String s);
+	public boolean checkUsername(String s);
 
 	public boolean login(String s1, String s2);
 
@@ -12,7 +12,7 @@ public interface UserDAO {
 
 	public User getUser(int i);
 
-	public void updateUser(User u);
+	public void updateUser(int i);
 
 	public void deleteUser(int i);
 
