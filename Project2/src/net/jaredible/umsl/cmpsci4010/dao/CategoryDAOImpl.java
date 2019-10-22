@@ -18,8 +18,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 		try {
 			ps = c.prepareStatement(sql);
 			ps.setInt(1, category.getId());
-			ps.setString(1, category.getName());
-			ps.setString(1, category.getDescription());
+			ps.setString(2, category.getName());
+			ps.setString(3, category.getDescription());
 			ps.executeUpdate();
 			c.close();
 		} catch (SQLException e) {
