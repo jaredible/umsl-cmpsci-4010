@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -16,7 +17,6 @@ public class DbConn {
 	private static String user;
 	private static String password;
 	private static boolean propsLoaded = false;
-	private static Connection connection = null;
 
 	private static void loadProps() {
 		try {
@@ -37,23 +37,50 @@ public class DbConn {
 		}
 	}
 
-	public static Connection getConnection() {
-		if (connection != null) {
-			return connection;
-		} else {
-			if (!propsLoaded) {
-				loadProps();
-			}
+	public static Connection openConn() {
+		if (!propsLoaded) {
+			loadProps();
+		}
 
-			try {
-				createDatabase();
-				Class.forName(driver).newInstance();
-				connection = DriverManager.getConnection(url + "/" + name, user, password);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		Connection conn = null;
 
-			return connection;
+		try {
+			createDatabase();
+			Class.forName(driver).newInstance();
+			conn = DriverManager.getConnection(url + name, user, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return conn;
+	}
+
+	public static void closeConn(Connection conn, Statement stmt, ResultSet rs) {
+		try {
+			if (conn != null) {
+				conn.close();
+				conn = null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			if (stmt != null) {
+				stmt.close();
+				stmt = null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -70,6 +97,7 @@ public class DbConn {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			stmt.close();
 			conn.close();
 		}
 	}

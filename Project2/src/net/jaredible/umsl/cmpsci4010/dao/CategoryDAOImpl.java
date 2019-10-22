@@ -16,7 +16,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public List<Category> getList() {
 		List<Category> result = new ArrayList<Category>();
 
-		Connection conn = DbConn.getConnection();
+		Connection conn = DbConn.openConn();
 		String sql = "SELECT * FROM category";
 
 		try {
@@ -30,7 +30,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 				result.add(new Category(id, name, description));
 			}
 
-			conn.close();
+			DbConn.closeConn(conn, ps, rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -40,7 +40,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public void addCategory(Category category) {
-		Connection conn = DbConn.getConnection();
+		Connection conn = DbConn.openConn();
 		String sql = "INSERT INTO category VALUE(?, ?, ?)";
 
 		try {
@@ -49,7 +49,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 			ps.setString(2, category.getName());
 			ps.setString(3, category.getDescription());
 			ps.executeUpdate();
-			conn.close();
+			DbConn.closeConn(conn, ps, null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -59,7 +59,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public Category getCategory(int id) {
 		Category result = new Category();
 
-		Connection conn = DbConn.getConnection();
+		Connection conn = DbConn.openConn();
 		String sql = "SELECT * FROM category WHERE id = ?";
 
 		try {
@@ -76,7 +76,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 				result.setDescription(description);
 			}
 
-			conn.close();
+			DbConn.closeConn(conn, ps, rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -86,7 +86,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public void updateCategory(Category categoy) {
-		Connection conn = DbConn.getConnection();
+		Connection conn = DbConn.openConn();
 		String sql = "UPDATE category SET name = ?, description = ? WHERE id = ?";
 
 		try {
@@ -95,7 +95,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 			ps.setString(2, categoy.getDescription());
 			ps.setInt(3, categoy.getId());
 			ps.executeUpdate();
-			conn.close();
+			DbConn.closeConn(conn, ps, null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -103,14 +103,14 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public void deleteCategory(int id) {
-		Connection conn = DbConn.getConnection();
+		Connection conn = DbConn.openConn();
 		String sql = "DELETE FROM category WHERE id = ?";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
 			ps.executeUpdate();
-			conn.close();
+			DbConn.closeConn(conn, ps, null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -122,15 +122,15 @@ public class CategoryDAOImpl implements CategoryDAO {
 		System.out.println("id: " + c.getId());
 		System.out.println("name: " + c.getName());
 		System.out.println("description: " + c.getDescription());
-		// dao.deleteCategory(c.getId());
+		dao.deleteCategory(c.getId());
 		dao.addCategory(c);
-		// c.setName("Test3");
-		// c.setDescription("Test4");
-		// dao.updateCategory(c);
-		// Category cc = dao.getCategory(6);
-		// System.out.println("id: " + cc.getId());
-		// System.out.println("name: " + cc.getName());
-		// System.out.println("description: " + cc.getDescription());
+		c.setName("Test3");
+		c.setDescription("Test4");
+		dao.updateCategory(c);
+		Category cc = dao.getCategory(6);
+		System.out.println("id: " + cc.getId());
+		System.out.println("name: " + cc.getName());
+		System.out.println("description: " + cc.getDescription());
 	}
 
 }
