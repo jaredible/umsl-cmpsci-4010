@@ -1,4 +1,4 @@
-package net.jaredible.umsl.cmpsci4010.dao;
+package main.java.mathbank.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jaredible.umsl.cmpsci4010.model.Category;
-import net.jaredible.umsl.cmpsci4010.util.DbConn;
+import main.java.mathbank.model.Category;
+import main.java.mathbank.util.DbConn;
 
 public class CategoryDAOImpl implements CategoryDAO {
 

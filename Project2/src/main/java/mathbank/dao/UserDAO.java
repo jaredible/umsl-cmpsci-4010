@@ -1,6 +1,6 @@
-package net.jaredible.umsl.cmpsci4010.dao;
+package main.java.mathbank.dao;
 
-import net.jaredible.umsl.cmpsci4010.model.User;
+import main.java.mathbank.model.User;
 
 public interface UserDAO {
 

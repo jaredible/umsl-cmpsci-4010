@@ -1,6 +1,6 @@
-package net.jaredible.umsl.cmpsci4010.dao;
+package main.java.mathbank.dao;
 
-import net.jaredible.umsl.cmpsci4010.model.Problem;
+import main.java.mathbank.model.Problem;
 
 public class ProblemDAOImpl implements ProblemDAO {
 

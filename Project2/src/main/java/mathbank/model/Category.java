@@ -1,4 +1,4 @@
-package net.jaredible.umsl.cmpsci4010.model;
+package main.java.mathbank.model;
 
 public class Category {
 

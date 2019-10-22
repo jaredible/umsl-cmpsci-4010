@@ -1,8 +1,8 @@
-package net.jaredible.umsl.cmpsci4010.dao;
+package main.java.mathbank.dao;
 
 import java.util.List;
 
-import net.jaredible.umsl.cmpsci4010.model.Category;
+import main.java.mathbank.model.Category;
 
 public interface CategoryDAO {
 

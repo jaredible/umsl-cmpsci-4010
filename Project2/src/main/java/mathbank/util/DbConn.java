@@ -1,4 +1,4 @@
-package net.jaredible.umsl.cmpsci4010.util;
+package main.java.mathbank.util;
 
 import java.io.IOException;
 import java.io.InputStream;
