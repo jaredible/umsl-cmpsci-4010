@@ -1,5 +1,7 @@
 package main.java.mathbank.model;
 
+import java.awt.image.BufferedImage;
+
 public class User {
 
 	private int id;
@@ -11,12 +13,14 @@ public class User {
 	private String phoneNumber;
 	private String password;
 	private String role;
-	private boolean verified;
+	private boolean emailVerified;
+	private boolean phoneVerified;
+	private BufferedImage image;
 
 	public User() {
 	}
 
-	public User(int id, String firstname, String lastname, int age, String username, String email, String phoneNumber, String password, String role, boolean verified) {
+	public User(int id, String firstname, String lastname, int age, String username, String email, String phoneNumber, String password, String role, boolean emailVerified, boolean phoneVerified, BufferedImage image) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -26,7 +30,9 @@ public class User {
 		this.phoneNumber = phoneNumber;
 		this.password = password;
 		this.role = role;
-		this.verified = verified;
+		this.emailVerified = emailVerified;
+		this.phoneVerified = phoneVerified;
+		this.image = image;
 	}
 
 	public int getId() {
@@ -101,12 +107,28 @@ public class User {
 		this.role = role;
 	}
 
-	public boolean isVerified() {
-		return verified;
+	public boolean isEmailVerified() {
+		return emailVerified;
 	}
 
-	public void setVerified(boolean verified) {
-		this.verified = verified;
+	public void setEmailVerified(boolean emailVerified) {
+		this.emailVerified = emailVerified;
+	}
+
+	public boolean isPhoneVerified() {
+		return phoneVerified;
+	}
+
+	public void setPhoneVerified(boolean phoneVerified) {
+		this.phoneVerified = phoneVerified;
+	}
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
 	}
 
 }

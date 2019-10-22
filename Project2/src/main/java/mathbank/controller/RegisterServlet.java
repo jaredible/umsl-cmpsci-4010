@@ -98,7 +98,7 @@ public class RegisterServlet extends HttpServlet {
 		if (errors.isEmpty()) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", username);
-			userDAO.addUser(new User(0, firstname, lastname, Integer.parseInt(age), username, email, phoneNumber, password, "default", true));
+			userDAO.addUser(new User(0, firstname, lastname, Integer.parseInt(age), username, email, phoneNumber, password, "default", false, false, null));
 			userDAO.login(username, password);
 			Cookie cookie = new Cookie("username", username);
 			cookie.setMaxAge(60 * 30); // 30 minutes
@@ -140,7 +140,7 @@ public class RegisterServlet extends HttpServlet {
 	private boolean validEmail(String email) {
 		return email.length() > 10;
 	}
-	
+
 	private boolean validPhoneNumber(String phoneNumber) {
 		return phoneNumber.length() > 0;
 	}
