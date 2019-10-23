@@ -45,7 +45,6 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
-		String age = request.getParameter("age");
 		String username = request.getParameter("username");
 		String email = request.getParameter("email");
 		String phoneNumber = request.getParameter("phone");
@@ -54,7 +53,6 @@ public class RegisterServlet extends HttpServlet {
 
 		System.out.println("firstname: " + firstname);
 		System.out.println("lastname: " + lastname);
-		System.out.println("age: " + age);
 		System.out.println("username: " + username);
 		System.out.println("email: " + email);
 		System.out.println("phone: " + phoneNumber);
@@ -68,12 +66,6 @@ public class RegisterServlet extends HttpServlet {
 		}
 		if (!validLastname(lastname)) {
 			errors.put("lastname", "Invalid lastname!");
-		}
-		int n = validAge(age);
-		if (n == 0) {
-			errors.put("age", "Invalid age!");
-		} else if (n == 1) {
-			errors.put("age", "Sorry, too young!");
 		}
 		if (!validUsername(username)) {
 			errors.put("username", "Invalid username!");
@@ -98,7 +90,7 @@ public class RegisterServlet extends HttpServlet {
 		if (errors.isEmpty()) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", username);
-			userDAO.addUser(new User(0, firstname, lastname, Integer.parseInt(age), username, email, phoneNumber, password, "default", false, false, null));
+			userDAO.addUser(new User(0, firstname, lastname, username, email, phoneNumber, password, "default", false, false, null));
 			userDAO.login(username, password);
 			Cookie cookie = new Cookie("username", username);
 			cookie.setMaxAge(60 * 30); // 30 minutes
@@ -111,30 +103,15 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 	private boolean validFirstname(String firstname) {
-		return firstname.length() > 2;
+		return !firstname.isEmpty();
 	}
 
 	private boolean validLastname(String lastname) {
-		return lastname.length() > 2;
-	}
-
-	private int validAge(String age) {
-		int result = 2;
-		int n;
-
-		try {
-			n = Integer.parseInt(age);
-			if (n < 0) result = 0;
-			else if (n < 18) result = 1;
-		} catch (Exception e) {
-			result = 0;
-		}
-
-		return result;
+		return !lastname.isEmpty();
 	}
 
 	private boolean validUsername(String username) {
-		return username.length() > 2;
+		return !username.isEmpty();
 	}
 
 	private boolean validEmail(String email) {

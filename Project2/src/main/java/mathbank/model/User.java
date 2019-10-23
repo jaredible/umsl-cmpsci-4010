@@ -7,7 +7,6 @@ public class User {
 	private int id;
 	private String firstname;
 	private String lastname;
-	private int age;
 	private String username;
 	private String email;
 	private String phoneNumber;
@@ -20,11 +19,10 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, String firstname, String lastname, int age, String username, String email, String phoneNumber, String password, String role, boolean emailVerified, boolean phoneVerified, BufferedImage image) {
+	public User(int id, String firstname, String lastname, String username, String email, String phoneNumber, String password, String role, boolean emailVerified, boolean phoneVerified, BufferedImage image) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.age = age;
 		this.username = username;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
@@ -57,14 +55,6 @@ public class User {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 
 	public String getUsername() {
