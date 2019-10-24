@@ -12,13 +12,13 @@ public class Problem {
 	private Timestamp updatedTimestamp;
 	private boolean canUpdate;
 	private String title;
-	private String body;
-	private String footer;
+	private String content;
+	private int viewCount;
 
 	public Problem() {
 	}
 
-	public Problem(int id, int categoryId, int createdByUserId, Timestamp createdTimestamp, int updatedByUserId, Timestamp updatedTimestamp, boolean canUpdate, String title, String body, String footer) {
+	public Problem(int id, int categoryId, int createdByUserId, Timestamp createdTimestamp, int updatedByUserId, Timestamp updatedTimestamp, boolean canUpdate, String title, String content, int viewCount) {
 		this.id = id;
 		this.categoryId = categoryId;
 		this.createdByUserId = createdByUserId;
@@ -27,8 +27,8 @@ public class Problem {
 		this.updatedTimestamp = updatedTimestamp;
 		this.canUpdate = canUpdate;
 		this.title = title;
-		this.body = body;
-		this.footer = footer;
+		this.content = content;
+		this.viewCount = viewCount;
 	}
 
 	public int getId() {
@@ -95,20 +95,12 @@ public class Problem {
 		this.title = title;
 	}
 
-	public String getBody() {
-		return body;
+	public String getContent() {
+		return content;
 	}
 
-	public void setBody(String body) {
-		this.body = body;
-	}
-
-	public String getFooter() {
-		return footer;
-	}
-
-	public void setFooter(String footer) {
-		this.footer = footer;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }
