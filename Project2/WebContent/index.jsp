@@ -78,6 +78,7 @@
 				<div>
 					<button type="button" class="btn btn-dark">New Problem</button>
 				</div>
+				<a class="btn-floating btn-lg btn-dark"><i class="fas fa-plus"></i></a>
 			</div>
 		</div>
 		<%@ include file="footer.jsp" %>

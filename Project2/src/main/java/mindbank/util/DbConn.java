@@ -1,5 +1,9 @@
 package main.java.mindbank.util;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -45,7 +49,7 @@ public class DbConn {
 		Connection conn = null;
 
 		try {
-			createDatabase();
+			initDb();
 			Class.forName(driver).newInstance();
 			conn = DriverManager.getConnection(url + name, user, password);
 		} catch (Exception e) {
@@ -84,7 +88,7 @@ public class DbConn {
 		}
 	}
 
-	private static void createDatabase() throws SQLException {
+	private static void initDb() throws SQLException {
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -106,41 +110,42 @@ public class DbConn {
 			stmt.close();
 			conn.close();
 		}
-	}
-	
-	public static void createTables() throws SQLException {
-		if (!propsLoaded) {
-			loadProps();
-		}
-		
-		if (!getDatabaseExists()) {
-			createDatabase();
-		}
-		
-		Connection conn = null;
-		Statement stmt = null;
-		
+
 		try {
-			conn = DriverManager.getConnection(getDatabaseUrl(), user, password);
+			conn = DriverManager.getConnection(getDbUrl(), user, password);
 			if (conn != null) {
 				stmt = conn.createStatement();
 				if (stmt != null) {
-					stmt.execute(""); // TODO: create tables
+					File f = new File(DbConn.class.getClassLoader().getResource("init.sql").getFile());
+					if (f != null) {
+						FileReader fr = new FileReader(f);
+						if (fr != null) {
+							BufferedReader br = new BufferedReader(fr);
+							if (br != null) {
+								String result = "";
+								String line;
+								while ((line = br.readLine()) != null) {
+									result += line + "\n";
+								}
+								stmt.execute(result);
+							}
+						}
+					}
 				}
 			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			stmt.close();
+			conn.close();
 		}
 	}
 
-	public static boolean getDatabaseExists() throws SQLException {
+	public static boolean getDbExists() throws SQLException {
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -166,19 +171,19 @@ public class DbConn {
 
 		return false;
 	}
-	
-	public static String getDatabaseUrl() {
+
+	public static String getDbUrl() {
 		if (!propsLoaded) {
 			loadProps();
 		}
-		
+
 		return url + name;
 	}
 
 	public static void main(String[] args) {
 		try {
-			// createDatabase();
-			System.out.println("" + getDatabaseExists());
+			initDb();
+			System.out.println("" + getDbExists());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
