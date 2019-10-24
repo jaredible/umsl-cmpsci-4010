@@ -1,4 +1,4 @@
-package main.java.mathbank.dao;
+package main.java.mindbank.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.mathbank.model.Category;
-import main.java.mathbank.model.Subject;
-import main.java.mathbank.util.DbConn;
+import main.java.mindbank.model.Category;
+import main.java.mindbank.model.Subject;
+import main.java.mindbank.util.DbConn;
 
 public class CategoryDAOImpl implements CategoryDAO {
 

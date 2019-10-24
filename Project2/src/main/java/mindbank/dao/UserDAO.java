@@ -1,6 +1,6 @@
-package main.java.mathbank.dao;
+package main.java.mindbank.dao;
 
-import main.java.mathbank.model.User;
+import main.java.mindbank.model.User;
 
 public interface UserDAO {
 

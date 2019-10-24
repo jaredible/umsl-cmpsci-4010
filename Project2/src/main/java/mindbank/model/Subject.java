@@ -1,4 +1,4 @@
-package main.java.mathbank.model;
+package main.java.mindbank.model;
 
 public class Subject {
 

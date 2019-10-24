@@ -1,4 +1,4 @@
-package main.java.mathbank.controller;
+package main.java.mindbank.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import main.java.mathbank.dao.UserDAO;
-import main.java.mathbank.dao.UserDAOImpl;
-import main.java.mathbank.model.User;
+import main.java.mindbank.dao.UserDAO;
+import main.java.mindbank.dao.UserDAOImpl;
+import main.java.mindbank.model.User;
 
 /**
  * Servlet implementation class LoginServlet

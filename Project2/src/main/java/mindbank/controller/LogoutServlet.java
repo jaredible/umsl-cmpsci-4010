@@ -1,4 +1,4 @@
-package main.java.mathbank.controller;
+package main.java.mindbank.controller;
 
 import java.io.IOException;
 

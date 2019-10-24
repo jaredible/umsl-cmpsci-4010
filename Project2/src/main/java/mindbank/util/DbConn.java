@@ -1,4 +1,4 @@
-package main.java.mathbank.util;
+package main.java.mindbank.util;
 
 import java.io.IOException;
 import java.io.InputStream;

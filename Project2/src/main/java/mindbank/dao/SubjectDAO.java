@@ -1,9 +1,9 @@
-package main.java.mathbank.dao;
+package main.java.mindbank.dao;
 
 import java.util.List;
 
-import main.java.mathbank.model.Category;
-import main.java.mathbank.model.Subject;
+import main.java.mindbank.model.Category;
+import main.java.mindbank.model.Subject;
 
 public interface SubjectDAO {
 
