@@ -95,7 +95,7 @@ public class RegisterServlet extends HttpServlet {
 			Cookie cookie = new Cookie("username", username);
 			cookie.setMaxAge(60 * 30); // 30 minutes
 			response.addCookie(cookie);
-			response.sendRedirect("index.jsp");
+			response.sendRedirect(request.getContextPath());
 		} else {
 			request.setAttribute("errors", errors);
 			request.getRequestDispatcher("register.jsp").forward(request, response); // TODO: getServletContext()?

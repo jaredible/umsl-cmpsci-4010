@@ -24,7 +24,7 @@
 	</head>
 	<body>
 		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">Mathbank</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mathbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -34,7 +34,7 @@
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
-								<a class="dropdown-item" href="user">My account</a>
+								<a class="dropdown-item" href="account">My account</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>

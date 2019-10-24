@@ -25,7 +25,12 @@ public class AccountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setAttribute("firstname", "Jared");
+		request.setAttribute("lastname", "Diehl");
+		request.setAttribute("username", "Jaredible");
+		request.setAttribute("email", "test@test.test");
+		request.setAttribute("phone", "3146291836");
+		request.getRequestDispatcher("account.jsp").forward(request, response);
 	}
 
 	/**

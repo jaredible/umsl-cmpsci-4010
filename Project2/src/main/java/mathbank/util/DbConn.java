@@ -101,6 +101,12 @@ public class DbConn {
 			conn.close();
 		}
 	}
+	
+	private static void createTables() {
+		// user
+		// category
+		// problem
+	}
 
 	public static void main(String[] args) {
 		try {

@@ -22,6 +22,11 @@ public class UserDAOImpl implements UserDAO {
 	public User getUser(int id) {
 		return null;
 	}
+	
+	@Override
+	public User getUser(String email) {
+		return null;
+	}
 
 	@Override
 	public void updateUser(int id) {

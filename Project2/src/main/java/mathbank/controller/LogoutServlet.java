@@ -39,7 +39,6 @@ public class LogoutServlet extends HttpServlet {
 			}
 		}
 		if (cookie != null) {
-			System.out.println("COOKIE EXISTS");
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		}
