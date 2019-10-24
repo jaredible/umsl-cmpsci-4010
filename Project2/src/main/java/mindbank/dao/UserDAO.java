@@ -4,7 +4,7 @@ import main.java.mindbank.model.User;
 
 public interface UserDAO {
 
-	public boolean checkUsername(String s);
+	public boolean checkExists(String s);
 
 	public boolean login(String s1, String s2);
 

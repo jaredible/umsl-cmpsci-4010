@@ -24,20 +24,13 @@
 						<input type="text" name="lastname" class="form-control" placeholder="Last name">
 					</div>
 				</div>
-				
-				<input type="text" name="username" class="form-control mb-3" placeholder="Username">
-				
+								
 				<input type="email" name="email" class="form-control mb-3" placeholder="E-mail">
 				
 				<input type="password" name="password" class="form-control mb-2" placeholder="Password">
 				<input type="password" name="confirm" class="form-control" placeholder="Confirm password">
 			    <small class="form-text text-muted mb-4">
 			        At least 8 characters and 1 digit
-			    </small>
-			    
-			    <input type="text" name="phone" class="form-control" placeholder="Phone number">
-			    <small class="form-text text-muted mb-3">
-			        Optional - for two step authentication
 			    </small>
 			    
 			    <button class="btn btn-dark my-3 btn-block" type="submit">Register</button>

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	String username = null;
+	String email = null;
 	Cookie[] cookies = request.getCookies();
 	if (cookies != null) {
 		for (Cookie c : cookies) {
-			if (c.getName().equals("username")) {
-				username = c.getValue();
+			if (c.getName().equals("email")) {
+				email = c.getValue();
 			}
 		}
 	}
@@ -30,7 +30,7 @@
 			</button>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
-					<% if (username != null) { %>
+					<% if (email != null) { %>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">

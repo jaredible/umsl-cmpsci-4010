@@ -1,20 +1,20 @@
 package main.java.mindbank.model;
 
-public class Permission {
+public class Role {
 
-	public static final Permission DEFAULT = new Permission(0, "default", "");
-	public static final Permission USER = new Permission(1, "user", "");
-	public static final Permission MODERATOR = new Permission(2, "moderator", "");
-	public static final Permission ADMIN = new Permission(3, "admin", "");
+	public static final Role DEFAULT = new Role(0, "default", "");
+	public static final Role USER = new Role(1, "user", "");
+	public static final Role MODERATOR = new Role(2, "moderator", "");
+	public static final Role ADMIN = new Role(3, "admin", "");
 
 	private int id;
 	private String name;
 	private String description;
 
-	public Permission() {
+	public Role() {
 	}
 
-	public Permission(int id, String name, String description) {
+	public Role(int id, String name, String description) {
 		this.id = id;
 		this.name = name;
 		this.description = description;

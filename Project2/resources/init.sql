@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS user (
 	lastname VARCHAR (20) NOT NULL,
 	phone INT,
 	password VARCHAR (20) NOT NULL,
-	PRIMARY KEY (id, email)
+	PRIMARY KEY (id, email, username)
 );

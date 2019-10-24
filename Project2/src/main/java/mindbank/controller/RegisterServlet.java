@@ -1,6 +1,11 @@
 package main.java.mindbank.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
+import main.java.mindbank.model.Role;
 import main.java.mindbank.model.User;
 
 /**
@@ -22,8 +28,6 @@ import main.java.mindbank.model.User;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private UserDAO userDAO = new UserDAOImpl();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -45,60 +49,60 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
-		String username = request.getParameter("username");
 		String email = request.getParameter("email");
-		String phoneNumber = request.getParameter("phone");
 		String password = request.getParameter("password");
 		String confirm = request.getParameter("confirm");
 
 		System.out.println("firstname: " + firstname);
 		System.out.println("lastname: " + lastname);
-		System.out.println("username: " + username);
 		System.out.println("email: " + email);
-		System.out.println("phone: " + phoneNumber);
 		System.out.println("password: " + password);
 		System.out.println("confirm: " + confirm);
 
-		Map<String, String> errors = new HashMap<String, String>();
+		try {
+			UserDAO userDAO = new UserDAOImpl();
 
-		if (!validFirstname(firstname)) {
-			errors.put("firstname", "Invalid firstname!");
-		}
-		if (!validLastname(lastname)) {
-			errors.put("lastname", "Invalid lastname!");
-		}
-		if (!validUsername(username)) {
-			errors.put("username", "Invalid username!");
-		} else if (userDAO.checkUsername(username)) {
-			errors.put("username", "Username already exists!");
-		}
-		if (!validEmail(email)) {
-			errors.put("email", "Invalid email!");
-		}
-		if (!validPhoneNumber(phoneNumber)) {
-			errors.put("phone", "Invalid phone number!");
-		}
-		if (!validPassword(password)) {
-			errors.put("password", "Invalid password!");
-		}
-		if (!passwordsMatch(password, confirm)) {
-			errors.put("confirm", "Passwords don't match!");
-		}
+			Map<String, String> errors = new HashMap<String, String>();
 
-		System.out.println(errors.toString());
+			if (!validFirstname(firstname)) {
+				errors.put("firstname", "Invalid firstname!");
+			}
+			if (!validLastname(lastname)) {
+				errors.put("lastname", "Invalid lastname!");
+			}
+			if (!validEmail(email)) {
+				errors.put("email", "Invalid email!");
+			} else if (userDAO.checkExists(email)) {
+				errors.put("username", "E-mail already exists!");
+			}
+			if (!validPassword(password)) {
+				errors.put("password", "Invalid password!");
+			}
+			if (!passwordsMatch(password, confirm)) {
+				errors.put("confirm", "Passwords don't match!");
+			}
 
-		if (errors.isEmpty()) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", username);
-			userDAO.addUser(new User(0, firstname, lastname, username, email, phoneNumber, password, "default", false, false, null, null));
-			userDAO.login(username, password);
-			Cookie cookie = new Cookie("username", username);
-			cookie.setMaxAge(60 * 30); // 30 minutes
-			response.addCookie(cookie);
-			response.sendRedirect(request.getContextPath());
-		} else {
-			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("register.jsp").forward(request, response); // TODO: getServletContext()?
+			System.out.println(errors.toString());
+
+			if (errors.isEmpty()) {
+				HttpSession session = request.getSession();
+				session.setAttribute("email", email);
+				LocalDateTime ldt = LocalDateTime.now();
+				ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
+				ZonedDateTime gmt = zdt.withZoneSameInstant(ZoneId.of("GMT"));
+				Timestamp timestamp = Timestamp.valueOf(gmt.toLocalDateTime());
+				userDAO.addUser(new User(0, firstname, lastname, "", email, "", password, Role.USER.getId(), false, false, timestamp, timestamp));
+				userDAO.login(email, password);
+				Cookie cookie = new Cookie("email", email);
+				cookie.setMaxAge(60 * 30); // 30 minutes
+				response.addCookie(cookie);
+				response.sendRedirect(request.getContextPath());
+			} else {
+				request.setAttribute("errors", errors);
+				request.getRequestDispatcher("register.jsp").forward(request, response); // TODO: getServletContext()?
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -110,16 +114,8 @@ public class RegisterServlet extends HttpServlet {
 		return !lastname.isEmpty();
 	}
 
-	private boolean validUsername(String username) {
-		return !username.isEmpty();
-	}
-
 	private boolean validEmail(String email) {
 		return email.length() > 10;
-	}
-
-	private boolean validPhoneNumber(String phoneNumber) {
-		return phoneNumber.length() > 0;
 	}
 
 	private boolean validPassword(String password) {

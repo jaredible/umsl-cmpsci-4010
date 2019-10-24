@@ -7,11 +7,11 @@ public class User {
 	private int id;
 	private String firstname;
 	private String lastname;
-	private String username;
+	private String displayName;
 	private String email;
 	private String phoneNumber;
 	private String password;
-	private String role;
+	private int roleId;
 	private boolean emailVerified;
 	private boolean phoneVerified;
 	private Timestamp registrationTimestamp;
@@ -20,15 +20,15 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, String firstname, String lastname, String username, String email, String phoneNumber, String password, String role, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp lastLoginTimestamp) {
+	public User(int id, String firstname, String lastname, String displayName, String email, String phoneNumber, String password, int roleId, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp lastLoginTimestamp) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.username = username;
+		this.displayName = displayName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.password = password;
-		this.role = role;
+		this.roleId = roleId;
 		this.emailVerified = emailVerified;
 		this.phoneVerified = phoneVerified;
 		this.registrationTimestamp = registrationTimestamp;
@@ -59,12 +59,12 @@ public class User {
 		this.lastname = lastname;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
 	public String getEmail() {
@@ -91,12 +91,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getRole() {
-		return role;
+	public int getRoleId() {
+		return roleId;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public boolean isEmailVerified() {
