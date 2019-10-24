@@ -50,38 +50,8 @@
 			</div>
 		</nav>
 		<div class="container">
-			<form class="d-fixed text-center p-5" action="account" method="post">
-				<p class="h4 mb-3">Account</p>
-
-				<div class="form-row mb-3">
-					<div class="col">
-						<input type="text" name="firstname" class="form-control" placeholder="First name" value="${firstname}">
-					</div>
-					<div class="col">
-						<input type="text" name="lastname" class="form-control" placeholder="Last name" value="${lastname}">
-					</div>
-				</div>
-				
-				<input type="text" name="username" class="form-control mb-3" placeholder="Username" value="${username}">
-				
-				<input type="email" name="email" class="form-control mb-3" placeholder="E-mail" value="${email}">
-				
-				<input type="password" name="currentpassword" class="form-control mb-2" placeholder="Current password">
-				<input type="password" name="newpassword" class="form-control mb-2" placeholder="New password">
-				<input type="password" name="confirmnew" class="form-control" placeholder="Confirm password">
-			    <small class="form-text text-muted mb-4">
-			        At least 8 characters and 1 digit
-			    </small>
-			    
-			    <input type="text" name="phone" class="form-control" placeholder="Phone number" value="${phone}">
-			    <small class="form-text text-muted mb-3">
-			        Optional - for two step authentication
-			    </small>
-			    
-			    <button class="btn btn-dark my-3 btn-block" type="submit">Save</button>
-			</form>
 		</div>
-		<jsp:include page="footer.jsp">
+		<%@ include file="footer.jsp" %>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>

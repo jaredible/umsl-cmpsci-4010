@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath());
 		} else {
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("login").forward(request, response); // TODO: getServletContext()?
+			request.getRequestDispatcher("login.jsp").forward(request, response); // TODO: getServletContext()?
 		}
 	}
 	

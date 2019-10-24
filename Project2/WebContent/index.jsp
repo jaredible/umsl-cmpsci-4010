@@ -75,9 +75,12 @@
 				<div>
 					<button type="button" class="btn btn-dark">Go</button>
 				</div>
+				<div>
+					<button type="button" class="btn btn-dark">New Problem</button>
+				</div>
 			</div>
 		</div>
-		<jsp:include page="footer.jsp">
+		<%@ include file="footer.jsp" %>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
