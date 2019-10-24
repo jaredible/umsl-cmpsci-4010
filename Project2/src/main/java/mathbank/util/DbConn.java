@@ -117,7 +117,27 @@ public class DbConn {
 			createDatabase();
 		}
 		
+		Connection conn = null;
+		Statement stmt = null;
 		
+		try {
+			conn = DriverManager.getConnection(getDatabaseUrl(), user, password);
+			if (conn != null) {
+				stmt = conn.createStatement();
+				if (stmt != null) {
+					stmt.execute(""); // TODO: create tables
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
 	}
 
 	public static boolean getDatabaseExists() throws SQLException {
@@ -145,6 +165,14 @@ public class DbConn {
 		}
 
 		return false;
+	}
+	
+	public static String getDatabaseUrl() {
+		if (!propsLoaded) {
+			loadProps();
+		}
+		
+		return url + name;
 	}
 
 	public static void main(String[] args) {
