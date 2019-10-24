@@ -9,7 +9,7 @@ public class User {
 	private String lastname;
 	private String displayName;
 	private String email;
-	private String phoneNumber;
+	private int phoneNumber;
 	private String password;
 	private int roleId;
 	private boolean emailVerified;
@@ -20,7 +20,7 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, String firstname, String lastname, String displayName, String email, String phoneNumber, String password, int roleId, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp lastLoginTimestamp) {
+	public User(int id, String firstname, String lastname, String displayName, String email, int phoneNumber, String password, int roleId, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp lastLoginTimestamp) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -75,11 +75,11 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPhoneNumber() {
+	public int getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

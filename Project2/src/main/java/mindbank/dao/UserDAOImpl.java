@@ -12,10 +12,12 @@ public class UserDAOImpl implements UserDAO {
 
 	private Connection conn;
 	private PreparedStatement checkExists;
+	private PreparedStatement addUser;
 
 	public UserDAOImpl() throws SQLException {
 		conn = DbConn.openConn();
 		checkExists = conn.prepareStatement("SELECT * FROM user WHERE email = ?");
+		addUser = conn.prepareStatement("INSERT INTO user VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	}
 
 	@Override
@@ -40,6 +42,15 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void addUser(User user) {
+		try {
+			checkExists.setString(1, email);
+			ResultSet rs = checkExists.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

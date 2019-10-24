@@ -91,7 +91,7 @@ public class RegisterServlet extends HttpServlet {
 				ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
 				ZonedDateTime gmt = zdt.withZoneSameInstant(ZoneId.of("GMT"));
 				Timestamp timestamp = Timestamp.valueOf(gmt.toLocalDateTime());
-				userDAO.addUser(new User(0, firstname, lastname, "", email, "", password, Role.USER.getId(), false, false, timestamp, timestamp));
+				userDAO.addUser(new User(0, firstname, lastname, "", email, -1, password, Role.USER.getId(), false, false, timestamp, timestamp));
 				userDAO.login(email, password);
 				Cookie cookie = new Cookie("email", email);
 				cookie.setMaxAge(60 * 30); // 30 minutes
