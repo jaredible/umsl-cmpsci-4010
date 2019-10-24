@@ -51,7 +51,7 @@
 		</nav>
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
-				<div class="col">
+				<div class="col-xs-12 col-lg-4 mb-2">
 					<select class="browser-default custom-select">
 						<option selected>Select a subject</option>
 						<option>Computer Science</option>
@@ -60,7 +60,7 @@
 						<option>Physics</option>
 					</select>
 				</div>
-				<div class="col">
+				<div class="col-xs-12 col-lg-4 mb-2">
 					<select class="browser-default custom-select">
 						<option selected>Select a category</option>
 						<option>Algebra</option>
@@ -72,13 +72,24 @@
 						<option>Trigonometry</option>
 					</select>
 				</div>
-				<div>
+				<div class="col-xs-6 col-lg-2 mb-2">
 					<button type="button" class="btn btn-dark">Go</button>
 				</div>
-				<div>
+				<div class="col-xs-6 col-lg-2 mb-2">
 					<button type="button" class="btn btn-dark">New Problem</button>
 				</div>
-				<a class="btn-floating btn-lg btn-dark"><i class="fas fa-plus"></i></a>
+				<% for (int i = 0; i < 3; i++) { %>
+					<div class="col-lg-3"></div>
+					<div class="col-lg-6">
+						<div class="card m-1">
+							<div class="card-body">
+								<h5 class="card-title">Panel title</h5>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3"></div>
+				<% } %>
 			</div>
 		</div>
 		<%@ include file="footer.jsp" %>

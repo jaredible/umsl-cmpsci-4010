@@ -21,6 +21,7 @@ public class DbConn {
 	private static String user;
 	private static String password;
 	private static boolean propsLoaded = false;
+	private static boolean initialized = false;
 
 	private static void loadProps() {
 		try {
@@ -89,6 +90,10 @@ public class DbConn {
 	}
 
 	private static void initDb() throws SQLException {
+		if (initialized) {
+			return;
+		}
+
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -143,9 +148,11 @@ public class DbConn {
 			stmt.close();
 			conn.close();
 		}
+
+		initialized = true;
 	}
 
-	public static boolean getDbExists() throws SQLException {
+	private static boolean getDbExists() throws SQLException {
 		if (!propsLoaded) {
 			loadProps();
 		}
