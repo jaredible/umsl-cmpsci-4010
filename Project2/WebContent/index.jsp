@@ -24,7 +24,7 @@
 	</head>
 	<body>
 		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mathbank</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mindbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -51,6 +51,15 @@
 		</nav>
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
+				<div class="col">
+					<select class="browser-default custom-select">
+						<option selected>Select a subject</option>
+						<option>Computer Science</option>
+						<option>English</option>
+						<option>Mathematics</option>
+						<option>Physics</option>
+					</select>
+				</div>
 				<div class="col">
 					<select class="browser-default custom-select">
 						<option selected>Select a category</option>

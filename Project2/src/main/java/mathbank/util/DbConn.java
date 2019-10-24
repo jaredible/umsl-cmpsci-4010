@@ -89,11 +89,17 @@ public class DbConn {
 			loadProps();
 		}
 
-		Connection conn = DriverManager.getConnection(url, user, password);
-		Statement stmt = conn.createStatement();
+		Connection conn = null;
+		Statement stmt = null;
 
 		try {
-			stmt.execute("CREATE DATABASE IF NOT EXISTS " + name);
+			conn = DriverManager.getConnection(url, user, password);
+			if (conn != null) {
+				stmt = conn.createStatement();
+				if (stmt != null) {
+					stmt.execute("CREATE DATABASE IF NOT EXISTS " + name);
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -102,15 +108,49 @@ public class DbConn {
 		}
 	}
 	
-	private static void createTables() {
-		// user
-		// category
-		// problem
+	public static void createTables() throws SQLException {
+		if (!propsLoaded) {
+			loadProps();
+		}
+		
+		if (!getDatabaseExists()) {
+			createDatabase();
+		}
+		
+		
+	}
+
+	public static boolean getDatabaseExists() throws SQLException {
+		if (!propsLoaded) {
+			loadProps();
+		}
+
+		Connection conn = null;
+
+		try {
+			conn = DriverManager.getConnection(url, user, password);
+			if (conn != null) {
+				ResultSet rs = conn.getMetaData().getCatalogs();
+				while (rs.next()) {
+					if (name.equals(rs.getString(1))) {
+						return true;
+					}
+				}
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+
+		return false;
 	}
 
 	public static void main(String[] args) {
 		try {
-			createDatabase();
+			// createDatabase();
+			System.out.println("" + getDatabaseExists());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -24,7 +24,7 @@
 	</head>
 	<body>
 		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mathbank</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mindbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
 			</button>

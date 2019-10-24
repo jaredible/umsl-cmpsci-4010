@@ -8,12 +8,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.mathbank.model.Category;
+import main.java.mathbank.model.Subject;
 import main.java.mathbank.util.DbConn;
 
 public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public List<Category> getList() {
+		List<Category> result = new ArrayList<Category>();
+
+		Connection conn = DbConn.openConn();
+		String sql = "SELECT * FROM category";
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+				result.add(new Category(id, name, description));
+			}
+
+			DbConn.closeConn(conn, ps, rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@Override
+	public List<Category> getList(Subject subject) {
 		List<Category> result = new ArrayList<Category>();
 
 		Connection conn = DbConn.openConn();
