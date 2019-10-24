@@ -81,9 +81,7 @@
 			    <button class="btn btn-dark my-3 btn-block" type="submit">Save</button>
 			</form>
 		</div>
-		<footer class="page-footer font-small bg-dark">
-			<div class="footer-copyright text-center py-3">&copy; 2019 Copyright: <a href="https://jaredible.net"> Jaredible</a></div>
-		</footer>
+		<jsp:include page="footer.jsp">
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
