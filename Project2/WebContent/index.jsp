@@ -1,4 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	String username = null;
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie c : cookies) {
+			if (c.getName().equals("username")) {
+				username = c.getValue();
+			}
+		}
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,14 +23,54 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
+		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">Mathbank</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="navbar-nav ml-auto">
+					<% if (username != null) { %>
+						<li class="nav-item dropdown">
+							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-info">
+								<a class="dropdown-item" href="user">My account</a>
+								<a class="dropdown-item" href="logout">Log out</a>
+							</div>
+						</li>
+					<% } else { %>
+						<li class="nav-item">
+							<a class="nav-link" href="login">Log in</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="register">Register</a>
+						</li>
+					<% } %>
+				</ul>
+			</div>
+		</nav>
 		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg3">Test1</div>
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg3">Test2</div>
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg3">Test3</div>
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg3">Test4</div>
+			<div class="row justify-content-center align-items-center">
+				<div class="col">
+					<select class="browser-default custom-select">
+						<option selected>Select a category</option>
+						<option>Algebra</option>
+						<option>Calculus</option>
+						<option>Combinatorics</option>
+						<option>Geometry</option>
+						<option>Logic</option>
+						<option>Number Theory</option>
+						<option>Trigonometry</option>
+					</select>
+				</div>
+				<div>
+					<button type="button" class="btn btn-dark">Go</button>
+				</div>
 			</div>
 		</div>
+		<footer class="page-footer font-small bg-dark">
+			<div class="footer-copyright text-center py-3">&copy; 2019 Copyright: <a href="https://jaredible.net"> Jaredible</a></div>
+		</footer>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>

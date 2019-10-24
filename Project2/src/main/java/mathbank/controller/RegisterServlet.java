@@ -90,7 +90,7 @@ public class RegisterServlet extends HttpServlet {
 		if (errors.isEmpty()) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", username);
-			userDAO.addUser(new User(0, firstname, lastname, username, email, phoneNumber, password, "default", false, false, null));
+			userDAO.addUser(new User(0, firstname, lastname, username, email, phoneNumber, password, "default", false, false, null, null));
 			userDAO.login(username, password);
 			Cookie cookie = new Cookie("username", username);
 			cookie.setMaxAge(60 * 30); // 30 minutes

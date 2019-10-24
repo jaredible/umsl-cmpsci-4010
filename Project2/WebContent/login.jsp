@@ -14,7 +14,7 @@
 	<body>
 		<div class="container">
 			<form class="text-center p-5" action="login" method="post">
-				<p class="h4 mb-4">Login</p>
+				<p class="h4 mb-4">Log in</p>
 
 				<input type="email" name="email" class="form-control mb-4" placeholder="E-mail">
 				
@@ -32,7 +32,7 @@
         			</div>
     			</div>
 			    
-			    <button class="btn btn-dark my-4 btn-block" type="submit">Login</button>
+			    <button class="btn btn-dark my-4 btn-block" type="submit">Log in</button>
 			    
 			    <p>Not a member?
         			<a href="register">Register</a>

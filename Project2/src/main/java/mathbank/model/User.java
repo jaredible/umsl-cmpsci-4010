@@ -1,6 +1,6 @@
 package main.java.mathbank.model;
 
-import java.awt.image.BufferedImage;
+import java.sql.Timestamp;
 
 public class User {
 
@@ -14,12 +14,13 @@ public class User {
 	private String role;
 	private boolean emailVerified;
 	private boolean phoneVerified;
-	private BufferedImage image;
+	private Timestamp registrationTimestamp;
+	private Timestamp lastLoginTimestamp;
 
 	public User() {
 	}
 
-	public User(int id, String firstname, String lastname, String username, String email, String phoneNumber, String password, String role, boolean emailVerified, boolean phoneVerified, BufferedImage image) {
+	public User(int id, String firstname, String lastname, String username, String email, String phoneNumber, String password, String role, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp lastLoginTimestamp) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -30,7 +31,8 @@ public class User {
 		this.role = role;
 		this.emailVerified = emailVerified;
 		this.phoneVerified = phoneVerified;
-		this.image = image;
+		this.registrationTimestamp = registrationTimestamp;
+		this.lastLoginTimestamp = lastLoginTimestamp;
 	}
 
 	public int getId() {
@@ -113,12 +115,20 @@ public class User {
 		this.phoneVerified = phoneVerified;
 	}
 
-	public BufferedImage getImage() {
-		return image;
+	public Timestamp getRegistrationTimestamp() {
+		return registrationTimestamp;
 	}
 
-	public void setImage(BufferedImage image) {
-		this.image = image;
+	public void setRegistrationTimestamp(Timestamp registrationTimestamp) {
+		this.registrationTimestamp = registrationTimestamp;
+	}
+
+	public Timestamp getLastLoginTimestamp() {
+		return lastLoginTimestamp;
+	}
+
+	public void setLastLoginTimestamp(Timestamp lastLoginTimestamp) {
+		this.lastLoginTimestamp = lastLoginTimestamp;
 	}
 
 }
