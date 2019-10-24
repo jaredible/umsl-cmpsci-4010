@@ -21,6 +21,7 @@ import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Role;
 import main.java.mindbank.model.User;
+import main.java.mindbank.util.DbConn;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -72,7 +73,7 @@ public class RegisterServlet extends HttpServlet {
 			}
 			if (!validEmail(email)) {
 				errors.put("email", "Invalid email!");
-			} else if (userDAO.checkExists(email)) {
+			} else if (userDAO.getEmailExists(email)) {
 				errors.put("username", "E-mail already exists!");
 			}
 			if (!validPassword(password)) {
@@ -85,17 +86,19 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println(errors.toString());
 
 			if (errors.isEmpty()) {
-				HttpSession session = request.getSession();
-				session.setAttribute("email", email);
 				LocalDateTime ldt = LocalDateTime.now();
 				ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
 				ZonedDateTime gmt = zdt.withZoneSameInstant(ZoneId.of("GMT"));
 				Timestamp timestamp = Timestamp.valueOf(gmt.toLocalDateTime());
-				userDAO.addUser(new User(0, firstname, lastname, "", email, -1, password, Role.USER.getId(), false, false, timestamp, timestamp));
-				userDAO.login(email, password);
+				User user = new User(0, firstname, lastname, "", email, -1, password, Role.USER.getId(), false, false, timestamp, timestamp);
+				userDAO.addUser(user);
+				userDAO.setLogin(user);
+
+				request.getSession().setAttribute("email", email);
 				Cookie cookie = new Cookie("email", email);
 				cookie.setMaxAge(60 * 30); // 30 minutes
 				response.addCookie(cookie);
+
 				response.sendRedirect(request.getContextPath());
 			} else {
 				request.setAttribute("errors", errors);
