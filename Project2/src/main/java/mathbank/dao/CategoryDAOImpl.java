@@ -28,7 +28,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
-				result.add(new Category(id, name, description));
+				result.add(new Category(id, 0, name, description));
 			}
 
 			DbConn.closeConn(conn, ps, rs);
@@ -54,7 +54,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
-				result.add(new Category(id, name, description));
+				result.add(new Category(id, 0, name, description));
 			}
 
 			DbConn.closeConn(conn, ps, rs);
@@ -145,7 +145,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	public static void main(String[] args) {
 		CategoryDAOImpl dao = new CategoryDAOImpl();
-		Category c = new Category(6, "Test1", "Test2");
+		Category c = new Category(6, 0, "Test1", "Test2");
 		System.out.println("id: " + c.getId());
 		System.out.println("name: " + c.getName());
 		System.out.println("description: " + c.getDescription());
