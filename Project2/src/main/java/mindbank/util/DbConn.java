@@ -117,7 +117,7 @@ public class DbConn {
 			if (conn != null) {
 				stmt = conn.createStatement();
 				if (stmt != null) {
-					File f = new File(Thread.currentThread().getContextClassLoader().getResource("init.sql").getFile());
+					File f = new File(Thread.currentThread().getContextClassLoader().getResource("/resources/init.sql").getFile());
 					if (f != null) {
 						FileReader fr = new FileReader(f);
 						if (fr != null) {
