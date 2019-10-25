@@ -18,10 +18,10 @@ public class UserDAOImpl implements UserDAO {
 
 	public UserDAOImpl() throws SQLException {
 		conn = DbConn.openConn();
-		getEmailExists = conn.prepareStatement("SELECT * FROM user WHERE email = ?");
-		isValidCredentials = conn.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?");
-		addUser = conn.prepareStatement("INSERT INTO user (email, displayName, firstname, lastname, phone, password, roleId, emailVerified, phoneVerified, registrationTimestamp, lastLoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		setLogin = conn.prepareStatement("UPDATE user SET lastLoginTimestamp = ? WHERE email = ?");
+		getEmailExists = conn.prepareStatement("SELECT * FROM user WHERE email = ?;");
+		isValidCredentials = conn.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?;");
+		addUser = conn.prepareStatement("INSERT INTO user (email, displayName, firstname, lastname, phone, password, roleId, emailVerified, phoneVerified, registrationTimestamp, lastLoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		setLogin = conn.prepareStatement("UPDATE user SET lastLoginTimestamp = ? WHERE email = ?;");
 	}
 
 	@Override

@@ -1,13 +1,17 @@
 
 -- CREATE TABLE IF NOT EXISTS test (id int);
 
+CREATE DATABASE IF NOT EXISTS mindbank;
+
+USE mindbank;
+
 CREATE TABLE IF NOT EXISTS user (
 	id INT NOT NULL AUTO_INCREMENT,
 	email VARCHAR (100) NOT NULL,
 	displayName VARCHAR (100) NOT NULL,
 	firstName VARCHAR (100) NOT NULL,
 	lastName VARCHAR (100) NOT NULL,
-	phone VARCHAR (20),
+	phone VARCHAR (100),
 	password VARCHAR (100) NOT NULL,
 	roleId INT NOT NULL,
 	emailVerified BOOLEAN NOT NULL,
@@ -15,4 +19,11 @@ CREATE TABLE IF NOT EXISTS user (
 	registrationTimestamp TIMESTAMP NOT NULL,
 	lastLoginTimestamp TIMESTAMP NOT NULL,
 	PRIMARY KEY (id, email)
+);
+
+CREATE TABLE IF NOT EXISTS role (
+	id INT NOT NULL,
+	name VARCHAR (100) NOT NULL,
+	description VARCHAR (100) NOT NULL,
+	PRIMARY KEY (id)
 );

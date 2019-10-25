@@ -1,9 +1,5 @@
 package main.java.mindbank.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -78,44 +74,9 @@ public class DbConn {
 			if (conn != null) {
 				stmt = conn.createStatement();
 				if (stmt != null) {
-					stmt.execute("CREATE DATABASE IF NOT EXISTS " + name);
+					stmt.execute("CREATE DATABASE IF NOT EXISTS " + name + ";");
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			stmt.close();
-			conn.close();
-		}
-
-		try {
-			conn = DriverManager.getConnection(getDbUrl(), user, password);
-			if (conn != null) {
-				stmt = conn.createStatement();
-				if (stmt != null) {
-					File f = new File(Thread.currentThread().getContextClassLoader().getResource("init.sql").getFile());
-					if (f != null) {
-						FileReader fr = new FileReader(f);
-						if (fr != null) {
-							BufferedReader br = new BufferedReader(fr);
-							if (br != null) {
-								String result = "";
-								String line;
-								while ((line = br.readLine()) != null) {
-									result += line + "\n";
-								}
-								stmt.execute(result);
-							}
-							br.close();
-						}
-						fr.close();
-					}
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
