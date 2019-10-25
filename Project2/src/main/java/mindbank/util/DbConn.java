@@ -22,33 +22,11 @@ public class DbConn {
 	private static String password;
 	private static boolean propsLoaded = false;
 	private static boolean initialized = false;
-	private static DbConn instance;
 
-	public static DbConn getInstance() {
-		if (instance == null) {
-			instance = new DbConn();
-		}
-
-		return instance;
-	}
-
-	private void loadProps() {
-		boolean test = true;
-		if (test) { // TODO
-			driver = "com.mysql.jdbc.Driver";
-			url = "jdbc:mysql://192.168.64.3:3306/";
-			name = "mindbank";
-			user = "admin";
-			password = "";
-			propsLoaded = true;
-			return;
-		}
-
+	private static void loadProps() {
 		try {
 			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties");
 			Properties prop = new Properties();
-
-			System.out.println("" + (is == null));
 
 			prop.load(is);
 			is.close();
@@ -65,7 +43,7 @@ public class DbConn {
 		}
 	}
 
-	public Connection openConn() {
+	public static Connection openConn() {
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -83,7 +61,7 @@ public class DbConn {
 		return conn;
 	}
 
-	public void initDb() throws SQLException {
+	public static void initDb() throws SQLException {
 		if (initialized) {
 			return;
 		}
@@ -96,8 +74,6 @@ public class DbConn {
 		Statement stmt = null;
 
 		try {
-			System.out.println(url);
-			System.out.println(user);
 			conn = DriverManager.getConnection(url, user, password);
 			if (conn != null) {
 				stmt = conn.createStatement();
@@ -117,7 +93,7 @@ public class DbConn {
 			if (conn != null) {
 				stmt = conn.createStatement();
 				if (stmt != null) {
-					File f = new File(Thread.currentThread().getContextClassLoader().getResource("/resources/init.sql").getFile());
+					File f = new File(Thread.currentThread().getContextClassLoader().getResource("init.sql").getFile());
 					if (f != null) {
 						FileReader fr = new FileReader(f);
 						if (fr != null) {
@@ -150,7 +126,7 @@ public class DbConn {
 		initialized = true;
 	}
 
-	public boolean getDbExists() throws SQLException {
+	public static boolean getDbExists() throws SQLException {
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -177,7 +153,7 @@ public class DbConn {
 		return false;
 	}
 
-	public String getDbUrl() {
+	public static String getDbUrl() {
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -187,10 +163,9 @@ public class DbConn {
 
 	public static void main(String[] args) {
 		try {
-			DbConn db = getInstance();
-			Connection conn = db.openConn();
-			db.initDb();
-			System.out.println("" + db.getDbExists());
+			Connection conn = openConn();
+			initDb();
+			System.out.println("" + getDbExists());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

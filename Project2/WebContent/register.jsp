@@ -13,25 +13,23 @@
 	</head>
 	<body>
 		<div class="container">
-			<form class="d-fixed text-center p-5" action="register" method="post">
+			<form class="d-fixed text-center p-5" action="register" method="post" novalidate>
 				<p class="h4 mb-3">Register</p>
-
+				
 				<div class="form-row mb-3">
 					<div class="col">
-						<input type="text" name="firstname" class="form-control" placeholder="First name">
+						<input type="text" name="firstname" class="form-control" placeholder="First name" value="${user.firstname}">
 					</div>
 					<div class="col">
-						<input type="text" name="lastname" class="form-control" placeholder="Last name">
+						<input type="text" name="lastname" class="form-control" placeholder="Last name" value="${user.lastname}">
 					</div>
 				</div>
-								
-				<input type="email" name="email" class="form-control mb-3" placeholder="E-mail">
+				
+				<input type="email" name="email" class="form-control mb-3" placeholder="E-mail" value="${user.email}">
 				
 				<input type="password" name="password" class="form-control mb-2" placeholder="Password">
 				<input type="password" name="confirm" class="form-control" placeholder="Confirm password">
-			    <small class="form-text text-muted mb-4">
-			        At least 8 characters and 1 digit
-			    </small>
+			    <small class="form-text text-muted mb-4">At least 8 characters and 1 digit</small>
 			    
 			    <button class="btn btn-dark my-3 btn-block" type="submit">Register</button>
 			    

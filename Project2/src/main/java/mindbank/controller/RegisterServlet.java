@@ -3,9 +3,6 @@ package main.java.mindbank.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +17,7 @@ import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Role;
 import main.java.mindbank.model.User;
+import main.java.mindbank.util.Util;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -83,12 +81,10 @@ public class RegisterServlet extends HttpServlet {
 
 			System.out.println(errors.toString());
 
+			Timestamp timestamp = Util.getGMTNowTime();
+			User user = new User(-1, firstname, lastname, "", email, "", password, Role.USER.getId(), false, false, timestamp, timestamp);
+
 			if (errors.isEmpty()) {
-				LocalDateTime ldt = LocalDateTime.now();
-				ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
-				ZonedDateTime gmt = zdt.withZoneSameInstant(ZoneId.of("GMT"));
-				Timestamp timestamp = Timestamp.valueOf(gmt.toLocalDateTime());
-				User user = new User(0, firstname, lastname, "", email, -1, password, Role.USER.getId(), false, false, timestamp, timestamp);
 				userDAO.addUser(user);
 				userDAO.setLogin(user);
 
@@ -100,6 +96,7 @@ public class RegisterServlet extends HttpServlet {
 				response.sendRedirect(request.getContextPath());
 			} else {
 				request.setAttribute("errors", errors);
+				request.setAttribute("user", user);
 				request.getRequestDispatcher("register.jsp").forward(request, response); // TODO: getServletContext()?
 			}
 		} catch (SQLException e) {

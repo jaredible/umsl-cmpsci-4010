@@ -5,11 +5,11 @@ import java.sql.Timestamp;
 public class User {
 
 	private int id;
-	private String firstname;
-	private String lastname;
+	private String firstName;
+	private String lastName;
 	private String displayName;
 	private String email;
-	private int phoneNumber;
+	private String phoneNumber;
 	private String password;
 	private int roleId;
 	private boolean emailVerified;
@@ -20,10 +20,10 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, String firstname, String lastname, String displayName, String email, int phoneNumber, String password, int roleId, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp lastLoginTimestamp) {
+	public User(int id, String firstName, String lastName, String displayName, String email, String phoneNumber, String password, int roleId, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp lastLoginTimestamp) {
 		this.id = id;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.displayName = displayName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
@@ -43,20 +43,20 @@ public class User {
 		this.id = id;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getDisplayName() {
@@ -75,11 +75,11 @@ public class User {
 		this.email = email;
 	}
 
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

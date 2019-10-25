@@ -17,10 +17,10 @@ public class UserDAOImpl implements UserDAO {
 	private PreparedStatement setLogin;
 
 	public UserDAOImpl() throws SQLException {
-		conn = DbConn.getInstance().openConn();
+		conn = DbConn.openConn();
 		getEmailExists = conn.prepareStatement("SELECT * FROM user WHERE email = ?");
 		isValidCredentials = conn.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?");
-		addUser = conn.prepareStatement("INSERT INTO user VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		addUser = conn.prepareStatement("INSERT INTO user (email, displayName, firstname, lastname, phone, password, roleId, emailVerified, phoneVerified, registrationTimestamp, lastLoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		setLogin = conn.prepareStatement("UPDATE user SET lastLoginTimestamp = ? WHERE email = ?");
 	}
 
@@ -69,19 +69,18 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void addUser(User user) {
 		try {
-			addUser.setInt(1, user.getId());
-			addUser.setString(2, user.getFirstname());
-			addUser.setString(3, user.getLastname());
-			addUser.setString(4, user.getDisplayName());
-			addUser.setString(5, user.getEmail());
-			addUser.setInt(6, user.getPhoneNumber());
-			addUser.setString(7, user.getPassword());
-			addUser.setInt(8, user.getRoleId());
-			addUser.setBoolean(9, user.isEmailVerified());
-			addUser.setBoolean(10, user.isPhoneVerified());
-			addUser.setTimestamp(11, user.getRegistrationTimestamp());
-			addUser.setTimestamp(12, user.getLastLoginTimestamp());
-			addUser.executeUpdate();
+			addUser.setString(1, user.getEmail());
+			addUser.setString(2, user.getDisplayName());
+			addUser.setString(3, user.getFirstName());
+			addUser.setString(4, user.getLastName());
+			addUser.setString(5, user.getPhoneNumber());
+			addUser.setString(6, user.getPassword());
+			addUser.setInt(7, user.getRoleId());
+			addUser.setBoolean(8, user.isEmailVerified());
+			addUser.setBoolean(9, user.isPhoneVerified());
+			addUser.setTimestamp(10, user.getRegistrationTimestamp());
+			addUser.setTimestamp(11, user.getLastLoginTimestamp());
+			addUser.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -103,6 +102,7 @@ public class UserDAOImpl implements UserDAO {
 
 	protected void finalize() {
 		try {
+			setLogin.close();
 			addUser.close();
 			isValidCredentials.close();
 			getEmailExists.close();
