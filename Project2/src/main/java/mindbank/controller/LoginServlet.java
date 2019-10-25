@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.User;
+import main.java.mindbank.util.Util;
 
 /**
  * Servlet implementation class LoginServlet
@@ -35,6 +36,16 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("email")) {
+					response.sendRedirect(request.getContextPath());
+					return;
+				}
+			}
+		}
+
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
@@ -53,33 +64,34 @@ public class LoginServlet extends HttpServlet {
 
 			Map<String, String> errors = new HashMap<String, String>();
 
-			if (!validLoginCredentials(email, password)) {
+			if (!userDAO.isValidCredentials(email, password)) {
 				errors.put("error", "Incorrect e-mail or password.");
 			}
 
 			System.out.println(errors.toString());
 
+			User user = new User();
+			user.setEmail(email);
+			user.setPassword(password);
+			user.setLastLoginTimestamp(Util.getGMTNowTime());
+
 			if (errors.isEmpty()) {
-				request.getSession().setAttribute("email", email);
-				User user = new User();
-				user.setEmail(email);
-				user.setPassword(password);
 				userDAO.setLogin(user);
+
+				request.getSession().setAttribute("email", email);
 				Cookie cookie = new Cookie("email", email);
 				cookie.setMaxAge(60 * 30); // 30 minutes
 				response.addCookie(cookie);
+
 				response.sendRedirect(request.getContextPath());
 			} else {
 				request.setAttribute("errors", errors);
+				request.setAttribute("user", user);
 				request.getRequestDispatcher("login.jsp").forward(request, response); // TODO: getServletContext()?
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private boolean validLoginCredentials(String email, String password) {
-		return true;
 	}
 
 }

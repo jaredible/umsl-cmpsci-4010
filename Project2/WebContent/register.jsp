@@ -1,4 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="main.java.mindbank.util.StringMap" %>
+<%
+	Map<String, String> errors = (StringMap) request.getAttribute("errors");
+	String firstNameError = null;
+	String lastNameError = null;
+	String emailError = null;
+	String passwordError = null;
+	String confirmError = null;
+	
+	if (errors != null) {
+		firstNameError = errors.get("firstName");
+		lastNameError = errors.get("lastName");
+		emailError = errors.get("email");
+		passwordError = errors.get("password");
+		confirmError = errors.get("confirm");
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,23 +31,35 @@
 	</head>
 	<body>
 		<div class="container">
-			<form class="d-fixed text-center p-5" action="register" method="post" novalidate>
+			<form class="d-fixed text-center p-1 needs-validation" action="register" method="post" novalidate>
 				<p class="h4 mb-3">Register</p>
 				
-				<div class="form-row mb-3">
-					<div class="col">
-						<input type="text" name="firstname" class="form-control" placeholder="First name" value="${user.firstname}">
+				<div class="form-row">
+					<div class="col-6 mb-3">
+						<input type="text" name="firstName" class="form-control <% if (firstNameError != null) { %>is-invalid<% } %>" placeholder="First name" value="${user.firstName}">
+						<% if (firstNameError != null) { %><div class="invalid-feedback"><%= firstNameError %></div><% } %>
 					</div>
-					<div class="col">
-						<input type="text" name="lastname" class="form-control" placeholder="Last name" value="${user.lastname}">
+					<div class="col-6 mb-3">
+						<input type="text" name="lastName" class="form-control <% if (lastNameError != null) { %>is-invalid<% } %>" placeholder="Last name" value="${user.lastName}">
+						<% if (lastNameError != null) { %><div class="invalid-feedback"><%= lastNameError %></div><% } %>
+					</div>
+					<div class="col-12 mb-3">
+						<input type="email" name="email" class="form-control <% if (emailError != null) { %>is-invalid<% } %>" placeholder="E-mail" value="${user.email}">
+						<% if (emailError != null) { %><div class="invalid-feedback"><%= emailError %></div><% } %>
+					</div>
+					<div class="col-12 mb-3">
+						<input type="password" name="password" class="form-control <% if (passwordError != null) { %>is-invalid<% } %>" placeholder="Password">
+						<% if (passwordError != null) { %><div class="invalid-feedback"><%= passwordError %></div><% } %>
+					</div>
+					<div class="col-12">
+						<input type="password" name="confirm" class="form-control <% if (confirmError != null) { %>is-invalid<% } %>" placeholder="Confirm password">
+						<% if (confirmError != null) { %>
+							<div class="invalid-feedback"><%= confirmError %></div>
+						<% } else { %>
+			    			<small class="form-text text-muted mb-2">At least 8 characters and 1 digit</small>
+			    		<% } %>
 					</div>
 				</div>
-				
-				<input type="email" name="email" class="form-control mb-3" placeholder="E-mail" value="${user.email}">
-				
-				<input type="password" name="password" class="form-control mb-3" placeholder="Password">
-				<input type="password" name="confirm" class="form-control" placeholder="Confirm password">
-			    <small class="form-text text-muted mb-4">At least 8 characters and 1 digit</small>
 			    
 			    <button class="btn btn-dark my-3 btn-block" type="submit">Register</button>
 			    

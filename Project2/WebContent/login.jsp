@@ -13,14 +13,19 @@
 	</head>
 	<body>
 		<div class="container">
-			<form class="text-center p-5" action="login" method="post">
+			<form class="text-center p-1" action="login" method="post">
 				<p class="h4 mb-4">Log in</p>
-
-				<input type="email" name="email" class="form-control mb-3" placeholder="E-mail">
 				
-				<input type="password" name="password" class="form-control mb-4" placeholder="Password">
-								
-				<div class="d-flex justify-content-between">
+				<div class="form-row">
+					<div class="col-12 mb-3">
+						<input type="email" name="email" class="form-control" placeholder="E-mail">
+					</div>
+					<div class="col-12 mb-3">
+						<input type="password" name="password" class="form-control" placeholder="Password">
+					</div>
+				</div>
+												
+				<div class="d-flex justify-content-between align-items-center">
         			<div>
             			<div class="custom-control custom-checkbox">
                 			<input type="checkbox" name="remember" class="custom-control-input">

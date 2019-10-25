@@ -14,7 +14,7 @@ html, body {
 }
 
 form {
-	min-width: 450px;
+	max-width: 400px;
 }
 
 input, select {
@@ -61,4 +61,16 @@ input, select {
 .btn-floating i {
 	font-size: 1.25rem;
 	line-height: 47px;
+}
+
+.btn-outline-grey {
+	border: 1px solid #616161 !important;
+}
+
+.btn-outline-info {
+	border: 1px solid #33b5e5 !important;
+}
+
+.btn-outline-red {
+	border: 1px solid #d32f2f !important;
 }

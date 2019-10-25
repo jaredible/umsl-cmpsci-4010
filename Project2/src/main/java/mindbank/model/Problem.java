@@ -5,31 +5,27 @@ import java.sql.Timestamp;
 public class Problem {
 
 	private int id;
+	private int subjectId;
 	private int categoryId;
 	private int createdByUserId;
 	private Timestamp createdTimestamp;
 	private int updatedByUserId;
 	private Timestamp updatedTimestamp;
-	private boolean canUpdate;
 	private String title;
-	private String question;
-	private String answer;
-	private int viewCount;
+	private String content;
 
 	public Problem() {
 	}
 
-	public Problem(int id, int categoryId, int createdByUserId, Timestamp createdTimestamp, int updatedByUserId, Timestamp updatedTimestamp, boolean canUpdate, String title, String question, String answer, int viewCount) {
+	public Problem(int id, int subjectId, int categoryId, int createdByUserId, Timestamp createdTimestamp, int updatedByUserId, Timestamp updatedTimestamp, String title, String content) {
 		this.id = id;
+		this.subjectId = subjectId;
 		this.categoryId = categoryId;
 		this.createdByUserId = createdByUserId;
 		this.createdTimestamp = createdTimestamp;
 		this.updatedByUserId = updatedByUserId;
 		this.updatedTimestamp = updatedTimestamp;
-		this.canUpdate = canUpdate;
-		this.question = question;
-		this.answer = answer;
-		this.viewCount = viewCount;
+		this.content = content;
 	}
 
 	public int getId() {
@@ -38,6 +34,14 @@ public class Problem {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(int subjectId) {
+		this.subjectId = subjectId;
 	}
 
 	public int getCategoryId() {
@@ -80,14 +84,6 @@ public class Problem {
 		this.updatedTimestamp = updatedTimestamp;
 	}
 
-	public boolean getCanUpdate() {
-		return canUpdate;
-	}
-
-	public void setCanUpdate(boolean canUpdate) {
-		this.canUpdate = canUpdate;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -96,28 +92,12 @@ public class Problem {
 		this.title = title;
 	}
 
-	public String getQuestion() {
-		return question;
+	public String getContent() {
+		return content;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-
-	public int getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(int viewCount) {
-		this.viewCount = viewCount;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }

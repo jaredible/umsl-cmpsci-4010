@@ -33,7 +33,7 @@ public class LogoutServlet extends HttpServlet {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie c : cookies) {
-				if (c.getName().equals("username")) {
+				if (c.getName().equals("email")) {
 					cookie = c;
 				}
 			}
@@ -54,7 +54,7 @@ public class LogoutServlet extends HttpServlet {
 		Cookie[] cookies = request.getCookies();
 		for (Cookie c : cookies) {
 			if (cookies != null) {
-				if (cookie.getName().equals("username")) {
+				if (cookie.getName().equals("email")) {
 					cookie = c;
 				}
 			}
@@ -63,7 +63,7 @@ public class LogoutServlet extends HttpServlet {
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		}
-		response.sendRedirect("");
+		response.sendRedirect(request.getContextPath());
 	}
 
 }
