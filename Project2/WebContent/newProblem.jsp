@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
-		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mindbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
@@ -32,7 +32,7 @@
 				<ul class="navbar-nav ml-auto">
 					<% if (email != null) { %>
 						<li class="nav-item">
-							<a class="nav-link" href="settings">Settings</a>
+							<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>
 						</li>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
@@ -55,13 +55,39 @@
 		</nav>
 		<main>
 			<div class="container-fluid">
-				<div class="my-1 py-1">
-					<input class="d-flex form-control col-xs-12 col-sm-6 col-lg-3 mx-auto mb-2" type="text" placeholder="Title">
+					<div class="row justify-content-center align-items-center mt-5 pt-3">
+						<div class="col-xs-12 col-sm-4 mb-2">
+							<input class="d-flex form-control" type="text" placeholder="Title">
+						</div>
+						<div class="col-xs-12 col-sm-4 mb-2">
+							<select class="browser-default custom-select">
+								<option selected>Select a subject</option>
+								<option>Computer Science</option>
+								<option>English</option>
+								<option>Mathematics</option>
+								<option>Physics</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-4 mb-2">
+							<select class="browser-default custom-select">
+								<option selected>Select a category</option>
+								<option>Algebra</option>
+								<option>Calculus</option>
+								<option>Combinatorics</option>
+								<option>Geometry</option>
+								<option>Logic</option>
+								<option>Number Theory</option>
+								<option>Trigonometry</option>
+							</select>
+						</div>
+					</div>
 					<div class="form-group test2">
 						<textarea id="editor" class="form-control rounded-1 my-1 py-1 test" rows="10"></textarea>
 					</div>
+					<div class="d-flex justify-content-center align-items-center">
+						<button type="button" class="btn btn-outline-grey waves-effect">Post</button>
+					</div>
 				</div>
-			</div>
 		</main>
 		<%@ include file="footer.jsp" %>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

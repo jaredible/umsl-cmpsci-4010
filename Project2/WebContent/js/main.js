@@ -13,3 +13,6 @@ function incrementCategoryPage(category, direction) {
 function gotoCategoryPage(category, pageIndex) {
 	document.location.href = "/?category=" + category + "&page=" + pageIndex;
 }
+
+$(function() {
+});

@@ -35,7 +35,7 @@
 							<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New </a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="settings">Settings</a>
+							<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>
 						</li>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
@@ -58,7 +58,7 @@
 		<main>
 			<div class="container">
 				<div class="row justify-content-center align-items-center mt-5 mb-4 pt-3 pb-4">
-					<div class="col-xs-12 col-lg-4 mb-2">
+					<div class="col-xs-12 col-sm-4 mb-2">
 						<select class="browser-default custom-select">
 							<option selected>Select a subject</option>
 							<option>Computer Science</option>
@@ -67,7 +67,7 @@
 							<option>Physics</option>
 						</select>
 					</div>
-					<div class="col-xs-12 col-lg-4 mb-2">
+					<div class="col-xs-12 col-sm-4 mb-2">
 						<select class="browser-default custom-select">
 							<option selected>Select a category</option>
 							<option>Algebra</option>
@@ -79,7 +79,7 @@
 							<option>Trigonometry</option>
 						</select>
 					</div>
-					<div class="col-xs-12 col-lg-4 mb-2">
+					<div class="col-xs-12 col-sm-4 mb-2">
 						<input class="form-control" type="text" placeholder="Search anything">
 					</div>
 					<div class="list-group test">
@@ -89,59 +89,25 @@
 						%>
 							<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test <% if (i == 0) { %>rounded-top<% } else if (i == length - 1) { %>rounded-bottom<% } %>">
 								<div class="d-flex w-100 justify-content-between align-items-center">
-									<h5 class="mb-1 p-2">
+									<h5 class="mb-1 pl-2">
 										Testing
 									</h5>
-									<div class="d-flex justify-content-between align-items-center">
+									<div class="d-flex justify-content-between align-items-center pr-2">
 										<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Edit</button>
 										<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Delete</button>
 									</div>
 								</div>
-								<p class="mb-1">
+								<p class="p-2 mb-1">
+									It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
 									$$ \sum_{i=0}^n $$
 									$$ \int_1^\infty $$
 									$$ \iint_1^\infty $$
 									
 									$$ \lim_{x \to 0} $$
-									
-									$$\begin{array}{c|lcr}
-									n & \text{Left} & \text{Center} & \text{Right} \\\\
-									\hline
-									1 & 1.97 & 5 & 12 \\\\
-									2 & -11 & 19 & -80 \\\\
-									3 & 70 & 209 & 1+i \\\\
-									\end{array}$$
-									
-									$$\left[
-									\begin{matrix}
-									V_A \\\\
-									V_B \\\\
-									V_C \\\\
-									\end{matrix}
-									\right] =
-									\left[
-									\begin{matrix}
-									1 & 0 & L \\\\
-									-cosψ & sinψ & L \\\\
-									-cosψ & -sinψ & L
-									\end{matrix}
-									\right]
-									\left[
-									\begin{matrix}
-									V_x \\\\
-									V_y \\\\
-									W \\\\
-									\end{matrix}
-									\right] $$
-									
-									$$\frac{\partial u}{\partial t}
-									= h^2 \left( \frac{\partial^2 u}{\partial x^2} +
-									\frac{\partial^2 u}{\partial y^2} +
-									\frac{\partial^2 u}{\partial z^2}\right)$$
+									It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
 								</p>
-								<div class="d-flex w-100 justify-content-between align-items-center">
-									<small class="mb-1">Donec id elit non mi porta.</small>
-									<small class="mb-1">3 days ago</small>
+								<div class="d-flex w-100 justify-content-center align-items-center">
+									<small class="mb-1 pl-2">Posted by Jaredible 3 days ago - <i>edited</i></small>
 								</div>
 							</div>
 						<% } %>
@@ -154,7 +120,7 @@
 								<li class="page-item"><a class="page-link">2</a></li>
 								<li class="page-item"><a class="page-link">3</a></li>
 								<li class="page-item">
-									<a class="page-link">Next&nbsp;&nbsp;&nbsp;&nbsp;</a>
+									<a class="page-link">&nbsp;&nbsp;Next&nbsp;&nbsp;</a>
 								</li>
 							</ul>
 						</nav>

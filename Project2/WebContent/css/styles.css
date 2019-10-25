@@ -22,8 +22,7 @@ input, select {
 }
 
 textarea {
-	width: 100%;
-	height: 100%;
+	/* height: calc(100vh - 350px) !important; */
 	resize: none;
 }
 
@@ -76,7 +75,7 @@ textarea {
 }
 
 .btn-outline-grey {
-	border: none !important;
+	border: none !important; /* border: 1px solid #ced4da !important; */
 	box-shadow: none !important;
 }
 

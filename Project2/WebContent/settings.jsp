@@ -34,9 +34,6 @@
 						<li class="nav-item dropdown">
 							<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New </a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="settings">Settings</a>
-						</li>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">

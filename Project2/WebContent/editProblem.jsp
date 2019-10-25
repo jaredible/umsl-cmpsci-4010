@@ -32,7 +32,7 @@
 				<ul class="navbar-nav ml-auto">
 					<% if (email != null) { %>
 						<li class="nav-item">
-							<a class="nav-link" href="settings">Settings</a>
+							<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>
 						</li>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
