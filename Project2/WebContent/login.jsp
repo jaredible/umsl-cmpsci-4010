@@ -1,4 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="main.java.mindbank.util.StringMap" %>
+<%
+	Map<String, String> errors = (StringMap) request.getAttribute("errors");
+	String error = null;
+	
+	if (errors != null) {
+		error = errors.get("error");
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,8 +23,10 @@
 	</head>
 	<body>
 		<div class="container">
-			<form class="text-center p-1" action="login" method="post">
+			<form class="text-center p-1" action="login" method="post" novalidate>
 				<p class="h4 mb-4">Log in</p>
+				
+				<% if (error != null) { %><div class="d-block invalid-feedback mb-3"><%= error %></div><% } %>
 				
 				<div class="form-row">
 					<div class="col-12 mb-3">

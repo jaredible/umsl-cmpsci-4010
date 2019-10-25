@@ -14,7 +14,7 @@ html, body {
 }
 
 form {
-	max-width: 400px;
+	max-width: 300px;
 }
 
 input, select {
@@ -65,12 +65,15 @@ input, select {
 
 .btn-outline-grey {
 	border: 1px solid #616161 !important;
+	box-shadow: none !important;
 }
 
 .btn-outline-info {
 	border: 1px solid #33b5e5 !important;
+	box-shadow: none !important;
 }
 
 .btn-outline-red {
 	border: 1px solid #d32f2f !important;
+	box-shadow: none !important;
 }

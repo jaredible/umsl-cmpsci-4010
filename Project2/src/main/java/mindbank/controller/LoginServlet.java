@@ -2,7 +2,6 @@ package main.java.mindbank.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -11,11 +10,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.User;
+import main.java.mindbank.util.StringMap;
 import main.java.mindbank.util.Util;
 
 /**
@@ -62,10 +61,10 @@ public class LoginServlet extends HttpServlet {
 		try {
 			UserDAO userDAO = new UserDAOImpl();
 
-			Map<String, String> errors = new HashMap<String, String>();
+			Map<String, String> errors = new StringMap();
 
 			if (!userDAO.isValidCredentials(email, password)) {
-				errors.put("error", "Incorrect e-mail or password.");
+				errors.put("error", "Incorrect e-mail or password!");
 			}
 
 			System.out.println(errors.toString());
