@@ -16,7 +16,7 @@
 			<form class="text-center p-5" action="login" method="post">
 				<p class="h4 mb-4">Log in</p>
 
-				<input type="email" name="email" class="form-control mb-2" placeholder="E-mail">
+				<input type="email" name="email" class="form-control mb-3" placeholder="E-mail">
 				
 				<input type="password" name="password" class="form-control mb-4" placeholder="Password">
 								

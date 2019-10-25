@@ -1,13 +1,9 @@
 @charset "UTF-8";
 
-html {
-	width: 100%;
+html, body {
 	height: 100%;
-}
-
-body {
-	width: 100%;
-	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 .container {
@@ -21,8 +17,12 @@ form {
 	min-width: 450px;
 }
 
-input {
+input, select {
 	background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.test {
+	background-color: rgba(0, 0, 0, 0) !important
 }
 
 .btn-floating {

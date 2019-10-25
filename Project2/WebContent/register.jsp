@@ -27,7 +27,7 @@
 				
 				<input type="email" name="email" class="form-control mb-3" placeholder="E-mail" value="${user.email}">
 				
-				<input type="password" name="password" class="form-control mb-2" placeholder="Password">
+				<input type="password" name="password" class="form-control mb-3" placeholder="Password">
 				<input type="password" name="confirm" class="form-control" placeholder="Confirm password">
 			    <small class="form-text text-muted mb-4">At least 8 characters and 1 digit</small>
 			    

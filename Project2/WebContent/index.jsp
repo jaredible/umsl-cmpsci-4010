@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
-		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mindbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
@@ -35,6 +35,7 @@
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="account">My account</a>
+								<a class="dropdown-item" href="settings">Settings</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>
@@ -50,7 +51,7 @@
 			</div>
 		</nav>
 		<main>
-			<div class="container mt-5 pt-3 mb-5 pb-3">
+			<div class="container mt-1 pt-1 mb-1 pb-1">
 				<div class="row justify-content-center align-items-center">
 					<div class="col-xs-12 col-lg-4 mb-2">
 						<select class="browser-default custom-select">
@@ -73,9 +74,20 @@
 							<option>Trigonometry</option>
 						</select>
 					</div>
-					<div class="list-group">
+					<div class="list-group test">
 						<% for (int i = 0; i < 30; i++) { %>
-							<a href="#" class="list-group-item list-group-item-action">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</a>
+							<a href="#" class="list-group-item list-group-item-action flex-column align-items-start test">
+								<div class="d-flex w-100 justify-content-between align-items-center">
+									<h5 class="mb-1">List group item heading</h5>
+									<div>
+										<small class="mb-1">3 days ago</small>
+											<button type="button" class="btn btn-sm btn-outline-dark waves-effect">Edit</button>
+											<button type="button" class="btn btn-sm btn-outline-dark waves-effect">Delete</button>
+									</div>
+								</div>
+								<p class="mb-1">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+								<small class="mb-1">Donec id elit non mi porta.</small>
+							</a>
 						<% } %>
 					</div>
 				</div>
