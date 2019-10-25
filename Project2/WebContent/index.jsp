@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
-		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mindbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
@@ -32,10 +32,15 @@
 				<ul class="navbar-nav ml-auto">
 					<% if (email != null) { %>
 						<li class="nav-item dropdown">
+							<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New </a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="settings">Settings</a>
+						</li>
+						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="account">My account</a>
-								<a class="dropdown-item" href="settings">Settings</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>
@@ -51,8 +56,8 @@
 			</div>
 		</nav>
 		<main>
-			<div class="container mt-1 pt-1 mb-1 pb-1">
-				<div class="row justify-content-center align-items-center">
+			<div class="container">
+				<div class="row justify-content-center align-items-center my-5 py-3">
 					<div class="col-xs-12 col-lg-4 mb-2">
 						<select class="browser-default custom-select">
 							<option selected>Select a subject</option>
@@ -74,11 +79,18 @@
 							<option>Trigonometry</option>
 						</select>
 					</div>
+					<div class="col-xs-12 col-lg-4 mb-2">
+						<input class="form-control" type="text" placeholder="Search anything">
+					</div>
 					<div class="list-group test">
-						<% for (int i = 0; i < 30; i++) { %>
-							<a href="#" class="list-group-item list-group-item-action flex-column align-items-start test">
+						<% for (int i = 0; i < 6; i++) { %>
+							<div class="list-group-item list-group-item-action flex-column align-items-start test">
 								<div class="d-flex w-100 justify-content-between align-items-center">
-									<h5 class="mb-1">List group item heading</h5>
+									<h5 class="mb-1">
+										\begin{equation*}
+										E = mc^2
+										\end{equation*}
+									</h5>
 									<div>
 										<small class="mb-1">3 days ago</small>
 											<button type="button" class="btn btn-sm btn-outline-grey waves-effect">Edit</button>
@@ -87,7 +99,7 @@
 								</div>
 								<p class="mb-1">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
 								<small class="mb-1">Donec id elit non mi porta.</small>
-							</a>
+							</div>
 						<% } %>
 					</div>
 				</div>
@@ -98,6 +110,7 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
 		<script type="text/javascript" color="0,0,0" opacity='0.7' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<script src="js/main.js"></script>
 	</body>
 </html>

@@ -16,7 +16,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Account</title>
+		<title>New</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
@@ -31,9 +31,6 @@
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
 					<% if (email != null) { %>
-						<li class="nav-item dropdown">
-							<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New </a>
-						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="settings">Settings</a>
 						</li>
@@ -41,6 +38,7 @@
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href=${pageContext.request.contextPath}>Home</a>
+								<a class="dropdown-item" href="account">My account</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>

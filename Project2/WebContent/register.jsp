@@ -18,7 +18,7 @@
 	}
 %>
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,7 +29,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
-	<body>
+	<body class="h-100">
 		<div class="container">
 			<form class="d-fixed text-center p-1 needs-validation" action="register" method="post" novalidate>
 				<p class="h4 mb-3">Register</p>

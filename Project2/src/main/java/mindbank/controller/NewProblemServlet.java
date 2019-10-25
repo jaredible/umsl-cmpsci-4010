@@ -8,24 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AdminServlet
+ * Servlet implementation class NewProblemServlet
  */
-@WebServlet("/admin")
-public class AdminServlet extends HttpServlet {
+@WebServlet("/newProblem")
+public class NewProblemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AdminServlet() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public NewProblemServlet() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("admin.jsp").forward(request, response);
+		request.getRequestDispatcher("newProblem.jsp").forward(request, response);
 	}
 
 	/**
