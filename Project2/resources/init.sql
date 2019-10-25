@@ -11,9 +11,3 @@ CREATE TABLE IF NOT EXISTS user (
 	password VARCHAR (20) NOT NULL,
 	PRIMARY KEY (id, email, username)
 );
-
-CREATE TABLE IF NOT EXISTS role (
-	id INT NOT NULL,
-	name VARCHAR (20) NOT NULL,
-	description VARCHAR (20)
-);

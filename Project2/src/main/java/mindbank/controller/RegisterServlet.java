@@ -15,13 +15,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Role;
 import main.java.mindbank.model.User;
-import main.java.mindbank.util.DbConn;
 
 /**
  * Servlet implementation class RegisterServlet

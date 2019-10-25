@@ -22,13 +22,36 @@ public class DbConn {
 	private static String password;
 	private static boolean propsLoaded = false;
 	private static boolean initialized = false;
+	private static DbConn instance;
 
-	private static void loadProps() {
+	public static DbConn getInstance() {
+		if (instance == null) {
+			instance = new DbConn();
+		}
+
+		return instance;
+	}
+
+	private void loadProps() {
+		boolean test = true;
+		if (test) { // TODO
+			driver = "com.mysql.jdbc.Driver";
+			url = "jdbc:mysql://192.168.64.3:3306/";
+			name = "mindbank";
+			user = "admin";
+			password = "";
+			propsLoaded = true;
+			return;
+		}
+
 		try {
-			InputStream is = DbConn.class.getClassLoader().getResourceAsStream("db.properties");
+			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties");
 			Properties prop = new Properties();
 
+			System.out.println("" + (is == null));
+
 			prop.load(is);
+			is.close();
 
 			driver = prop.getProperty("db.driver");
 			url = prop.getProperty("db.url");
@@ -42,7 +65,7 @@ public class DbConn {
 		}
 	}
 
-	public static Connection openConn() {
+	public Connection openConn() {
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -50,9 +73,9 @@ public class DbConn {
 		Connection conn = null;
 
 		try {
-			initDb();
 			Class.forName(driver).newInstance();
-			conn = DriverManager.getConnection(url + name, user, password);
+			initDb();
+			conn = DriverManager.getConnection(getDbUrl(), user, password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,36 +83,7 @@ public class DbConn {
 		return conn;
 	}
 
-	public static void closeConn(Connection conn, Statement stmt, ResultSet rs) {
-		try {
-			if (conn != null) {
-				conn.close();
-				conn = null;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			if (stmt != null) {
-				stmt.close();
-				stmt = null;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			if (rs != null) {
-				rs.close();
-				rs = null;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private static void initDb() throws SQLException {
+	public void initDb() throws SQLException {
 		if (initialized) {
 			return;
 		}
@@ -102,6 +96,8 @@ public class DbConn {
 		Statement stmt = null;
 
 		try {
+			System.out.println(url);
+			System.out.println(user);
 			conn = DriverManager.getConnection(url, user, password);
 			if (conn != null) {
 				stmt = conn.createStatement();
@@ -121,7 +117,7 @@ public class DbConn {
 			if (conn != null) {
 				stmt = conn.createStatement();
 				if (stmt != null) {
-					File f = new File(DbConn.class.getClassLoader().getResource("init.sql").getFile());
+					File f = new File(Thread.currentThread().getContextClassLoader().getResource("init.sql").getFile());
 					if (f != null) {
 						FileReader fr = new FileReader(f);
 						if (fr != null) {
@@ -134,7 +130,9 @@ public class DbConn {
 								}
 								stmt.execute(result);
 							}
+							br.close();
 						}
+						fr.close();
 					}
 				}
 			}
@@ -152,7 +150,7 @@ public class DbConn {
 		initialized = true;
 	}
 
-	private static boolean getDbExists() throws SQLException {
+	public boolean getDbExists() throws SQLException {
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -179,7 +177,7 @@ public class DbConn {
 		return false;
 	}
 
-	public static String getDbUrl() {
+	public String getDbUrl() {
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -189,8 +187,10 @@ public class DbConn {
 
 	public static void main(String[] args) {
 		try {
-			initDb();
-			System.out.println("" + getDbExists());
+			DbConn db = getInstance();
+			Connection conn = db.openConn();
+			db.initDb();
+			System.out.println("" + db.getDbExists());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

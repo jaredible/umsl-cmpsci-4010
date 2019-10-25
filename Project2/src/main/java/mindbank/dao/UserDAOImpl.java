@@ -17,7 +17,7 @@ public class UserDAOImpl implements UserDAO {
 	private PreparedStatement setLogin;
 
 	public UserDAOImpl() throws SQLException {
-		conn = DbConn.openConn();
+		conn = DbConn.getInstance().openConn();
 		getEmailExists = conn.prepareStatement("SELECT * FROM user WHERE email = ?");
 		isValidCredentials = conn.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?");
 		addUser = conn.prepareStatement("INSERT INTO user VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

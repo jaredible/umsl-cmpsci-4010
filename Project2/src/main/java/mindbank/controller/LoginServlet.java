@@ -23,8 +23,6 @@ import main.java.mindbank.model.User;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private UserDAO userDAO = new UserDAOImpl();
-
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -61,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 			String username = "Jaredible";
 			HttpSession session = request.getSession();
 			session.setAttribute("user", username);
-			userDAO.login(username, password);
+			//userDAO.login(username, password);
 			Cookie cookie = new Cookie("username", username);
 			cookie.setMaxAge(60 * 30); // 30 minutes
 			response.addCookie(cookie);
