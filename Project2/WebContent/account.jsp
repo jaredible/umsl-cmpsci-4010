@@ -49,8 +49,15 @@
 				</ul>
 			</div>
 		</nav>
-		<div class="container">
-		</div>
+		<main>
+			<div class="container">
+				<div class="card" style="width: 18rem;">
+					<div class="card-body">
+						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+					</div>
+				</div>
+			</div>
+		</main>
 		<%@ include file="footer.jsp" %>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>

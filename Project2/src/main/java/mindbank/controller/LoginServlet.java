@@ -1,6 +1,7 @@
 package main.java.mindbank.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ import main.java.mindbank.model.User;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -46,30 +47,37 @@ public class LoginServlet extends HttpServlet {
 
 		System.out.println("email: " + email);
 		System.out.println("password: " + password);
-		
-		Map<String, String> errors = new HashMap<String, String>();
-		
-		if (!validLoginCredentials(email, password)) {
-			errors.put("error", "Incorrect e-mail or password.");
-		}
-		
-		System.out.println(errors.toString());
-		
-		if (errors.isEmpty()) {
-			String username = "Jaredible";
-			HttpSession session = request.getSession();
-			session.setAttribute("user", username);
-			//userDAO.login(username, password);
-			Cookie cookie = new Cookie("username", username);
-			cookie.setMaxAge(60 * 30); // 30 minutes
-			response.addCookie(cookie);
-			response.sendRedirect(request.getContextPath());
-		} else {
-			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("login.jsp").forward(request, response); // TODO: getServletContext()?
+
+		try {
+			UserDAO userDAO = new UserDAOImpl();
+
+			Map<String, String> errors = new HashMap<String, String>();
+
+			if (!validLoginCredentials(email, password)) {
+				errors.put("error", "Incorrect e-mail or password.");
+			}
+
+			System.out.println(errors.toString());
+
+			if (errors.isEmpty()) {
+				request.getSession().setAttribute("email", email);
+				User user = new User();
+				user.setEmail(email);
+				user.setPassword(password);
+				userDAO.setLogin(user);
+				Cookie cookie = new Cookie("email", email);
+				cookie.setMaxAge(60 * 30); // 30 minutes
+				response.addCookie(cookie);
+				response.sendRedirect(request.getContextPath());
+			} else {
+				request.setAttribute("errors", errors);
+				request.getRequestDispatcher("login.jsp").forward(request, response); // TODO: getServletContext()?
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
-	
+
 	private boolean validLoginCredentials(String email, String password) {
 		return true;
 	}

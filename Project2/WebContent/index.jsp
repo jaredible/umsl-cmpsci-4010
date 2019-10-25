@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
-		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mindbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
@@ -49,49 +49,38 @@
 				</ul>
 			</div>
 		</nav>
-		<div class="container">
-			<div class="row justify-content-center align-items-center">
-				<div class="col-xs-12 col-lg-4 mb-2">
-					<select class="browser-default custom-select">
-						<option selected>Select a subject</option>
-						<option>Computer Science</option>
-						<option>English</option>
-						<option>Mathematics</option>
-						<option>Physics</option>
-					</select>
-				</div>
-				<div class="col-xs-12 col-lg-4 mb-2">
-					<select class="browser-default custom-select">
-						<option selected>Select a category</option>
-						<option>Algebra</option>
-						<option>Calculus</option>
-						<option>Combinatorics</option>
-						<option>Geometry</option>
-						<option>Logic</option>
-						<option>Number Theory</option>
-						<option>Trigonometry</option>
-					</select>
-				</div>
-				<div class="col-xs-6 col-lg-2 mb-2">
-					<button type="button" class="btn btn-dark">Go</button>
-				</div>
-				<div class="col-xs-6 col-lg-2 mb-2">
-					<button type="button" class="btn btn-dark">New Problem</button>
-				</div>
-				<% for (int i = 0; i < 3; i++) { %>
-					<div class="col-lg-3"></div>
-					<div class="col-lg-6">
-						<div class="card m-1">
-							<div class="card-body">
-								<h5 class="card-title">Panel title</h5>
-								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-							</div>
-						</div>
+		<main>
+			<div class="container mt-5 pt-3 mb-5 pb-3">
+				<div class="row justify-content-center align-items-center">
+					<div class="col-xs-12 col-lg-4 mb-2">
+						<select class="browser-default custom-select">
+							<option selected>Select a subject</option>
+							<option>Computer Science</option>
+							<option>English</option>
+							<option>Mathematics</option>
+							<option>Physics</option>
+						</select>
 					</div>
-					<div class="col-lg-3"></div>
-				<% } %>
+					<div class="col-xs-12 col-lg-4 mb-2">
+						<select class="browser-default custom-select">
+							<option selected>Select a category</option>
+							<option>Algebra</option>
+							<option>Calculus</option>
+							<option>Combinatorics</option>
+							<option>Geometry</option>
+							<option>Logic</option>
+							<option>Number Theory</option>
+							<option>Trigonometry</option>
+						</select>
+					</div>
+					<div class="list-group">
+						<% for (int i = 0; i < 30; i++) { %>
+							<a href="#" class="list-group-item list-group-item-action">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</a>
+						<% } %>
+					</div>
+				</div>
 			</div>
-		</div>
+		</main>
 		<%@ include file="footer.jsp" %>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
