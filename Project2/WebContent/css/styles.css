@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 html, body {
+	min-height: 100vh;
 	margin: 0;
 	padding: 0;
 }
@@ -20,8 +21,20 @@ input, select {
 	background-color: rgba(0, 0, 0, 0) !important;
 }
 
+textarea {
+	width: 100%;
+	height: 100%;
+	resize: none;
+}
+
 .test {
 	background-color: rgba(0, 0, 0, 0) !important
+}
+
+.test2 {
+	
+	width: 100%;
+	height: 100%;
 }
 
 .btn-floating {
@@ -63,7 +76,7 @@ input, select {
 }
 
 .btn-outline-grey {
-	border: 1px solid #616161 !important;
+	border: none !important;
 	box-shadow: none !important;
 }
 

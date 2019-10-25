@@ -57,7 +57,7 @@
 		</nav>
 		<main>
 			<div class="container">
-				<div class="row justify-content-center align-items-center my-5 py-3">
+				<div class="row justify-content-center align-items-center mt-5 mb-4 pt-3 pb-4">
 					<div class="col-xs-12 col-lg-4 mb-2">
 						<select class="browser-default custom-select">
 							<option selected>Select a subject</option>
@@ -83,24 +83,81 @@
 						<input class="form-control" type="text" placeholder="Search anything">
 					</div>
 					<div class="list-group test">
-						<% for (int i = 0; i < 6; i++) { %>
-							<div class="list-group-item list-group-item-action flex-column align-items-start test">
+						<%
+							int length = 6;
+							for (int i = 0; i < length; i++) {
+						%>
+							<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test <% if (i == 0) { %>rounded-top<% } else if (i == length - 1) { %>rounded-bottom<% } %>">
 								<div class="d-flex w-100 justify-content-between align-items-center">
-									<h5 class="mb-1">
-										\begin{equation*}
-										E = mc^2
-										\end{equation*}
+									<h5 class="mb-1 p-2">
+										Testing
 									</h5>
-									<div>
-										<small class="mb-1">3 days ago</small>
-											<button type="button" class="btn btn-sm btn-outline-grey waves-effect">Edit</button>
-											<button type="button" class="btn btn-sm btn-outline-grey waves-effect">Delete</button>
+									<div class="d-flex justify-content-between align-items-center">
+										<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Edit</button>
+										<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Delete</button>
 									</div>
 								</div>
-								<p class="mb-1">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
-								<small class="mb-1">Donec id elit non mi porta.</small>
+								<p class="mb-1">
+									$$ \sum_{i=0}^n $$
+									$$ \int_1^\infty $$
+									$$ \iint_1^\infty $$
+									
+									$$ \lim_{x \to 0} $$
+									
+									$$\begin{array}{c|lcr}
+									n & \text{Left} & \text{Center} & \text{Right} \\\\
+									\hline
+									1 & 1.97 & 5 & 12 \\\\
+									2 & -11 & 19 & -80 \\\\
+									3 & 70 & 209 & 1+i \\\\
+									\end{array}$$
+									
+									$$\left[
+									\begin{matrix}
+									V_A \\\\
+									V_B \\\\
+									V_C \\\\
+									\end{matrix}
+									\right] =
+									\left[
+									\begin{matrix}
+									1 & 0 & L \\\\
+									-cosψ & sinψ & L \\\\
+									-cosψ & -sinψ & L
+									\end{matrix}
+									\right]
+									\left[
+									\begin{matrix}
+									V_x \\\\
+									V_y \\\\
+									W \\\\
+									\end{matrix}
+									\right] $$
+									
+									$$\frac{\partial u}{\partial t}
+									= h^2 \left( \frac{\partial^2 u}{\partial x^2} +
+									\frac{\partial^2 u}{\partial y^2} +
+									\frac{\partial^2 u}{\partial z^2}\right)$$
+								</p>
+								<div class="d-flex w-100 justify-content-between align-items-center">
+									<small class="mb-1">Donec id elit non mi porta.</small>
+									<small class="mb-1">3 days ago</small>
+								</div>
 							</div>
 						<% } %>
+						<nav class="my-3 p-1">
+							<ul class="pagination pg-blue justify-content-center align-items-center mb-0 p-0">
+								<li class="page-item">
+									<a class="page-link" tabindex="-1">Previous</a>
+								</li>
+								<li class="page-item"><a class="page-link">1</a></li>
+								<li class="page-item"><a class="page-link">2</a></li>
+								<li class="page-item"><a class="page-link">3</a></li>
+								<li class="page-item">
+									<a class="page-link">Next&nbsp;&nbsp;&nbsp;&nbsp;</a>
+								</li>
+							</ul>
+						</nav>
 					</div>
 				</div>
 			</div>

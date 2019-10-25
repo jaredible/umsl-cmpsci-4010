@@ -54,10 +54,11 @@
 			</div>
 		</nav>
 		<main>
-			<div class="container">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+			<div class="container-fluid">
+				<div class="my-1 py-1">
+					<input class="d-flex form-control col-xs-12 col-sm-6 col-lg-3 mx-auto mb-2" type="text" placeholder="Title">
+					<div class="form-group test2">
+						<textarea id="editor" class="form-control rounded-1 my-1 py-1 test" rows="10"></textarea>
 					</div>
 				</div>
 			</div>
