@@ -16,7 +16,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Admin</title>
+		<title>Settings</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
@@ -34,9 +34,8 @@
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
-								<a class="dropdown-item" href=${pageContext.request.contextPath}>Home</a>
-								<a class="dropdown-item" href="settings">My account</a>
-								<a class="dropdown-item" href="settings">Settings</a>
+								<a class="dropdown-item" href="settings">Home</a>
+								<a class="dropdown-item" href=${pageContext.request.contextPath}>My account</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>
