@@ -2,10 +2,10 @@ package main.java.mindbank.util;
 
 public enum EnumRole {
 
-	DEFAULT(0, "default", ""),
-	USER(1, "user", ""),
-	MODERATOR(2, "moderator", ""),
-	ADMIN(3, "admin", "");
+	DEFAULT(0, "DEFAULT", ""),
+	USER(1, "USER", ""),
+	MOD(2, "MOD", ""),
+	ADMIN(3, "ADMIN", "");
 
 	private int id;
 	private String name;

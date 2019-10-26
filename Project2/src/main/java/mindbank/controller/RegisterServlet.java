@@ -92,7 +92,7 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println(errors.toString());
 
 			Timestamp timestamp = Util.getGMTNowTime();
-			User user = new User(-1, firstName, lastName, "", email, "", password, EnumRole.USER.getId(), false, false, timestamp, timestamp);
+			User user = new User(-1, EnumRole.USER.getId(), firstName, lastName, "", email, "", password, false, false, timestamp, timestamp);
 
 			if (errors.isEmpty()) {
 				userDAO.addUser(user);

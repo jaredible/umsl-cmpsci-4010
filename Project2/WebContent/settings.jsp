@@ -37,7 +37,7 @@
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
-								<a class="dropdown-item" href=${pageContext.request.contextPath}>Home</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
 								<a class="dropdown-item" href="account">My account</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>

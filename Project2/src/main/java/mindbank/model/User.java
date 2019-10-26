@@ -5,34 +5,34 @@ import java.sql.Timestamp;
 public class User {
 
 	private int id;
+	private int roleId;
 	private String firstName;
 	private String lastName;
 	private String displayName;
 	private String email;
 	private String phoneNumber;
 	private String password;
-	private int roleId;
 	private boolean emailVerified;
 	private boolean phoneVerified;
 	private Timestamp registrationTimestamp;
-	private Timestamp lastLoginTimestamp;
+	private Timestamp loginTimestamp;
 
 	public User() {
 	}
 
-	public User(int id, String firstName, String lastName, String displayName, String email, String phoneNumber, String password, int roleId, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp lastLoginTimestamp) {
+	public User(int id, int roleId, String firstName, String lastName, String displayName, String email, String phoneNumber, String password, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp loginTimestamp) {
 		this.id = id;
+		this.roleId = roleId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.displayName = displayName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.password = password;
-		this.roleId = roleId;
 		this.emailVerified = emailVerified;
 		this.phoneVerified = phoneVerified;
 		this.registrationTimestamp = registrationTimestamp;
-		this.lastLoginTimestamp = lastLoginTimestamp;
+		this.loginTimestamp = loginTimestamp;
 	}
 
 	public int getId() {
@@ -41,6 +41,14 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getFirstName() {
@@ -91,14 +99,6 @@ public class User {
 		this.password = password;
 	}
 
-	public int getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
-
 	public boolean isEmailVerified() {
 		return emailVerified;
 	}
@@ -123,12 +123,12 @@ public class User {
 		this.registrationTimestamp = registrationTimestamp;
 	}
 
-	public Timestamp getLastLoginTimestamp() {
-		return lastLoginTimestamp;
+	public Timestamp getLoginTimestamp() {
+		return loginTimestamp;
 	}
 
-	public void setLastLoginTimestamp(Timestamp lastLoginTimestamp) {
-		this.lastLoginTimestamp = lastLoginTimestamp;
+	public void setLoginTimestamp(Timestamp loginTimestamp) {
+		this.loginTimestamp = loginTimestamp;
 	}
 
 }

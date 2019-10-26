@@ -31,13 +31,16 @@
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
 					<% if (email != null) { %>
+						<li class="nav-item dropdown">
+							<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New </a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>
 						</li>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
-								<a class="dropdown-item" href=${pageContext.request.contextPath}>Home</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
 								<a class="dropdown-item" href="account">My account</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
@@ -54,46 +57,49 @@
 			</div>
 		</nav>
 		<main>
-			<div class="container-fluid">
-					<div class="row justify-content-center align-items-center mt-5 pt-3">
-						<div class="col-xs-12 col-sm-4 mb-2">
-							<input class="d-flex form-control" type="text" placeholder="Title">
-						</div>
-						<div class="col-xs-12 col-sm-4 mb-2">
-							<select class="browser-default custom-select">
-								<option selected>Select a subject</option>
-								<option>Computer Science</option>
-								<option>English</option>
-								<option>Mathematics</option>
-								<option>Physics</option>
-							</select>
-						</div>
-						<div class="col-xs-12 col-sm-4 mb-2">
-							<select class="browser-default custom-select">
-								<option selected>Select a category</option>
-								<option>Algebra</option>
-								<option>Calculus</option>
-								<option>Combinatorics</option>
-								<option>Geometry</option>
-								<option>Logic</option>
-								<option>Number Theory</option>
-								<option>Trigonometry</option>
-							</select>
-						</div>
+			<div class="container">
+				<div class="row justify-content-center align-items-center mt-5 mb-4 pt-3 pb-4">
+					<div class="col-xs-12 col-sm-4 mb-2">
+						<input class="form-control" type="text" placeholder="Title">
 					</div>
-					<div class="form-group test2">
-						<textarea id="editor" class="form-control rounded-1 my-1 py-1 test" rows="10"></textarea>
+					<div class="col-xs-12 col-sm-4 mb-2">
+						<select class="browser-default custom-select">
+							<option selected>Select a subject</option>
+							<option>Computer Science</option>
+							<option>English</option>
+							<option>Mathematics</option>
+							<option>Physics</option>
+						</select>
 					</div>
-					<div class="d-flex justify-content-center align-items-center">
-						<button type="button" class="btn btn-outline-grey waves-effect">Post</button>
+					<div class="col-xs-12 col-sm-4 mb-2">
+						<select class="browser-default custom-select">
+							<option selected>Select a category</option>
+							<option>Algebra</option>
+							<option>Calculus</option>
+							<option>Combinatorics</option>
+							<option>Geometry</option>
+							<option>Logic</option>
+							<option>Number Theory</option>
+							<option>Trigonometry</option>
+						</select>
+					</div>
+					<div class="list-group test">
+						<div class="form-group test2">
+							<textarea id="editor" class="form-control rounded-1 my-1 py-1 test" rows="10"></textarea>
+						</div>
+						<div class="d-flex justify-content-center align-items-center">
+							<button type="button" class="btn btn-outline-grey waves-effect">Post</button>
+						</div>
 					</div>
 				</div>
+			</div>
 		</main>
 		<%@ include file="footer.jsp" %>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
 		<script type="text/javascript" color="0,0,0" opacity='0.7' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<script src="js/main.js"></script>
 	</body>
 </html>
