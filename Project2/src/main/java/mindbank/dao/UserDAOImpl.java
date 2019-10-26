@@ -11,7 +11,7 @@ import main.java.mindbank.util.DbConn;
 
 public class UserDAOImpl implements UserDAO {
 
-	private Connection conn;
+	private Connection connection;
 	private PreparedStatement getEmailExists;
 	private PreparedStatement isValidCredentials;
 	private PreparedStatement setLogin;
@@ -21,14 +21,25 @@ public class UserDAOImpl implements UserDAO {
 	private PreparedStatement deleteUserById;
 
 	public UserDAOImpl() throws SQLException {
-		conn = DbConn.openConn();
-		getEmailExists = conn.prepareStatement("SELECT * FROM User WHERE Email = ?;");
-		isValidCredentials = conn.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
-		setLogin = conn.prepareStatement("UPDATE User SET LoginTimestamp = ? WHERE ID = ?;");
-		addUser = conn.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-		getUserById = conn.prepareStatement("SELECT * FROM User WHERE ID = ?;");
-		getUserByEmail = conn.prepareStatement("SELECT * FROM User WHERE Email = ?;");
-		deleteUserById = conn.prepareStatement("DELETE FROM User WHERE ID = ?;");
+		connection = DbConn.openConn();
+		getEmailExists = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
+		isValidCredentials = connection.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
+		setLogin = connection.prepareStatement("UPDATE User SET LoginTimestamp = ? WHERE ID = ?;");
+		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		getUserById = connection.prepareStatement("SELECT * FROM User WHERE ID = ?;");
+		getUserByEmail = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
+		deleteUserById = connection.prepareStatement("DELETE FROM User WHERE ID = ?;");
+	}
+
+	public UserDAOImpl(Connection connection) throws SQLException {
+		this.connection = connection;
+		getEmailExists = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
+		isValidCredentials = connection.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
+		setLogin = connection.prepareStatement("UPDATE User SET LoginTimestamp = ? WHERE ID = ?;");
+		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		getUserById = connection.prepareStatement("SELECT * FROM User WHERE ID = ?;");
+		getUserByEmail = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
+		deleteUserById = connection.prepareStatement("DELETE FROM User WHERE ID = ?;");
 	}
 
 	@Override
@@ -160,6 +171,10 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
+	public Connection getConnection() {
+		return connection;
+	}
+
 	protected void finalize() {
 		try {
 			deleteUserById.close();
@@ -169,10 +184,13 @@ public class UserDAOImpl implements UserDAO {
 			addUser.close();
 			isValidCredentials.close();
 			getEmailExists.close();
-			conn.close();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void main(String[] args) {
 	}
 
 }

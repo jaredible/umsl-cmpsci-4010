@@ -1,5 +1,7 @@
 package main.java.mindbank.dao;
 
+import java.sql.Connection;
+
 import main.java.mindbank.model.User;
 
 public interface UserDAO {
@@ -17,5 +19,7 @@ public interface UserDAO {
 	public User getUser(String s);
 
 	public void deleteUser(int i);
+
+	public Connection getConnection();
 
 }

@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="main.java.mindbank.model.User" %>
+<%@ page import="main.java.mindbank.model.Subject" %>
+<%@ page import="main.java.mindbank.util.SubjectList" %>
+<%@ page import="main.java.mindbank.model.Category" %>
+<%@ page import="main.java.mindbank.util.CategoryList" %>
 <%@ page import="main.java.mindbank.model.Problem" %>
 <%@ page import="main.java.mindbank.util.ProblemList" %>
 <%
@@ -15,6 +19,8 @@
 	}
 	
 	User user = (User) request.getAttribute("user");
+	List<Subject> subjects = (SubjectList) request.getAttribute("subjects");
+	List<Category> categories = (CategoryList) request.getAttribute("categories");
 	List<Problem> problems = (ProblemList) request.getAttribute("problems");
 %>
 <!DOCTYPE html>
@@ -99,7 +105,7 @@
 						%>
 						<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test <% if (i == 0) { %>rounded-top<% } else if (i == length - 1) { %>rounded-bottom<% } %>">
 							<div class="d-flex w-100 justify-content-between align-items-center">
-								<h5 class="mb-1 pl-2">${p.title}</h5>
+								<h5 class="mb-1 pl-2"><%= p.getTitle() == null ? "" : p.getTitle() %></h5>
 								<% if (p.getCreatedByUserId() == user.getId()) { %>
 								<div class="d-flex justify-content-between align-items-center pr-2">
 									<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Edit</button>
@@ -107,7 +113,7 @@
 								</div>
 								<% } %>
 							</div>
-							<p class="pl-2 pr-2 mb-1">${p.content}</p>
+							<p class="pl-2 pr-2 mb-1"><%= p.getContent() == null ? "" : p.getContent() %></p>
 							<div class="d-flex w-100 justify-content-center align-items-center">
 								<small class="mb-1 pl-2"><%= footer %><% if (p.isEdited()) { %> - <i>edited</i><% } %></small>
 							</div>

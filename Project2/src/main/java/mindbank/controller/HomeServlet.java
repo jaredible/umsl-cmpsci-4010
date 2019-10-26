@@ -11,11 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.mindbank.dao.CategoryDAO;
+import main.java.mindbank.dao.CategoryDAOImpl;
 import main.java.mindbank.dao.ProblemDAO;
 import main.java.mindbank.dao.ProblemDAOImpl;
+import main.java.mindbank.dao.SubjectDAO;
+import main.java.mindbank.dao.SubjectDAOImpl;
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
+import main.java.mindbank.model.Category;
 import main.java.mindbank.model.Problem;
+import main.java.mindbank.model.Subject;
 import main.java.mindbank.model.User;
 
 /**
@@ -45,13 +51,21 @@ public class HomeServlet extends HttpServlet {
 				}
 			}
 		}
-		
+
 		try {
 			UserDAO userDAO = new UserDAOImpl();
-			ProblemDAO problemDAO = new ProblemDAOImpl();
+			SubjectDAO subjectDAO = new SubjectDAOImpl(userDAO.getConnection());
+			CategoryDAO categoryDAO = new CategoryDAOImpl(subjectDAO.getConnection());
+			ProblemDAO problemDAO = new ProblemDAOImpl(categoryDAO.getConnection());
+
 			User user = userDAO.getUser(email);
+			List<Subject> subjects = subjectDAO.getSubjects();
+			List<Category> categories = categoryDAO.getCategories();
 			List<Problem> problems = problemDAO.getList();
+
 			request.setAttribute("user", user);
+			request.setAttribute("subjects", subjects);
+			request.setAttribute("categories", categories);
 			request.setAttribute("problems", problems);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		} catch (SQLException e) {

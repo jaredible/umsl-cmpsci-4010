@@ -1,15 +1,13 @@
 package main.java.mindbank.dao;
 
-import java.util.List;
+import java.sql.Connection;
 
 import main.java.mindbank.model.Category;
-import main.java.mindbank.model.Subject;
+import main.java.mindbank.util.CategoryList;
 
 public interface CategoryDAO {
 
-	public List<Category> getList();
-
-	public List<Category> getList(Subject s);
+	public CategoryList getCategories();
 
 	public void addCategory(Category c);
 
@@ -18,5 +16,7 @@ public interface CategoryDAO {
 	public void updateCategory(Category c);
 
 	public void deleteCategory(int i);
+
+	public Connection getConnection();
 
 }

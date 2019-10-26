@@ -68,7 +68,7 @@ public class Problem {
 		return createdByUserId;
 	}
 
-	public void getCreatedByUserId(int createdByUserId) {
+	public void setCreatedByUserId(int createdByUserId) {
 		this.createdByUserId = createdByUserId;
 	}
 

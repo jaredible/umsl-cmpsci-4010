@@ -10,12 +10,17 @@ import main.java.mindbank.util.ProblemList;
 
 public class ProblemDAOImpl implements ProblemDAO {
 
-	private Connection conn;
+	private Connection connection;
 	private PreparedStatement getList;
 
 	public ProblemDAOImpl() throws SQLException {
-		conn = DbConn.openConn();
-		getList = conn.prepareStatement("SELECT * FROM Problems");
+		connection = DbConn.openConn();
+		getList = connection.prepareStatement("SELECT * FROM Problems");
+	}
+
+	public ProblemDAOImpl(Connection connection) throws SQLException {
+		this.connection = connection;
+		getList = connection.prepareStatement("SELECT * FROM Problems");
 	}
 
 	@Override
@@ -24,6 +29,9 @@ public class ProblemDAOImpl implements ProblemDAO {
 
 		Problem p = new Problem();
 		p.setId(1);
+		p.setTitle("Testing");
+		p.setContent("This is a test.");
+		p.setCreatedByUserId(1);
 		result.add(p);
 
 		return result;
@@ -49,10 +57,17 @@ public class ProblemDAOImpl implements ProblemDAO {
 	protected void finalize() {
 		try {
 			getList.close();
-			conn.close();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public static void main(String[] args) {
 	}
 
 }

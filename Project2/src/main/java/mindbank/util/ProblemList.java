@@ -6,6 +6,6 @@ import main.java.mindbank.model.Problem;
 
 public class ProblemList extends ArrayList<Problem> {
 
-	private static final long serialVersionUID = 774834718654161456L;
+	private static final long serialVersionUID = -2847437087048509560L;
 
 }
