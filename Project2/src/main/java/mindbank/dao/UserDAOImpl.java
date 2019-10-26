@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import main.java.mindbank.model.User;
 import main.java.mindbank.util.DbConn;
@@ -18,10 +19,10 @@ public class UserDAOImpl implements UserDAO {
 
 	public UserDAOImpl() throws SQLException {
 		conn = DbConn.openConn();
-		getEmailExists = conn.prepareStatement("SELECT * FROM user WHERE email = ?;");
-		isValidCredentials = conn.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?;");
-		addUser = conn.prepareStatement("INSERT INTO user (email, displayName, firstname, lastname, phone, password, roleId, emailVerified, phoneVerified, registrationTimestamp, lastLoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-		setLogin = conn.prepareStatement("UPDATE user SET lastLoginTimestamp = ? WHERE email = ?;");
+		getEmailExists = conn.prepareStatement("SELECT * FROM User WHERE Email = ?;");
+		isValidCredentials = conn.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
+		addUser = conn.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		setLogin = conn.prepareStatement("UPDATE User SET LoginTimestamp = ? WHERE Email = ?;");
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void setLogin(User user) {
 		try {
-			setLogin.setTimestamp(1, user.getLastLoginTimestamp());
+			setLogin.setTimestamp(1, user.getLoginTimestamp());
 			setLogin.setString(2, user.getEmail());
 			setLogin.executeUpdate();
 		} catch (SQLException e) {
@@ -69,17 +70,18 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void addUser(User user) {
 		try {
-			addUser.setString(1, user.getEmail());
-			addUser.setString(2, user.getDisplayName());
-			addUser.setString(3, user.getFirstName());
-			addUser.setString(4, user.getLastName());
-			addUser.setString(5, user.getPhoneNumber());
-			addUser.setString(6, user.getPassword());
-			addUser.setInt(7, user.getRoleId());
-			addUser.setBoolean(8, user.isEmailVerified());
-			addUser.setBoolean(9, user.isPhoneVerified());
-			addUser.setTimestamp(10, user.getRegistrationTimestamp());
-			addUser.setTimestamp(11, user.getLastLoginTimestamp());
+			addUser.setNull(1, Types.INTEGER);
+			addUser.setInt(2, user.getRoleId());
+			addUser.setString(3, user.getEmail());
+			addUser.setString(4, user.getUserName());
+			addUser.setString(5, user.getFirstName());
+			addUser.setString(6, user.getLastName());
+			addUser.setString(7, user.getPhoneNumber());
+			addUser.setString(8, user.getPasswordHash());
+			addUser.setBoolean(9, user.isEmailVerified());
+			addUser.setBoolean(10, user.isPhoneNumberVerified());
+			addUser.setTimestamp(11, user.getRegistrationTimestamp());
+			addUser.setTimestamp(12, user.getLoginTimestamp());
 			addUser.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

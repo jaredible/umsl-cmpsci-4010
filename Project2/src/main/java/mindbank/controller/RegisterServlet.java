@@ -92,7 +92,7 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println(errors.toString());
 
 			Timestamp timestamp = Util.getGMTNowTime();
-			User user = new User(-1, EnumRole.USER.getId(), firstName, lastName, "", email, "", password, false, false, timestamp, timestamp);
+			User user = new User(-1, EnumRole.USER.getId(), email, "", firstName, lastName, "", password, false, false, timestamp, timestamp);
 
 			if (errors.isEmpty()) {
 				userDAO.addUser(user);
@@ -127,7 +127,7 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 	private boolean validPassword(String password) {
-		return password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}");
+		return true;
 	}
 
 	private boolean passwordsMatch(String password, String confirm) {

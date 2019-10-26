@@ -6,31 +6,31 @@ public class User {
 
 	private int id;
 	private int roleId;
+	private String email;
+	private String userName;
 	private String firstName;
 	private String lastName;
-	private String displayName;
-	private String email;
 	private String phoneNumber;
-	private String password;
+	private String passwordHash;
 	private boolean emailVerified;
-	private boolean phoneVerified;
+	private boolean phoneNumberVerified;
 	private Timestamp registrationTimestamp;
 	private Timestamp loginTimestamp;
 
 	public User() {
 	}
 
-	public User(int id, int roleId, String firstName, String lastName, String displayName, String email, String phoneNumber, String password, boolean emailVerified, boolean phoneVerified, Timestamp registrationTimestamp, Timestamp loginTimestamp) {
+	public User(int id, int roleId, String email, String userName, String firstName, String lastName, String phoneNumber, String passwordHash, boolean emailVerified, boolean phoneNumberVerified, Timestamp registrationTimestamp, Timestamp loginTimestamp) {
 		this.id = id;
 		this.roleId = roleId;
+		this.email = email;
+		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.displayName = displayName;
-		this.email = email;
 		this.phoneNumber = phoneNumber;
-		this.password = password;
+		this.passwordHash = passwordHash;
 		this.emailVerified = emailVerified;
-		this.phoneVerified = phoneVerified;
+		this.phoneNumberVerified = phoneNumberVerified;
 		this.registrationTimestamp = registrationTimestamp;
 		this.loginTimestamp = loginTimestamp;
 	}
@@ -51,6 +51,22 @@ public class User {
 		this.roleId = roleId;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -67,22 +83,6 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -91,12 +91,12 @@ public class User {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPasswordHash() {
+		return passwordHash;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
 	public boolean isEmailVerified() {
@@ -107,12 +107,12 @@ public class User {
 		this.emailVerified = emailVerified;
 	}
 
-	public boolean isPhoneVerified() {
-		return phoneVerified;
+	public boolean isPhoneNumberVerified() {
+		return phoneNumberVerified;
 	}
 
-	public void setPhoneVerified(boolean phoneVerified) {
-		this.phoneVerified = phoneVerified;
+	public void setPhoneNumberVerified(boolean phoneNumberVerified) {
+		this.phoneNumberVerified = phoneNumberVerified;
 	}
 
 	public Timestamp getRegistrationTimestamp() {

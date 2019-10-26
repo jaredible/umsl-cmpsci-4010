@@ -16,13 +16,13 @@ CREATE TABLE IF NOT EXISTS User (
 	ID INT NOT NULL AUTO_INCREMENT,
 	RoleID INT NOT NULL,
 	Email VARCHAR (50) NOT NULL,
-	DisplayName VARCHAR (20) NOT NULL,
+	UserName VARCHAR (20) NOT NULL,
 	FirstName VARCHAR (20) NOT NULL,
 	LastName VARCHAR (20) NOT NULL,
 	PhoneNumber VARCHAR (20),
 	PasswordHash TEXT NOT NULL,
 	EmailVerified BOOLEAN,
-	PhoneVerified BOOLEAN,
+	PhoneNumberVerified BOOLEAN,
 	RegistrationTimestamp TIMESTAMP NOT NULL,
 	LoginTimestamp TIMESTAMP NOT NULL,
 	PRIMARY KEY (id),
@@ -63,8 +63,8 @@ INSERT INTO Role (ID, Name, Description) VALUES (1, "USER", "");
 INSERT INTO Role (ID, Name, Description) VALUES (2, "MOD", "");
 INSERT INTO Role (ID, Name, Description) VALUES (3, "ADMIN", "");
 
-INSERT INTO User (ID, RoleID, FirstName, LastName, DisplayName, Email, PhoneNumber, PasswordHash, EmailVerified, PhoneVerified, RegistrationTimestamp, LoginTimestamp) 
-VALUES (0, 3, "Jared", "Diehl", "Jaredible", "jared@jaredible.net", "3146291836", "Testing2000!", FALSE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) 
+VALUES (0, 3, "jared@jaredible.net", "Jaredible", "Jared", "Diehl", "3146291836", "Testing2000!", FALSE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO Subject (ID, Name, Description) VALUES (NULL, "Computer Science", "");
 INSERT INTO Subject (ID, Name, Description) VALUES (NULL, "English", "");

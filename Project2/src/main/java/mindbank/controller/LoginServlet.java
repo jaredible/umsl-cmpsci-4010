@@ -71,8 +71,8 @@ public class LoginServlet extends HttpServlet {
 
 			User user = new User();
 			user.setEmail(email);
-			user.setPassword(password);
-			user.setLastLoginTimestamp(Util.getGMTNowTime());
+			user.setPasswordHash(password);
+			user.setLoginTimestamp(Util.getGMTNowTime());
 
 			if (errors.isEmpty()) {
 				userDAO.setLogin(user);
