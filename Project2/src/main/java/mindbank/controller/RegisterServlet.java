@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
-import main.java.mindbank.model.Role;
 import main.java.mindbank.model.User;
+import main.java.mindbank.util.EnumRole;
 import main.java.mindbank.util.StringMap;
 import main.java.mindbank.util.Util;
 
@@ -92,7 +92,7 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println(errors.toString());
 
 			Timestamp timestamp = Util.getGMTNowTime();
-			User user = new User(-1, firstName, lastName, "", email, "", password, Role.USER.getId(), false, false, timestamp, timestamp);
+			User user = new User(-1, firstName, lastName, "", email, "", password, EnumRole.USER.getId(), false, false, timestamp, timestamp);
 
 			if (errors.isEmpty()) {
 				userDAO.addUser(user);

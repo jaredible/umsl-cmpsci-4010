@@ -2,11 +2,6 @@ package main.java.mindbank.model;
 
 public class Role {
 
-	public static final Role DEFAULT = new Role(0, "default", "");
-	public static final Role USER = new Role(1, "user", "");
-	public static final Role MODERATOR = new Role(2, "moderator", "");
-	public static final Role ADMIN = new Role(3, "admin", "");
-
 	private int id;
 	private String name;
 	private String description;
