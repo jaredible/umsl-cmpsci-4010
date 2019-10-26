@@ -92,10 +92,18 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println(errors.toString());
 
 			Timestamp timestamp = Util.getGMTNowTime();
-			User user = new User(-1, EnumRole.USER.getId(), email, "", firstName, lastName, "", password, false, false, timestamp, timestamp);
+			User user = new User();
+			user.setRoleId(EnumRole.USER.getId());
+			user.setEmail(email);
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setPasswordHash(password);
+			user.setRegistrationTimestamp(timestamp);
+			user.setLoginTimestamp(timestamp);
 
 			if (errors.isEmpty()) {
 				userDAO.addUser(user);
+				user = userDAO.getUser(email);
 				userDAO.setLogin(user);
 
 				request.getSession().setAttribute("email", email);
@@ -103,6 +111,7 @@ public class RegisterServlet extends HttpServlet {
 				cookie.setMaxAge(60 * 30); // 30 minutes
 				response.addCookie(cookie);
 
+				request.setAttribute("user", user);
 				response.sendRedirect(request.getContextPath());
 			} else {
 				request.setAttribute("errors", errors);
@@ -127,7 +136,7 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 	private boolean validPassword(String password) {
-		return true;
+		return !password.isEmpty(); // password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}");
 	}
 
 	private boolean passwordsMatch(String password, String confirm) {

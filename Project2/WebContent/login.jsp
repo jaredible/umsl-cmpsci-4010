@@ -30,7 +30,7 @@
 				
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input type="email" name="email" class="form-control" placeholder="E-mail">
+						<input type="email" name="email" class="form-control" placeholder="E-mail" value="${user.email}">
 					</div>
 					<div class="col-12 mb-3">
 						<input type="password" name="password" class="form-control" placeholder="Password">
@@ -45,7 +45,7 @@
             			</div>
         			</div>
        			 	<div>
-            			<a href="">Forgot password?</a>
+            			<a href="forgotPassword">Forgot password?</a>
         			</div>
     			</div>
 			    

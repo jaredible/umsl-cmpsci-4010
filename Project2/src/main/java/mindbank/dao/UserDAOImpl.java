@@ -14,15 +14,21 @@ public class UserDAOImpl implements UserDAO {
 	private Connection conn;
 	private PreparedStatement getEmailExists;
 	private PreparedStatement isValidCredentials;
-	private PreparedStatement addUser;
 	private PreparedStatement setLogin;
+	private PreparedStatement addUser;
+	private PreparedStatement getUserById;
+	private PreparedStatement getUserByEmail;
+	private PreparedStatement deleteUserById;
 
 	public UserDAOImpl() throws SQLException {
 		conn = DbConn.openConn();
 		getEmailExists = conn.prepareStatement("SELECT * FROM User WHERE Email = ?;");
 		isValidCredentials = conn.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
+		setLogin = conn.prepareStatement("UPDATE User SET LoginTimestamp = ? WHERE ID = ?;");
 		addUser = conn.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-		setLogin = conn.prepareStatement("UPDATE User SET LoginTimestamp = ? WHERE Email = ?;");
+		getUserById = conn.prepareStatement("SELECT * FROM User WHERE ID = ?;");
+		getUserByEmail = conn.prepareStatement("SELECT * FROM User WHERE Email = ?;");
+		deleteUserById = conn.prepareStatement("DELETE FROM User WHERE ID = ?;");
 	}
 
 	@Override
@@ -60,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
 	public void setLogin(User user) {
 		try {
 			setLogin.setTimestamp(1, user.getLoginTimestamp());
-			setLogin.setString(2, user.getEmail());
+			setLogin.setInt(2, user.getId());
 			setLogin.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -90,20 +96,75 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUser(int id) {
+		try {
+			getUserById.setInt(1, id);
+			ResultSet rs = getUserById.executeQuery();
+			if (rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt("ID"));
+				user.setRoleId(rs.getInt("RoleID"));
+				user.setEmail(rs.getString("Email"));
+				user.setUserName(rs.getString("UserName"));
+				user.setFirstName(rs.getString("FirstName"));
+				user.setLastName(rs.getString("LastName"));
+				user.setPhoneNumber(rs.getString("PhoneNumber"));
+				user.setPasswordHash(rs.getString("PasswordHash"));
+				user.setEmailVerified(rs.getBoolean("EmailVerified"));
+				user.setPhoneNumberVerified(rs.getBoolean("PhoneNumberVerified"));
+				user.setRegistrationTimestamp(rs.getTimestamp("RegistrationTimestamp"));
+				user.setLoginTimestamp(rs.getTimestamp("LoginTimestamp"));
+				return user;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
 	@Override
 	public User getUser(String email) {
+		try {
+			getUserByEmail.setString(1, email);
+			ResultSet rs = getUserByEmail.executeQuery();
+			if (rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt("ID"));
+				user.setRoleId(rs.getInt("RoleID"));
+				user.setEmail(rs.getString("Email"));
+				user.setUserName(rs.getString("UserName"));
+				user.setFirstName(rs.getString("FirstName"));
+				user.setLastName(rs.getString("LastName"));
+				user.setPhoneNumber(rs.getString("PhoneNumber"));
+				user.setPasswordHash(rs.getString("PasswordHash"));
+				user.setEmailVerified(rs.getBoolean("EmailVerified"));
+				user.setPhoneNumberVerified(rs.getBoolean("PhoneNumberVerified"));
+				user.setRegistrationTimestamp(rs.getTimestamp("RegistrationTimestamp"));
+				user.setLoginTimestamp(rs.getTimestamp("LoginTimestamp"));
+				return user;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
 	@Override
 	public void deleteUser(int id) {
+		try {
+			deleteUserById.setInt(1, id);
+			deleteUserById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void finalize() {
 		try {
+			deleteUserById.close();
+			getUserByEmail.close();
+			getUserById.close();
 			setLogin.close();
 			addUser.close();
 			isValidCredentials.close();

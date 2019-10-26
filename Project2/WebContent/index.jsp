@@ -1,14 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="main.java.mindbank.model.User" %>
+<%@ page import="main.java.mindbank.model.Problem" %>
+<%@ page import="main.java.mindbank.util.ProblemList" %>
 <%
 	String email = null;
 	Cookie[] cookies = request.getCookies();
 	if (cookies != null) {
 		for (Cookie c : cookies) {
-			if (c.getName().equals("email")) {
-				email = c.getValue();
-			}
+	if (c.getName().equals("email")) {
+		email = c.getValue();
+	}
 		}
 	}
+	
+	User user = (User) request.getAttribute("user");
+	List<Problem> problems = (ProblemList) request.getAttribute("problems");
 %>
 <!DOCTYPE html>
 <html>
@@ -31,26 +38,26 @@
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
 					<% if (email != null) { %>
-						<li class="nav-item dropdown">
-							<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New </a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>
-						</li>
-						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
-							<div class="dropdown-menu dropdown-menu-right dropdown-info">
-								<a class="dropdown-item" href="account">My account</a>
-								<a class="dropdown-item" href="logout">Log out</a>
-							</div>
-						</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>
+					</li>
+					<li class="nav-item dropdown">
+						<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
+						<div class="dropdown-menu dropdown-menu-right dropdown-info">
+							<a class="dropdown-item" href="account">My account</a>
+							<a class="dropdown-item" href="logout">Log out</a>
+						</div>
+					</li>
 					<% } else { %>
-						<li class="nav-item">
-							<a class="nav-link" href="login">Log in</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="register">Register</a>
-						</li>
+					<li class="nav-item">
+						<a class="nav-link" href="login">Log in</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="register">Register</a>
+					</li>
 					<% } %>
 				</ul>
 			</div>
@@ -82,33 +89,29 @@
 					<div class="col-xs-12 col-sm-4 mb-2">
 						<input class="form-control" type="text" placeholder="Search anything">
 					</div>
+					<% if (problems.size() > 0) { %>
 					<div class="list-group test">
 						<%
-							int length = 6;
+							int length = problems.size();
 							for (int i = 0; i < length; i++) {
+								Problem p = problems.get(i);
+								String footer = "";
 						%>
-							<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test <% if (i == 0) { %>rounded-top<% } else if (i == length - 1) { %>rounded-bottom<% } %>">
-								<div class="d-flex w-100 justify-content-between align-items-center">
-									<h5 class="mb-1 pl-2">
-										Testing
-									</h5>
-									<div class="d-flex justify-content-between align-items-center pr-2">
-										<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Edit</button>
-										<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Delete</button>
-									</div>
+						<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test <% if (i == 0) { %>rounded-top<% } else if (i == length - 1) { %>rounded-bottom<% } %>">
+							<div class="d-flex w-100 justify-content-between align-items-center">
+								<h5 class="mb-1 pl-2">${p.title}</h5>
+								<% if (p.getCreatedByUserId() == user.getId()) { %>
+								<div class="d-flex justify-content-between align-items-center pr-2">
+									<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Edit</button>
+									<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Delete</button>
 								</div>
-								<p class="pl-2 pr-2 mb-1">
-									It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-									$$ \sum_{i=0}^n $$
-									$$ \int_1^\infty $$
-									$$ \iint_1^\infty $$
-									$$ \lim_{x \to 0} $$
-									It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-								</p>
-								<div class="d-flex w-100 justify-content-center align-items-center">
-									<small class="mb-1 pl-2">Posted by Jaredible 3 days ago - <i>edited</i></small>
-								</div>
+								<% } %>
 							</div>
+							<p class="pl-2 pr-2 mb-1">${p.content}</p>
+							<div class="d-flex w-100 justify-content-center align-items-center">
+								<small class="mb-1 pl-2"><%= footer %><% if (p.isEdited()) { %> - <i>edited</i><% } %></small>
+							</div>
+						</div>
 						<% } %>
 						<nav class="my-3 p-1">
 							<ul class="pagination pg-blue justify-content-center align-items-center mb-0 p-0">
@@ -124,6 +127,7 @@
 							</ul>
 						</nav>
 					</div>
+					<% } %>
 				</div>
 			</div>
 		</main>
