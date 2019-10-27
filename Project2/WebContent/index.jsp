@@ -7,22 +7,23 @@
 <%@ page import="main.java.mindbank.util.CategoryList" %>
 <%@ page import="main.java.mindbank.model.Problem" %>
 <%@ page import="main.java.mindbank.util.ProblemList" %>
+<%@ page import="com.google.gson.Gson" %>
 <%
-String email = null;
-Cookie[] cookies = request.getCookies();
-if (cookies != null) {
-	for (Cookie c : cookies) {
-if (c.getName().equals("email")) {
-	email = c.getValue();
-}
+	String email = null;
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie c : cookies) {
+			if (c.getName().equals("email")) {
+				email = c.getValue();
+			}
+		}
 	}
-}
-
-User user = (User) request.getAttribute("user");
-List<Subject> subjects = (SubjectList) request.getAttribute("subjects");
-List<Category> categories = (CategoryList) request.getAttribute("categories");
-ProblemList problems = (ProblemList) request.getAttribute("problems");
-int length;
+	
+	User user = (User) request.getAttribute("user");
+	List<Subject> subjects = (SubjectList) request.getAttribute("subjects");
+	List<Category> categories = (CategoryList) request.getAttribute("categories");
+	ProblemList problems = (ProblemList) request.getAttribute("problems");
+	int length;
 %>
 <!DOCTYPE html>
 <html>
@@ -74,20 +75,23 @@ int length;
 				<div class="row justify-content-center align-items-center mt-5 mb-4 pt-3 pb-4">
 					<div class="col-xs-12 col-sm-4 mb-2">
 						<select class="browser-default custom-select">
-							<option selected>Select a subject</option>
-							<option>Computer Science</option>
-							<option>English</option>
-							<option>Mathematics</option>
-							<option>Physics</option>
+							<option value="0" selected>Select a subject</option>
+							<%
+								length = subjects.size();
+								for (int i = 0; i < length; i++) {
+									Subject s = subjects.get(i);
+							%>
+							<option value="<%= s.getId() %>"><%= s.getName() %></option>
+							<% } %>
 						</select>
 					</div>
 					<div class="col-xs-12 col-sm-4 mb-2">
-						<select class="browser-default custom-select">
+						<select class="browser-default custom-select" disabled>
 							<option value="0" selected>Select a category</option>
 							<%
-							length = categories.size();
-							for (int i = 0; i < length; i++) {
-								Category c = categories.get(i);
+								length = categories.size();
+								for (int i = 0; i < length; i++) {
+									Category c = categories.get(i);
 							%>
 							<option value="<%= c.getId() %>"><%= c.getName() %></option>
 							<% } %>
@@ -146,7 +150,13 @@ int length;
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<script src="js/main.js"></script>
 		<script>
-			console.log("<%= "Testing" %>");
+			var subjects = <%= new Gson().toJson(subjects) %>;
+			var categories = <%= new Gson().toJson(categories) %>;
+			var problems = <%= new Gson().toJson(problems) %>;
+			
+			console.log(subjects);
+			console.log(categories);
+			console.log(problems);
 		</script>
 	</body>
 </html>

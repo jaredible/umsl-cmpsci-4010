@@ -2,9 +2,12 @@ package main.java.mindbank.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import main.java.mindbank.model.Category;
 import main.java.mindbank.model.Subject;
+import main.java.mindbank.util.CategoryList;
 import main.java.mindbank.util.DbConn;
 import main.java.mindbank.util.SubjectList;
 
@@ -25,6 +28,21 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 	@Override
 	public SubjectList getSubjects() {
+		try {
+			ResultSet rs = getSubjects.executeQuery();
+			SubjectList sl = new SubjectList();
+			while (rs.next()) {
+				Subject s = new Subject();
+				s.setId(rs.getInt("ID"));
+				s.setName(rs.getString("Name"));
+				s.setDescription(rs.getString("Description"));
+				sl.add(s);
+			}
+			return sl;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
