@@ -27,12 +27,18 @@ public class ProblemDAOImpl implements ProblemDAO {
 	public ProblemList getList() {
 		ProblemList result = new ProblemList();
 
-		Problem p = new Problem();
-		p.setId(1);
-		p.setTitle("Testing");
-		p.setContent("This is a test.");
-		p.setCreatedByUserId(1);
-		result.add(p);
+		Problem p1 = new Problem();
+		p1.setId(1);
+		p1.setTitle("Testing");
+		p1.setContent("This is a test.");
+		p1.setCreatedByUserId(1);
+		result.add(p1);
+		Problem p2 = new Problem();
+		p2.setId(1);
+		p2.setTitle("Testing");
+		p2.setContent("This is a test.");
+		p2.setCreatedByUserId(2);
+		result.add(p2);
 
 		return result;
 	}

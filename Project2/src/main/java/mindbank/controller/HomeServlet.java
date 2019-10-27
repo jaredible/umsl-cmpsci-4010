@@ -29,6 +29,7 @@ import main.java.mindbank.model.User;
  */
 @WebServlet("")
 public class HomeServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -42,7 +43,7 @@ public class HomeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = ""; // TODO
+		String email = null; // TODO
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie c : cookies) {
@@ -58,7 +59,14 @@ public class HomeServlet extends HttpServlet {
 			CategoryDAO categoryDAO = new CategoryDAOImpl(subjectDAO.getConnection());
 			ProblemDAO problemDAO = new ProblemDAOImpl(categoryDAO.getConnection());
 
-			User user = userDAO.getUser(email);
+			User user;
+			if (email == null) {
+				user = new User();
+				user.setId(0);
+			} else {
+				user = userDAO.getUser(email);
+			}
+			userDAO.getUser(email);
 			List<Subject> subjects = subjectDAO.getSubjects();
 			List<Category> categories = categoryDAO.getCategories();
 			List<Problem> problems = problemDAO.getList();

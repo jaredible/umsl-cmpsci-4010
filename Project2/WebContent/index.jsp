@@ -8,20 +8,21 @@
 <%@ page import="main.java.mindbank.model.Problem" %>
 <%@ page import="main.java.mindbank.util.ProblemList" %>
 <%
-	String email = null;
-	Cookie[] cookies = request.getCookies();
-	if (cookies != null) {
-		for (Cookie c : cookies) {
-	if (c.getName().equals("email")) {
-		email = c.getValue();
+String email = null;
+Cookie[] cookies = request.getCookies();
+if (cookies != null) {
+	for (Cookie c : cookies) {
+if (c.getName().equals("email")) {
+	email = c.getValue();
+}
 	}
-		}
-	}
-	
-	User user = (User) request.getAttribute("user");
-	List<Subject> subjects = (SubjectList) request.getAttribute("subjects");
-	List<Category> categories = (CategoryList) request.getAttribute("categories");
-	List<Problem> problems = (ProblemList) request.getAttribute("problems");
+}
+
+User user = (User) request.getAttribute("user");
+List<Subject> subjects = (SubjectList) request.getAttribute("subjects");
+List<Category> categories = (CategoryList) request.getAttribute("categories");
+ProblemList problems = (ProblemList) request.getAttribute("problems");
+int length;
 %>
 <!DOCTYPE html>
 <html>
@@ -73,23 +74,26 @@
 				<div class="row justify-content-center align-items-center mt-5 mb-4 pt-3 pb-4">
 					<div class="col-xs-12 col-sm-4 mb-2">
 						<select class="browser-default custom-select">
-							<option selected>Select a subject</option>
-							<option>Computer Science</option>
-							<option>English</option>
-							<option>Mathematics</option>
-							<option>Physics</option>
+							<option value="0" selected>Select a subject</option>
+							<%
+							length = subjects.size();
+							for (int i = 0; i < length; i++) {
+								Subject c = subjects.get(i);
+							%>
+							<option value="<%= c.getId() %>"><%= c.getName() %></option>
+							<% } %>
 						</select>
 					</div>
 					<div class="col-xs-12 col-sm-4 mb-2">
 						<select class="browser-default custom-select">
-							<option selected>Select a category</option>
-							<option>Algebra</option>
-							<option>Calculus</option>
-							<option>Combinatorics</option>
-							<option>Geometry</option>
-							<option>Logic</option>
-							<option>Number Theory</option>
-							<option>Trigonometry</option>
+							<option value="0" selected>Select a category</option>
+							<%
+							length = categories.size();
+							for (int i = 0; i < length; i++) {
+								Category c = categories.get(i);
+							%>
+							<option value="<%= c.getId() %>"><%= c.getName() %></option>
+							<% } %>
 						</select>
 					</div>
 					<div class="col-xs-12 col-sm-4 mb-2">
@@ -98,18 +102,18 @@
 					<% if (problems.size() > 0) { %>
 					<div class="list-group test">
 						<%
-							int length = problems.size();
-							for (int i = 0; i < length; i++) {
-								Problem p = problems.get(i);
-								String footer = "";
+						length = problems.size();
+						for (int i = 0; i < length; i++) {
+							Problem p = problems.get(i);
+							String footer = "footer";
 						%>
 						<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test <% if (i == 0) { %>rounded-top<% } else if (i == length - 1) { %>rounded-bottom<% } %>">
 							<div class="d-flex w-100 justify-content-between align-items-center">
-								<h5 class="mb-1 pl-2"><%= p.getTitle() == null ? "" : p.getTitle() %></h5>
+								<h5 class="mt-1 mb-1 p1-1 pl-2"><%= p.getTitle() == null ? "" : p.getTitle() %></h5>
 								<% if (p.getCreatedByUserId() == user.getId()) { %>
 								<div class="d-flex justify-content-between align-items-center pr-2">
-									<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Edit</button>
-									<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect">Delete</button>
+									<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Edit</button>
+									<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Delete</button>
 								</div>
 								<% } %>
 							</div>
@@ -144,5 +148,8 @@
 		<script type="text/javascript" color="0,0,0" opacity='0.7' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<script src="js/main.js"></script>
+		<script>
+			console.log("<%= "Testing" %>");
+		</script>
 	</body>
 </html>

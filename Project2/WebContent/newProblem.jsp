@@ -31,9 +31,6 @@
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
 					<% if (email != null) { %>
-						<li class="nav-item dropdown">
-							<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New </a>
-						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>
 						</li>
