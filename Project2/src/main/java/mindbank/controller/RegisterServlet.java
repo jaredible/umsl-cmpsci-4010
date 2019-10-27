@@ -90,11 +90,12 @@ public class RegisterServlet extends HttpServlet {
 			}
 
 			System.out.println(errors.toString());
-
+			
 			Timestamp timestamp = Util.getGMTNowTime();
 			User user = new User();
 			user.setRoleId(EnumRole.USER.getId());
 			user.setEmail(email);
+			// TODO: UserName?
 			user.setFirstName(firstName);
 			user.setLastName(lastName);
 			user.setPasswordHash(password);

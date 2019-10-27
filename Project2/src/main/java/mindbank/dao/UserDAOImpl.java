@@ -76,6 +76,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void setLogin(User user) {
 		try {
+			// TODO: timestamp not saving
 			setLogin.setTimestamp(1, user.getLoginTimestamp());
 			setLogin.setInt(2, user.getId());
 			setLogin.executeUpdate();

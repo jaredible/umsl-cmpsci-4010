@@ -114,7 +114,7 @@
 								<% if (p.getCreatedByUserId() == user.getId()) { %>
 								<div class="d-flex justify-content-between align-items-center pr-2">
 									<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Edit</button>
-									<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Delete</button>
+									<!-- Hamburger dropdown button? <button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Delete</button> -->
 								</div>
 								<% } %>
 							</div>
@@ -150,10 +150,12 @@
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<script src="js/main.js"></script>
 		<script>
+			var user = <%= new Gson().toJson(user) %>;
 			var subjects = <%= new Gson().toJson(subjects) %>;
 			var categories = <%= new Gson().toJson(categories) %>;
 			var problems = <%= new Gson().toJson(problems) %>;
 			
+			console.log(user);
 			console.log(subjects);
 			console.log(categories);
 			console.log(problems);
