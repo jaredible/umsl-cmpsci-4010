@@ -68,8 +68,12 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	protected void finalize() {
 		try {
-			getCategories.close();
-			connection.close();
+			if (!getCategories.isClosed()) {
+				getCategories.close();
+			}
+			if (!connection.isClosed()) {
+				connection.close();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

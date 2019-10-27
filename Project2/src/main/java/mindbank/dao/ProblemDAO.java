@@ -7,7 +7,7 @@ import main.java.mindbank.util.ProblemList;
 
 public interface ProblemDAO {
 
-	public ProblemList getList();
+	public ProblemList getProblems();
 
 	public void addProblem(Problem p);
 

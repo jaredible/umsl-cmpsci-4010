@@ -177,14 +177,30 @@ public class UserDAOImpl implements UserDAO {
 
 	protected void finalize() {
 		try {
-			deleteUserById.close();
-			getUserByEmail.close();
-			getUserById.close();
-			setLogin.close();
-			addUser.close();
-			isValidCredentials.close();
-			getEmailExists.close();
-			connection.close();
+			if (!deleteUserById.isClosed()) {
+				deleteUserById.close();
+			}
+			if (!getUserByEmail.isClosed()) {
+				getUserByEmail.close();
+			}
+			if (!getUserById.isClosed()) {
+				getUserById.close();
+			}
+			if (!setLogin.isClosed()) {
+				setLogin.close();
+			}
+			if (!addUser.isClosed()) {
+				addUser.close();
+			}
+			if (!isValidCredentials.isClosed()) {
+				isValidCredentials.close();
+			}
+			if (!getEmailExists.isClosed()) {
+				getEmailExists.close();
+			}
+			if (!connection.isClosed()) {
+				connection.close();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

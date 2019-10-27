@@ -1,6 +1,7 @@
 package main.java.mindbank.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import main.java.mindbank.model.Category;
 import main.java.mindbank.model.Problem;
 import main.java.mindbank.model.Subject;
 import main.java.mindbank.model.User;
+import main.java.mindbank.util.DbConn;
 
 /**
  * Servlet implementation class HomeServlet
@@ -54,11 +56,11 @@ public class HomeServlet extends HttpServlet {
 		}
 
 		try {
-			// TODO
-			UserDAO userDAO = new UserDAOImpl();
-			SubjectDAO subjectDAO = new SubjectDAOImpl(userDAO.getConnection());
-			CategoryDAO categoryDAO = new CategoryDAOImpl(subjectDAO.getConnection());
-			ProblemDAO problemDAO = new ProblemDAOImpl(categoryDAO.getConnection());
+			Connection conn = DbConn.openConn();
+			UserDAO userDAO = new UserDAOImpl(conn);
+			SubjectDAO subjectDAO = new SubjectDAOImpl(conn);
+			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
+			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
 
 			User user;
 			if (email == null) {
@@ -70,7 +72,7 @@ public class HomeServlet extends HttpServlet {
 			userDAO.getUser(email);
 			List<Subject> subjects = subjectDAO.getSubjects();
 			List<Category> categories = categoryDAO.getCategories();
-			List<Problem> problems = problemDAO.getList();
+			List<Problem> problems = problemDAO.getProblems();
 
 			request.setAttribute("user", user);
 			request.setAttribute("subjects", subjects);

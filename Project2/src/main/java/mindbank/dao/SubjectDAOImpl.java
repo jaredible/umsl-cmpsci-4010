@@ -51,8 +51,12 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 	protected void finalize() {
 		try {
-			getSubjects.close();
-			connection.close();
+			if (!getSubjects.isClosed()) {
+				getSubjects.close();
+			}
+			if (!connection.isClosed()) {
+				connection.close();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
