@@ -54,6 +54,7 @@ public class HomeServlet extends HttpServlet {
 		}
 
 		try {
+			// TODO
 			UserDAO userDAO = new UserDAOImpl();
 			SubjectDAO subjectDAO = new SubjectDAOImpl(userDAO.getConnection());
 			CategoryDAO categoryDAO = new CategoryDAOImpl(subjectDAO.getConnection());

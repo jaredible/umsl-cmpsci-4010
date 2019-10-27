@@ -74,14 +74,11 @@ int length;
 				<div class="row justify-content-center align-items-center mt-5 mb-4 pt-3 pb-4">
 					<div class="col-xs-12 col-sm-4 mb-2">
 						<select class="browser-default custom-select">
-							<option value="0" selected>Select a subject</option>
-							<%
-							length = subjects.size();
-							for (int i = 0; i < length; i++) {
-								Subject c = subjects.get(i);
-							%>
-							<option value="<%= c.getId() %>"><%= c.getName() %></option>
-							<% } %>
+							<option selected>Select a subject</option>
+							<option>Computer Science</option>
+							<option>English</option>
+							<option>Mathematics</option>
+							<option>Physics</option>
 						</select>
 					</div>
 					<div class="col-xs-12 col-sm-4 mb-2">
