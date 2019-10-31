@@ -30,7 +30,6 @@ public class AccountServlet extends HttpServlet {
 		if (cookies != null) {
 			for (Cookie c : cookies) {
 				if (c.getName().equals("email")) {
-					response.sendRedirect("login");
 					request.setAttribute("firstname", "Jared");
 					request.setAttribute("lastname", "Diehl");
 					request.setAttribute("username", "Jaredible");

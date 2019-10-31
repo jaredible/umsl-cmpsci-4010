@@ -24,6 +24,7 @@
 	List<Category> categories = (CategoryList) request.getAttribute("categories");
 	ProblemList problems = (ProblemList) request.getAttribute("problems");
 	int length;
+	boolean isMobile = false;
 %>
 <!DOCTYPE html>
 <html>
@@ -74,27 +75,13 @@
 			<div class="container">
 				<div class="row justify-content-center align-items-center mt-5 mb-4 pt-3 pb-4">
 					<div class="col-xs-12 col-sm-4 mb-2">
-						<select class="browser-default custom-select">
+						<select id="subject-select" class="browser-default custom-select" disabled>
 							<option value="0" selected>Select a subject</option>
-							<%
-								length = subjects.size();
-								for (int i = 0; i < length; i++) {
-									Subject s = subjects.get(i);
-							%>
-							<option value="<%= s.getId() %>"><%= s.getName() %></option>
-							<% } %>
 						</select>
 					</div>
 					<div class="col-xs-12 col-sm-4 mb-2">
-						<select class="browser-default custom-select" disabled>
+						<select id="category-select" class="browser-default custom-select" disabled>
 							<option value="0" selected>Select a category</option>
-							<%
-								length = categories.size();
-								for (int i = 0; i < length; i++) {
-									Category c = categories.get(i);
-							%>
-							<option value="<%= c.getId() %>"><%= c.getName() %></option>
-							<% } %>
 						</select>
 					</div>
 					<div class="col-xs-12 col-sm-4 mb-2">
@@ -108,7 +95,7 @@
 							Problem p = problems.get(i);
 							String footer = "footer";
 						%>
-						<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test <% if (i == 0) { %>rounded-top<% } else if (i == length - 1) { %>rounded-bottom<% } %>">
+						<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test <% if (!isMobile) { if (i == 0) { %>rounded-top<% } else if (i == length - 1) { %>rounded-bottom<% } } %>">
 							<div class="d-flex w-100 justify-content-between align-items-center">
 								<h5 class="mt-1 mb-1 p1-1 pl-2"><%= p.getTitle() == null ? "" : p.getTitle() %></h5>
 								<% if (p.getCreatedByUserId() == user.getId()) { %>
@@ -118,7 +105,7 @@
 								</div>
 								<% } %>
 							</div>
-							<p class="pl-2 pr-2 mb-1"><%= p.getContent() == null ? "" : p.getContent() %></p>
+							<p class="pl-2 pr-2 mb-1">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
 							<div class="d-flex w-100 justify-content-center align-items-center">
 								<small class="mb-1 pl-2"><%= footer %><% if (p.isEdited()) { %> - <i>edited</i><% } %></small>
 							</div>
@@ -148,17 +135,65 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
 		<script type="text/javascript" color="0,0,0" opacity='0.7' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-		<script src="js/main.js"></script>
 		<script>
 			var user = <%= new Gson().toJson(user) %>;
 			var subjects = <%= new Gson().toJson(subjects) %>;
 			var categories = <%= new Gson().toJson(categories) %>;
 			var problems = <%= new Gson().toJson(problems) %>;
 			
+			subjects.sort(sort);
+			categories.sort(sort);
+			
 			console.log(user);
 			console.log(subjects);
 			console.log(categories);
 			console.log(problems);
+			
+			var subjectSelect = $("#subject-select");
+			var categorySelect = $("#category-select");
+			
+			subjects.forEach(function(subject) {
+				var option = $("<option>");
+				option.attr("value", subject.id);
+				option.html(subject.name);
+				subjectSelect.append(option);
+			});
+			
+			function onSubjectSelected() {
+				var selected = subjectSelect.find(":selected").attr("value");
+				if (selected == 0) {
+					// clear categories
+					categorySelect.removeAttr("disabled");
+				} else {
+					// set categories accordingly
+				}
+			}
+			
+			function onCategorySelected() {
+				
+			}
+			
+			subjectSelect.change(function() {
+				onSubjectSelected();
+			});
+			
+			categorySelect.change(function() {
+				onChangeSelected();
+			});
+			
+			function sort(a, b) {
+				if (a.name < b.name) {
+					return -1;
+				}
+				if (b.name > a.name) {
+					return 1;
+				}
+				return 0;
+			}
+			
+			$(function() {
+				subjectSelect.removeAttr("disabled");
+			});
 		</script>
 	</body>
 </html>
