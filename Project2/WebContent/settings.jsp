@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
-		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mindbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
@@ -55,11 +55,6 @@
 		</nav>
 		<main>
 			<div class="container">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
-				</div>
 			</div>
 		</main>
 		<%@ include file="footer.jsp" %>

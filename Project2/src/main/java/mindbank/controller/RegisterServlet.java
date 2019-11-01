@@ -105,6 +105,7 @@ public class RegisterServlet extends HttpServlet {
 			if (errors.isEmpty()) {
 				userDAO.addUser(user);
 				user = userDAO.getUser(email);
+				user.setUserName("User" + user.getId());
 				userDAO.setLogin(user);
 
 				request.getSession().setAttribute("email", email);

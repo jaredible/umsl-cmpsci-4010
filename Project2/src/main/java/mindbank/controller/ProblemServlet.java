@@ -14,29 +14,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import main.java.mindbank.dao.CategoryDAO;
 import main.java.mindbank.dao.CategoryDAOImpl;
-import main.java.mindbank.dao.ProblemDAO;
-import main.java.mindbank.dao.ProblemDAOImpl;
-import main.java.mindbank.dao.UserDAO;
-import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Category;
-import main.java.mindbank.model.Problem;
-import main.java.mindbank.model.User;
 import main.java.mindbank.util.DbConn;
 
 /**
- * Servlet implementation class HomeServlet
+ * Servlet implementation class ProblemServlet
  */
-@WebServlet("")
-public class HomeServlet extends HttpServlet {
-
+@WebServlet("/problem")
+public class ProblemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public HomeServlet() {
-		super();
-	}
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ProblemServlet() {
+        super();
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -51,22 +44,24 @@ public class HomeServlet extends HttpServlet {
 				}
 			}
 		}
+		
+		System.out.println(request.getParameter("edit"));
+		System.out.println(request.getParameter("id"));
+
+		if (email == null) {
+			response.sendRedirect("login");
+			return;
+		}
 
 		try {
 			Connection conn = DbConn.openConn();
-			UserDAO userDAO = new UserDAOImpl(conn);
 			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
-			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
+			// TODO: get user?
 
-			User user = userDAO.getUser(email);
-			userDAO.getUser(email);
 			List<Category> categories = categoryDAO.getCategories();
-			List<Problem> problems = problemDAO.getProblems();
 
-			request.setAttribute("user", user);
 			request.setAttribute("categories", categories);
-			request.setAttribute("problems", problems);
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			request.getRequestDispatcher("newProblem.jsp").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

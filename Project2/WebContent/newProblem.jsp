@@ -24,14 +24,14 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>New</title>
+		<title>New Problem</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
-		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mindbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
@@ -63,11 +63,11 @@
 		</nav>
 		<main>
 			<div class="container">
-				<div class="row justify-content-center align-items-center mt-5 pt-3">
-					<div class="col-xs-12 col-sm-4 mb-2">
+				<div class="row justify-content-center align-items-center">
+					<div class="col-xs-12 col-sm-4 mt-2 mb-2">
 						<input class="form-control" type="text" placeholder="Title">
 					</div>
-					<div class="col-xs-12 col-sm-4 mb-2">
+					<div class="col-xs-12 col-sm-4 mt-2 mb-2">
 						<select id="category-select" class="browser-default custom-select">
 							<option value="0" selected>Select a category</option>
 							<%
@@ -80,11 +80,11 @@
 						</select>
 					</div>
 				</div>
-				<div class="row justify-content-center align-items-center mb-5 pb-3 h-100">
+				<div class="row justify-content-center align-items-center">
 					<div class="col-xs-12 col-sm-8 mb-2">
 						<div class="list-group test">
 							<div class="form-group test2">
-								<textarea id="editor" class="form-control rounded-1 my-1 py-1 test" rows="10"></textarea>
+								<textarea id="editor" class="form-control rounded-1 test" rows="10"></textarea>
 							</div>
 							<div class="d-flex justify-content-center align-items-center">
 								<button type="button" class="btn btn-outline-grey waves-effect">Save</button>

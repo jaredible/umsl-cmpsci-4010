@@ -2,9 +2,12 @@ package main.java.mindbank.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import main.java.mindbank.model.Category;
 import main.java.mindbank.model.Problem;
+import main.java.mindbank.util.CategoryList;
 import main.java.mindbank.util.DbConn;
 import main.java.mindbank.util.ProblemList;
 
@@ -15,32 +18,36 @@ public class ProblemDAOImpl implements ProblemDAO {
 
 	public ProblemDAOImpl() throws SQLException {
 		connection = DbConn.openConn();
-		getProblems = connection.prepareStatement("SELECT * FROM Problems");
+		getProblems = connection.prepareStatement("SELECT * FROM Problem");
 	}
 
 	public ProblemDAOImpl(Connection connection) throws SQLException {
 		this.connection = connection;
-		getProblems = connection.prepareStatement("SELECT * FROM Problems");
+		getProblems = connection.prepareStatement("SELECT Problem.*, User.UserName FROM Problem LEFT OUTER JOIN User ON Problem.CreatedByUserID = User.ID ORDER BY Problem.CreatedTimestamp DESC");
 	}
 
 	@Override
 	public ProblemList getProblems() {
-		ProblemList result = new ProblemList();
+		try {
+			ResultSet rs = getProblems.executeQuery();
+			ProblemList pl = new ProblemList();
+			while (rs.next()) {
+				Problem p = new Problem();
+				p.setId(rs.getInt("ID"));
+				p.setCategoryId(rs.getInt("CategoryID"));
+				p.setTitle(rs.getString("Title"));
+				p.setContent(rs.getString("Content"));
+				p.setEdited(rs.getBoolean("Edited"));
+				p.setCreatedByUserId(rs.getInt("CreatedByUserID"));
+				p.setCreatedTimestamp(rs.getTimestamp("CreatedTimestamp"));
+				pl.add(p);
+			}
+			return pl;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-		Problem p1 = new Problem();
-		p1.setId(1);
-		p1.setTitle("Testing");
-		p1.setContent("This is a test.");
-		p1.setCreatedByUserId(1);
-		result.add(p1);
-		Problem p2 = new Problem();
-		p2.setId(1);
-		p2.setTitle("Testing");
-		p2.setContent("This is a test.");
-		p2.setCreatedByUserId(2);
-		result.add(p2);
-
-		return result;
+		return null;
 	}
 
 	@Override

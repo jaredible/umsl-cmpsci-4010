@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
-		<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}">Mindbank</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 				<span class="navbar-toggler-icon"></span>
@@ -57,10 +57,47 @@
 		</nav>
 		<main>
 			<div class="container">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
+				<div class="d-flex h-100 justify-content-center align-items-center">
+					<form class="d-fixed text-center p-1 needs-validation" action="account" method="post" novalidate>
+						<p class="h4 mb-3">Your account</p>
+						
+						<div class="form-row">
+							<div class="col-6 mb-3">
+								<input type="text" name="firstName" class="form-control" placeholder="First name" value="${user.firstName}">
+							</div>
+							<div class="col-6 mb-3">
+								<input type="text" name="lastName" class="form-control" placeholder="Last name" value="${user.lastName}">
+							</div>
+							<div class="col-12 mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">@</span>
+									</div>
+									<input type="text" name="username" class="form-control is-invalid" placeholder="Username" value="${user.userName}">
+								</div>
+								<div class="invalid-feedback">This is an error!</div>
+							</div>
+							<div class="col-12 mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" style="background-color: #78e08f;"><i class="fas fa-check"></i></span>
+									</div>
+									<input type="email" name="email" class="form-control" placeholder="E-mail" value="${user.email}" disabled>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" style="background-color: none;"><i class="fas fa-check"></i></span>
+									</div>
+									<input type="text" name="phoneNumber" class="form-control" placeholder="Phone number">
+								</div>
+								<small class="form-text text-muted">Optional - for two-step authentication</small>
+							</div>
+						</div>
+					    
+						<button type="button" class="btn btn-outline-grey waves-effect">Save</button>
+					</form>
 				</div>
 			</div>
 		</main>

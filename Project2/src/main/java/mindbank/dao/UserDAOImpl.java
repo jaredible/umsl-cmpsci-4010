@@ -18,27 +18,29 @@ public class UserDAOImpl implements UserDAO {
 	private PreparedStatement addUser;
 	private PreparedStatement getUserById;
 	private PreparedStatement getUserByEmail;
+	private PreparedStatement updateUser;
 	private PreparedStatement deleteUserById;
 
 	public UserDAOImpl() throws SQLException {
 		connection = DbConn.openConn();
-		getEmailExists = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
-		isValidCredentials = connection.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
-		setLogin = connection.prepareStatement("UPDATE User SET LoginTimestamp = ? WHERE ID = ?;");
-		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-		getUserById = connection.prepareStatement("SELECT * FROM User WHERE ID = ?;");
-		getUserByEmail = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
-		deleteUserById = connection.prepareStatement("DELETE FROM User WHERE ID = ?;");
+
+		init();
 	}
 
 	public UserDAOImpl(Connection connection) throws SQLException {
 		this.connection = connection;
+
+		init();
+	}
+
+	private void init() throws SQLException {
 		getEmailExists = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
 		isValidCredentials = connection.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
 		setLogin = connection.prepareStatement("UPDATE User SET LoginTimestamp = ? WHERE ID = ?;");
 		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		getUserById = connection.prepareStatement("SELECT * FROM User WHERE ID = ?;");
 		getUserByEmail = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
+		updateUser = connection.prepareStatement("UPDATE User SET ... WHERE ID = ?");
 		deleteUserById = connection.prepareStatement("DELETE FROM User WHERE ID = ?;");
 	}
 
@@ -160,6 +162,11 @@ public class UserDAOImpl implements UserDAO {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void updateUser(User user) {
+
 	}
 
 	@Override
