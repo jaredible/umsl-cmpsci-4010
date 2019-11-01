@@ -6,23 +6,19 @@ html, body {
 	padding: 0;
 }
 
-.container {
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 form {
 	max-width: 300px;
 }
 
 input, select {
 	background-color: rgba(0, 0, 0, 0) !important;
+	text-align: center;
+	text-align-last: center;
 }
 
 textarea {
 	/* height: calc(100vh - 350px) !important; */
+	width: 400px;
 	resize: none;
 }
 

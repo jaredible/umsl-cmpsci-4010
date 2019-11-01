@@ -29,20 +29,12 @@ CREATE TABLE IF NOT EXISTS User (
 	FOREIGN KEY (RoleID) REFERENCES Role(ID)
 );
 
-CREATE TABLE IF NOT EXISTS Subject (
-	ID INT NOT NULL AUTO_INCREMENT,
-	Name VARCHAR(20) NOT NULL,
-	Description VARCHAR (100),
-	PRIMARY KEY (ID)
-);
-
 CREATE TABLE IF NOT EXISTS Category (
 	ID INT NOT NULL AUTO_INCREMENT,
 	SubjectID INT NOT NULL,
 	Name VARCHAR (30) NOT NULL,
 	Description VARCHAR (100),
-	PRIMARY KEY (ID, SubjectID),
-	FOREIGN KEY (SubjectID) REFERENCES Subject(ID)
+	PRIMARY KEY (ID)
 );
 
 CREATE TABLE IF NOT EXISTS Problem (
@@ -65,11 +57,6 @@ INSERT INTO Role (ID, Name, Description) VALUES (3, "ADMIN", "");
 
 INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) 
 VALUES (0, 3, "jared@jaredible.net", "Jaredible", "Jared", "Diehl", "3146291836", "Testing2000!", FALSE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
-INSERT INTO Subject (ID, Name, Description) VALUES (NULL, "Computer Science", "");
-INSERT INTO Subject (ID, Name, Description) VALUES (NULL, "English", "");
-INSERT INTO Subject (ID, Name, Description) VALUES (NULL, "Math", "");
-INSERT INTO Subject (ID, Name, Description) VALUES (NULL, "Physics", "");
 
 INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 1, "AI", "");
 INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 1, "Machine Learning", "");

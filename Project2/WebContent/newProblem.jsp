@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="main.java.mindbank.model.User" %>
+<%@ page import="main.java.mindbank.model.Category" %>
+<%@ page import="main.java.mindbank.util.CategoryList" %>
 <%
 	String email = null;
 	Cookie[] cookies = request.getCookies();
@@ -9,6 +13,10 @@
 			}
 		}
 	}
+	
+	User user = (User) request.getAttribute("user");
+	List<Category> categories = (CategoryList) request.getAttribute("categories");
+	int length;
 %>
 <!DOCTYPE html>
 <html>
@@ -55,37 +63,32 @@
 		</nav>
 		<main>
 			<div class="container">
-				<div class="row justify-content-center align-items-center mt-5 mb-4 pt-3 pb-4">
+				<div class="row justify-content-center align-items-center mt-5 pt-3">
 					<div class="col-xs-12 col-sm-4 mb-2">
 						<input class="form-control" type="text" placeholder="Title">
 					</div>
 					<div class="col-xs-12 col-sm-4 mb-2">
-						<select class="browser-default custom-select">
-							<option selected>Select a subject</option>
-							<option>Computer Science</option>
-							<option>English</option>
-							<option>Mathematics</option>
-							<option>Physics</option>
+						<select id="category-select" class="browser-default custom-select">
+							<option value="0" selected>Select a category</option>
+							<%
+								length = categories.size();
+								for (int i = 0; i < length; i++) {
+									Category c = categories.get(i);
+							%>
+								<option value="<%= c.getId() %>"><%= c.getName() %></option>
+							<% } %>
 						</select>
 					</div>
-					<div class="col-xs-12 col-sm-4 mb-2">
-						<select class="browser-default custom-select">
-							<option selected>Select a category</option>
-							<option>Algebra</option>
-							<option>Calculus</option>
-							<option>Combinatorics</option>
-							<option>Geometry</option>
-							<option>Logic</option>
-							<option>Number Theory</option>
-							<option>Trigonometry</option>
-						</select>
-					</div>
-					<div class="list-group test">
-						<div class="form-group test2">
-							<textarea id="editor" class="form-control rounded-1 my-1 py-1 test" rows="10"></textarea>
-						</div>
-						<div class="d-flex justify-content-center align-items-center">
-							<button type="button" class="btn btn-outline-grey waves-effect">Post</button>
+				</div>
+				<div class="row justify-content-center align-items-center mb-5 pb-3 h-100">
+					<div class="col-xs-12 col-sm-8 mb-2">
+						<div class="list-group test">
+							<div class="form-group test2">
+								<textarea id="editor" class="form-control rounded-1 my-1 py-1 test" rows="10"></textarea>
+							</div>
+							<div class="d-flex justify-content-center align-items-center">
+								<button type="button" class="btn btn-outline-grey waves-effect">Save</button>
+							</div>
 						</div>
 					</div>
 				</div>

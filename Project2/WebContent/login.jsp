@@ -22,7 +22,7 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body class="h-100">
-		<div class="container">
+		<div class="d-flex h-100 justify-content-center align-items-center">
 			<form class="text-center p-1" action="login" method="post" novalidate>
 				<p class="h4 mb-4">Log in</p>
 				

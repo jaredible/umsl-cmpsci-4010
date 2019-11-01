@@ -16,13 +16,10 @@ import main.java.mindbank.dao.CategoryDAO;
 import main.java.mindbank.dao.CategoryDAOImpl;
 import main.java.mindbank.dao.ProblemDAO;
 import main.java.mindbank.dao.ProblemDAOImpl;
-import main.java.mindbank.dao.SubjectDAO;
-import main.java.mindbank.dao.SubjectDAOImpl;
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Category;
 import main.java.mindbank.model.Problem;
-import main.java.mindbank.model.Subject;
 import main.java.mindbank.model.User;
 import main.java.mindbank.util.DbConn;
 
@@ -58,11 +55,10 @@ public class HomeServlet extends HttpServlet {
 		try {
 			Connection conn = DbConn.openConn();
 			UserDAO userDAO = new UserDAOImpl(conn);
-			SubjectDAO subjectDAO = new SubjectDAOImpl(conn);
 			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
 
-			User user;
+			User user; // TODO
 			if (email == null) {
 				user = new User();
 				user.setId(0);
@@ -70,12 +66,10 @@ public class HomeServlet extends HttpServlet {
 				user = userDAO.getUser(email);
 			}
 			userDAO.getUser(email);
-			List<Subject> subjects = subjectDAO.getSubjects();
 			List<Category> categories = categoryDAO.getCategories();
 			List<Problem> problems = problemDAO.getProblems();
 
 			request.setAttribute("user", user);
-			request.setAttribute("subjects", subjects);
 			request.setAttribute("categories", categories);
 			request.setAttribute("problems", problems);
 			request.getRequestDispatcher("index.jsp").forward(request, response);

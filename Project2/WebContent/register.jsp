@@ -30,7 +30,7 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body class="h-100">
-		<div class="container">
+		<div class="d-flex h-100 justify-content-center align-items-center">
 			<form class="d-fixed text-center p-1 needs-validation" action="register" method="post" novalidate>
 				<p class="h4 mb-3">Register</p>
 				
