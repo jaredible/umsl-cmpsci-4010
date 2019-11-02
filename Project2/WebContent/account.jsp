@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="main.java.mindbank.util.StringMap" %>
 <%
 	String email = null;
 	Cookie[] cookies = request.getCookies();
@@ -9,6 +11,19 @@
 			}
 		}
 	}
+	
+	Map<String, String> errors = (StringMap) request.getAttribute("errors");
+	String userNameError = null;
+	String firstNameError = null;
+	String lastNameError = null;
+	String emailError = null;
+	
+	if (errors != null) {
+		userNameError = errors.get("userName");
+		firstNameError = errors.get("firstName");
+		lastNameError = errors.get("lastName");
+		emailError = errors.get("email");
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +31,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Account</title>
+		<title>Account | Mindbank</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
@@ -58,24 +73,27 @@
 		<main>
 			<div class="container">
 				<div class="d-flex h-100 justify-content-center align-items-center">
-					<form class="d-fixed text-center p-1 needs-validation" action="account" method="post" novalidate>
-						<p class="h4 mb-3">Your account</p>
-						
+					<form class="d-fixed text-center p-1 needs-validation" action="account" method="post" novalidate>						
 						<div class="form-row">
-							<div class="col-6 mb-3">
-								<input type="text" name="firstName" class="form-control" placeholder="First name" value="${user.firstName}">
-							</div>
-							<div class="col-6 mb-3">
-								<input type="text" name="lastName" class="form-control" placeholder="Last name" value="${user.lastName}">
+							<div class="col-12 my-3">
+								<img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg" class="img-fluid rounded-circle border avatar-pic" alt="example placeholder avatar">
 							</div>
 							<div class="col-12 mb-3">
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text">@</span>
 									</div>
-									<input type="text" name="username" class="form-control is-invalid" placeholder="Username" value="${user.userName}">
+									<input type="text" name="username" class="form-control <% if (userNameError != null) { %>is-invalid<% } %>" placeholder="Username" value="${user.userName}">
+									<% if (userNameError != null) { %><div class="invalid-feedback"><%= userNameError %></div><% } %>
 								</div>
-								<div class="invalid-feedback">This is an error!</div>
+							</div>
+							<div class="col-6 mb-3">
+								<input type="text" name="firstName" class="form-control <% if (firstNameError != null) { %>is-invalid<% } %>" placeholder="First name" value="${user.firstName}">
+								<% if (firstNameError != null) { %><div class="invalid-feedback"><%= firstNameError %></div><% } %>
+							</div>
+							<div class="col-6 mb-3">
+								<input type="text" name="lastName" class="form-control <% if (lastNameError != null) { %>is-invalid<% } %>" placeholder="Last name" value="${user.lastName}">
+								<% if (lastNameError != null) { %><div class="invalid-feedback"><%= lastNameError %></div><% } %>
 							</div>
 							<div class="col-12 mb-3">
 								<div class="input-group">
@@ -96,7 +114,7 @@
 							</div>
 						</div>
 					    
-						<button type="button" class="btn btn-outline-grey waves-effect">Save</button>
+						<button type="submit" class="btn btn-outline-grey waves-effect">Save</button>
 					</form>
 				</div>
 			</div>
@@ -105,7 +123,7 @@
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
-		<script type="text/javascript" color="0,0,0" opacity='0.7' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
+		<script type="text/javascript" color="0,0,0" opacity='0.3' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
 		<script src="js/main.js"></script>
 	</body>
 </html>

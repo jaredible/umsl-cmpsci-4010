@@ -82,3 +82,7 @@ textarea {
 	border: 1px solid #d32f2f !important;
 	box-shadow: none !important;
 }
+
+.avatar-pic {
+	width: 150px;
+}
