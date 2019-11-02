@@ -72,3 +72,4 @@ INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 4, "Relati
 INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 4, "Quantum Mechanics", "");
 
 INSERT INTO Problem (ID, CategoryID, Title, Content, Edited, CreatedByUserID, CreatedTimestamp) VALUES (NULL, 6, "Proposal", "This is a test.", FALSE, 1, CURRENT_TIMESTAMP);
+INSERT INTO Problem (ID, CategoryID, Title, Content, Edited, CreatedByUserID, CreatedTimestamp) VALUES (NULL, 7, "Simple Equation", "$$ 2+2=4 $$", FALSE, 1, CURRENT_TIMESTAMP);

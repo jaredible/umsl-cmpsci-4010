@@ -35,14 +35,19 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String email = (String) request.getSession().getAttribute("email");
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie c : cookies) {
 				if (c.getName().equals("email")) {
-					response.sendRedirect(request.getContextPath());
-					return;
+					email = c.getValue();
 				}
 			}
+		}
+		
+		if (email != null) {
+			response.sendRedirect(request.getContextPath());
+			return;
 		}
 
 		request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -54,9 +59,11 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String remember = request.getParameter("remember");
 
 		System.out.println("email: " + email);
 		System.out.println("password: " + password);
+		System.out.println("remember: " + remember);
 
 		try {
 			UserDAO userDAO = new UserDAOImpl();
@@ -78,9 +85,12 @@ public class LoginServlet extends HttpServlet {
 				userDAO.setLogin(user);
 
 				request.getSession().setAttribute("email", email);
-				Cookie cookie = new Cookie("email", email);
-				cookie.setMaxAge(60 * 30); // 30 minutes
-				response.addCookie(cookie);
+
+				if (remember != null && remember == "on") {
+					Cookie cookie = new Cookie("email", email);
+					cookie.setMaxAge(60 * 30); // 30 minutes
+					response.addCookie(cookie);
+				}
 
 				response.sendRedirect(request.getContextPath());
 			} else {

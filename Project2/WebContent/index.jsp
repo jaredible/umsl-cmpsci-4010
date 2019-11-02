@@ -27,7 +27,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Mindbank | Home</title>
+		<title>Home | Mindbank</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
@@ -49,9 +49,8 @@
 							<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>
 						</li>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Jaredible </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
-								<a class="dropdown-item" href="account">My profile</a>
 								<a class="dropdown-item" href="account">My account</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
@@ -69,8 +68,8 @@
 		</nav>
 		<main>
 			<div class="container">
-				<div class="row justify-content-center align-items-center">
-					<div class="col-xs-12 col-sm-6 col-md-4 mt-2 mb-2">
+				<div class="row justify-content-center align-items-center my-2">
+					<div class="col-xs-12 col-sm-6 col-md-4 mb-2">
 						<select id="category-select" class="browser-default custom-select">
 							<option value="0" selected>Select a category</option>
 							<%
@@ -82,41 +81,43 @@
 							<% } %>
 						</select>
 					</div>
-					<% if (problems.size() > 0) { %>
-						<div class="list-group test">
-							<%
-								length = problems.size();
-								for (int i = 0; i < length; i++) {
-									Problem p = problems.get(i);
-									String footer = "Posted by Jaredible 3 days ago";
-							%>
-								<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test <% if (i == 0) { %>rounded-top<% } else if (i == length - 1) { %>rounded-bottom<% } %>">
-									<div class="d-flex w-100 justify-content-between align-items-center">
-										<h5 class="mt-1 mb-1 p1-1 pl-2"><%= p.getTitle() == null ? "" : p.getTitle() %></h5>
-										<% if (user != null && p.getCreatedByUserId() == user.getId()) { %>
-										<div class="d-flex justify-content-between align-items-center pr-2">
-											<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Edit</button>
-											<!-- Hamburger dropdown button? <button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Delete</button> -->
+					<div class="col-12">
+						<% if (problems.size() > 0) { %>
+							<div class="list-group test">
+								<%
+									length = problems.size();
+									for (int i = 0; i < length; i++) {
+										Problem p = problems.get(i);
+										String footer = "Posted by Jaredible 3 days ago";
+								%>
+									<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test<% if (i == 0) { %> rounded-top<% } if (i == length - 1) { %> rounded-bottom<% } %>">
+										<div class="d-flex w-100 justify-content-between align-items-center">
+											<h5 class="mt-1 mb-1 p1-1 pl-2"><%= p.getTitle() == null ? "" : p.getTitle() %></h5>
+											<% if (user != null && p.getCreatedByUserId() == user.getId()) { %>
+											<div class="d-flex justify-content-between align-items-center">
+												<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Edit</button>
+												<!-- Hamburger dropdown button? <button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Delete</button> -->
+											</div>
+											<% } %>
 										</div>
-										<% } %>
+										<p class="pl-2 pr-2 mb-1"><%= p.getContent() %></p>
+										<div class="d-flex w-100 justify-content-left align-items-center">
+											<small class="mb-1 pl-2"><%= footer %><% if (p.isEdited()) { %> - <i>edited</i><% } %></small>
+										</div>
 									</div>
-									<p class="pl-2 pr-2 mb-1">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
-									<div class="d-flex w-100 justify-content-left align-items-center">
-										<small class="mb-1 pl-2"><%= footer %><% if (p.isEdited()) { %> - <i>edited</i><% } %></small>
-									</div>
-								</div>
-							<% } %>
-							<nav class="my-3 p-1">
-								<ul class="pagination pg-blue justify-content-center align-items-center mb-0 p-0">
-									<li class="page-item"><a class="page-link" tabindex="-1">Previous</a></li>
-									<li class="page-item"><a class="page-link">1</a></li>
-									<li class="page-item"><a class="page-link">2</a></li>
-									<li class="page-item"><a class="page-link">3</a></li>
-									<li class="page-item"><a class="page-link">&nbsp;&nbsp;Next&nbsp;&nbsp;</a></li>
-								</ul>
-							</nav>
-						</div>
-					<% } %>
+								<% } %>
+								<!--<nav class="my-3 p-1">
+									<ul class="pagination pg-blue justify-content-center align-items-center mb-0 p-0">
+										<li class="page-item"><a class="page-link" tabindex="-1">Previous</a></li>
+										<li class="page-item"><a class="page-link">1</a></li>
+										<li class="page-item"><a class="page-link">2</a></li>
+										<li class="page-item"><a class="page-link">3</a></li>
+										<li class="page-item"><a class="page-link">&nbsp;&nbsp;Next&nbsp;&nbsp;</a></li>
+									</ul>
+								</nav>-->
+							</div>
+						<% } %>
+					</div>
 				</div>
 			</div>
 		</main>

@@ -15,7 +15,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Login</title>
+		<title>Login | Mindbank</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
@@ -37,10 +37,10 @@
 					</div>
 				</div>
 												
-				<div class="d-flex justify-content-between align-items-center">
+				<div class="d-flex justify-content-around">
         			<div>
             			<div class="custom-control custom-checkbox">
-                			<input type="checkbox" name="remember" class="custom-control-input">
+                			<input id="remember" type="checkbox" class="custom-control-input" name="remember">
                 			<label class="custom-control-label" for="remember">Remember me</label>
             			</div>
         			</div>

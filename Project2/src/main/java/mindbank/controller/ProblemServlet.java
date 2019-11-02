@@ -20,7 +20,7 @@ import main.java.mindbank.util.DbConn;
 /**
  * Servlet implementation class ProblemServlet
  */
-@WebServlet("/problem")
+@WebServlet("/problem/*")
 public class ProblemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -49,19 +49,22 @@ public class ProblemServlet extends HttpServlet {
 		System.out.println(request.getParameter("id"));
 
 		if (email == null) {
-			response.sendRedirect("login");
-			return;
+			//response.sendRedirect("login");
+			//return;
 		}
 
 		try {
 			Connection conn = DbConn.openConn();
 			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 			// TODO: get user?
+			
+			String test = (String) request.getSession().getAttribute("email");
+			System.out.println(test);
 
 			List<Category> categories = categoryDAO.getCategories();
 
 			request.setAttribute("categories", categories);
-			request.getRequestDispatcher("newProblem.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/problem.jsp").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

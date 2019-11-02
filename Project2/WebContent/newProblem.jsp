@@ -81,13 +81,13 @@
 					</div>
 				</div>
 				<div class="row justify-content-center align-items-center">
-					<div class="col-xs-12 col-sm-8 mb-2">
+					<div class="col-xs-12 col-sm-8">
 						<div class="list-group test">
-							<div class="form-group test2">
+							<div class="d-flex justify-content-center align-items-center">
 								<textarea id="editor" class="form-control rounded-1 test" rows="10"></textarea>
 							</div>
 							<div class="d-flex justify-content-center align-items-center">
-								<button type="button" class="btn btn-outline-grey waves-effect">Save</button>
+								<button type="button" class="btn btn-outline-grey waves-effect">Post</button>
 							</div>
 						</div>
 					</div>

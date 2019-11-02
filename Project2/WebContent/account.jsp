@@ -73,48 +73,59 @@
 		<main>
 			<div class="container">
 				<div class="d-flex h-100 justify-content-center align-items-center">
-					<form class="d-fixed text-center p-1 needs-validation" action="account" method="post" novalidate>						
-						<div class="form-row">
-							<div class="col-12 my-3">
-								<img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg" class="img-fluid rounded-circle border avatar-pic" alt="example placeholder avatar">
-							</div>
-							<div class="col-12 mb-3">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">@</span>
-									</div>
-									<input type="text" name="username" class="form-control <% if (userNameError != null) { %>is-invalid<% } %>" placeholder="Username" value="${user.userName}">
-									<% if (userNameError != null) { %><div class="invalid-feedback"><%= userNameError %></div><% } %>
+					<form class="d-fixed p-1 needs-validation" action="account" method="post" novalidate>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="profile-img text-center">
+									<img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg" class="img-fluid rounded-circle border avatar-pic" alt="example placeholder avatar">
 								</div>
 							</div>
-							<div class="col-6 mb-3">
-								<input type="text" name="firstName" class="form-control <% if (firstNameError != null) { %>is-invalid<% } %>" placeholder="First name" value="${user.firstName}">
-								<% if (firstNameError != null) { %><div class="invalid-feedback"><%= firstNameError %></div><% } %>
-							</div>
-							<div class="col-6 mb-3">
-								<input type="text" name="lastName" class="form-control <% if (lastNameError != null) { %>is-invalid<% } %>" placeholder="Last name" value="${user.lastName}">
-								<% if (lastNameError != null) { %><div class="invalid-feedback"><%= lastNameError %></div><% } %>
-							</div>
-							<div class="col-12 mb-3">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" style="background-color: #78e08f;"><i class="fas fa-check"></i></span>
-									</div>
-									<input type="email" name="email" class="form-control" placeholder="E-mail" value="${user.email}" disabled>
+							<div class="col-md-6">
+								<div class="profile-head">
+									<h5>Jared Diehl</h5>
+									<h6>Web Developer</h6>
+									<ul id="tab" class="nav nav-tabs" role="tablist">
+										<li class="nav-item">
+											<a id="about-tab" href="#about" class="nav-link active show" data-toggle="tab" role="tab">Test1</a>
+										</li>
+										<li class="nav-item">
+											<a id="stats-tab" href="#stats" class="nav-link" data-toggle="tab" role="tab">Test2</a>
+										</li>
+									</ul>
 								</div>
 							</div>
-							<div class="col-12">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" style="background-color: none;"><i class="fas fa-check"></i></span>
-									</div>
-									<input type="text" name="phoneNumber" class="form-control" placeholder="Phone number">
-								</div>
-								<small class="form-text text-muted">Optional - for two-step authentication</small>
+							<div class="col-md-2">
+								<button type="submit" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Edit</button>
 							</div>
 						</div>
-					    
-						<button type="submit" class="btn btn-outline-grey waves-effect">Save</button>
+						<div class="row">
+							<div class="col-md-4">
+							</div>
+							<div class="col-md-8">
+								<div id="tab-content" class="tab-content profile-content">
+									<div id="about" class="tab-pane fade" role="tabpanel">
+										<div class="row">
+											<div class="col-md-6">
+												<label>Username</label>
+											</div>
+											<div class="col-md-6">
+												<p>Jaredible</p>
+											</div>
+										</div>
+									</div>
+									<div id="stats" class="tab-pane fade" role="tabpanel">
+										<div class="row">
+											<div class="col-md-6">
+												<label>Test</label>
+											</div>
+											<div class="col-md-6">
+												<p>Testing</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 			</div>
