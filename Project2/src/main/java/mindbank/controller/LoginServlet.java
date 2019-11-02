@@ -11,9 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
+import main.java.mindbank.dao.AuthDAO;
+import main.java.mindbank.dao.AuthDAOImpl;
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
+import main.java.mindbank.model.AuthToken;
 import main.java.mindbank.model.User;
+import main.java.mindbank.util.HashGenerationException;
+import main.java.mindbank.util.HashGeneratorUtil;
 import main.java.mindbank.util.StringMap;
 import main.java.mindbank.util.Util;
 
@@ -44,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 				}
 			}
 		}
-		
+
 		if (email != null) {
 			response.sendRedirect(request.getContextPath());
 			return;
@@ -82,14 +89,37 @@ public class LoginServlet extends HttpServlet {
 			user.setLoginTimestamp(Util.getGMTNowTime());
 
 			if (errors.isEmpty()) {
+				user = userDAO.getUser(email);
 				userDAO.setLogin(user);
 
-				request.getSession().setAttribute("email", email);
+				request.getSession().setAttribute("user", user);
 
 				if (remember != null && remember.equals("on")) {
-					Cookie cookie = new Cookie("email", email);
-					cookie.setMaxAge(60 * 30);
-					response.addCookie(cookie);
+					AuthToken newToken = new AuthToken();
+
+					String selector = RandomStringUtils.randomAlphanumeric(12);
+					String rawValidator = RandomStringUtils.randomAlphanumeric(64);
+
+					String hashedValidator = HashGeneratorUtil.generateSHA256(rawValidator);
+
+					newToken.setSelector(selector);
+					newToken.setValidator(hashedValidator);
+
+					newToken.setUserId(user.getId());
+
+					AuthDAO authDao = new AuthDAOImpl();
+					authDao.createWithToken(newToken);
+
+					int cookieMaxAge = 60 * 60 * 24;
+
+					Cookie cookieSelector = new Cookie("selector", selector);
+					cookieSelector.setMaxAge(cookieMaxAge);
+
+					Cookie cookieValidator = new Cookie("validator", rawValidator);
+					cookieValidator.setMaxAge(cookieMaxAge);
+
+					response.addCookie(cookieSelector);
+					response.addCookie(cookieValidator);
 				}
 
 				response.sendRedirect(request.getContextPath());
@@ -98,6 +128,8 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute("user", user);
 				getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
 			}
+		} catch (HashGenerationException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

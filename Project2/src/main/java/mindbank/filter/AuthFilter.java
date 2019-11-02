@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -30,7 +29,7 @@ import main.java.mindbank.util.HashGeneratorUtil;
 /**
  * Servlet Filter implementation class AuthFilter
  */
-@WebFilter("/auth")
+@WebFilter(urlPatterns = { "account", "problem", "settings" })
 public class AuthFilter implements Filter {
 
 	/**
@@ -115,9 +114,16 @@ public class AuthFilter implements Filter {
 			}
 		}
 
+		String uri = req.getRequestURI();
+		if (uri.endsWith("css") || uri.endsWith("js")) {
+			chain.doFilter(req, res);
+			return;
+		}
+
+		System.out.println(loggedIn);
+
 		if (!loggedIn) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+			res.sendRedirect("login");
 		} else {
 			chain.doFilter(req, res);
 		}
