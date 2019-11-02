@@ -19,7 +19,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
-		<link rel="stylesheet" href="css/styles.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 	</head>
 	<body class="h-100">
 		<div class="d-flex h-100 justify-content-center align-items-center">
@@ -60,7 +60,7 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
-		<script type="text/javascript" color="0,0,0" opacity='0.3' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
-		<script src="js/main.js"></script>
+		<script type="text/javascript" color="0,0,0" opacity='0.3' zIndex="-2" count="99" src="${pageContext.request.contextPath}/js/canvas-nest.js"></script>
+		<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	</body>
 </html>

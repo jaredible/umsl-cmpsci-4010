@@ -35,22 +35,32 @@ public class ProblemServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = null;
+		String sessionEmail = (String) request.getSession().getAttribute("email");
+		String cookieEmail = null;
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie c : cookies) {
 				if (c.getName().equals("email")) {
-					email = c.getValue();
+					cookieEmail = c.getValue();
 				}
 			}
 		}
 		
-		System.out.println(request.getParameter("edit"));
-		System.out.println(request.getParameter("id"));
-
-		if (email == null) {
-			//response.sendRedirect("login");
-			//return;
+		String problemId = request.getParameter("id");
+		String edit = request.getParameter("edit");
+		System.out.println(problemId);
+		System.out.println(edit);
+		
+		if (sessionEmail == null) {
+			// user is not logged in
+		} else {
+			// a user is logged in, and without remember
+		}
+		
+		if (cookieEmail == null) {
+			// if this doesn't exist, then check the session
+		} else {
+			// a user is logged in, and with remember
 		}
 
 		try {

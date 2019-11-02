@@ -6,7 +6,7 @@
 <%@ page import="main.java.mindbank.model.Problem" %>
 <%@ page import="main.java.mindbank.util.ProblemList" %>
 <%
-	String email = null;
+	String email = (String) request.getSession().getAttribute("email");
 	Cookie[] cookies = request.getCookies();
 	if (cookies != null) {
 		for (Cookie c : cookies) {

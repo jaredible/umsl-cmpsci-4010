@@ -3,7 +3,9 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
+	
 	<display-name>Mindbank</display-name>
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -12,7 +14,19 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	
 	<error-page>
 		<location>/error.html</location>
 	</error-page>
+	
+	<filter>
+		<filter-name>AuthFilter</filter-name>
+		<filter-class>main.java.mindbank.filter.AuthFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>AuthFilter</filter-name>
+		<url-pattern>/*(^css|js)$</url-pattern>
+	</filter-mapping>
+	
 </web-app>

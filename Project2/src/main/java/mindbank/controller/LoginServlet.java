@@ -86,9 +86,9 @@ public class LoginServlet extends HttpServlet {
 
 				request.getSession().setAttribute("email", email);
 
-				if (remember != null && remember == "on") {
+				if (remember != null && remember.equals("on")) {
 					Cookie cookie = new Cookie("email", email);
-					cookie.setMaxAge(60 * 30); // 30 minutes
+					cookie.setMaxAge(60 * 30);
 					response.addCookie(cookie);
 				}
 
@@ -96,7 +96,7 @@ public class LoginServlet extends HttpServlet {
 			} else {
 				request.setAttribute("errors", errors);
 				request.setAttribute("user", user);
-				request.getRequestDispatcher("login.jsp").forward(request, response); // TODO: getServletContext()?
+				getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

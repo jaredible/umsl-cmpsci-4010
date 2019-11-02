@@ -42,24 +42,25 @@ public class HomeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = null;
+		String sessionEmail = (String) request.getSession().getAttribute("email");
+		String cookieEmail = null;
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie c : cookies) {
 				if (c.getName().equals("email")) {
-					email = c.getValue();
+					cookieEmail = c.getValue();
 				}
 			}
 		}
-
+		
 		try {
 			Connection conn = DbConn.openConn();
 			UserDAO userDAO = new UserDAOImpl(conn);
 			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
 
-			User user = userDAO.getUser(email);
-			userDAO.getUser(email);
+			User user = userDAO.getUser(sessionEmail);
+			userDAO.getUser(sessionEmail);
 			List<Category> categories = categoryDAO.getCategories();
 			List<Problem> problems = problemDAO.getProblems();
 
