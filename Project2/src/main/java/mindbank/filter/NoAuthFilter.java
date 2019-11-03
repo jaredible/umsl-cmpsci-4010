@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 /**
  * Servlet Filter implementation class NoAuthFilter
  */
-@WebFilter(urlPatterns = { "login", "register" })
+@WebFilter(urlPatterns = { "/login", "/register" })
 public class NoAuthFilter implements Filter {
 
 	/**
@@ -31,6 +31,7 @@ public class NoAuthFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		System.out.println("NoAuthFilter");
 		chain.doFilter(request, response);
 	}
 

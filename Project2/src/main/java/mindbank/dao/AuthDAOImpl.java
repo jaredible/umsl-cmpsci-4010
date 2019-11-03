@@ -12,9 +12,10 @@ import main.java.mindbank.util.DbConn;
 public class AuthDAOImpl implements AuthDAO {
 
 	private Connection connection;
-	private PreparedStatement findBySelector;
+	private PreparedStatement getBySelector;
 	private PreparedStatement createWithToken;
 	private PreparedStatement updateWithToken;
+	private PreparedStatement deleteBySelector;
 
 	public AuthDAOImpl() throws SQLException {
 		this(DbConn.openConn());
@@ -27,16 +28,17 @@ public class AuthDAOImpl implements AuthDAO {
 	}
 
 	private void init() throws SQLException {
-		findBySelector = connection.prepareStatement("SELECT * FROM Auth WHERE Selector = ?");
+		getBySelector = connection.prepareStatement("SELECT * FROM Auth WHERE Selector = ?");
 		createWithToken = connection.prepareStatement("INSERT INTO Auth (ID, UserID, Selector, Validator) VALUES (?, ?, ?, ?)");
 		updateWithToken = connection.prepareStatement("UPDATE Auth SET Selector = ?, Validator = ? WHERE ID = ?");
+		deleteBySelector = connection.prepareStatement("DELETE FROM Auth WHERE ID = ?");
 	}
 
 	@Override
-	public AuthToken findBySelector(String selector) {
+	public AuthToken getBySelector(String selector) {
 		try {
-			findBySelector.setString(1, selector);
-			ResultSet rs = findBySelector.executeQuery();
+			getBySelector.setString(1, selector);
+			ResultSet rs = getBySelector.executeQuery();
 			if (rs.next()) {
 				AuthToken at = new AuthToken();
 				at.setId(rs.getInt("ID"));
@@ -77,10 +79,29 @@ public class AuthDAOImpl implements AuthDAO {
 		}
 	}
 
+	@Override
+	public void deleteById(int tokenId) {
+		try {
+			deleteBySelector.setInt(1, tokenId);
+			deleteBySelector.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	protected void finalize() {
 		try {
-			if (!findBySelector.isClosed()) {
-				findBySelector.close();
+			if (!deleteBySelector.isClosed()) {
+				deleteBySelector.close();
+			}
+			if (!updateWithToken.isClosed()) {
+				updateWithToken.close();
+			}
+			if (!createWithToken.isClosed()) {
+				createWithToken.close();
+			}
+			if (!getBySelector.isClosed()) {
+				getBySelector.close();
 			}
 			if (!connection.isClosed()) {
 				connection.close();

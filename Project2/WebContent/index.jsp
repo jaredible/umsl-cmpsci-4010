@@ -70,7 +70,7 @@
 			<div class="container">
 				<div class="row justify-content-center align-items-center my-2">
 					<div class="col-xs-12 col-sm-6 col-md-4 mb-2">
-						<select id="category-select" class="browser-default custom-select">
+						<select id="category-select" class="browser-default custom-select" autofocus>
 							<option value="0" selected>Select a category</option>
 							<%
 								length = categories.size();

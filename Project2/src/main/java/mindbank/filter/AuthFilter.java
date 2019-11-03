@@ -29,7 +29,7 @@ import main.java.mindbank.util.HashGeneratorUtil;
 /**
  * Servlet Filter implementation class AuthFilter
  */
-@WebFilter(urlPatterns = { "account", "problem", "settings" })
+@WebFilter(urlPatterns = { "/account", "/logout", "/problem", "/settings" })
 public class AuthFilter implements Filter {
 
 	/**
@@ -71,7 +71,7 @@ public class AuthFilter implements Filter {
 			if (selector != null && rawValidator != null) {
 				try {
 					AuthDAO authDAO = new AuthDAOImpl();
-					AuthToken token = authDAO.findBySelector(selector);
+					AuthToken token = authDAO.getBySelector(selector);
 
 					if (token != null) {
 						String hashedValidatorDatabase = token.getValidator();
@@ -112,12 +112,6 @@ public class AuthFilter implements Filter {
 					e.printStackTrace();
 				}
 			}
-		}
-
-		String uri = req.getRequestURI();
-		if (uri.endsWith("css") || uri.endsWith("js")) {
-			chain.doFilter(req, res);
-			return;
 		}
 
 		System.out.println(loggedIn);

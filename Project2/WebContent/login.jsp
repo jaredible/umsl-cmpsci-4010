@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Map" %>
 <%@ page import="main.java.mindbank.util.StringMap" %>
+<%@ page import="main.java.mindbank.model.User" %>
 <%
 	Map<String, String> errors = (StringMap) request.getAttribute("errors");
 	String error = null;
@@ -8,6 +9,8 @@
 	if (errors != null) {
 		error = errors.get("error");
 	}
+	
+	User user = (User) request.getAttribute("user");
 %>
 <!DOCTYPE html>
 <html class="h-100">
@@ -30,7 +33,7 @@
 				
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input type="email" name="email" class="form-control" placeholder="E-mail" value="${user.email}">
+						<input type="email" name="email" class="form-control" placeholder="E-mail" value="${user.email}" autofocus>
 					</div>
 					<div class="col-12 mb-3">
 						<input type="password" name="password" class="form-control" placeholder="Password">

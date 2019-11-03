@@ -36,7 +36,7 @@
 				
 				<div class="form-row">
 					<div class="col-6 mb-3">
-						<input type="text" name="firstName" class="form-control <% if (firstNameError != null) { %>is-invalid<% } %>" placeholder="First name" value="${user.firstName}">
+						<input type="text" name="firstName" class="form-control <% if (firstNameError != null) { %>is-invalid<% } %>" placeholder="First name" value="${user.firstName}" autofocus>
 						<% if (firstNameError != null) { %><div class="invalid-feedback"><%= firstNameError %></div><% } %>
 					</div>
 					<div class="col-6 mb-3">
