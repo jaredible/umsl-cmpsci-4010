@@ -42,21 +42,6 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = (String) request.getSession().getAttribute("email");
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie c : cookies) {
-				if (c.getName().equals("email")) {
-					email = c.getValue();
-				}
-			}
-		}
-
-		if (email != null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}
-
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 

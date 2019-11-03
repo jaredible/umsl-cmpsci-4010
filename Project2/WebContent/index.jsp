@@ -6,17 +6,8 @@
 <%@ page import="main.java.mindbank.model.Problem" %>
 <%@ page import="main.java.mindbank.util.ProblemList" %>
 <%
-	String email = (String) request.getSession().getAttribute("email");
-	Cookie[] cookies = request.getCookies();
-	if (cookies != null) {
-		for (Cookie c : cookies) {
-			if (c.getName().equals("email")) {
-				email = c.getValue();
-			}
-		}
-	}
-	
-	User user = (User) request.getAttribute("user");
+	User user = (User) session.getAttribute("user");
+	boolean loggedIn = session != null && user != null;
 	List<Category> categories = (CategoryList) request.getAttribute("categories");
 	ProblemList problems = (ProblemList) request.getAttribute("problems");
 	int length;
@@ -41,7 +32,7 @@
 			</button>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
-					<% if (email != null) { %>
+					<% if (loggedIn) { %>
 						<li class="nav-item dropdown">
 							<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New problem </a>
 						</li>

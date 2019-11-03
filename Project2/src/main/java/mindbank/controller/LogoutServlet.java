@@ -33,6 +33,8 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			request.getSession().removeAttribute("user");
+
 			Cookie[] cookies = request.getCookies();
 
 			if (cookies != null) {

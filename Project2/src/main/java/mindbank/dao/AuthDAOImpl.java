@@ -28,10 +28,23 @@ public class AuthDAOImpl implements AuthDAO {
 	}
 
 	private void init() throws SQLException {
-		getBySelector = connection.prepareStatement("SELECT * FROM Auth WHERE Selector = ?");
 		createWithToken = connection.prepareStatement("INSERT INTO Auth (ID, UserID, Selector, Validator) VALUES (?, ?, ?, ?)");
+		getBySelector = connection.prepareStatement("SELECT * FROM Auth WHERE Selector = ?");
 		updateWithToken = connection.prepareStatement("UPDATE Auth SET Selector = ?, Validator = ? WHERE ID = ?");
 		deleteBySelector = connection.prepareStatement("DELETE FROM Auth WHERE ID = ?");
+	}
+
+	@Override
+	public void createWithToken(AuthToken authToken) {
+		try {
+			createWithToken.setNull(1, Types.INTEGER);
+			createWithToken.setInt(2, authToken.getUserId());
+			createWithToken.setString(3, authToken.getSelector());
+			createWithToken.setString(4, authToken.getValidator());
+			createWithToken.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -52,19 +65,6 @@ public class AuthDAOImpl implements AuthDAO {
 		}
 
 		return null;
-	}
-
-	@Override
-	public void createWithToken(AuthToken authToken) {
-		try {
-			createWithToken.setNull(1, Types.INTEGER);
-			createWithToken.setInt(2, authToken.getUserId());
-			createWithToken.setString(3, authToken.getSelector());
-			createWithToken.setString(4, authToken.getValidator());
-			createWithToken.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
