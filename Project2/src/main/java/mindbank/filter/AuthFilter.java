@@ -27,7 +27,7 @@ import main.java.mindbank.util.HashGenerator;
 /**
  * Servlet Filter implementation class AuthFilter
  */
-@WebFilter(urlPatterns = { "/account", "/logout", "/problem", "/settings" })
+@WebFilter(urlPatterns = { "/account", "/logout", "/problem", "/profile", "/security", "/settings" })
 public class AuthFilter implements Filter {
 
 	/**

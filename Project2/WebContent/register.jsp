@@ -3,15 +3,11 @@
 <%@ page import="main.java.mindbank.util.StringMap" %>
 <%
 Map<String, String> errors = (StringMap) request.getAttribute("errors");
-String firstNameError = null;
-String lastNameError = null;
 String emailError = null;
 String passwordError = null;
 String confirmError = null;
 
 if (errors != null) {
-	firstNameError = errors.get("firstName");
-	lastNameError = errors.get("lastName");
 	emailError = errors.get("email");
 	passwordError = errors.get("password");
 	confirmError = errors.get("confirm");
@@ -37,14 +33,6 @@ if (errors != null) {
 						<p class="h4 mb-3">Register</p>
 						
 						<div class="form-row">
-							<div class="col-6 mb-3">
-								<input class="form-control <% if (firstNameError != null) { %>is-invalid<% } %>" type="text" name="firstName" placeholder="First name" value="${firstName}">
-								<% if (firstNameError != null) { %><div class="invalid-feedback"><%= firstNameError %></div><% } %>
-							</div>
-							<div class="col-6 mb-3">
-								<input class="form-control <% if (lastNameError != null) { %>is-invalid<% } %>" type="text" name="lastName" placeholder="Last name" value="${lastName}">
-								<% if (lastNameError != null) { %><div class="invalid-feedback"><%= lastNameError %></div><% } %>
-							</div>
 							<div class="col-12 mb-3">
 								<input class="form-control <% if (emailError != null) { %>is-invalid<% } %>" type="email" name="email" placeholder="E-mail" value="${email}">
 								<% if (emailError != null) { %><div class="invalid-feedback"><%= emailError %></div><% } %>
@@ -63,7 +51,7 @@ if (errors != null) {
 							</div>
 						</div>
 					    
-					    <button class="btn btn-dark my-3 btn-block" type="submit">Register</button>
+					    <button class="btn btn-dark my-3 btn-block rounded" type="submit">Register</button>
 					    
 					    <p>Already a member?
 		        			<a href="login">Login</a>

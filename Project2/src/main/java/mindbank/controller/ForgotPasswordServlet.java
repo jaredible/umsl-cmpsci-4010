@@ -3,7 +3,6 @@ package main.java.mindbank.controller;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ForgotPasswordServlet
  */
-@WebServlet("/forgotPassword")
+@WebServlet("/forgot")
 public class ForgotPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,17 +25,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie c : cookies) {
-				if (c.getName().equals("email")) {
-					request.getRequestDispatcher("forgotPassword.jsp").forward(request, response);
-					return;
-				}
-			}
-		}
-
-		response.sendRedirect("login");
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

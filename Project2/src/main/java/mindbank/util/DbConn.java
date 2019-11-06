@@ -104,7 +104,7 @@ public class DbConn {
 					}
 				}
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -123,13 +123,6 @@ public class DbConn {
 	}
 
 	public static void main(String[] args) {
-		try {
-			Connection conn = openConn();
-			initDb();
-			System.out.println("" + getDbExists());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 }

@@ -43,8 +43,6 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String firstName = request.getParameter("firstName");
-			String lastName = request.getParameter("lastName");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String confirm = request.getParameter("confirm");
@@ -53,12 +51,6 @@ public class RegisterServlet extends HttpServlet {
 
 			Map<String, String> errors = new StringMap();
 
-			if (!validFirstname(firstName)) {
-				errors.put("firstName", "Invalid first name!");
-			}
-			if (!validLastname(lastName)) {
-				errors.put("lastName", "Invalid last name!");
-			}
 			if (!validEmail(email)) {
 				errors.put("email", "Invalid e-mail!");
 			} else if (userDAO.getEmailExists(email)) {
@@ -76,8 +68,6 @@ public class RegisterServlet extends HttpServlet {
 
 				user.setRoleId(EnumRole.DEFAULT.getId());
 				user.setEmail(email);
-				user.setFirstName(firstName);
-				user.setLastName(lastName);
 				user.setPasswordHash(HashGenerator.generateSHA256(password));
 				userDAO.addUser(user);
 				user = userDAO.getUserByEmail(email);
@@ -86,8 +76,6 @@ public class RegisterServlet extends HttpServlet {
 
 				response.sendRedirect("login");
 			} else {
-				request.setAttribute("firstName", firstName);
-				request.setAttribute("lastName", lastName);
 				request.setAttribute("email", email);
 				request.setAttribute("password", password);
 				request.setAttribute("confirm", confirm);
@@ -99,20 +87,12 @@ public class RegisterServlet extends HttpServlet {
 		}
 	}
 
-	private boolean validFirstname(String firstName) {
-		return firstName.matches("[a-zA-Z]+");
-	}
-
-	private boolean validLastname(String lastName) {
-		return lastName.matches("[a-zA-Z]+");
-	}
-
 	private boolean validEmail(String email) {
-		return email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
+		return email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$") && email.length() <= 50;
 	}
 
 	private boolean validPassword(String password) {
-		return !password.isEmpty(); // password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}");
+		return password.matches("(?=.*[0-9])(?=\\S+$).{8,}");
 	}
 
 	private boolean passwordsMatch(String password, String confirm) {

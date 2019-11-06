@@ -27,7 +27,7 @@ String remember = (String) request.getAttribute("remember");
 	<body>
 		<div class="wrapper">
 			<div class="main">
-				<div class="container">
+				<div class="container test5">
 					<form class="text-center" action="login" method="post" novalidate>
 						<p class="h4 mb-4">Log in</p>
 						
@@ -42,7 +42,7 @@ String remember = (String) request.getAttribute("remember");
 							</div>
 						</div>
 														
-						<div class="d-flex justify-content-around">
+						<div class="d-flex justify-content-around align-items-center">
 		        			<div>
 		            			<div class="custom-control custom-checkbox">
 		                			<input id="remember" class="custom-control-input" type="checkbox" name="remember" <% if (remember != null && remember.equals("on")) { %>checked<% } %>>
@@ -50,11 +50,11 @@ String remember = (String) request.getAttribute("remember");
 		            			</div>
 		        			</div>
 		       			 	<div>
-		            			<a href="forgotPassword">Forgot password?</a>
+		            			<a href="forgot">Forgot password?</a>
 		        			</div>
 		    			</div>
 					    
-					    <button class="btn btn-dark my-4 btn-block" type="submit">Log in</button>
+					    <button class="btn btn-dark my-4 btn-block rounded" type="submit">Log in</button>
 					    
 					    <p>Not a member?
 		        			<a href="register">Register</a>

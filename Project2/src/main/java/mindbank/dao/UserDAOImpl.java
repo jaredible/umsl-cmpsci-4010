@@ -12,6 +12,8 @@ import main.java.mindbank.util.DbConn;
 public class UserDAOImpl implements UserDAO {
 
 	private Connection connection;
+	private PreparedStatement updateNameById;
+	private PreparedStatement updateBioById;
 	private PreparedStatement getEmailExists;
 	private PreparedStatement isValidCredentials;
 	private PreparedStatement updateLoginTimestampById;
@@ -34,14 +36,38 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	private void init() throws SQLException {
+		updateNameById = connection.prepareStatement("UPDATE User SET Name = ? WHERE ID = ?;");
+		updateBioById = connection.prepareStatement("UPDATE User SET Bio = ? WHERE ID = ?;");
 		getEmailExists = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
 		isValidCredentials = connection.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
 		updateLoginTimestampById = connection.prepareStatement("UPDATE User SET LoginTimestamp = CURRENT_TIMESTAMP WHERE ID = ?;");
-		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, Name, Bio, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		getUserById = connection.prepareStatement("SELECT * FROM User WHERE ID = ?;");
 		getUserByEmail = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
 		updateUserNameById = connection.prepareStatement("UPDATE User SET UserName = ? WHERE ID = ?");
 		deleteUserById = connection.prepareStatement("DELETE FROM User WHERE ID = ?;");
+	}
+
+	@Override
+	public void updateNameById(int id, String name) {
+		try {
+			updateNameById.setString(1, name);
+			updateNameById.setInt(2, id);
+			updateNameById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateBioById(int id, String bio) {
+		try {
+			updateBioById.setString(1, bio);
+			updateBioById.setInt(2, id);
+			updateBioById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -92,8 +118,8 @@ public class UserDAOImpl implements UserDAO {
 			addUser.setInt(2, user.getRoleId());
 			addUser.setString(3, user.getEmail());
 			addUser.setString(4, user.getUserName());
-			addUser.setString(5, user.getFirstName());
-			addUser.setString(6, user.getLastName());
+			addUser.setString(5, user.getName());
+			addUser.setString(6, user.getBio());
 			addUser.setString(7, user.getPhoneNumber());
 			addUser.setString(8, user.getPasswordHash());
 			addUser.setBoolean(9, user.isEmailVerified());
@@ -117,8 +143,8 @@ public class UserDAOImpl implements UserDAO {
 				user.setRoleId(rs.getInt("RoleID"));
 				user.setEmail(rs.getString("Email"));
 				user.setUserName(rs.getString("UserName"));
-				user.setFirstName(rs.getString("FirstName"));
-				user.setLastName(rs.getString("LastName"));
+				user.setName(rs.getString("Name"));
+				user.setBio(rs.getString("Bio"));
 				user.setPhoneNumber(rs.getString("PhoneNumber"));
 				user.setPasswordHash(rs.getString("PasswordHash"));
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
@@ -145,8 +171,8 @@ public class UserDAOImpl implements UserDAO {
 				user.setRoleId(rs.getInt("RoleID"));
 				user.setEmail(rs.getString("Email"));
 				user.setUserName(rs.getString("UserName"));
-				user.setFirstName(rs.getString("FirstName"));
-				user.setLastName(rs.getString("LastName"));
+				user.setName(rs.getString("Name"));
+				user.setBio(rs.getString("Bio"));
 				user.setPhoneNumber(rs.getString("PhoneNumber"));
 				user.setPasswordHash(rs.getString("PasswordHash"));
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
@@ -189,6 +215,12 @@ public class UserDAOImpl implements UserDAO {
 
 	protected void finalize() {
 		try {
+			if (!updateNameById.isClosed()) {
+				updateNameById.close();
+			}
+			if (!updateBioById.isClosed()) {
+				updateBioById.close();
+			}
 			if (!deleteUserById.isClosed()) {
 				deleteUserById.close();
 			}

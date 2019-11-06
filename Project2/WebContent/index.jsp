@@ -34,15 +34,15 @@ ProblemList problems = (ProblemList) request.getAttribute("problems");
 					<ul class="navbar-nav ml-auto">
 						<% if (loggedIn) { %>
 						<li class="nav-item dropdown">
-							<a class="nav-link rounded mx-1" href="problem"><i class="fas fa-plus"></i> New problem </a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link rounded mx-1" href="settings"><i class="fas fa-cogs"></i> Settings </a>
+							<a class="nav-link rounded mx-1" href="problem"><i class="fas fa-plus"></i> New </a>
 						</li>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i> Me </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
-								<a class="dropdown-item" href="account">My account</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
+								<a class="dropdown-item" href="profile">Profile</a>
+								<a class="dropdown-item" href="account">Account</a>
+								<a class="dropdown-item" href="security">Security</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>
@@ -65,20 +65,21 @@ ProblemList problems = (ProblemList) request.getAttribute("problems");
 							<select id="category-select" class="browser-default custom-select" autofocus>
 								<option value="0" selected>Select a category</option>
 								<%
-								for (int i = 0; i < categories.size(); i++) {
-									Category c = categories.get(i);
+								if (categories != null) {
+									for (int i = 0; i < categories.size(); i++) {
+										Category c = categories.get(i);
 								%>
 								<option value="<%= c.getId() %>"><%= c.getName() %></option>
-								<% } %>
+								<% }} %>
 							</select>
 						</div>
 						<div class="col-12">
-							<% if (problems.size() > 0) { %>
+							<% if (problems != null && problems.size() > 0) { %>
 							<div class="list-group test">
 								<%
 								int length = problems.size();
-								for (int i = 0; i < length; i++) {
-									Problem p = problems.get(i);
+								for (int i = 0; i < 10; i++) {
+									Problem p = problems.get(i % 2);
 									String footer = "Posted by Jaredible 3 days ago";
 								%>
 								<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test problem-card<% if (i == 0) { %> rounded-top<% } if (i == length - 1) { %> rounded-bottom<% } %>" data-id="<%= p.getId() %>">

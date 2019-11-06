@@ -6,15 +6,9 @@
 User user = (User) session.getAttribute("user");
 Map<String, String> errors = (StringMap) request.getAttribute("errors");
 String userNameError = null;
-String firstNameError = null;
-String lastNameError = null;
-String emailError = null;
 
 if (errors != null) {
 	userNameError = errors.get("userName");
-	firstNameError = errors.get("firstName");
-	lastNameError = errors.get("lastName");
-	emailError = errors.get("email");
 }
 %>
 <!DOCTYPE html>
@@ -40,15 +34,15 @@ if (errors != null) {
 					<ul class="navbar-nav ml-auto">
 						<% if (user != null) { %>
 						<li class="nav-item dropdown">
-							<a class="nav-link rounded mx-1" href="newProblem"><i class="fas fa-plus"></i> New problem </a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link rounded mx-1" href="settings"><i class="fas fa-cogs"></i> Settings </a>
+							<a class="nav-link rounded mx-1" href="problem"><i class="fas fa-plus"></i> New </a>
 						</li>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded" data-toggle="dropdown"><i class="fas fa-user"></i> Me </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
+								<a class="dropdown-item" href="profile">Profile</a>
+								<a class="dropdown-item" href="account">Account</a>
+								<a class="dropdown-item" href="security">Security</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>
@@ -65,62 +59,24 @@ if (errors != null) {
 			</nav>
 			
 			<div class="main">
-				<div class="container">
-					<div class="d-flex h-100 justify-content-center align-items-center">
-						<form class="d-fixed p-1 needs-validation" action="account" method="post" novalidate>
-							<div class="row">
-								<div class="col-md-4">
-									<div class="profile-img text-center">
-										<img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg" class="img-fluid rounded-circle border avatar-pic" alt="example placeholder avatar">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="profile-head">
-										<h5>Jared Diehl</h5>
-										<h6>Web Developer</h6>
-										<ul id="tab" class="nav nav-tabs" role="tablist">
-											<li class="nav-item">
-												<a id="about-tab" href="#about" class="nav-link active show" data-toggle="tab" role="tab">Test1</a>
-											</li>
-											<li class="nav-item">
-												<a id="stats-tab" href="#stats" class="nav-link" data-toggle="tab" role="tab">Test2</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<button type="submit" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Edit</button>
-								</div>
+				<div class="container test5">
+					<form id="account-form" class="text-center" action="account" method="post" novalidate>
+						<p class="h4 mb-3">Change username</p>
+												
+						<div class="form-row justify-content-center align-items-center">
+							<div class="col-12 mb-2">
+								<input class="form-control <% if (userNameError != null) { %>is-invalid<% } %>" type="text" name="userName" placeholder="Username" value="${userName}">
+								<% if (userNameError != null) { %><div class="invalid-feedback"><%= userNameError %></div><% } %>
 							</div>
-							<div class="row">
-								<div class="col-md-4">
-								</div>
-								<div class="col-md-8">
-									<div id="tab-content" class="tab-content profile-content">
-										<div id="about" class="tab-pane fade" role="tabpanel">
-											<div class="row">
-												<div class="col-md-6">
-													<label>Username</label>
-												</div>
-												<div class="col-md-6">
-													<p>Jaredible</p>
-												</div>
-											</div>
-										</div>
-										<div id="stats" class="tab-pane fade" role="tabpanel">
-											<div class="row">
-												<div class="col-md-6">
-													<label>Test</label>
-												</div>
-												<div class="col-md-6">
-													<p>Testing</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
+						</div>
+						
+					   <div class="d-flex justify-content-center align-items-center">
+							<button class="btn btn-outline-grey waves-effect rounded" type="submit">Change username</button>
+						</div>
+					</form>
+					
+					<div class="d-flex justify-content-center align-items-center">
+						<button class="btn btn-outline-red waves-effect rounded" type="submit">Delete your account</button>
 					</div>
 				</div>
 			</div>

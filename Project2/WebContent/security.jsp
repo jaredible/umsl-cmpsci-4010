@@ -1,14 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List" %>
 <%@ page import="main.java.mindbank.model.User" %>
-<%@ page import="main.java.mindbank.model.Category" %>
-<%@ page import="main.java.mindbank.util.CategoryList" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="main.java.mindbank.util.StringMap" %>
 <%
 User user = (User) session.getAttribute("user");
-List<Category> categories = (CategoryList) request.getAttribute("categories");
-String edit = request.getParameter("edit");
-request.setAttribute("id", 2);
-System.out.println(request.getAttribute("errors"));
+Map<String, String> errors = (StringMap) request.getAttribute("errors");
+String oldPasswordError = null;
+String newPasswordError = null;
+String newPasswordConfirmError = null;
+
+if (errors != null) {
+	oldPasswordError = errors.get("oldPassword");
+	newPasswordError = errors.get("newPassword");
+	newPasswordConfirmError = errors.get("newPasswordConfirm");
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +21,7 @@ System.out.println(request.getAttribute("errors"));
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>${title} | Mindbank</title>
+		<title>Security | Mindbank</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
@@ -47,10 +52,10 @@ System.out.println(request.getAttribute("errors"));
 						</li>
 						<% } else { %>
 						<li class="nav-item">
-							<a class="nav-link rounded mx-1" href="login">Log in</a>
+							<a class="nav-link" href="login">Log in</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link rounded mx-1" href="register">Register</a>
+							<a class="nav-link" href="register">Register</a>
 						</li>
 						<% } %>
 					</ul>
@@ -58,49 +63,44 @@ System.out.println(request.getAttribute("errors"));
 			</nav>
 			
 			<div class="main">
-				<div class="container">
-					<% if (edit != null && edit.equals("true")) { %>
-					<form id="problem-form" class="needs-validation" action="problem?id=${param.id}" method="post" novalidate>
+				<div class="container test5">
+					<form id="profile-form" class="text-center" action="security" method="post" novalidate>
+						<p class="h4 mb-3">Change password</p>
+												
 						<div class="form-row justify-content-center align-items-center">
-							<div class="col-xs-12 col-sm-4 mb-2">
-								<input class="form-control" type="text" name="title" placeholder="Title" value="${title}">
-							</div>
-							<div class="col-xs-12 col-sm-4 mb-2">
-								<select class="browser-default custom-select" name="categoryId">
-									<option value="0" selected>Select a category</option>
-									<%
-									if (categories != null) {
-										for (int i = 0; i < categories.size(); i++) {
-											Category c = categories.get(i);
-									%>
-									<option value="<%= c.getId() %>"><%= c.getName() %></option>
-									<% }} %>
-								</select>
+							<div class="col-12 mb-2">
+								<input class="form-control <% if (oldPasswordError != null) { %>is-invalid<% } %>" type="text" name="oldPassword" placeholder="Old password" value="${oldPassword}">
+								<% if (oldPasswordError != null) { %><div class="invalid-feedback"><%= oldPasswordError %></div><% } %>
 							</div>
 						</div>
+						
 						<div class="form-row justify-content-center align-items-center">
-							<div class="col-xs-12 col-sm-8">
-								<textarea class="form-control w-100 h-100" name="content" placeholder="Write your problem statement here">${content}</textarea>
+							<div class="col-12 mb-2">
+								<input class="form-control <% if (newPasswordError != null) { %>is-invalid<% } %>" type="text" name="newPassword" placeholder="New password" value="${newPassword}">
+								<% if (newPasswordError != null) { %><div class="invalid-feedback"><%= newPasswordError %></div><% } %>
 							</div>
 						</div>
-						<div class="d-flex justify-content-center align-items-center">
-							<button class="btn btn-outline-grey waves-effect rounded" type="submit">Post</button>
+						
+						<div class="form-row justify-content-center align-items-center">
+							<div class="col-12 mb-2">
+								<input class="form-control <% if (newPasswordConfirmError != null) { %>is-invalid<% } %>" type="text" name="newPasswordConfirm" placeholder="Confirm new password" value="${newPasswordConfirm}">
+								<% if (newPasswordConfirmError != null) { %>
+								<div class="invalid-feedback"><%= newPasswordConfirmError %></div>
+								<% } else { %>
+			    				<small class="form-text text-muted mb-2">At least 8 characters and 1 digit</small>
+			    				<% } %>
+							</div>
+						</div>
+						
+						<div class="form-row justify-content-around align-items-center">
+							<div class="col-sm-6 order-sm-12">
+		            			<a href="forgot">I forgot my password</a>
+							</div>
+							<div class="col-sm-6 order-sm-1">
+		            			<button class="btn btn-outline-grey waves-effect rounded" type="submit">Update password</button>
+		        			</div>
 						</div>
 					</form>
-					<% } else { %>
-					<article class="problem-wrapper">
-						<header class="problem-header">
-							<a href="${pageContext.request.contextPath}/problem?id=${param.id}&edit=true">Edit</a>
-							<h1 class="problem-title">${title}</h1>
-							<div class="problem-meta">
-								<div class="problem-time">Published: <a href="">${time}</a></div>
-								<div class="problem-author">Author: <a href="">${author}</a></div>
-								<div class="problem-category">Category: <a href="">${category}</a></div>
-							</div>
-						</header>
-						<div class="problem-content">${content}</div>
-					</article>
-					<% } %>
 				</div>
 			</div>
 			
@@ -111,7 +111,6 @@ System.out.println(request.getAttribute("errors"));
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
 		<script type="text/javascript" color="0,0,0" opacity='0.3' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
-		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	</body>
 </html>

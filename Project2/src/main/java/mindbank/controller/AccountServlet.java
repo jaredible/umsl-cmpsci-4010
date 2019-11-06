@@ -40,13 +40,11 @@ public class AccountServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
+		String name = request.getParameter("name");
 		String userName = request.getParameter("userName");
 		String phoneNumber = request.getParameter("phoneNumber");
 
-		System.out.println("firstName: " + firstName);
-		System.out.println("lastName: " + lastName);
+		System.out.println("name: " + name);
 		System.out.println("userName: " + userName);
 		System.out.println("phoneNumber: " + phoneNumber);
 
@@ -55,12 +53,6 @@ public class AccountServlet extends HttpServlet {
 
 			Map<String, String> errors = new StringMap();
 
-			if (!validFirstname(firstName)) {
-				errors.put("firstName", "Invalid first name!");
-			}
-			if (!validLastname(lastName)) {
-				errors.put("lastName", "Invalid last name!");
-			}
 			if (!validUserName(userName)) {
 				errors.put("userName", "Invalid username!");
 			}
@@ -71,8 +63,7 @@ public class AccountServlet extends HttpServlet {
 			System.out.println(errors.toString());
 
 			User user = new User();
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
+			user.setName(name);
 			user.setUserName(userName);
 			user.setPhoneNumber(phoneNumber);
 
@@ -89,14 +80,6 @@ public class AccountServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private boolean validFirstname(String firstName) {
-		return firstName.matches("[a-zA-Z]+");
-	}
-
-	private boolean validLastname(String lastName) {
-		return lastName.matches("[a-zA-Z]+");
 	}
 
 	private boolean validUserName(String userName) {

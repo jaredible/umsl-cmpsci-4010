@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS User (
 	RoleID INT NOT NULL,
 	Email VARCHAR (50) NOT NULL UNIQUE,
 	UserName VARCHAR (20) UNIQUE,
-	FirstName VARCHAR (20) NOT NULL,
-	LastName VARCHAR (20) NOT NULL,
+	Name VARCHAR (100),
+	Bio VARCHAR (420),
 	PhoneNumber VARCHAR (20),
 	PasswordHash TEXT NOT NULL,
 	EmailVerified BOOLEAN,
@@ -59,12 +59,12 @@ CREATE TABLE IF NOT EXISTS Auth (
 );
 
 INSERT INTO Role (ID, Name, Description) VALUES (0, "DEFAULT", "");
-INSERT INTO Role (ID, Name, Description) VALUES (1, "USER", "");
-INSERT INTO Role (ID, Name, Description) VALUES (2, "MOD", "");
-INSERT INTO Role (ID, Name, Description) VALUES (3, "ADMIN", "");
+INSERT INTO Role (ID, Name, Description) VALUES (1, "ADMIN", "");
 
-INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) 
-VALUES (0, 3, "jared@jaredible.net", "Jaredible", "Jared", "Diehl", "3146291836", "443697d7c5bd42e70e34c9254d9951e17f09e523f8ff969cd347f8af156da13e", FALSE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO User (ID, RoleID, Email, UserName, Name, Bio, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) 
+VALUES (NULL, 0, "jared@jaredible.net", "Jaredible", "Jared Diehl", "This is me!", "3146291836", "443697d7c5bd42e70e34c9254d9951e17f09e523f8ff969cd347f8af156da13e", FALSE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO User (ID, RoleID, Email, UserName, Name, Bio, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) 
+VALUES (NULL, 1, "admin@admin.com", "admin", NULL, NULL, NULL, "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", TRUE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO Category (ID, Name, Description) VALUES (NULL, "AI", "");
 INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Machine Learning", "");

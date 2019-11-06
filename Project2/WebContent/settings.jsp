@@ -26,13 +26,15 @@ User user = (User) session.getAttribute("user");
 					<ul class="navbar-nav ml-auto">
 						<% if (user != null) { %>
 						<li class="nav-item dropdown">
-							<a class="nav-link rounded mx-1" href="newProblem"><i class="fas fa-plus"></i> New problem </a>
+							<a class="nav-link rounded mx-1" href="problem"><i class="fas fa-plus"></i> New </a>
 						</li>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i> Me </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
-								<a class="dropdown-item" href="account">My account</a>
+								<a class="dropdown-item" href="profile">Profile</a>
+								<a class="dropdown-item" href="account">Account</a>
+								<a class="dropdown-item" href="security">Security</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>

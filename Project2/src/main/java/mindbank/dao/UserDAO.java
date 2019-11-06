@@ -6,6 +6,10 @@ import main.java.mindbank.model.User;
 
 public interface UserDAO {
 
+	public void updateNameById(int i, String s);
+
+	public void updateBioById(int i, String s);
+
 	public boolean getEmailExists(String s);
 
 	public boolean isValidCredentials(String s1, String s2);
