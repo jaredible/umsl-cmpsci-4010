@@ -1,6 +1,6 @@
 package main.java.mindbank.model;
 
-public class AuthToken {
+public class Auth {
 
 	private int id;
 	private int userId;

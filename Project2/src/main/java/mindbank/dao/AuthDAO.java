@@ -1,14 +1,14 @@
 package main.java.mindbank.dao;
 
-import main.java.mindbank.model.AuthToken;
+import main.java.mindbank.model.Auth;
 
 public interface AuthDAO {
 
-	public void createWithToken(AuthToken t);
+	public void createWithToken(Auth t);
 
-	public AuthToken getBySelector(String s);
+	public Auth getBySelector(String s);
 
-	public void updateWithToken(AuthToken t);
+	public void updateWithToken(Auth t);
 
 	public void deleteById(int i);
 

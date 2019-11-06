@@ -21,7 +21,7 @@ import main.java.mindbank.dao.AuthDAO;
 import main.java.mindbank.dao.AuthDAOImpl;
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
-import main.java.mindbank.model.AuthToken;
+import main.java.mindbank.model.Auth;
 import main.java.mindbank.model.User;
 import main.java.mindbank.util.HashGenerationException;
 import main.java.mindbank.util.HashGeneratorUtil;
@@ -71,7 +71,7 @@ public class AuthFilter implements Filter {
 			if (selector != null && rawValidator != null) {
 				try {
 					AuthDAO authDAO = new AuthDAOImpl();
-					AuthToken token = authDAO.getBySelector(selector);
+					Auth token = authDAO.getBySelector(selector);
 
 					if (token != null) {
 						String hashedValidatorDatabase = token.getValidator();
@@ -79,7 +79,7 @@ public class AuthFilter implements Filter {
 
 						if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
 							UserDAO userDAO = new UserDAOImpl();
-							User user = userDAO.getUser(token.getUserId());
+							User user = userDAO.getUserById(token.getUserId());
 
 							session = req.getSession();
 							session.setAttribute("user", user);
@@ -114,12 +114,10 @@ public class AuthFilter implements Filter {
 			}
 		}
 
-		System.out.println(loggedIn);
-
-		if (!loggedIn) {
-			res.sendRedirect("login");
-		} else {
+		if (loggedIn) {
 			chain.doFilter(req, res);
+		} else {
+			res.sendRedirect("login");
 		}
 	}
 

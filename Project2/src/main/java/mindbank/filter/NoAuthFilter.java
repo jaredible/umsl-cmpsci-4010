@@ -34,14 +34,11 @@ public class NoAuthFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("NoAuthFilter");
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 
 		boolean loggedIn = session != null && session.getAttribute("user") != null;
-
-		System.out.println(loggedIn);
 
 		if (loggedIn) {
 			res.sendRedirect(req.getContextPath());

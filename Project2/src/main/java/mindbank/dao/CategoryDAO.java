@@ -7,6 +7,8 @@ import main.java.mindbank.util.CategoryList;
 
 public interface CategoryDAO {
 
+	public boolean getCategoryExistsById(int i);
+
 	public CategoryList getCategories();
 
 	public void addCategory(Category c);

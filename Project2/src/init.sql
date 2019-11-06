@@ -5,15 +5,6 @@ CREATE DATABASE mindbank;
 
 USE mindbank;
 
-CREATE TABLE IF NOT EXISTS Auth (
-	ID INT NOT NULL AUTO_INCREMENT,
-	UserID INT NOT NULL,
-	Selector VARCHAR (12) NOT NULL,
-	Validator VARCHAR (64) NOT NULL,
-	PRIMARY KEY (ID),
-	FOREIGN KEY (UserID) REFERENCES User(ID)
-);
-
 CREATE TABLE IF NOT EXISTS Role (
 	ID INT NOT NULL,
 	Name VARCHAR (10) NOT NULL,
@@ -32,15 +23,14 @@ CREATE TABLE IF NOT EXISTS User (
 	PasswordHash TEXT NOT NULL,
 	EmailVerified BOOLEAN,
 	PhoneNumberVerified BOOLEAN,
-	RegistrationTimestamp TIMESTAMP NOT NULL,
-	LoginTimestamp TIMESTAMP NOT NULL,
+	RegistrationTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	LoginTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (RoleID) REFERENCES Role(ID)
 );
 
 CREATE TABLE IF NOT EXISTS Category (
 	ID INT NOT NULL AUTO_INCREMENT,
-	SubjectID INT NOT NULL,
 	Name VARCHAR (30) NOT NULL,
 	Description VARCHAR (100),
 	PRIMARY KEY (ID)
@@ -59,6 +49,15 @@ CREATE TABLE IF NOT EXISTS Problem (
 	FOREIGN KEY (CreatedByUserID) REFERENCES User(ID)
 );
 
+CREATE TABLE IF NOT EXISTS Auth (
+	ID INT NOT NULL AUTO_INCREMENT,
+	UserID INT NOT NULL,
+	Selector VARCHAR (12) NOT NULL,
+	Validator VARCHAR (64) NOT NULL,
+	PRIMARY KEY (ID),
+	FOREIGN KEY (UserID) REFERENCES User(ID)
+);
+
 INSERT INTO Role (ID, Name, Description) VALUES (0, "DEFAULT", "");
 INSERT INTO Role (ID, Name, Description) VALUES (1, "USER", "");
 INSERT INTO Role (ID, Name, Description) VALUES (2, "MOD", "");
@@ -67,18 +66,18 @@ INSERT INTO Role (ID, Name, Description) VALUES (3, "ADMIN", "");
 INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) 
 VALUES (0, 3, "jared@jaredible.net", "Jaredible", "Jared", "Diehl", "3146291836", "Testing2000!", FALSE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 1, "AI", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 1, "Machine Learning", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 1, "Web Development", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 2, "Essay", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 2, "Proposal", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 2, "Technical Writing", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 3, "Algebra", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 3, "Geometry", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 3, "Trigonometry", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 4, "Classical Mechanics", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 4, "Relativistic Mechanics", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, 4, "Quantum Mechanics", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "AI", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Machine Learning", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Web Development", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Essay", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Proposal", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Technical Writing", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Algebra", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Geometry", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Trigonometry", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Classical Mechanics", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Relativistic Mechanics", "");
+INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Quantum Mechanics", "");
 
 INSERT INTO Problem (ID, CategoryID, Title, Content, Edited, CreatedByUserID, CreatedTimestamp) VALUES (NULL, 6, "Proposal", "This is a test.", FALSE, 1, CURRENT_TIMESTAMP);
 INSERT INTO Problem (ID, CategoryID, Title, Content, Edited, CreatedByUserID, CreatedTimestamp) VALUES (NULL, 7, "Simple Equation", "$$ 2+2=4 $$", FALSE, 1, CURRENT_TIMESTAMP);

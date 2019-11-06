@@ -34,7 +34,7 @@
 				<ul class="navbar-nav ml-auto">
 					<% if (loggedIn) { %>
 						<li class="nav-item dropdown">
-							<a class="nav-link" href="newProblem"><i class="fas fa-plus"></i> New problem </a>
+							<a class="nav-link" href="problem"><i class="fas fa-plus"></i> New problem </a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>

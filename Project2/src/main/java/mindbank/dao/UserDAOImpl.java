@@ -36,7 +36,7 @@ public class UserDAOImpl implements UserDAO {
 	private void init() throws SQLException {
 		getEmailExists = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
 		isValidCredentials = connection.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
-		setLogin = connection.prepareStatement("UPDATE User SET LoginTimestamp = ? WHERE ID = ?;");
+		setLogin = connection.prepareStatement("UPDATE User SET LoginTimestamp = CURRENT_TIMESTAMP WHERE ID = ?;");
 		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		getUserById = connection.prepareStatement("SELECT * FROM User WHERE ID = ?;");
 		getUserByEmail = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
@@ -76,11 +76,9 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void setLogin(User user) {
+	public void setLoginById(int id) {
 		try {
-			// TODO: timestamp not saving
-			setLogin.setTimestamp(1, user.getLoginTimestamp());
-			setLogin.setInt(2, user.getId());
+			setLogin.setInt(1, id);
 			setLogin.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,7 +107,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User getUser(int id) {
+	public User getUserById(int id) {
 		try {
 			getUserById.setInt(1, id);
 			ResultSet rs = getUserById.executeQuery();
@@ -137,7 +135,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User getUser(String email) {
+	public User getUserByEmail(String email) {
 		try {
 			getUserByEmail.setString(1, email);
 			ResultSet rs = getUserByEmail.executeQuery();

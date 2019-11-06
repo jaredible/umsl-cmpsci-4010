@@ -2,6 +2,9 @@ package main.java.mindbank.model;
 
 import java.sql.Timestamp;
 
+import main.java.mindbank.dao.CategoryDAO;
+import main.java.mindbank.dao.ProblemDAO;
+
 public class Problem {
 
 	private int id;

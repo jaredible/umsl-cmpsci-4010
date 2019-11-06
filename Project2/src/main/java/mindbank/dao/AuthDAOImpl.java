@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import main.java.mindbank.model.AuthToken;
+import main.java.mindbank.model.Auth;
 import main.java.mindbank.util.DbConn;
 
 public class AuthDAOImpl implements AuthDAO {
@@ -35,7 +35,7 @@ public class AuthDAOImpl implements AuthDAO {
 	}
 
 	@Override
-	public void createWithToken(AuthToken authToken) {
+	public void createWithToken(Auth authToken) {
 		try {
 			createWithToken.setNull(1, Types.INTEGER);
 			createWithToken.setInt(2, authToken.getUserId());
@@ -48,12 +48,12 @@ public class AuthDAOImpl implements AuthDAO {
 	}
 
 	@Override
-	public AuthToken getBySelector(String selector) {
+	public Auth getBySelector(String selector) {
 		try {
 			getBySelector.setString(1, selector);
 			ResultSet rs = getBySelector.executeQuery();
 			if (rs.next()) {
-				AuthToken at = new AuthToken();
+				Auth at = new Auth();
 				at.setId(rs.getInt("ID"));
 				at.setUserId(rs.getInt("UserID"));
 				at.setSelector(rs.getString("Selector"));
@@ -68,7 +68,7 @@ public class AuthDAOImpl implements AuthDAO {
 	}
 
 	@Override
-	public void updateWithToken(AuthToken authToken) {
+	public void updateWithToken(Auth authToken) {
 		try {
 			updateWithToken.setString(1, authToken.getSelector());
 			updateWithToken.setString(2, authToken.getValidator());

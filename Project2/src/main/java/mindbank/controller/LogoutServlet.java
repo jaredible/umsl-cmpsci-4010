@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import main.java.mindbank.dao.AuthDAO;
 import main.java.mindbank.dao.AuthDAOImpl;
-import main.java.mindbank.model.AuthToken;
+import main.java.mindbank.model.Auth;
 
 /**
  * Servlet implementation class LogoutServlet
@@ -48,7 +48,7 @@ public class LogoutServlet extends HttpServlet {
 
 				if (selector != null) {
 					AuthDAO authDao = new AuthDAOImpl();
-					AuthToken token = authDao.getBySelector(selector);
+					Auth token = authDao.getBySelector(selector);
 
 					if (token != null) {
 						System.out.println("tokenId: " + token.getId());

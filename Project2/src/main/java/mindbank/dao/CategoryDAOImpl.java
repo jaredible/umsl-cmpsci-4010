@@ -13,15 +13,26 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	private Connection connection;
 	private PreparedStatement getCategories;
+	private PreparedStatement getCategoryById;
 
 	public CategoryDAOImpl() throws SQLException {
-		connection = DbConn.openConn();
-		getCategories = connection.prepareStatement("SELECT * FROM Category;");
+		this(DbConn.openConn());
 	}
 
 	public CategoryDAOImpl(Connection connection) throws SQLException {
 		this.connection = connection;
+
+		init();
+	}
+
+	private void init() throws SQLException {
 		getCategories = connection.prepareStatement("SELECT * FROM Category;");
+		getCategoryById = connection.prepareStatement("SELECT * FROM Category WHERE ID = ?;");
+	}
+
+	@Override
+	public boolean getCategoryExistsById(int id) {
+		return getCategory(id) != null;
 	}
 
 	@Override
@@ -32,7 +43,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 			while (rs.next()) {
 				Category c = new Category();
 				c.setId(rs.getInt("ID"));
-				c.setSubjectId(rs.getInt("SubjectID"));
 				c.setName(rs.getString("Name"));
 				c.setDescription(rs.getString("Description"));
 				cl.add(c);
@@ -51,6 +61,20 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public Category getCategory(int id) {
+		try {
+			getCategoryById.setInt(1, id);
+			ResultSet rs = getCategoryById.executeQuery();
+			if (rs.next()) {
+				Category c = new Category();
+				c.setId(rs.getInt("ID"));
+				c.setName(rs.getString("Name"));
+				c.setDescription(rs.getString("Description"));
+				return c;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
@@ -68,6 +92,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	protected void finalize() {
 		try {
+			if (!getCategoryById.isClosed()) {
+				getCategoryById.close();
+			}
 			if (!getCategories.isClosed()) {
 				getCategories.close();
 			}

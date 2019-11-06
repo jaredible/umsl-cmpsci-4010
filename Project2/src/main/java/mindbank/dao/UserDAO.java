@@ -10,13 +10,13 @@ public interface UserDAO {
 
 	public boolean isValidCredentials(String s1, String s2);
 
-	public void setLogin(User u);
+	public void setLoginById(int i);
 
 	public void addUser(User u);
 
-	public User getUser(int i);
+	public User getUserById(int i);
 
-	public User getUser(String s);
+	public User getUserByEmail(String s);
 
 	public void updateUser(User u);
 

@@ -59,7 +59,7 @@ public class AccountServlet extends HttpServlet {
 		try {
 			if (request.getAttribute("user") == null) {
 				UserDAO userDAO = new UserDAOImpl();
-				User user = userDAO.getUser(email);
+				User user = userDAO.getUserByEmail(email);
 				request.setAttribute("user", user);
 			}
 
@@ -115,7 +115,7 @@ public class AccountServlet extends HttpServlet {
 				request.setAttribute("errors", errors);
 				request.setAttribute("user", user);
 			}
-			
+
 			System.out.println("HERE");
 
 			request.getRequestDispatcher("account.jsp").forward(request, response);
