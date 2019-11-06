@@ -64,20 +64,20 @@ INSERT INTO Role (ID, Name, Description) VALUES (2, "MOD", "");
 INSERT INTO Role (ID, Name, Description) VALUES (3, "ADMIN", "");
 
 INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) 
-VALUES (0, 3, "jared@jaredible.net", "Jaredible", "Jared", "Diehl", "3146291836", "Testing2000!", FALSE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES (0, 3, "jared@jaredible.net", "Jaredible", "Jared", "Diehl", "3146291836", "443697d7c5bd42e70e34c9254d9951e17f09e523f8ff969cd347f8af156da13e", FALSE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "AI", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Machine Learning", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Web Development", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Essay", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Proposal", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Technical Writing", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Algebra", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Geometry", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Trigonometry", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Classical Mechanics", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Relativistic Mechanics", "");
-INSERT INTO Category (ID, SubjectID, Name, Description) VALUES (NULL, "Quantum Mechanics", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "AI", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Machine Learning", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Web Development", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Essay", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Proposal", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Technical Writing", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Algebra", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Geometry", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Trigonometry", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Classical Mechanics", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Relativistic Mechanics", "");
+INSERT INTO Category (ID, Name, Description) VALUES (NULL, "Quantum Mechanics", "");
 
 INSERT INTO Problem (ID, CategoryID, Title, Content, Edited, CreatedByUserID, CreatedTimestamp) VALUES (NULL, 6, "Proposal", "This is a test.", FALSE, 1, CURRENT_TIMESTAMP);
 INSERT INTO Problem (ID, CategoryID, Title, Content, Edited, CreatedByUserID, CreatedTimestamp) VALUES (NULL, 7, "Simple Equation", "$$ 2+2=4 $$", FALSE, 1, CURRENT_TIMESTAMP);

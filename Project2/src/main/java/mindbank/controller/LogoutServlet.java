@@ -1,7 +1,6 @@
 package main.java.mindbank.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,18 +46,16 @@ public class LogoutServlet extends HttpServlet {
 				}
 
 				if (selector != null) {
-					AuthDAO authDao = new AuthDAOImpl();
-					Auth token = authDao.getBySelector(selector);
+					AuthDAO authDAO = new AuthDAOImpl();
+					Auth auth = authDAO.getBySelector(selector);
 
-					if (token != null) {
-						System.out.println("tokenId: " + token.getId());
-						authDao.deleteById(token.getId());
+					if (auth != null) {
+						System.out.println("tokenId: " + auth.getId());
+						authDAO.deleteById(auth.getId());
 
 						int cookieMaxAge = 0;
-
 						Cookie cookieSelector = new Cookie("selector", null);
 						cookieSelector.setMaxAge(cookieMaxAge);
-
 						Cookie cookieValidator = new Cookie("validator", null);
 						cookieValidator.setMaxAge(cookieMaxAge);
 
@@ -69,7 +66,7 @@ public class LogoutServlet extends HttpServlet {
 			}
 
 			response.sendRedirect(request.getContextPath());
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -23,7 +23,7 @@ textarea {
 }
 
 .test {
-	background-color: rgba(0, 0, 0, 0) !important
+	background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .test2 {
@@ -160,4 +160,8 @@ a {
 	flex-grow: 1;
 	flex-shrink: 0;
 	flex-basis: auto;
+}
+
+.problem-card {
+	cursor: pointer;
 }

@@ -10,7 +10,7 @@ public interface UserDAO {
 
 	public boolean isValidCredentials(String s1, String s2);
 
-	public void setLoginById(int i);
+	public void updateLoginTimestampById(int i);
 
 	public void addUser(User u);
 
@@ -18,7 +18,7 @@ public interface UserDAO {
 
 	public User getUserByEmail(String s);
 
-	public void updateUser(User u);
+	public void updateUserNameById(int i, String s);
 
 	public void deleteUser(int i);
 

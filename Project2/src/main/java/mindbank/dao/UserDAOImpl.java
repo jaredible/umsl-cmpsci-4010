@@ -14,11 +14,11 @@ public class UserDAOImpl implements UserDAO {
 	private Connection connection;
 	private PreparedStatement getEmailExists;
 	private PreparedStatement isValidCredentials;
-	private PreparedStatement setLogin;
+	private PreparedStatement updateLoginTimestampById;
 	private PreparedStatement addUser;
 	private PreparedStatement getUserById;
 	private PreparedStatement getUserByEmail;
-	private PreparedStatement updateUser;
+	private PreparedStatement updateUserNameById;
 	private PreparedStatement deleteUserById;
 
 	public UserDAOImpl() throws SQLException {
@@ -36,11 +36,11 @@ public class UserDAOImpl implements UserDAO {
 	private void init() throws SQLException {
 		getEmailExists = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
 		isValidCredentials = connection.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
-		setLogin = connection.prepareStatement("UPDATE User SET LoginTimestamp = CURRENT_TIMESTAMP WHERE ID = ?;");
+		updateLoginTimestampById = connection.prepareStatement("UPDATE User SET LoginTimestamp = CURRENT_TIMESTAMP WHERE ID = ?;");
 		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, FirstName, LastName, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		getUserById = connection.prepareStatement("SELECT * FROM User WHERE ID = ?;");
 		getUserByEmail = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
-		updateUser = connection.prepareStatement("UPDATE User SET ... WHERE ID = ?");
+		updateUserNameById = connection.prepareStatement("UPDATE User SET UserName = ? WHERE ID = ?");
 		deleteUserById = connection.prepareStatement("DELETE FROM User WHERE ID = ?;");
 	}
 
@@ -76,10 +76,10 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void setLoginById(int id) {
+	public void updateLoginTimestampById(int id) {
 		try {
-			setLogin.setInt(1, id);
-			setLogin.executeUpdate();
+			updateLoginTimestampById.setInt(1, id);
+			updateLoginTimestampById.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -163,8 +163,14 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void updateUser(User user) {
-
+	public void updateUserNameById(int id, String userName) {
+		try {
+			updateUserNameById.setString(1, userName);
+			updateUserNameById.setInt(2, id);
+			updateUserNameById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -186,14 +192,17 @@ public class UserDAOImpl implements UserDAO {
 			if (!deleteUserById.isClosed()) {
 				deleteUserById.close();
 			}
+			if (!updateUserNameById.isClosed()) {
+				updateUserNameById.close();
+			}
 			if (!getUserByEmail.isClosed()) {
 				getUserByEmail.close();
 			}
 			if (!getUserById.isClosed()) {
 				getUserById.close();
 			}
-			if (!setLogin.isClosed()) {
-				setLogin.close();
+			if (!updateLoginTimestampById.isClosed()) {
+				updateLoginTimestampById.close();
 			}
 			if (!addUser.isClosed()) {
 				addUser.close();

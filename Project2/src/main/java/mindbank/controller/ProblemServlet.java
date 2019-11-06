@@ -87,9 +87,7 @@ public class ProblemServlet extends HttpServlet {
 			String problemId = request.getParameter("id");
 			HttpSession session = request.getSession(false);
 
-			Connection conn = DbConn.openConn();
-			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
-			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
+			ProblemDAO problemDAO = new ProblemDAOImpl();
 
 			User user = (User) session.getAttribute("user");
 			boolean canEdit = session != null && user != null && problemDAO.getProblem(Integer.parseInt(problemId)).getCreatedByUserId() == user.getId();
@@ -102,10 +100,6 @@ public class ProblemServlet extends HttpServlet {
 				System.out.println("[POST] - id: " + problemId + ", edit: " + edit + ", title: " + title + ", categoryId: " + categoryId + ", content: " + content);
 
 				Map<String, String> errors = new StringMap();
-				errors.put("problemId", Problem.validateProblemId(problemDAO));
-				errors.put("categoryId", Problem.validateCategoryId(categoryDAO, Integer.parseInt(categoryId)));
-				errors.put("title", Problem.validateTitle(problemDAO));
-				errors.put("content", Problem.validateContent(problemDAO));
 
 				if (problemId == null) {
 					// new problem
@@ -116,10 +110,6 @@ public class ProblemServlet extends HttpServlet {
 				}
 
 				boolean error = false;
-				error |= !errors.get("problemId").isEmpty();
-				error |= !errors.get("categoryId").isEmpty();
-				error |= !errors.get("title").isEmpty();
-				error |= !errors.get("content").isEmpty();
 
 				if (error) {
 					request.setAttribute("errors", errors);

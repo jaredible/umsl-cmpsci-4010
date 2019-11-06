@@ -1,7 +1,6 @@
 package main.java.mindbank.filter;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -23,8 +22,7 @@ import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Auth;
 import main.java.mindbank.model.User;
-import main.java.mindbank.util.HashGenerationException;
-import main.java.mindbank.util.HashGeneratorUtil;
+import main.java.mindbank.util.HashGenerator;
 
 /**
  * Servlet Filter implementation class AuthFilter
@@ -71,15 +69,15 @@ public class AuthFilter implements Filter {
 			if (selector != null && rawValidator != null) {
 				try {
 					AuthDAO authDAO = new AuthDAOImpl();
-					Auth token = authDAO.getBySelector(selector);
+					Auth auth = authDAO.getBySelector(selector);
 
-					if (token != null) {
-						String hashedValidatorDatabase = token.getValidator();
-						String hashedValidatorCookie = HashGeneratorUtil.generateSHA256(rawValidator);
+					if (auth != null) {
+						String hashedValidatorDatabase = auth.getValidator();
+						String hashedValidatorCookie = HashGenerator.generateSHA256(rawValidator);
 
 						if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
 							UserDAO userDAO = new UserDAOImpl();
-							User user = userDAO.getUserById(token.getUserId());
+							User user = userDAO.getUserById(auth.getUserId());
 
 							session = req.getSession();
 							session.setAttribute("user", user);
@@ -87,18 +85,15 @@ public class AuthFilter implements Filter {
 
 							String newSelector = RandomStringUtils.randomAlphanumeric(12);
 							String newRawValidator = RandomStringUtils.randomAlphanumeric(64);
+							String newHashedValidator = HashGenerator.generateSHA256(newRawValidator);
 
-							String newHashedValidator = HashGeneratorUtil.generateSHA256(newRawValidator);
-
-							token.setSelector(newSelector);
-							token.setValidator(newHashedValidator);
-							authDAO.updateWithToken(token);
+							auth.setSelector(newSelector);
+							auth.setValidator(newHashedValidator);
+							authDAO.updateWithToken(auth);
 
 							int cookieMaxAge = 60 * 60 * 24;
-
 							Cookie cookieSelector = new Cookie("selector", newSelector);
 							cookieSelector.setMaxAge(cookieMaxAge);
-
 							Cookie cookieValidator = new Cookie("validator", newRawValidator);
 							cookieValidator.setMaxAge(cookieMaxAge);
 
@@ -106,9 +101,7 @@ public class AuthFilter implements Filter {
 							res.addCookie(cookieValidator);
 						}
 					}
-				} catch (HashGenerationException e) {
-					e.printStackTrace();
-				} catch (SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

@@ -14,6 +14,7 @@ import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.User;
 import main.java.mindbank.util.EnumRole;
+import main.java.mindbank.util.HashGenerator;
 import main.java.mindbank.util.StringMap;
 
 /**
@@ -70,25 +71,30 @@ public class RegisterServlet extends HttpServlet {
 				errors.put("confirm", "Passwords don't match!");
 			}
 
-			User user = new User();
-			user.setRoleId(EnumRole.USER.getId());
-			user.setEmail(email);
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
-			user.setPasswordHash(password);
-
 			if (errors.isEmpty()) {
+				User user = new User();
+
+				user.setRoleId(EnumRole.DEFAULT.getId());
+				user.setEmail(email);
+				user.setFirstName(firstName);
+				user.setLastName(lastName);
+				user.setPasswordHash(HashGenerator.generateSHA256(password));
 				userDAO.addUser(user);
 				user = userDAO.getUserByEmail(email);
 				user.setUserName("User" + user.getId());
-				request.setAttribute("user", user);
+				userDAO.updateUserNameById(user.getId(), user.getUserName());
+
 				response.sendRedirect("login");
 			} else {
+				request.setAttribute("firstName", firstName);
+				request.setAttribute("lastName", lastName);
+				request.setAttribute("email", email);
+				request.setAttribute("password", password);
+				request.setAttribute("confirm", confirm);
 				request.setAttribute("errors", errors);
-				request.setAttribute("user", user);
 				doGet(request, response);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

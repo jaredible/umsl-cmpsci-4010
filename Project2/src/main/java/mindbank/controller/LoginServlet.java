@@ -1,6 +1,7 @@
 package main.java.mindbank.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,8 @@ import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Auth;
 import main.java.mindbank.model.User;
-import main.java.mindbank.util.HashGeneratorUtil;
+import main.java.mindbank.util.DbConn;
+import main.java.mindbank.util.HashGenerator;
 import main.java.mindbank.util.StringMap;
 
 /**
@@ -50,43 +52,39 @@ public class LoginServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String remember = request.getParameter("remember");
-			Map<String, String> errors = new StringMap();
-			UserDAO userDao = new UserDAOImpl();
 
-			if (!userDao.isValidCredentials(email, password)) {
+			Connection conn = DbConn.openConn();
+			UserDAO userDAO = new UserDAOImpl(conn);
+
+			Map<String, String> errors = new StringMap();
+
+			if (!userDAO.isValidCredentials(email, HashGenerator.generateSHA256(password))) {
 				errors.put("error", "Incorrect e-mail or password!");
 			}
 
-			User user = new User();
-			user.setEmail(email);
-			user.setPasswordHash(password);
-
 			if (errors.isEmpty()) {
-				user = userDao.getUserByEmail(email);
-				userDao.setLoginById(user.getId());
+				User user = userDAO.getUserByEmail(email);
+				userDAO.updateLoginTimestampById(user.getId());
 
 				request.getSession().setAttribute("user", user);
 
 				if (remember != null && remember.equals("on")) {
-					Auth newToken = new Auth();
+					Auth auth = new Auth();
 
 					String selector = RandomStringUtils.randomAlphanumeric(12);
 					String rawValidator = RandomStringUtils.randomAlphanumeric(64);
+					String hashedValidator = HashGenerator.generateSHA256(rawValidator);
 
-					String hashedValidator = HashGeneratorUtil.generateSHA256(rawValidator);
+					auth.setUserId(user.getId());
+					auth.setSelector(selector);
+					auth.setValidator(hashedValidator);
 
-					newToken.setUserId(user.getId());
-					newToken.setSelector(selector);
-					newToken.setValidator(hashedValidator);
-
-					AuthDAO authDao = new AuthDAOImpl();
-					authDao.createWithToken(newToken); // TODO
+					AuthDAO authDAO = new AuthDAOImpl(conn);
+					authDAO.createWithToken(auth); // TODO: if token exists with userId, just update the selector and validator
 
 					int cookieMaxAge = 60 * 60 * 24;
-
 					Cookie cookieSelector = new Cookie("selector", selector);
 					cookieSelector.setMaxAge(cookieMaxAge);
-
 					Cookie cookieValidator = new Cookie("validator", rawValidator);
 					cookieValidator.setMaxAge(cookieMaxAge);
 
@@ -96,7 +94,9 @@ public class LoginServlet extends HttpServlet {
 
 				response.sendRedirect(request.getContextPath());
 			} else {
-				request.setAttribute("user", user);
+				request.setAttribute("email", email);
+				request.setAttribute("password", password);
+				request.setAttribute("remember", remember);
 				request.setAttribute("errors", errors);
 				doGet(request, response);
 			}

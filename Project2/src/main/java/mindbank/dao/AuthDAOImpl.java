@@ -12,6 +12,8 @@ import main.java.mindbank.util.DbConn;
 public class AuthDAOImpl implements AuthDAO {
 
 	private Connection connection;
+	private PreparedStatement updateSelectorById;
+	private PreparedStatement updateValidatorById;
 	private PreparedStatement getBySelector;
 	private PreparedStatement createWithToken;
 	private PreparedStatement updateWithToken;
@@ -28,10 +30,34 @@ public class AuthDAOImpl implements AuthDAO {
 	}
 
 	private void init() throws SQLException {
-		createWithToken = connection.prepareStatement("INSERT INTO Auth (ID, UserID, Selector, Validator) VALUES (?, ?, ?, ?)");
-		getBySelector = connection.prepareStatement("SELECT * FROM Auth WHERE Selector = ?");
-		updateWithToken = connection.prepareStatement("UPDATE Auth SET Selector = ?, Validator = ? WHERE ID = ?");
-		deleteBySelector = connection.prepareStatement("DELETE FROM Auth WHERE ID = ?");
+		updateSelectorById = connection.prepareStatement("UPDATE Auth SET Selector = ? WHERE ID = ?;");
+		updateValidatorById = connection.prepareStatement("UPDATE Auth SET Validator = ? WHERE ID = ?;");
+		createWithToken = connection.prepareStatement("INSERT INTO Auth (ID, UserID, Selector, Validator) VALUES (?, ?, ?, ?);");
+		getBySelector = connection.prepareStatement("SELECT * FROM Auth WHERE Selector = ?;");
+		updateWithToken = connection.prepareStatement("UPDATE Auth SET Selector = ?, Validator = ? WHERE ID = ?;");
+		deleteBySelector = connection.prepareStatement("DELETE FROM Auth WHERE ID = ?;");
+	}
+
+	@Override
+	public void updateSelectorById(int id, String selector) {
+		try {
+			updateSelectorById.setString(1, selector);
+			updateSelectorById.setInt(2, id);
+			updateSelectorById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateValidatorById(int id, String validator) {
+		try {
+			updateValidatorById.setString(1, validator);
+			updateValidatorById.setInt(2, id);
+			updateValidatorById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

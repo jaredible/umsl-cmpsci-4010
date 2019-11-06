@@ -1,31 +1,29 @@
 package main.java.mindbank.util;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
-public class HashGeneratorUtil {
+public class HashGenerator {
 
-	public static String generateMD5(String message) throws HashGenerationException {
+	public static String generateMD5(String message) throws HashGeneratorException {
 		return hashString(message, "MD5");
 	}
 
-	public static String generateSHA1(String message) throws HashGenerationException {
+	public static String generateSHA1(String message) throws HashGeneratorException {
 		return hashString(message, "SHA-1");
 	}
 
-	public static String generateSHA256(String message) throws HashGenerationException {
+	public static String generateSHA256(String message) throws HashGeneratorException {
 		return hashString(message, "SHA-256");
 	}
 
-	private static String hashString(String message, String algorithm) throws HashGenerationException {
+	private static String hashString(String message, String algorithm) throws HashGeneratorException {
 		try {
 			MessageDigest digest = MessageDigest.getInstance(algorithm);
 			byte[] hashedBytes = digest.digest(message.getBytes("UTF-8"));
 
 			return convertByteArrayToHexString(hashedBytes);
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-			throw new HashGenerationException("Could not generate hash from String", ex);
+		} catch (Exception e) {
+			throw new HashGeneratorException("Could not generate hash using " + algorithm + "!", e);
 		}
 	}
 

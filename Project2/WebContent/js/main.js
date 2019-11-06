@@ -16,3 +16,8 @@ function gotoCategoryPage(category, pageIndex) {
 
 $(function() {
 });
+
+$(".problem-card").click(function() {
+	var id = $(this).attr("data-id");
+	document.location.href = "problem?id=" + id;
+});

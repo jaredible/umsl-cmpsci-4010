@@ -4,11 +4,11 @@
 <%@ page import="main.java.mindbank.model.Category" %>
 <%@ page import="main.java.mindbank.util.CategoryList" %>
 <%
-	User user = (User) session.getAttribute("user");
-	List<Category> categories = (CategoryList) request.getAttribute("categories");
-	String edit = request.getParameter("edit");
-	request.setAttribute("id", 2);
-	System.out.println(request.getAttribute("errors"));
+User user = (User) session.getAttribute("user");
+List<Category> categories = (CategoryList) request.getAttribute("categories");
+String edit = request.getParameter("edit");
+request.setAttribute("id", 2);
+System.out.println(request.getAttribute("errors"));
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +20,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
-		<link rel="stylesheet" href="css/styles.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 	</head>
 	<body>
 		<div class="wrapper">
@@ -33,10 +33,10 @@
 					<ul class="navbar-nav ml-auto">
 					<% if (user != null) { %>
 						<li class="nav-item">
-							<a class="nav-link" href="settings"><i class="fas fa-cogs"></i> Settings </a>
+							<a class="nav-link rounded mx-1" href="settings"><i class="fas fa-cogs"></i> Settings </a>
 						</li>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i> Profile </a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
 								<a class="dropdown-item" href="account">My account</a>
@@ -45,15 +45,16 @@
 						</li>
 					<% } else { %>
 						<li class="nav-item">
-							<a class="nav-link" href="login">Log in</a>
+							<a class="nav-link rounded mx-1" href="login">Log in</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="register">Register</a>
+							<a class="nav-link rounded mx-1" href="register">Register</a>
 						</li>
 					<% } %>
 					</ul>
 				</div>
 			</nav>
+			
 			<div class="main">
 				<div class="container">
 					<% if (edit != null && edit.equals("true")) { %>
@@ -99,13 +100,15 @@
 					<% } %>
 				</div>
 			</div>
+			
 			<%@ include file="footer.jsp" %>
 		</div>
+		
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
 		<script type="text/javascript" color="0,0,0" opacity='0.3' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-		<script src="js/main.js"></script>
+		<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	</body>
 </html>
