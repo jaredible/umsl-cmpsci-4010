@@ -4,7 +4,7 @@
 
 ### Prerequisites
 
-* Java
+* JDK
 * Tomcat
 * XAMPP
 
