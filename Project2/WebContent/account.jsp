@@ -59,7 +59,7 @@ if (errors != null) {
 			</nav>
 			
 			<div class="main">
-				<div class="container test5">
+				<div class="container mw-400">
 					<form id="account-form" class="text-center" action="account" method="post" novalidate>
 						<p class="h4 mb-3">Change username</p>
 												

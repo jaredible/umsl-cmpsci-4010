@@ -20,6 +20,7 @@ input, select {
 
 textarea {
 	/* height: calc(100vh - 350px) !important; */
+	background-color: rgba(0, 0, 0, 0) !important;
 	resize: none;
 }
 
@@ -186,6 +187,24 @@ a {
 	padding: 2rem 0;
 }
 
-.test5 {
+.mw-300 {
+	max-width: 300px;
+}
+
+.mw-400 {
+	max-width: 400px;
+}
+
+.mw-500 {
 	max-width: 500px;
+}
+
+.mw-600 {
+	max-width: 600px;
+}
+
+.rgba-gradient {
+	background: -moz-linear-gradient(45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
+	background: -webkit-linear-gradient(45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
+	background: linear-gradient(to 45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
 }

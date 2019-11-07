@@ -27,7 +27,7 @@ String remember = (String) request.getAttribute("remember");
 	<body>
 		<div class="wrapper">
 			<div class="main">
-				<div class="container test5">
+				<div class="container test6">
 					<form class="text-center" action="login" method="post" novalidate>
 						<p class="h4 mb-4">Log in</p>
 						
@@ -59,6 +59,15 @@ String remember = (String) request.getAttribute("remember");
 					    <p>Not a member?
 		        			<a href="register">Register</a>
 		    			</p>
+		    			
+		    			<div class="mb-2">
+					    	<p class="mb-1">or log in with:</p>
+					    	
+							<a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f blue-text"></i></a>
+							<a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
+							<a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in dark-blue-text"></i></a>
+							<a href="#" class="mx-2" role="button"><i class="fab fa-github black-text"></i></a>
+					    </div>
 					</form>
 				</div>
 			</div>

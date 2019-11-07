@@ -28,7 +28,7 @@ if (errors != null) {
 	<body>
 		<div class="wrapper">
 			<div class="main">
-				<div class="container">
+				<div class="container test6">
 					<form class="text-center" action="register" method="post" novalidate>
 						<p class="h4 mb-3">Register</p>
 						
@@ -53,9 +53,22 @@ if (errors != null) {
 					    
 					    <button class="btn btn-dark my-3 btn-block rounded" type="submit">Register</button>
 					    
+						<div class="mb-2">
+					    	<p class="mb-1">or register with:</p>
+					    	
+							<a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f blue-text"></i></a>
+							<a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
+							<a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in dark-blue-text"></i></a>
+							<a href="#" class="mx-2" role="button"><i class="fab fa-github black-text"></i></a>
+					    </div>
+					    
 					    <p>Already a member?
 		        			<a href="login">Login</a>
 		    			</p>
+		    			
+		    			<hr>
+		    			
+		    			<p>By clicking <em>Register</em> you agree to our <a href="" target="_blank">terms of service</a></p>
 					</form>
 				</div>
 			</div>

@@ -63,7 +63,7 @@ if (errors != null) {
 			</nav>
 			
 			<div class="main">
-				<div class="container test5">
+				<div class="container mw-500">
 					<form id="profile-form" class="text-center" action="security" method="post" novalidate>
 						<p class="h4 mb-3">Change password</p>
 												
@@ -93,12 +93,12 @@ if (errors != null) {
 						</div>
 						
 						<div class="form-row justify-content-around align-items-center">
-							<div class="col-sm-6 order-sm-12">
-		            			<a href="forgot">I forgot my password</a>
-							</div>
-							<div class="col-sm-6 order-sm-1">
+							<div class="col-sm-6">
 		            			<button class="btn btn-outline-grey waves-effect rounded" type="submit">Update password</button>
 		        			</div>
+							<div class="col-sm-6">
+		            			<a href="forgot">I forgot my password</a>
+							</div>
 						</div>
 					</form>
 				</div>

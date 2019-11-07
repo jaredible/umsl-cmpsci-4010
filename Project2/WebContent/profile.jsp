@@ -60,33 +60,44 @@ if (errors != null) {
 				</div>
 			</nav>
 			
-			<div class="alert alert-success rounded-0 text-center" role="alert">Saved!</div>
+			<!--<div class="alert alert-success rounded-0 text-center m-0" role="alert">Saved!</div>-->
 			
 			<div class="main">
-				<div class="container test5">
+				<div class="container mw-600">
 					<form id="profile-form" class="text-center" action="profile" method="post" novalidate>
 						<p class="h4 mb-3">Public profile</p>
 						
 						<hr>
 												
 						<div class="form-row justify-content-center align-items-center">
-							<div class="col-12 mb-2">
-								<input class="form-control <% if (nameError != null) { %>is-invalid<% } %>" type="text" name="name" placeholder="Name" value="${name}">
-								<% if (nameError != null) { %><div class="invalid-feedback"><%= nameError %></div><% } %>
+							<div class="col-sm-6 order-sm-12">
+								<div class="view overlay mb-2">
+									<img src="https://www.mememaker.net/api/bucket?path=static/img/memes/full/2019/Mar/15/2/victory-36356.png" class="img-fluid border rounded" alt="placeholder">
+									<a>
+										<div class="mask waves-effect rgba-white-slight rounded"></div>
+									</a>
+								</div>
 							</div>
-						</div>
-						
-						<div class="form-row justify-content-center align-items-center">
-							<div class="col-12">
-								<textarea class="form-control <% if (bioError != null) { %>is-invalid<% } %>" name="bio" placeholder="Tell us a little about yourself">${bio}</textarea>
-								<% if (bioError != null) { %><div class="invalid-feedback"><%= bioError %></div><% } %>
+							<div class="col-sm-6 order-sm-1">
+								<div class="form-row justify-content-center align-items-center">
+									<div class="col-12 mb-2">
+										<input class="form-control <% if (nameError != null) { %>is-invalid<% } %>" type="text" name="name" placeholder="Name" value="${name}">
+										<% if (nameError != null) { %><div class="invalid-feedback"><%= nameError %></div><% } %>
+									</div>
+								</div>
+								<div class="form-row justify-content-center align-items-center">
+									<div class="col-12">
+										<textarea class="form-control <% if (bioError != null) { %>is-invalid<% } %>" name="bio" placeholder="Tell us a little about yourself">${bio}</textarea>
+										<% if (bioError != null) { %><div class="invalid-feedback"><%= bioError %></div><% } %>
+									</div>
+								</div>
 							</div>
 						</div>
 					    
 					    <hr>
 					    
 					   <div class="d-flex justify-content-center align-items-center">
-							<button class="btn btn-outline-grey waves-effect rounded" type="submit">Update profile</button>
+							<button class="btn btn-outline-grey text-dark waves-effect rounded" type="submit">Update profile</button>
 						</div>
 					</form>
 				</div>
@@ -98,7 +109,7 @@ if (errors != null) {
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
-		<script type="text/javascript" color="0,0,0" opacity='0.3' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
+		<script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
 		<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	</body>
 </html>
