@@ -27,7 +27,7 @@ String remember = (String) request.getAttribute("remember");
 	<body>
 		<div class="wrapper">
 			<div class="main">
-				<div class="container test6">
+				<div class="container mw-400">
 					<form class="text-center" action="login" method="post" novalidate>
 						<p class="h4 mb-4">Log in</p>
 						
