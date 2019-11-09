@@ -59,16 +59,20 @@ if (errors != null) {
 			</nav>
 			
 			<div class="main">
-				<div class="container mw-400">
+				<div class="container mw-300">
 					<form id="account-form" class="text-center" action="account" method="post" novalidate>
 						<p class="h4 mb-3">Change username</p>
+						
+						<hr>
 												
 						<div class="form-row justify-content-center align-items-center">
-							<div class="col-12 mb-2">
+							<div class="col-12">
 								<input class="form-control <% if (userNameError != null) { %>is-invalid<% } %>" type="text" name="userName" placeholder="Username" value="${userName}">
 								<% if (userNameError != null) { %><div class="invalid-feedback"><%= userNameError %></div><% } %>
 							</div>
 						</div>
+						
+						<hr>
 						
 					   <div class="d-flex justify-content-center align-items-center">
 							<button class="btn btn-outline-grey waves-effect rounded" type="submit">Change username</button>

@@ -58,14 +58,19 @@ System.out.println(request.getAttribute("errors"));
 			</nav>
 			
 			<div class="main">
-				<div class="container">
+				<div class="container mw-600">
 					<% if (edit != null && edit.equals("true")) { %>
-					<form id="problem-form" class="needs-validation" action="problem?id=${param.id}" method="post" novalidate>
+					<form id="problem-form" class="text-center" action="problem?id=${param.id}" method="post" novalidate style="flex: 1;">
+						<p class="h4 mb-3">New problem</p>
+						
+						<hr>
+						
 						<div class="form-row justify-content-center align-items-center">
-							<div class="col-xs-12 col-sm-4 mb-2">
+							<div class="col-sm-6 mb-2">
 								<input class="form-control" type="text" name="title" placeholder="Title" value="${title}">
 							</div>
-							<div class="col-xs-12 col-sm-4 mb-2">
+							
+							<div class="col-sm-6 mb-2">
 								<select class="browser-default custom-select" name="categoryId">
 									<option value="0" selected>Select a category</option>
 									<%
@@ -78,11 +83,15 @@ System.out.println(request.getAttribute("errors"));
 								</select>
 							</div>
 						</div>
+						
 						<div class="form-row justify-content-center align-items-center">
-							<div class="col-xs-12 col-sm-8">
+							<div class="col-sm-12">
 								<textarea class="form-control w-100 h-100" name="content" placeholder="Write your problem statement here">${content}</textarea>
 							</div>
 						</div>
+						
+						<hr>
+						
 						<div class="d-flex justify-content-center align-items-center">
 							<button class="btn btn-outline-grey waves-effect rounded" type="submit">Post</button>
 						</div>

@@ -36,10 +36,13 @@ if (errors != null) {
 					<ul class="navbar-nav ml-auto">
 						<% if (user != null) { %>
 						<li class="nav-item dropdown">
-							<a class="nav-link rounded mx-1" href="problem"><i class="fas fa-plus"></i> New </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-plus"></i></a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-info">
+								<a class="dropdown-item" href="problem">New problem</a>
+							</div>
 						</li>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i> Me </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i></a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
 								<a class="dropdown-item" href="profile">Profile</a>
@@ -71,7 +74,7 @@ if (errors != null) {
 												
 						<div class="form-row justify-content-center align-items-center">
 							<div class="col-sm-6 order-sm-12">
-								<div class="view overlay mb-2">
+								<div class="view overlay">
 									<img src="https://www.mememaker.net/api/bucket?path=static/img/memes/full/2019/Mar/15/2/victory-36356.png" class="img-fluid border rounded" alt="placeholder">
 									<a>
 										<div class="mask waves-effect rgba-white-slight rounded"></div>
@@ -80,7 +83,7 @@ if (errors != null) {
 							</div>
 							<div class="col-sm-6 order-sm-1">
 								<div class="form-row justify-content-center align-items-center">
-									<div class="col-12 mb-2">
+									<div class="col-12 my-2">
 										<input class="form-control <% if (nameError != null) { %>is-invalid<% } %>" type="text" name="name" placeholder="Name" value="${name}">
 										<% if (nameError != null) { %><div class="invalid-feedback"><%= nameError %></div><% } %>
 									</div>

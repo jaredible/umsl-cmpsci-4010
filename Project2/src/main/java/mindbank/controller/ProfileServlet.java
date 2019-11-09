@@ -55,7 +55,7 @@ public class ProfileServlet extends HttpServlet {
 		try {
 			String name = request.getParameter("name");
 			String bio = request.getParameter("bio");
-
+			
 			Map<String, String> errors = new StringMap();
 
 			if (!validName(name)) {
