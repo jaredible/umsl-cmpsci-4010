@@ -1,5 +1,6 @@
 package main.java.mindbank.model;
 
+import java.sql.Blob;
 import java.sql.Timestamp;
 
 public class User {
@@ -10,6 +11,7 @@ public class User {
 	private String userName;
 	private String name;
 	private String bio;
+	private Blob profileImage;
 	private String phoneNumber;
 	private String passwordHash;
 	private boolean emailVerified;
@@ -20,13 +22,14 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, int roleId, String email, String userName, String name, String bio, String phoneNumber, String passwordHash, boolean emailVerified, boolean phoneNumberVerified, Timestamp registrationTimestamp, Timestamp loginTimestamp) {
+	public User(int id, int roleId, String email, String userName, String name, String bio, Blob profileImage, String phoneNumber, String passwordHash, boolean emailVerified, boolean phoneNumberVerified, Timestamp registrationTimestamp, Timestamp loginTimestamp) {
 		this.id = id;
 		this.roleId = roleId;
 		this.email = email;
 		this.userName = userName;
 		this.name = name;
 		this.bio = bio;
+		this.profileImage = profileImage;
 		this.phoneNumber = phoneNumber;
 		this.passwordHash = passwordHash;
 		this.emailVerified = emailVerified;
@@ -66,7 +69,7 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -74,13 +77,21 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getBio() {
 		return bio;
 	}
 
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+
+	public Blob getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(Blob profileImage) {
+		this.profileImage = profileImage;
 	}
 
 	public String getPhoneNumber() {

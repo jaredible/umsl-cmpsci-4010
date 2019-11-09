@@ -12,15 +12,20 @@ import main.java.mindbank.util.DbConn;
 public class UserDAOImpl implements UserDAO {
 
 	private Connection connection;
+
+	private PreparedStatement updateRoleIdById;
 	private PreparedStatement updateNameById;
 	private PreparedStatement updateBioById;
+	private PreparedStatement updateUserNameById;
+	private PreparedStatement updatePhoneNumberById;
+
 	private PreparedStatement getEmailExists;
+	private PreparedStatement getUserNameExists;
 	private PreparedStatement isValidCredentials;
 	private PreparedStatement updateLoginTimestampById;
 	private PreparedStatement addUser;
 	private PreparedStatement getUserById;
 	private PreparedStatement getUserByEmail;
-	private PreparedStatement updateUserNameById;
 	private PreparedStatement deleteUserById;
 
 	public UserDAOImpl() throws SQLException {
@@ -36,16 +41,31 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	private void init() throws SQLException {
+		updateRoleIdById = connection.prepareStatement("UPDATE User SET RoleID = ? WHERE ID = ?;");
 		updateNameById = connection.prepareStatement("UPDATE User SET Name = ? WHERE ID = ?;");
 		updateBioById = connection.prepareStatement("UPDATE User SET Bio = ? WHERE ID = ?;");
+		updateUserNameById = connection.prepareStatement("UPDATE User SET UserName = ? WHERE ID = ?;");
+		updatePhoneNumberById = connection.prepareStatement("UPDATE User SET PhoneNumber = ? WHERE ID = ?;");
+
 		getEmailExists = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
+		getUserNameExists = connection.prepareStatement("SELECT * FROM User WHERE UserName = ?;");
 		isValidCredentials = connection.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
 		updateLoginTimestampById = connection.prepareStatement("UPDATE User SET LoginTimestamp = CURRENT_TIMESTAMP WHERE ID = ?;");
 		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, Name, Bio, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		getUserById = connection.prepareStatement("SELECT * FROM User WHERE ID = ?;");
 		getUserByEmail = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
-		updateUserNameById = connection.prepareStatement("UPDATE User SET UserName = ? WHERE ID = ?");
 		deleteUserById = connection.prepareStatement("DELETE FROM User WHERE ID = ?;");
+	}
+
+	@Override
+	public void updateRoleIdById(int id, int roleId) {
+		try {
+			updateRoleIdById.setInt(1, roleId);
+			updateRoleIdById.setInt(2, id);
+			updateRoleIdById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -71,10 +91,47 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
+	public void updateUserNameById(int id, String userName) {
+		try {
+			updateUserNameById.setString(1, userName);
+			updateUserNameById.setInt(2, id);
+			updateUserNameById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updatePhoneNumberById(int id, String phoneNumber) {
+		try {
+			updatePhoneNumberById.setString(1, phoneNumber);
+			updatePhoneNumberById.setInt(2, id);
+			updatePhoneNumberById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public boolean getEmailExists(String email) {
 		try {
 			getEmailExists.setString(1, email);
 			ResultSet rs = getEmailExists.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean getUserNameExists(String userName) {
+		try {
+			getUserNameExists.setString(1, userName);
+			ResultSet rs = getUserNameExists.executeQuery();
 			if (rs.next()) {
 				return true;
 			}
@@ -189,17 +246,6 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void updateUserNameById(int id, String userName) {
-		try {
-			updateUserNameById.setString(1, userName);
-			updateUserNameById.setInt(2, id);
-			updateUserNameById.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
 	public void deleteUser(int id) {
 		try {
 			deleteUserById.setInt(1, id);
@@ -215,17 +261,28 @@ public class UserDAOImpl implements UserDAO {
 
 	protected void finalize() {
 		try {
+			if (!updateRoleIdById.isClosed()) {
+				updateRoleIdById.close();
+			}
 			if (!updateNameById.isClosed()) {
 				updateNameById.close();
 			}
 			if (!updateBioById.isClosed()) {
 				updateBioById.close();
 			}
-			if (!deleteUserById.isClosed()) {
-				deleteUserById.close();
+			if (!updatePhoneNumberById.isClosed()) {
+				updatePhoneNumberById.close();
 			}
 			if (!updateUserNameById.isClosed()) {
 				updateUserNameById.close();
+			}
+
+			if (!getUserNameExists.isClosed()) {
+				getUserNameExists.close();
+			}
+
+			if (!deleteUserById.isClosed()) {
+				deleteUserById.close();
 			}
 			if (!getUserByEmail.isClosed()) {
 				getUserByEmail.close();

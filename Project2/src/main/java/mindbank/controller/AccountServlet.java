@@ -1,7 +1,6 @@
 package main.java.mindbank.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -34,40 +33,70 @@ public class AccountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/account.jsp").forward(request, response);
+		try {
+			int userId = (int) request.getSession(false).getAttribute("userId");
+			UserDAO userDAO = new UserDAOImpl();
+			User user = userDAO.getUserById(userId);
+
+			String userName = user.getUserName();
+			String phoneNumber = user.getPhoneNumber();
+			String email = user.getEmail();
+
+			request.setAttribute("email", email);
+			request.setAttribute("userName", userName);
+			request.setAttribute("phoneNumber", phoneNumber);
+			getServletContext().getRequestDispatcher("/account.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String delete = request.getParameter("delete");
+
+		if (delete != null) {
+			try {
+				if (Boolean.parseBoolean(delete)) {
+					// delete user account
+					response.sendRedirect(request.getContextPath());
+					return;
+				}
+			} catch (Exception e) {
+			}
+		}
+
 		try {
 			String userName = request.getParameter("userName");
 			String phoneNumber = request.getParameter("phoneNumber");
-			
+
+			int userId = (int) request.getSession(false).getAttribute("userId");
+			UserDAO userDAO = new UserDAOImpl();
+			User user = userDAO.getUserById(userId);
+
 			Map<String, String> errors = new StringMap();
 
 			if (!validUserName(userName)) {
-				errors.put("name", "Invalid username!");
+				errors.put("userName", "Invalid username!");
+			} else if (!userName.equals(user.getUserName()) && userDAO.getUserNameExists(userName)) {
+				errors.put("userName", "Username already exists!");
 			}
 			if (!validPhoneNumber(phoneNumber)) {
-				errors.put("bio", "Invalid phone number!");
+				errors.put("phoneNumber", "Invalid phone number!");
 			}
 
 			if (errors.isEmpty()) {
-				HttpSession session = request.getSession(false);
-				User user = (User) session.getAttribute("user");
-				UserDAO userDAO = new UserDAOImpl();
-
-				//userDAO.updateNameById(user.getId(), name);
-				//userDAO.updateBioById(user.getId(), bio);
-				//user.setName(name);
-				//user.setBio(bio);
+				userDAO.updateUserNameById(userId, userName);
+				userDAO.updatePhoneNumberById(userId, phoneNumber);
 
 				response.sendRedirect("account");
 			} else {
 				request.setAttribute("errors", errors);
-				doGet(request, response);
+				request.setAttribute("userName", userName);
+				request.setAttribute("phoneNumber", phoneNumber);
+				getServletContext().getRequestDispatcher("/account.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,11 +104,11 @@ public class AccountServlet extends HttpServlet {
 	}
 
 	private boolean validUserName(String userName) {
-		return true;
+		return userName.length() <= 12;
 	}
 
 	private boolean validPhoneNumber(String phoneNumber) {
-		return true;
+		return phoneNumber.isEmpty() || phoneNumber.matches("\\d{10}|(?:\\d{3}-c){2}\\d{4}|\\(\\d{3}\\) \\d{3}-?\\d{4}");
 	}
 
 }

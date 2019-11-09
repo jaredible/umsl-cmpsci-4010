@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="main.java.mindbank.model.User" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="main.java.mindbank.util.StringMap" %>
 <%
-User user = (User) session.getAttribute("user");
+int userId = (int) session.getAttribute("userId");
+boolean loggedIn = userId != -1;
 Map<String, String> errors = (StringMap) request.getAttribute("errors");
 String nameError = null;
 String bioError = null;
@@ -34,7 +34,7 @@ if (errors != null) {
 				</button>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="navbar-nav ml-auto">
-						<% if (user != null) { %>
+						<% if (loggedIn) { %>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-plus"></i></a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
@@ -66,8 +66,8 @@ if (errors != null) {
 			<div class="alert alert-success rounded-0 text-center m-0" role="alert">Saved!</div>
 			
 			<div class="main">
-				<div class="container mw-600">
-					<form id="profile-form" class="text-center" action="profile" method="post" novalidate>
+				<div class="container">
+					<form id="profile-form" class="text-center mw-600 m-auto" action="profile" method="post" novalidate>
 						<p class="h4 mb-3">Your profile</p>
 						
 						<hr>

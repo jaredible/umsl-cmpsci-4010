@@ -38,7 +38,7 @@ public class NoAuthFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 
-		boolean loggedIn = session != null && session.getAttribute("user") != null;
+		boolean loggedIn = session != null && session.getAttribute("userId") != null;
 
 		if (loggedIn) {
 			res.sendRedirect(req.getContextPath());

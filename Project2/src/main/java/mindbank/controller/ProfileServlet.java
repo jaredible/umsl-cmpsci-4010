@@ -34,8 +34,9 @@ public class ProfileServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			HttpSession session = request.getSession(false);
-			User user = (User) session.getAttribute("user");
+			int userId = (int) request.getSession(false).getAttribute("userId");
+			UserDAO userDAO = new UserDAOImpl();
+			User user = userDAO.getUserById(userId);
 
 			String name = user.getName();
 			String bio = user.getBio();
@@ -55,7 +56,11 @@ public class ProfileServlet extends HttpServlet {
 		try {
 			String name = request.getParameter("name");
 			String bio = request.getParameter("bio");
-			
+
+			int userId = (int) request.getSession(false).getAttribute("userId");
+			UserDAO userDAO = new UserDAOImpl();
+			User user = userDAO.getUserById(userId);
+
 			Map<String, String> errors = new StringMap();
 
 			if (!validName(name)) {
@@ -66,19 +71,15 @@ public class ProfileServlet extends HttpServlet {
 			}
 
 			if (errors.isEmpty()) {
-				HttpSession session = request.getSession(false);
-				User user = (User) session.getAttribute("user");
-				UserDAO userDAO = new UserDAOImpl();
-
 				userDAO.updateNameById(user.getId(), name);
 				userDAO.updateBioById(user.getId(), bio);
-				user.setName(name);
-				user.setBio(bio);
 
 				response.sendRedirect("profile");
 			} else {
 				request.setAttribute("errors", errors);
-				doGet(request, response);
+				request.setAttribute("name", name);
+				request.setAttribute("bio", bio);
+				getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

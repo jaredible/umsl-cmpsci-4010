@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 				User user = userDAO.getUserByEmail(email);
 				userDAO.updateLoginTimestampById(user.getId());
 
-				request.getSession().setAttribute("user", user);
+				request.getSession().setAttribute("userId", user.getId());
 
 				if (remember != null && remember.equals("on")) {
 					Auth auth = new Auth();

@@ -80,7 +80,7 @@ public class AuthFilter implements Filter {
 							User user = userDAO.getUserById(auth.getUserId());
 
 							session = req.getSession();
-							session.setAttribute("user", user);
+							session.setAttribute("userId", user.getId());
 							loggedIn = true;
 
 							String newSelector = RandomStringUtils.randomAlphanumeric(12);

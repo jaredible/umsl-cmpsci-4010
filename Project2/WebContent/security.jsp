@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="main.java.mindbank.model.User" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="main.java.mindbank.util.StringMap" %>
 <%
-User user = (User) session.getAttribute("user");
+int userId = (int) session.getAttribute("userId");
+boolean loggedIn = userId != -1;
 Map<String, String> errors = (StringMap) request.getAttribute("errors");
 String oldPasswordError = null;
 String newPasswordError = null;
@@ -36,7 +36,7 @@ if (errors != null) {
 				</button>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="navbar-nav ml-auto">
-						<% if (user != null) { %>
+						<% if (loggedIn) { %>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-plus"></i></a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
@@ -50,6 +50,7 @@ if (errors != null) {
 								<a class="dropdown-item" href="profile">Profile</a>
 								<a class="dropdown-item" href="account">Account</a>
 								<a class="dropdown-item" href="security">Security</a>
+								<a class="dropdown-item" href="help">Help</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>
@@ -66,9 +67,11 @@ if (errors != null) {
 			</nav>
 			
 			<div class="main">
-				<div class="container mw-500">
-					<form id="profile-form" class="text-center" action="security" method="post" novalidate>
+				<div class="container">
+					<form id="profile-form" class="text-center mw-300 m-auto" action="security" method="post" novalidate>
 						<p class="h4 mb-3">Change password</p>
+						
+						<hr>
 												
 						<div class="form-row justify-content-center align-items-center">
 							<div class="col-12 mb-2">
@@ -85,21 +88,23 @@ if (errors != null) {
 						</div>
 						
 						<div class="form-row justify-content-center align-items-center">
-							<div class="col-12 mb-2">
+							<div class="col-12">
 								<input class="form-control <% if (newPasswordConfirmError != null) { %>is-invalid<% } %>" type="text" name="newPasswordConfirm" placeholder="Confirm new password" value="${newPasswordConfirm}">
 								<% if (newPasswordConfirmError != null) { %>
 								<div class="invalid-feedback"><%= newPasswordConfirmError %></div>
 								<% } else { %>
-			    				<small class="form-text text-muted mb-2">At least 8 characters and 1 digit</small>
+			    				<small class="form-text text-muted">At least 8 characters and 1 digit</small>
 			    				<% } %>
 							</div>
 						</div>
 						
+						<hr>
+						
 						<div class="form-row justify-content-around align-items-center">
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 		            			<button class="btn btn-outline-grey waves-effect rounded" type="submit">Update password</button>
 		        			</div>
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 		            			<a href="forgot">I forgot my password</a>
 							</div>
 						</div>
