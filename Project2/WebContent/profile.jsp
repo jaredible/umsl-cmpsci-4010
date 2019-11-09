@@ -63,12 +63,12 @@ if (errors != null) {
 				</div>
 			</nav>
 			
-			<!--<div class="alert alert-success rounded-0 text-center m-0" role="alert">Saved!</div>-->
+			<div class="alert alert-success rounded-0 text-center m-0" role="alert">Saved!</div>
 			
 			<div class="main">
 				<div class="container mw-600">
 					<form id="profile-form" class="text-center" action="profile" method="post" novalidate>
-						<p class="h4 mb-3">Public profile</p>
+						<p class="h4 mb-3">Your profile</p>
 						
 						<hr>
 												

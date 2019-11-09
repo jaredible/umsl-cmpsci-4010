@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
@@ -40,44 +41,35 @@ public class AccountServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("name");
-		String userName = request.getParameter("userName");
-		String phoneNumber = request.getParameter("phoneNumber");
-
-		System.out.println("name: " + name);
-		System.out.println("userName: " + userName);
-		System.out.println("phoneNumber: " + phoneNumber);
-
 		try {
-			UserDAO userDAO = new UserDAOImpl();
-
+			String userName = request.getParameter("userName");
+			String phoneNumber = request.getParameter("phoneNumber");
+			
 			Map<String, String> errors = new StringMap();
 
 			if (!validUserName(userName)) {
-				errors.put("userName", "Invalid username!");
+				errors.put("name", "Invalid username!");
 			}
 			if (!validPhoneNumber(phoneNumber)) {
-				errors.put("phoneNumber", "Invalid phone number!");
+				errors.put("bio", "Invalid phone number!");
 			}
-
-			System.out.println(errors.toString());
-
-			User user = new User();
-			user.setName(name);
-			user.setUserName(userName);
-			user.setPhoneNumber(phoneNumber);
 
 			if (errors.isEmpty()) {
+				HttpSession session = request.getSession(false);
+				User user = (User) session.getAttribute("user");
+				UserDAO userDAO = new UserDAOImpl();
 
+				//userDAO.updateNameById(user.getId(), name);
+				//userDAO.updateBioById(user.getId(), bio);
+				//user.setName(name);
+				//user.setBio(bio);
+
+				response.sendRedirect("account");
 			} else {
 				request.setAttribute("errors", errors);
-				request.setAttribute("user", user);
+				doGet(request, response);
 			}
-
-			System.out.println("HERE");
-
-			request.getRequestDispatcher("account.jsp").forward(request, response);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -32,12 +32,15 @@ ProblemList problems = (ProblemList) request.getAttribute("problems");
 				</button>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="navbar-nav ml-auto">
-						<% if (loggedIn) { %>
+						<% if (user != null) { %>
 						<li class="nav-item dropdown">
-							<a class="nav-link rounded mx-1" href="problem"><i class="fas fa-plus"></i> New </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-plus"></i></a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-info">
+								<a class="dropdown-item" href="problem">New problem</a>
+							</div>
 						</li>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i> Me </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i></a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
 								<a class="dropdown-item" href="profile">Profile</a>
@@ -48,10 +51,10 @@ ProblemList problems = (ProblemList) request.getAttribute("problems");
 						</li>
 						<% } else { %>
 						<li class="nav-item">
-							<a class="nav-link rounded mx-1" href="login">Log in</a>
+							<a class="nav-link" href="login">Log in</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link rounded mx-1" href="register">Register</a>
+							<a class="nav-link" href="register">Register</a>
 						</li>
 						<% } %>
 					</ul>

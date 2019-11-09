@@ -34,10 +34,13 @@ if (errors != null) {
 					<ul class="navbar-nav ml-auto">
 						<% if (user != null) { %>
 						<li class="nav-item dropdown">
-							<a class="nav-link rounded mx-1" href="problem"><i class="fas fa-plus"></i> New </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-plus"></i></a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-info">
+								<a class="dropdown-item" href="problem">New problem</a>
+							</div>
 						</li>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded" data-toggle="dropdown"><i class="fas fa-user"></i> Me </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i></a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
 								<a class="dropdown-item" href="profile">Profile</a>
@@ -61,14 +64,21 @@ if (errors != null) {
 			<div class="main">
 				<div class="container mw-300">
 					<form id="account-form" class="text-center" action="account" method="post" novalidate>
-						<p class="h4 mb-3">Change username</p>
+						<p class="h4 mb-3">Your account</p>
 						
 						<hr>
 												
-						<div class="form-row justify-content-center align-items-center">
+						<div class="form-row justify-content-center align-items-center mb-2">
 							<div class="col-12">
 								<input class="form-control <% if (userNameError != null) { %>is-invalid<% } %>" type="text" name="userName" placeholder="Username" value="${userName}">
 								<% if (userNameError != null) { %><div class="invalid-feedback"><%= userNameError %></div><% } %>
+							</div>
+						</div>
+						
+						<div class="form-row justify-content-center align-items-center">
+							<div class="col-12">
+								<input class="form-control" type="text" name="phoneNumber" placeholder="Phone number">
+								<small class="form-text text-muted">Optional - for two step authentication</small>
 							</div>
 						</div>
 						

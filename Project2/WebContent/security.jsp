@@ -38,10 +38,13 @@ if (errors != null) {
 					<ul class="navbar-nav ml-auto">
 						<% if (user != null) { %>
 						<li class="nav-item dropdown">
-							<a class="nav-link rounded mx-1" href="problem"><i class="fas fa-plus"></i> New </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-plus"></i></a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-info">
+								<a class="dropdown-item" href="problem">New problem</a>
+							</div>
 						</li>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i> Me </a>
+							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-user"></i></a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="${pageContext.request.contextPath}">Home</a>
 								<a class="dropdown-item" href="profile">Profile</a>
