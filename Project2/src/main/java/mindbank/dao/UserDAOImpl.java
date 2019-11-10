@@ -18,6 +18,7 @@ public class UserDAOImpl implements UserDAO {
 	private PreparedStatement updateBioById;
 	private PreparedStatement updateUserNameById;
 	private PreparedStatement updatePhoneNumberById;
+	private PreparedStatement updatePasswordHashById;
 
 	private PreparedStatement getEmailExists;
 	private PreparedStatement getUserNameExists;
@@ -46,12 +47,13 @@ public class UserDAOImpl implements UserDAO {
 		updateBioById = connection.prepareStatement("UPDATE User SET Bio = ? WHERE ID = ?;");
 		updateUserNameById = connection.prepareStatement("UPDATE User SET UserName = ? WHERE ID = ?;");
 		updatePhoneNumberById = connection.prepareStatement("UPDATE User SET PhoneNumber = ? WHERE ID = ?;");
+		updatePasswordHashById = connection.prepareStatement("UPDATE User SET PasswordHash = ? WHERE ID = ?;");
 
 		getEmailExists = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
 		getUserNameExists = connection.prepareStatement("SELECT * FROM User WHERE UserName = ?;");
 		isValidCredentials = connection.prepareStatement("SELECT * FROM User WHERE Email = ? AND PasswordHash = ?;");
 		updateLoginTimestampById = connection.prepareStatement("UPDATE User SET LoginTimestamp = CURRENT_TIMESTAMP WHERE ID = ?;");
-		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, Name, Bio, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		addUser = connection.prepareStatement("INSERT INTO User (ID, RoleID, Email, UserName, Name, Bio, PhoneNumber, PasswordHash, EmailVerified, PhoneNumberVerified, RegistrationTimestamp, LoginTimestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		getUserById = connection.prepareStatement("SELECT * FROM User WHERE ID = ?;");
 		getUserByEmail = connection.prepareStatement("SELECT * FROM User WHERE Email = ?;");
 		deleteUserById = connection.prepareStatement("DELETE FROM User WHERE ID = ?;");
@@ -107,6 +109,17 @@ public class UserDAOImpl implements UserDAO {
 			updatePhoneNumberById.setString(1, phoneNumber);
 			updatePhoneNumberById.setInt(2, id);
 			updatePhoneNumberById.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updatePasswordHashById(int id, String passwordHash) {
+		try {
+			updatePasswordHashById.setString(1, passwordHash);
+			updatePasswordHashById.setInt(2, id);
+			updatePasswordHashById.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -275,6 +288,9 @@ public class UserDAOImpl implements UserDAO {
 			}
 			if (!updateUserNameById.isClosed()) {
 				updateUserNameById.close();
+			}
+			if (!updatePasswordHashById.isClosed()) {
+				updatePasswordHashById.close();
 			}
 
 			if (!getUserNameExists.isClosed()) {

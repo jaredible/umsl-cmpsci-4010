@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
@@ -38,9 +37,9 @@ public class AccountServlet extends HttpServlet {
 			UserDAO userDAO = new UserDAOImpl();
 			User user = userDAO.getUserById(userId);
 
+			String email = user.getEmail();
 			String userName = user.getUserName();
 			String phoneNumber = user.getPhoneNumber();
-			String email = user.getEmail();
 
 			request.setAttribute("email", email);
 			request.setAttribute("userName", userName);

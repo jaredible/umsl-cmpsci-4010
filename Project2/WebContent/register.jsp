@@ -27,8 +27,8 @@ if (errors != null) {
 	</head>
 	<body>
 		<div class="wrapper">
-			<div class="main">
-				<div class="container mw-400">
+			<div class="main d-flex justify-content-center align-items-center">
+				<div class="container mw-300">
 					<form class="text-center" action="register" method="post" novalidate>
 						<p class="h4 mb-3">Register</p>
 						
@@ -43,11 +43,11 @@ if (errors != null) {
 							</div>
 							<div class="col-12">
 								<input class="form-control <% if (confirmError != null) { %>is-invalid<% } %>" type="password" name="confirm" placeholder="Confirm password" value="${confirm}">
-									<% if (confirmError != null) { %>
-									<div class="invalid-feedback"><%= confirmError %></div>
-									<% } else { %>
-					    			<small class="form-text text-muted mb-2">At least 8 characters and 1 digit</small>
-					    			<% } %>
+								<% if (confirmError != null) { %>
+								<div class="invalid-feedback"><%= confirmError %></div>
+								<% } else { %>
+					    		<small class="form-text text-muted mb-2">At least 8 characters and 1 digit</small>
+					    		<% } %>
 							</div>
 						</div>
 					    
@@ -62,13 +62,11 @@ if (errors != null) {
 							<a href="#" class="mx-2" role="button"><i class="fab fa-github black-text"></i></a>
 					    </div>
 					    
-					    <p>Already a member?
-		        			<a href="login">Login</a>
-		    			</p>
+					    <p>Already a member?<a href="login">Login</a></p>
 		    			
 		    			<hr>
 		    			
-		    			<p>By clicking <em>Register</em> you agree to our <a href="" target="_blank">terms of service</a></p>
+		    			<small><small><p>By clicking <em>Register</em> you agree to our <a href="" target="_blank">terms of service</a></p></small></small>
 					</form>
 				</div>
 			</div>

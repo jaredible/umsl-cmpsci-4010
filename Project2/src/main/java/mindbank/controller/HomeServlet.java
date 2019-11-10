@@ -2,7 +2,6 @@ package main.java.mindbank.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -39,17 +38,29 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String limit = request.getParameter("limit");
+			String page = request.getParameter("page");
+			String category = request.getParameter("category");
+			System.out.println("limit: " + limit + ", page: " + page + ", category: " + category);
+
 			Connection conn = DbConn.openConn();
 			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
 
 			List<Category> categories = categoryDAO.getCategories();
-			List<Problem> problems = problemDAO.getProblems();
+			List<Problem> problems = problemDAO.getProblemsWithLimit(0, 5);
 
+			request.setAttribute("previousEnabled", false);
+			request.setAttribute("nextEnabled", true);
+			request.setAttribute("pageItem1", 0);
+			request.setAttribute("pageItem2", 1);
+			request.setAttribute("pageItem3", 2);
+			request.setAttribute("pageItem4", 3);
+			request.setAttribute("pageItem5", 4);
 			request.setAttribute("categories", categories);
 			request.setAttribute("problems", problems);
 			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

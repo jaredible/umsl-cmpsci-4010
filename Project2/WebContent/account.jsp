@@ -7,12 +7,10 @@ boolean loggedIn = userId != -1;
 Map<String, String> errors = (StringMap) request.getAttribute("errors");
 String emailError = null;
 String userNameError = null;
-String phoneNumberError = null;
 
 if (errors != null) {
 	emailError = errors.get("email");
 	userNameError = errors.get("userName");
-	phoneNumberError = errors.get("phoneNumber");
 }
 %>
 <!DOCTYPE html>
@@ -56,17 +54,21 @@ if (errors != null) {
 						</li>
 						<% } else { %>
 						<li class="nav-item">
-							<a class="nav-link" href="login">Log in</a>
+							<a class="nav-link rounded mx-1" href="login">Log in</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="register">Register</a>
+							<a class="nav-link rounded mx-1" href="register">Register</a>
 						</li>
 						<% } %>
 					</ul>
 				</div>
 			</nav>
 			
-			<div class="main">
+			<!--<div class="alert alert-success rounded-0 text-center m-0" role="alert">Account updated!</div>
+			
+			<div class="alert alert-warning rounded-0 text-center m-0" role="alert">Verify your e-mail address!</div>-->
+			
+			<div class="main d-flex justify-content-center align-items-center">
 				<div class="container">
 					<form id="account-form" class="text-center mw-300 m-auto" action="account" method="post" novalidate>
 						<p class="h4 mb-3">Your account</p>
@@ -87,20 +89,9 @@ if (errors != null) {
 							</div>
 						</div>
 						
-						<div class="form-row justify-content-center align-items-center">
-							<div class="col-12">
-								<input class="form-control <% if (phoneNumberError != null) { %>is-invalid<% } %>" type="text" name="phoneNumber" placeholder="Phone number" value="${phoneNumber}" data-mask="(000) 000-0000">
-								<% if (phoneNumberError != null) { %>
-								<div class="invalid-feedback"><%= phoneNumberError %></div>
-								<% } else { %>
-								<small class="form-text text-muted">Optional - for two step authentication</small>
-								<% } %>
-							</div>
-						</div>
-						
 						<hr>
 						
-					   <div class="d-flex justify-content-center align-items-center">
+						<div class="d-flex justify-content-center align-items-center">
 							<button class="btn btn-outline-grey waves-effect rounded" type="submit">Update account</button>
 						</div>
 					</form>
@@ -127,7 +118,6 @@ if (errors != null) {
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.mask.min.js"></script>
 		<script type="text/javascript" color="0,0,0" opacity='0.3' zIndex="-2" count="99" src="js/canvas-nest.js"></script>
 		<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	</body>

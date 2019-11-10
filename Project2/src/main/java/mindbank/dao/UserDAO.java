@@ -16,6 +16,8 @@ public interface UserDAO {
 
 	public void updatePhoneNumberById(int i, String s);
 
+	public void updatePasswordHashById(int i, String s);
+
 	public boolean getEmailExists(String s);
 
 	public boolean getUserNameExists(String s);

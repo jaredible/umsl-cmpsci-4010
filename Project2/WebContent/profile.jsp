@@ -48,24 +48,25 @@ if (errors != null) {
 								<a class="dropdown-item" href="profile">Profile</a>
 								<a class="dropdown-item" href="account">Account</a>
 								<a class="dropdown-item" href="security">Security</a>
+								<a class="dropdown-item" href="help">Help</a>
 								<a class="dropdown-item" href="logout">Log out</a>
 							</div>
 						</li>
 						<% } else { %>
 						<li class="nav-item">
-							<a class="nav-link" href="login">Log in</a>
+							<a class="nav-link rounded mx-1" href="login">Log in</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="register">Register</a>
+							<a class="nav-link rounded mx-1" href="register">Register</a>
 						</li>
 						<% } %>
 					</ul>
 				</div>
 			</nav>
 			
-			<div class="alert alert-success rounded-0 text-center m-0" role="alert">Saved!</div>
+			<div class="alert alert-success rounded-0 text-center m-0" role="alert">Profile updated!</div>
 			
-			<div class="main">
+			<div class="main d-flex justify-content-center align-items-center">
 				<div class="container">
 					<form id="profile-form" class="text-center mw-600 m-auto" action="profile" method="post" novalidate>
 						<p class="h4 mb-3">Your profile</p>
@@ -81,7 +82,7 @@ if (errors != null) {
 									</a>
 								</div>
 							</div>
-							<div class="col-sm-6 order-sm-1">
+							<div class="col-sm-6 order-sm-1 h-100">
 								<div class="form-row justify-content-center align-items-center">
 									<div class="col-12 my-2">
 										<input class="form-control <% if (nameError != null) { %>is-invalid<% } %>" type="text" name="name" placeholder="Name" value="${name}">

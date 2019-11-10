@@ -44,30 +44,52 @@ public class ProblemServlet extends HttpServlet {
 		try {
 			String problemId = request.getParameter("id");
 			String edit = request.getParameter("edit");
-			System.out.println("[GET] - id: " + problemId + ", edit: " + edit);
+
+			Connection conn = DbConn.openConn();
+
+			int userId = (int) request.getSession(false).getAttribute("userId");
+			UserDAO userDAO = new UserDAOImpl(conn);
+			User user = userDAO.getUserById(userId);
+
+			String title = "";
+			String time = "";
+			String author = "";
+			String category = "";
+			String content = "";
 
 			if (problemId == null) {
 				// new problem
+				CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
+				List<Category> categories = categoryDAO.getCategories();
+
+				request.setAttribute("categories", categories);
 			} else if (edit != null && edit.equals("true")) {
 				// edit problem
+				ProblemDAO problemDAO = new ProblemDAOImpl(conn);
+				Problem problem = problemDAO.getProblemById(Integer.parseInt(problemId));
+				CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
+				List<Category> categories = categoryDAO.getCategories();
+
+				title = problem.getTitle();
+				time = new SimpleDateFormat("MMMM d, yyyy h:mm a").format(problem.getCreatedTimestamp());
+				author = userDAO.getUserById(problem.getCreatedByUserId()).getUserName();
+				category = categoryDAO.getCategory(problem.getCategoryId()).getName();
+				content = problem.getContent();
+
+				request.setAttribute("categories", categories);
 			} else if (problemId != null) {
 				// display problem
+				ProblemDAO problemDAO = new ProblemDAOImpl(conn);
+				Problem problem = problemDAO.getProblemById(Integer.parseInt(problemId));
+				CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
+
+				title = problem.getTitle();
+				time = new SimpleDateFormat("MMMM d, yyyy h:mm a").format(problem.getCreatedTimestamp());
+				author = userDAO.getUserById(problem.getCreatedByUserId()).getUserName();
+				category = categoryDAO.getCategory(problem.getCategoryId()).getName();
+				content = problem.getContent();
 			}
 
-			Connection conn = DbConn.openConn();
-			UserDAO userDAO = new UserDAOImpl(conn);
-			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
-			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
-			List<Category> categories = categoryDAO.getCategories();
-			Problem problem = problemDAO.getProblem(Integer.parseInt(problemId));
-
-			String title = problem.getTitle();
-			String time = new SimpleDateFormat("MMMM d, yyyy h:mm a").format(problem.getCreatedTimestamp());
-			String author = userDAO.getUserById(problem.getCreatedByUserId()).getUserName();
-			String category = categoryDAO.getCategory(problem.getCategoryId()).getName();
-			String content = problem.getContent();
-
-			request.setAttribute("categories", categories);
 			request.setAttribute("title", title);
 			request.setAttribute("time", time);
 			request.setAttribute("author", author);
@@ -85,19 +107,67 @@ public class ProblemServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String problemId = request.getParameter("id");
+			String edit = request.getParameter("edit");
+
+			Connection conn = DbConn.openConn();
+
 			HttpSession session = request.getSession(false);
+			int userId = (int) session.getAttribute("userId");
+			UserDAO userDAO = new UserDAOImpl(conn);
+			User user = userDAO.getUserById(userId);
 
-			ProblemDAO problemDAO = new ProblemDAOImpl();
+			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
+			// Problem problem = problemDAO.getProblem(Integer.parseInt(problemId));
 
-			User user = (User) session.getAttribute("user");
-			boolean canEdit = session != null && user != null && problemDAO.getProblem(Integer.parseInt(problemId)).getCreatedByUserId() == user.getId();
-
-			if (canEdit) {
-				String edit = request.getParameter("edit");
+			if (problemId == null) {
+				// new problem
 				String title = request.getParameter("title");
 				String categoryId = request.getParameter("categoryId");
 				String content = request.getParameter("content");
-				System.out.println("[POST] - id: " + problemId + ", edit: " + edit + ", title: " + title + ", categoryId: " + categoryId + ", content: " + content);
+
+				Map<String, String> errors = new StringMap();
+
+				if (!validTitle(title)) {
+					errors.put("title", "Invalid title!");
+				}
+				if (!validContent(content)) {
+					errors.put("content", "Invalid content!");
+				}
+
+				if (errors.isEmpty()) {
+					Problem newProblem = new Problem();
+					newProblem.setCategoryId(Integer.parseInt(categoryId));
+					newProblem.setTitle(title);
+					newProblem.setContent(content);
+					newProblem.setCreatedByUserId(userId);
+
+					problemDAO.addProblem(newProblem);
+
+					response.sendRedirect(request.getContextPath() + "?category=ai");
+				} else {
+					CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
+					List<Category> categories = categoryDAO.getCategories();
+					
+					request.setAttribute("errors", errors);
+					request.setAttribute("title", title);
+					request.setAttribute("categoryId", categoryId);
+					request.setAttribute("content", content);
+					request.setAttribute("categories", categories);
+					getServletContext().getRequestDispatcher("/problem.jsp").forward(request, response);
+				}
+			} else if (edit != null && edit.equals("true")) {
+				// edit problem
+			} else if (problemId != null) {
+				// display problem
+			}
+
+			// boolean canEdit = user.getId() == problem.getCreatedByUserId();
+
+			if (false) {
+				// String edit = request.getParameter("edit");
+				String title = request.getParameter("title");
+				String categoryId = request.getParameter("categoryId");
+				String content = request.getParameter("content");
 
 				Map<String, String> errors = new StringMap();
 
@@ -105,7 +175,7 @@ public class ProblemServlet extends HttpServlet {
 					// new problem
 				} else if (edit != null && edit.equals("true")) {
 					// edit problem
-				} else if (problemId != null) { // problemId != null && edit == null
+				} else if (problemId != null) {
 					// display problem
 				}
 
@@ -118,11 +188,19 @@ public class ProblemServlet extends HttpServlet {
 					response.sendRedirect("problem?id=" + problemId);
 				}
 			} else {
-				response.sendRedirect("problem?id=" + problemId);
+				// response.sendRedirect("problem?id=" + problemId);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private boolean validTitle(String title) {
+		return !title.isEmpty() && title.length() <= 100;
+	}
+
+	private boolean validContent(String content) {
+		return !content.isEmpty();
 	}
 
 }

@@ -33,6 +33,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			request.getSession().removeAttribute("userId");
+			request.getSession().removeAttribute("isAdmin");
 
 			Cookie[] cookies = request.getCookies();
 
@@ -50,7 +51,6 @@ public class LogoutServlet extends HttpServlet {
 					Auth auth = authDAO.getBySelector(selector);
 
 					if (auth != null) {
-						System.out.println("tokenId: " + auth.getId());
 						authDAO.deleteById(auth.getId());
 
 						int cookieMaxAge = 0;

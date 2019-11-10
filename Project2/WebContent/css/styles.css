@@ -159,9 +159,6 @@ a {
 }
 
 .main {
-	display: flex !important;
-	justify-content: center !important;
-	align-items: center !important;
 	flex-grow: 1;
 	flex-shrink: 0;
 	flex-basis: auto;
@@ -211,4 +208,22 @@ a {
 
 .test7 {
 	color: #d32f2f;
+}
+
+.test8 {
+	color: #388e3c;
+}
+
+.btn-outline-green {
+	border: 1px solid #388e3c !important;
+	box-shadow: none !important;
+}
+
+a.disabled {
+	pointer-events: none;
+	cursor: default;
+}
+
+.pt-3-half {
+	padding-top: 1.4rem;
 }

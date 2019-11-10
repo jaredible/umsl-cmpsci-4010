@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -20,6 +21,7 @@ import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Auth;
 import main.java.mindbank.model.User;
 import main.java.mindbank.util.DbConn;
+import main.java.mindbank.util.EnumRole;
 import main.java.mindbank.util.HashGenerator;
 import main.java.mindbank.util.StringMap;
 
@@ -66,7 +68,9 @@ public class LoginServlet extends HttpServlet {
 				User user = userDAO.getUserByEmail(email);
 				userDAO.updateLoginTimestampById(user.getId());
 
-				request.getSession().setAttribute("userId", user.getId());
+				HttpSession session = request.getSession();
+				session.setAttribute("userId", user.getId());
+				session.setAttribute("isAdmin", user.getRoleId() == EnumRole.ADMIN.getId());
 
 				if (remember != null && remember.equals("on")) {
 					Auth auth = new Auth();

@@ -7,15 +7,15 @@ import main.java.mindbank.util.ProblemList;
 
 public interface ProblemDAO {
 
-	public ProblemList getProblems();
+	public ProblemList getProblemsWithLimit(int i, int j);
+
+	public ProblemList getProblemsByCategoryIdWithLimit(int i, int j, int k);
 
 	public void addProblem(Problem p);
 
-	public Problem getProblem(int i);
+	public Problem getProblemById(int i);
 
-	public void updateProblem(Problem p);
-
-	public void deleteProblem(int i);
+	public void deleteProblemById(int i);
 
 	public Connection getConnection();
 

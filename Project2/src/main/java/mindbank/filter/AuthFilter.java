@@ -22,12 +22,13 @@ import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Auth;
 import main.java.mindbank.model.User;
+import main.java.mindbank.util.EnumRole;
 import main.java.mindbank.util.HashGenerator;
 
 /**
  * Servlet Filter implementation class AuthFilter
  */
-@WebFilter(urlPatterns = { "/account", "/logout", "/problem", "/profile", "/security", "/settings" })
+@WebFilter(urlPatterns = { "/account", "/help", "/logout", "/profile", "/security", "/settings" })
 public class AuthFilter implements Filter {
 
 	/**
@@ -50,7 +51,7 @@ public class AuthFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 
-		boolean loggedIn = session != null && session.getAttribute("user") != null;
+		boolean loggedIn = session != null && session.getAttribute("userId") != null;
 
 		Cookie[] cookies = req.getCookies();
 
@@ -81,6 +82,7 @@ public class AuthFilter implements Filter {
 
 							session = req.getSession();
 							session.setAttribute("userId", user.getId());
+							session.setAttribute("isAdmin", user.getRoleId() == EnumRole.ADMIN.getId());
 							loggedIn = true;
 
 							String newSelector = RandomStringUtils.randomAlphanumeric(12);
