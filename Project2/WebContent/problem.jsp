@@ -1,13 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
+<%@ page import="main.java.mindbank.model.Problem" %>
 <%@ page import="main.java.mindbank.model.Category" %>
 <%@ page import="main.java.mindbank.util.CategoryList" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="main.java.mindbank.util.StringMap" %>
 <%
-int userId = (int) session.getAttribute("userId");
-boolean loggedIn = userId != -1;
+boolean loggedIn = false;
+int userId = -1;
+if (session != null) {
+	try {
+		userId = (int) session.getAttribute("userId");
+		loggedIn = true;
+	} catch (Exception e) {
+	}
+}
+
+Problem problem = (Problem) request.getAttribute("problem");
 List<Category> categories = (CategoryList) request.getAttribute("categories");
+
 String problemId = request.getParameter("id");
 String edit = request.getParameter("edit");
 
@@ -160,6 +171,7 @@ if (errors != null) {
 								<div class="problem-time">Published: <a href="">${time}</a></div>
 								<div class="problem-category">Category: <a href="">${category}</a></div>
 								<div class="problem-author">Author: <a href="">${author}</a></div>
+								<% if (loggedIn && problem.getCreatedByUserId() == userId) { %>
 								<ul class="navbar-nav mr-auto">
 									<li class="nav-item dropdown">
 										<a id="navbarDropdown" class="nav-link rounded mx-1" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
@@ -169,6 +181,7 @@ if (errors != null) {
 										</div>
 									</li>
 								</ul>
+								<% } %>
 							</div>
 						</header>
 						

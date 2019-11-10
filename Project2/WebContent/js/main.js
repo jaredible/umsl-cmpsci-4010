@@ -17,6 +17,14 @@ function gotoCategoryPage(category, pageIndex) {
 $(function() {
 });
 
+$("#category-select").change(function() {
+	var selector = $(this);
+	var categoryId = selector.find(":checked").val();
+	var categoryName = selector.find(":checked").text().trim().replace(" ", "-");
+	console.log(categoryId + " " + categoryName);
+	document.location.href = "?category=" + categoryName.toLowerCase();
+});
+
 $(".problem-card").click(function() {
 	var id = $(this).attr("data-id");
 	document.location.href = "problem?id=" + id;

@@ -3,7 +3,9 @@
 <%@ page import="main.java.mindbank.model.Category" %>
 <%@ page import="main.java.mindbank.util.CategoryList" %>
 <%@ page import="main.java.mindbank.model.Problem" %>
-<%@ page import="main.java.mindbank.util.ProblemList" %>
+<%@ page import="main.java.mindbank.model.User" %>
+<%@ page import="main.java.mindbank.model.ProblemInfo" %>
+<%@ page import="main.java.mindbank.util.ProblemInfoList" %>
 <%
 boolean loggedIn = false;
 int userId = -1;
@@ -14,8 +16,9 @@ if (session != null) {
 	} catch (Exception e) {
 	}
 }
+
 List<Category> categories = (CategoryList) request.getAttribute("categories");
-ProblemList problems = (ProblemList) request.getAttribute("problems");
+ProblemInfoList problems = (ProblemInfoList) request.getAttribute("problems");
 
 boolean previousEnabled = (boolean) request.getAttribute("previousEnabled");
 boolean nextEnabled = (boolean) request.getAttribute("nextEnabled");;
@@ -107,18 +110,12 @@ System.out.println(pageNumber + " " + category + " " + limit);
 								<%
 								int length = problems.size();
 								for (int i = 0; i < length; i++) {
-									Problem p = problems.get(i);
-									String footer = "Posted by Jaredible 3 days ago";
+									ProblemInfo p = problems.get(i);
+									String footer = "Posted by " + p + " 3 days ago";
 								%>
 								<div class="list-group-item list-group-item-action flex-column justify-content-center align-items-center p-0 test problem-card<% if (i == 0) { %> rounded-top<% } if (i == length - 1) { %> rounded-bottom<% } %>" data-id="<%= p.getId() %>">
 									<div class="d-flex w-100 justify-content-between align-items-center">
 										<h5 class="mt-1 mb-1 p1-1 pl-2"><%= p.getTitle() == null ? "" : p.getTitle() %></h5>
-										<% if (loggedIn && p.getCreatedByUserId() == userId) { %>
-										<div class="d-flex justify-content-between align-items-center">
-											<button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Edit</button>
-											<!-- Hamburger dropdown button? <button type="button" class="btn btn-sm btn-outline-grey px-1 waves-effect mt-1 pt-1">Delete</button> -->
-										</div>
-										<% } %>
 									</div>
 									<p class="pl-2 pr-2 mb-1"><%= p.getContent() %></p>
 									<div class="d-flex w-100 justify-content-left align-items-center">

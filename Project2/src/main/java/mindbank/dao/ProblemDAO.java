@@ -3,11 +3,12 @@ package main.java.mindbank.dao;
 import java.sql.Connection;
 
 import main.java.mindbank.model.Problem;
+import main.java.mindbank.util.ProblemInfoList;
 import main.java.mindbank.util.ProblemList;
 
 public interface ProblemDAO {
 
-	public ProblemList getProblemsWithLimit(int i, int j);
+	public ProblemInfoList getProblemsWithLimit(int i, int j);
 
 	public ProblemList getProblemsByCategoryIdWithLimit(int i, int j, int k);
 

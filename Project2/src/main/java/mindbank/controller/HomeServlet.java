@@ -15,7 +15,7 @@ import main.java.mindbank.dao.CategoryDAOImpl;
 import main.java.mindbank.dao.ProblemDAO;
 import main.java.mindbank.dao.ProblemDAOImpl;
 import main.java.mindbank.model.Category;
-import main.java.mindbank.model.Problem;
+import main.java.mindbank.model.ProblemInfo;
 import main.java.mindbank.util.DbConn;
 
 /**
@@ -48,7 +48,7 @@ public class HomeServlet extends HttpServlet {
 			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
 
 			List<Category> categories = categoryDAO.getCategories();
-			List<Problem> problems = problemDAO.getProblemsWithLimit(0, 5);
+			List<ProblemInfo> problems = problemDAO.getProblemsWithLimit(0, 5);
 
 			request.setAttribute("previousEnabled", false);
 			request.setAttribute("nextEnabled", true);

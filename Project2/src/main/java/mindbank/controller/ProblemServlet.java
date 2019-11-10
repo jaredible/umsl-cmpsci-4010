@@ -47,10 +47,6 @@ public class ProblemServlet extends HttpServlet {
 
 			Connection conn = DbConn.openConn();
 
-			int userId = (int) request.getSession(false).getAttribute("userId");
-			UserDAO userDAO = new UserDAOImpl(conn);
-			User user = userDAO.getUserById(userId);
-
 			String title = "";
 			String time = "";
 			String author = "";
@@ -65,6 +61,7 @@ public class ProblemServlet extends HttpServlet {
 				request.setAttribute("categories", categories);
 			} else if (edit != null && edit.equals("true")) {
 				// edit problem
+				UserDAO userDAO = new UserDAOImpl(conn);
 				ProblemDAO problemDAO = new ProblemDAOImpl(conn);
 				Problem problem = problemDAO.getProblemById(Integer.parseInt(problemId));
 				CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
@@ -76,9 +73,11 @@ public class ProblemServlet extends HttpServlet {
 				category = categoryDAO.getCategory(problem.getCategoryId()).getName();
 				content = problem.getContent();
 
+				request.setAttribute("problem", problem);
 				request.setAttribute("categories", categories);
 			} else if (problemId != null) {
 				// display problem
+				UserDAO userDAO = new UserDAOImpl(conn);
 				ProblemDAO problemDAO = new ProblemDAOImpl(conn);
 				Problem problem = problemDAO.getProblemById(Integer.parseInt(problemId));
 				CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
@@ -88,6 +87,8 @@ public class ProblemServlet extends HttpServlet {
 				author = userDAO.getUserById(problem.getCreatedByUserId()).getUserName();
 				category = categoryDAO.getCategory(problem.getCategoryId()).getName();
 				content = problem.getContent();
+				
+				request.setAttribute("problem", problem);
 			}
 
 			request.setAttribute("title", title);
@@ -147,7 +148,7 @@ public class ProblemServlet extends HttpServlet {
 				} else {
 					CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 					List<Category> categories = categoryDAO.getCategories();
-					
+
 					request.setAttribute("errors", errors);
 					request.setAttribute("title", title);
 					request.setAttribute("categoryId", categoryId);

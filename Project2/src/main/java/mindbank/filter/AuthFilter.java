@@ -28,7 +28,7 @@ import main.java.mindbank.util.HashGenerator;
 /**
  * Servlet Filter implementation class AuthFilter
  */
-@WebFilter(urlPatterns = { "/account", "/help", "/logout", "/profile", "/security", "/settings" })
+@WebFilter(urlPatterns = { "/account", "/admin", "/help", "/logout", "/problem", "/profile", "/security", "/settings" })
 public class AuthFilter implements Filter {
 
 	/**
@@ -50,6 +50,14 @@ public class AuthFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
+
+		String url = req.getRequestURL().toString();
+		String query = req.getQueryString();
+
+		if ((url != null && !url.contains("problem")) || (query != null && !query.contains("edit"))) {
+			chain.doFilter(req, res);
+			return;
+		}
 
 		boolean loggedIn = session != null && session.getAttribute("userId") != null;
 
