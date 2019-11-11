@@ -24,6 +24,18 @@ if (session != null) {
 List<Category> categories = (CategoryList) request.getAttribute("categories");
 ProblemInfoList problems = (ProblemInfoList) request.getAttribute("problems");
 
+String pageNumber = request.getParameter("page");
+int pg = 0;
+if (pageNumber != null) {
+	try {
+		pg = Integer.parseInt(pageNumber);
+		if (pg < 1) {
+			pg = 1;
+		}
+	} catch (Exception e) {
+	}
+}
+
 boolean previousEnabled = (boolean) request.getAttribute("previousEnabled");
 boolean nextEnabled = (boolean) request.getAttribute("nextEnabled");;
 int pageItem1 = (int) request.getAttribute("pageItem1");
@@ -37,9 +49,6 @@ String pageItem3Link = "?page=2";
 String pageItem4Link = "?page=3";
 String pageItem5Link = "?page=4";
 
-String pageNumber = request.getParameter("page");
-String category = request.getParameter("category");
-String limit = request.getParameter("limit");
 String categoryId = request.getParameter("category");
 int n = 0;
 try {

@@ -90,14 +90,14 @@ if (errors != null) {
 						
 						<div class="form-row justify-content-center align-items-center mb-2">
 							<div class="col-12">
-								<input class="form-control <% if (nameError != null) { %>is-invalid<% } %>" type="text" name="name" placeholder="Name" value="${category}" maxlength="30">
+								<input class="form-control <% if (nameError != null) { %>is-invalid<% } %>" type="text" name="name" placeholder="Name" value="${name}" maxlength="30">
 								<% if (nameError != null) { %><div class="invalid-feedback"><%= nameError %></div><% } %>
 							</div>
 						</div>
 						
 						<div class="form-row justify-content-center align-items-center mb-2">
 							<div class="col-12">
-								<textarea class="form-control <% if (descriptionError != null) { %>is-invalid<% } %>" name="description" placeholder="Type a description here" rows="10" maxlength="100">${content}</textarea>
+								<textarea class="form-control <% if (descriptionError != null) { %>is-invalid<% } %>" name="description" placeholder="Type a description here" rows="10" maxlength="100">${description}</textarea>
 								<% if (descriptionError != null) { %><div class="invalid-feedback"><%= descriptionError %></div><% } %>
 							</div>
 						</div>

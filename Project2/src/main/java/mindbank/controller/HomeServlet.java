@@ -17,6 +17,7 @@ import main.java.mindbank.dao.ProblemDAOImpl;
 import main.java.mindbank.model.Category;
 import main.java.mindbank.model.ProblemInfo;
 import main.java.mindbank.util.DbConn;
+import main.java.mindbank.util.EnumLimit;
 
 /**
  * Servlet implementation class HomeServlet
@@ -39,7 +40,7 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// String limit = request.getParameter("limit");
-			// String page = request.getParameter("page");
+			String page = request.getParameter("page");
 			String categoryId = request.getParameter("category");
 
 			Connection conn = DbConn.openConn();
@@ -49,6 +50,19 @@ public class HomeServlet extends HttpServlet {
 			List<Category> categories = categoryDAO.getCategories();
 			// List<ProblemInfo> problems = problemDAO.getProblemsWithLimit(0, EnumLimit.FIVE.getLimit());
 			List<ProblemInfo> problems = null;
+			
+			int pg = 0;
+			int lim = EnumLimit.TEN.getLimit();
+						
+			if (page != null) {
+				try {
+					pg = Integer.parseInt(page);
+					if (pg < 1) {
+						pg = 1;
+					}
+				} catch (Exception e) {
+				}
+			}
 
 			if (categoryId != null) {
 				int n = -1;
