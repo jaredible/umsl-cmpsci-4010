@@ -11,7 +11,7 @@
 ### Install
 
 - Execute the file, init.sql, within the directory, src, on phpMyAdmin.
-- Update the file, dp.properties, within the directoy, src, to your own need.
+- Update the file, dp.properties, within the directoy, src.
 
 ### Deployment
 
