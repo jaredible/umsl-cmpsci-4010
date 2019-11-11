@@ -62,6 +62,8 @@ public class LogoutServlet extends HttpServlet {
 						response.addCookie(cookieSelector);
 						response.addCookie(cookieValidator);
 					}
+
+					authDAO.closeConnections();
 				}
 			}
 

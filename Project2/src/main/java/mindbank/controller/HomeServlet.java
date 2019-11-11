@@ -38,17 +38,41 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String limit = request.getParameter("limit");
-			String page = request.getParameter("page");
-			String category = request.getParameter("category");
-			System.out.println("limit: " + limit + ", page: " + page + ", category: " + category);
+			// String limit = request.getParameter("limit");
+			// String page = request.getParameter("page");
+			String categoryId = request.getParameter("category");
 
 			Connection conn = DbConn.openConn();
 			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
 
 			List<Category> categories = categoryDAO.getCategories();
-			List<ProblemInfo> problems = problemDAO.getProblemsWithLimit(0, 5);
+			// List<ProblemInfo> problems = problemDAO.getProblemsWithLimit(0, EnumLimit.FIVE.getLimit());
+			List<ProblemInfo> problems = null;
+
+			if (categoryId != null) {
+				int n = -1;
+				try {
+					n = Integer.parseInt(categoryId);
+				} catch (Exception e) {
+				}
+
+				if (n > 0) {
+					problems = problemDAO.getAllProblemsByCategoryId(n);
+				} else if (n == 0) {
+					response.sendRedirect(request.getContextPath());
+					return;
+				} else {
+					problems = problemDAO.getAllProblems();
+				}
+
+				request.setAttribute("category", n);
+			} else {
+				problems = problemDAO.getAllProblems();
+			}
+
+			categoryDAO.closeConnections();
+			problemDAO.closeConnections();
 
 			request.setAttribute("previousEnabled", false);
 			request.setAttribute("nextEnabled", true);

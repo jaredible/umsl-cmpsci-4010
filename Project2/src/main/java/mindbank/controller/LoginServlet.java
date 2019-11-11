@@ -85,6 +85,7 @@ public class LoginServlet extends HttpServlet {
 
 					AuthDAO authDAO = new AuthDAOImpl(conn);
 					authDAO.createWithToken(auth); // TODO: if token exists with userId, just update the selector and validator
+					authDAO.closeConnections();
 
 					int cookieMaxAge = 60 * 60 * 24;
 					Cookie cookieSelector = new Cookie("selector", selector);
@@ -104,6 +105,8 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute("errors", errors);
 				doGet(request, response);
 			}
+
+			userDAO.closeConnections();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

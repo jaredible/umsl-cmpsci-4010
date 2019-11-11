@@ -32,6 +32,12 @@ if (errors != null) {
 	categoryIdError = errors.get("categoryId");
 	contentError = errors.get("content");
 }
+
+int categoryId = 0;
+try {
+	categoryId = (int) request.getAttribute("categoryId");
+} catch (Exception e) {
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -39,7 +45,8 @@ if (errors != null) {
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>${title} | Mindbank</title>
+		<title>Problem | Mindbank</title>
+		<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
@@ -59,6 +66,7 @@ if (errors != null) {
 							<a id="navbarDropdown" class="nav-link dropdown-toggle rounded mx-1" data-toggle="dropdown"><i class="fas fa-plus"></i></a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-info">
 								<a class="dropdown-item" href="problem">New problem</a>
+								<a class="dropdown-item" href="category">New category</a>
 							</div>
 						</li>
 						<li class="nav-item dropdown">
@@ -115,7 +123,7 @@ if (errors != null) {
 						
 						<div class="form-row justify-content-center align-items-center">
 							<div class="col-sm-12">
-								<textarea class="form-control w-100 h-100 <% if (contentError != null) { %>is-invalid<% } %>" name="content" placeholder="Type your problem here" rows="10">${content}</textarea>
+								<textarea class="form-control <% if (contentError != null) { %>is-invalid<% } %>" name="content" placeholder="Type your problem here" rows="10">${content}</textarea>
 								<% if (contentError != null) { %><div class="invalid-feedback"><%= contentError %></div><% } %>
 							</div>
 						</div>
@@ -127,33 +135,36 @@ if (errors != null) {
 						</div>
 					</form>
 					<% } else if (edit != null && edit.equals("true")) { %>
-					<form id="problem-form" class="text-center mw-600 m-auto" action="problem?id=${param.id}" method="post" novalidate>
+					<form id="problem-form" class="text-center mw-600 m-auto" action="problem?id=${param.id}&edit=true" method="post" novalidate>
 						<p class="h4 mb-3">Edit problem</p>
 						
 						<hr>
 						
 						<div class="form-row justify-content-center align-items-center">
 							<div class="col-sm-6 mb-2">
-								<input class="form-control" type="text" name="title" placeholder="Title" value="${title}">
+								<input class="form-control <% if (titleError != null) { %>is-invalid<% } %>" type="text" name="title" placeholder="Title" value="${title}">
+								<% if (titleError != null) { %><div class="invalid-feedback"><%= titleError %></div><% } %>
 							</div>
 							
 							<div class="col-sm-6 mb-2">
-								<select class="browser-default custom-select" name="categoryId">
-									<option value="0" selected>Select a category</option>
+								<select class="browser-default custom-select <% if (categoryIdError != null) { %>is-invalid<% } %>" name="categoryId">
+									<option value="0" <% if (categoryId == 0) { %>selected<% } %>>Select a category</option>
 									<%
 									if (categories != null) {
 										for (int i = 0; i < categories.size(); i++) {
 											Category c = categories.get(i);
 									%>
-									<option value="<%= c.getId() %>"><%= c.getName() %></option>
+									<option value="<%= c.getId() %>" <% if (categoryId == c.getId()) { %>selected<% } %>><%= c.getName() %></option>
 									<% }} %>
 								</select>
+								<% if (categoryIdError != null) { %><div class="invalid-feedback"><%= categoryIdError %></div><% } %>
 							</div>
 						</div>
 						
 						<div class="form-row justify-content-center align-items-center">
 							<div class="col-sm-12">
-								<textarea class="form-control w-100 h-100" name="content" placeholder="Type your problem here">${content}</textarea>
+								<textarea class="form-control <% if (contentError != null) { %>is-invalid<% } %>" name="content" placeholder="Type your problem here" rows="10">${content}</textarea>
+								<% if (contentError != null) { %><div class="invalid-feedback"><%= contentError %></div><% } %>
 							</div>
 						</div>
 						
@@ -168,9 +179,9 @@ if (errors != null) {
 						<header class="problem-header">
 							<h1 class="problem-title">${title}</h1>
 							<div class="problem-meta">
-								<div class="problem-time">Published: <a href="">${time}</a></div>
-								<div class="problem-category">Category: <a href="">${category}</a></div>
-								<div class="problem-author">Author: <a href="">${author}</a></div>
+								<div class="problem-time">Published: <a href="#">${time}</a></div>
+								<div class="problem-category">Category: <a href="${pageContext.request.contextPath}/?category=ai">${category}</a></div>
+								<div class="problem-author">Author: <a href="${pageContext.request.contextPath}/profile?user=${author}">${author}</a></div>
 								<% if (loggedIn && problem.getCreatedByUserId() == userId) { %>
 								<ul class="navbar-nav mr-auto">
 									<li class="nav-item dropdown">

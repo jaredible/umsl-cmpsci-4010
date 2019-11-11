@@ -28,7 +28,7 @@ import main.java.mindbank.util.HashGenerator;
 /**
  * Servlet Filter implementation class AuthFilter
  */
-@WebFilter(urlPatterns = { "/account", "/admin", "/help", "/logout", "/problem", "/profile", "/security", "/settings" })
+@WebFilter(urlPatterns = { "/account", "/admin", "/category", "/logout", "/problem", "/profile", "/security" })
 public class AuthFilter implements Filter {
 
 	/**
@@ -50,14 +50,6 @@ public class AuthFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
-
-		String url = req.getRequestURL().toString();
-		String query = req.getQueryString();
-
-		if ((url != null && !url.contains("problem")) || (query != null && !query.contains("edit"))) {
-			chain.doFilter(req, res);
-			return;
-		}
 
 		boolean loggedIn = session != null && session.getAttribute("userId") != null;
 
@@ -111,15 +103,28 @@ public class AuthFilter implements Filter {
 							res.addCookie(cookieValidator);
 						}
 					}
+
+					authDAO.closeConnections();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
 
+		String url = req.getRequestURL().toString();
+		String query = req.getQueryString();
+
 		if (loggedIn) {
 			chain.doFilter(req, res);
 		} else {
+			if (url != null && query != null) {
+				if (url.contains("problem")) {
+					if (query.contains("id") && !query.contains("edit")) {
+						chain.doFilter(req, res);
+						return;
+					}
+				}
+			}
 			res.sendRedirect("login");
 		}
 	}

@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
@@ -37,6 +36,7 @@ public class ProfileServlet extends HttpServlet {
 			int userId = (int) request.getSession(false).getAttribute("userId");
 			UserDAO userDAO = new UserDAOImpl();
 			User user = userDAO.getUserById(userId);
+			userDAO.closeConnections();
 
 			String name = user.getName();
 			String bio = user.getBio();
@@ -81,6 +81,8 @@ public class ProfileServlet extends HttpServlet {
 				request.setAttribute("bio", bio);
 				getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
 			}
+
+			userDAO.closeConnections();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

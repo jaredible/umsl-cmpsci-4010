@@ -7,18 +7,23 @@ import main.java.mindbank.util.CategoryList;
 
 public interface CategoryDAO {
 
-	public boolean getCategoryExistsById(int i);
-
-	public CategoryList getCategories();
-
+	// create
 	public void addCategory(Category c);
 
+	// read
+	public CategoryList getCategories();
 	public Category getCategory(int i);
+	public boolean getCategoryExistsByName(String s);
 
-	public void updateCategory(Category c);
+	// update
 
-	public void deleteCategory(int i);
-
+	// delete
+	public void deleteCategoryById(int i);
+	
+	public boolean getCategoryExistsById(int i);
+	
 	public Connection getConnection();
+
+	public void closeConnections();
 
 }

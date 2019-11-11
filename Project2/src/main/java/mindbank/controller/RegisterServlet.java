@@ -81,6 +81,8 @@ public class RegisterServlet extends HttpServlet {
 				request.setAttribute("errors", errors);
 				doGet(request, response);
 			}
+
+			userDAO.closeConnections();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

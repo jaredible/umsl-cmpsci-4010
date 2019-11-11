@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>Help | Mindbank</title>
+		<title>Terms of Service | Mindbank</title>
 		<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -15,9 +15,15 @@
 	<body>
 		<div class="wrapper">
 			<div class="main d-flex justify-content-center align-items-center">
-				<div class="container text-center mw-400">
-					<p class="h4 mb-4">Unfinished</p>
-					<a href="${pageContext.request.contextPath}">Go home</a>
+				<div class="container text-center mw-500">
+					<p class="h4 mb-4">Terms of Service</p>
+					<p>
+						<a href="https://jaredible.net/contact" target="_blank">Jaredible</a> is not responsible for any content posted on this website, and is provided "AS-IS". 
+						It is assumed that any content you post is yours, and you are responsible for it. 
+						By using this website, you agree to these terms of service. 
+						If you have any concerns (legal, copyright infringement, etc.), please contact <a href="https://jaredible.net/contact" target="_blank">Jaredible</a>. 
+						Please be mindful of the data you post on this website.
+					</p>
 				</div>
 			</div>
 		</div>

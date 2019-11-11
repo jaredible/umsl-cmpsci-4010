@@ -268,11 +268,13 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
+	@Override
 	public Connection getConnection() {
 		return connection;
 	}
 
-	protected void finalize() {
+	@Override
+	public void closeConnections() {
 		try {
 			if (!updateRoleIdById.isClosed()) {
 				updateRoleIdById.close();
@@ -324,6 +326,10 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	protected void finalize() {
+		closeConnections();
 	}
 
 	public static void main(String[] args) {

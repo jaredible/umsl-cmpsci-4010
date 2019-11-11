@@ -36,6 +36,7 @@ public class AccountServlet extends HttpServlet {
 			int userId = (int) request.getSession(false).getAttribute("userId");
 			UserDAO userDAO = new UserDAOImpl();
 			User user = userDAO.getUserById(userId);
+			userDAO.closeConnections();
 
 			String email = user.getEmail();
 			String userName = user.getUserName();
@@ -59,8 +60,11 @@ public class AccountServlet extends HttpServlet {
 		if (delete != null) {
 			try {
 				if (Boolean.parseBoolean(delete)) {
-					// delete user account
-					response.sendRedirect(request.getContextPath());
+					int userId = (int) request.getSession(false).getAttribute("userId");
+					UserDAO userDAO = new UserDAOImpl();
+					userDAO.deleteUser(userId);
+					userDAO.closeConnections();
+					response.sendRedirect("logout");
 					return;
 				}
 			} catch (Exception e) {
@@ -97,6 +101,8 @@ public class AccountServlet extends HttpServlet {
 				request.setAttribute("phoneNumber", phoneNumber);
 				getServletContext().getRequestDispatcher("/account.jsp").forward(request, response);
 			}
+
+			userDAO.closeConnections();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

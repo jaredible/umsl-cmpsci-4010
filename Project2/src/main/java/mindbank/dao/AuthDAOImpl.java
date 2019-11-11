@@ -115,7 +115,13 @@ public class AuthDAOImpl implements AuthDAO {
 		}
 	}
 
-	protected void finalize() {
+	@Override
+	public Connection getConnection() {
+		return connection;
+	}
+
+	@Override
+	public void closeConnections() {
 		try {
 			if (!deleteBySelector.isClosed()) {
 				deleteBySelector.close();
@@ -135,10 +141,16 @@ public class AuthDAOImpl implements AuthDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		deleteBySelector = null;
+		updateWithToken = null;
+		createWithToken = null;
+		getBySelector = null;
+		connection = null;
 	}
 
-	public Connection getConnection() {
-		return connection;
+	protected void finalize() {
+		closeConnections();
 	}
 
 	public static void main(String[] args) {

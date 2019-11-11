@@ -19,6 +19,7 @@ String remember = (String) request.getAttribute("remember");
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<title>Login | Mindbank</title>
+		<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
@@ -28,6 +29,8 @@ String remember = (String) request.getAttribute("remember");
 		<div class="wrapper">
 			<div class="main d-flex justify-content-center align-items-center">
 				<div class="container mw-300">
+					<a class="text-center text-dark" href="${pageContext.request.contextPath}"><div class="h1 mb-5">Mindbank</div></a>
+					
 					<form class="text-center" action="login" method="post" novalidate>
 						<p class="h4 mb-4">Log in</p>
 						
@@ -56,7 +59,7 @@ String remember = (String) request.getAttribute("remember");
 					    
 					    <button class="btn btn-dark my-4 btn-block rounded" type="submit">Log in</button>
 					    
-					    <p>Not a member?<a href="register">Register</a></p>
+					    <p>Not a member?<a href="register"> Register</a></p>
 		    			
 		    			<div class="mb-2">
 					    	<p class="mb-1">or log in with:</p>

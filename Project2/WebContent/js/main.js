@@ -1,33 +1,23 @@
-function incrementCategoryPage(category, direction) {
-	var page = 0;
-
-	if (direction > 0) {
-		page++;
-	} else if (direction < 0) {
-		page--;
-	}
-
-	document.location.href = "/?category=" + category + "&page=" + page;
-}
-
-function gotoCategoryPage(category, pageIndex) {
-	document.location.href = "/?category=" + category + "&page=" + pageIndex;
-}
+window.MathJax = {
+		tex2jax : {
+			inlineMath : [ [ '$', '$' ], [ "\\(", "\\)" ] ],
+			processEscapes : true
+		}
+	};
 
 $(function() {
-});
-
-$("#category-select").change(function() {
-	var selector = $(this);
-	var categoryId = selector.find(":checked").val();
-	var categoryName = selector.find(":checked").text().trim().replace(" ", "-");
-	console.log(categoryId + " " + categoryName);
-	document.location.href = "?category=" + categoryName.toLowerCase();
-});
-
-$(".problem-card").click(function() {
-	var id = $(this).attr("data-id");
-	document.location.href = "problem?id=" + id;
+	$("#category-select").change(function() {
+		var selector = $(this);
+		var categoryId = selector.find(":checked").val();
+		var categoryName = selector.find(":checked").text().trim().replace(" ", "-");
+		console.log(categoryId + " " + categoryName);
+		document.location.href = "?category=" + categoryId;
+	});
+	
+	$(".problem-card").click(function() {
+		var id = $(this).attr("data-id");
+		document.location.href = "problem?id=" + id;
+	});
 });
 
 const $tableID = $('#table');

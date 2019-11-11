@@ -1,7 +1,9 @@
 package main.java.mindbank.controller;
 
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +21,7 @@ import main.java.mindbank.dao.UserDAO;
 import main.java.mindbank.dao.UserDAOImpl;
 import main.java.mindbank.model.Category;
 import main.java.mindbank.model.Problem;
-import main.java.mindbank.model.User;
+import main.java.mindbank.model.ProblemInfo;
 import main.java.mindbank.util.DbConn;
 import main.java.mindbank.util.StringMap;
 
@@ -44,6 +46,7 @@ public class ProblemServlet extends HttpServlet {
 		try {
 			String problemId = request.getParameter("id");
 			String edit = request.getParameter("edit");
+			String delete = request.getParameter("delete");
 
 			Connection conn = DbConn.openConn();
 
@@ -57,13 +60,14 @@ public class ProblemServlet extends HttpServlet {
 				// new problem
 				CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 				List<Category> categories = categoryDAO.getCategories();
-
+				categoryDAO.closeConnections();
 				request.setAttribute("categories", categories);
 			} else if (edit != null && edit.equals("true")) {
 				// edit problem
 				UserDAO userDAO = new UserDAOImpl(conn);
 				ProblemDAO problemDAO = new ProblemDAOImpl(conn);
-				Problem problem = problemDAO.getProblemById(Integer.parseInt(problemId));
+				ProblemInfo problemInfo = problemDAO.getProblemById(Integer.parseInt(problemId));
+				Problem problem = problemInfo.getProblem();
 				CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 				List<Category> categories = categoryDAO.getCategories();
 
@@ -75,11 +79,24 @@ public class ProblemServlet extends HttpServlet {
 
 				request.setAttribute("problem", problem);
 				request.setAttribute("categories", categories);
+				request.setAttribute("categoryId", problem.getCategoryId());
+
+				userDAO.closeConnections();
+				problemDAO.closeConnections();
+				categoryDAO.closeConnections();
+			} else if (delete != null && delete.equals("true")) {
+				// delete problem
+				ProblemDAO problemDAO = new ProblemDAOImpl(conn);
+				problemDAO.deleteProblemById(Integer.parseInt(problemId));
+				problemDAO.closeConnections();
+				response.sendRedirect(request.getContextPath());
+				return;
 			} else if (problemId != null) {
 				// display problem
 				UserDAO userDAO = new UserDAOImpl(conn);
 				ProblemDAO problemDAO = new ProblemDAOImpl(conn);
-				Problem problem = problemDAO.getProblemById(Integer.parseInt(problemId));
+				ProblemInfo problemInfo = problemDAO.getProblemById(Integer.parseInt(problemId));
+				Problem problem = problemInfo.getProblem();
 				CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 
 				title = problem.getTitle();
@@ -87,8 +104,12 @@ public class ProblemServlet extends HttpServlet {
 				author = userDAO.getUserById(problem.getCreatedByUserId()).getUserName();
 				category = categoryDAO.getCategory(problem.getCategoryId()).getName();
 				content = problem.getContent();
-				
+
 				request.setAttribute("problem", problem);
+
+				userDAO.closeConnections();
+				problemDAO.closeConnections();
+				categoryDAO.closeConnections();
 			}
 
 			request.setAttribute("title", title);
@@ -114,11 +135,6 @@ public class ProblemServlet extends HttpServlet {
 
 			HttpSession session = request.getSession(false);
 			int userId = (int) session.getAttribute("userId");
-			UserDAO userDAO = new UserDAOImpl(conn);
-			User user = userDAO.getUserById(userId);
-
-			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
-			// Problem problem = problemDAO.getProblem(Integer.parseInt(problemId));
 
 			if (problemId == null) {
 				// new problem
@@ -126,10 +142,15 @@ public class ProblemServlet extends HttpServlet {
 				String categoryId = request.getParameter("categoryId");
 				String content = request.getParameter("content");
 
+				ProblemDAO problemDAO = new ProblemDAOImpl(conn);
+
 				Map<String, String> errors = new StringMap();
 
 				if (!validTitle(title)) {
 					errors.put("title", "Invalid title!");
+				}
+				if (!validCategoryId(categoryId)) {
+					errors.put("categoryId", "Invalid category!");
 				}
 				if (!validContent(content)) {
 					errors.put("content", "Invalid content!");
@@ -141,6 +162,7 @@ public class ProblemServlet extends HttpServlet {
 					newProblem.setTitle(title);
 					newProblem.setContent(content);
 					newProblem.setCreatedByUserId(userId);
+					newProblem.setCreatedTimestamp(new Timestamp(new Date().getTime()));
 
 					problemDAO.addProblem(newProblem);
 
@@ -148,6 +170,7 @@ public class ProblemServlet extends HttpServlet {
 				} else {
 					CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 					List<Category> categories = categoryDAO.getCategories();
+					categoryDAO.closeConnections();
 
 					request.setAttribute("errors", errors);
 					request.setAttribute("title", title);
@@ -156,40 +179,52 @@ public class ProblemServlet extends HttpServlet {
 					request.setAttribute("categories", categories);
 					getServletContext().getRequestDispatcher("/problem.jsp").forward(request, response);
 				}
+
+				problemDAO.closeConnections();
 			} else if (edit != null && edit.equals("true")) {
 				// edit problem
-			} else if (problemId != null) {
-				// display problem
-			}
-
-			// boolean canEdit = user.getId() == problem.getCreatedByUserId();
-
-			if (false) {
-				// String edit = request.getParameter("edit");
 				String title = request.getParameter("title");
 				String categoryId = request.getParameter("categoryId");
 				String content = request.getParameter("content");
 
+				ProblemDAO problemDAO = new ProblemDAOImpl(conn);
+
 				Map<String, String> errors = new StringMap();
 
-				if (problemId == null) {
-					// new problem
-				} else if (edit != null && edit.equals("true")) {
-					// edit problem
-				} else if (problemId != null) {
-					// display problem
+				if (!validTitle(title)) {
+					errors.put("title", "Invalid title!");
+				}
+				if (!validCategoryId(categoryId)) {
+					errors.put("categoryId", "Invalid category!");
+				}
+				if (!validContent(content)) {
+					errors.put("content", "Invalid content!");
 				}
 
-				boolean error = false;
+				if (errors.isEmpty()) {
+					// TODO: update problem
+					problemDAO.updateCategoryIdById(Integer.parseInt(problemId), Integer.parseInt(categoryId));
+					problemDAO.updateTitleById(Integer.parseInt(problemId), title);
+					problemDAO.updateContentById(Integer.parseInt(problemId), content);
+					problemDAO.updateEditedById(Integer.parseInt(problemId), true);
 
-				if (error) {
-					request.setAttribute("errors", errors);
-					doGet(request, response);
-				} else {
 					response.sendRedirect("problem?id=" + problemId);
+				} else {
+					CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
+					List<Category> categories = categoryDAO.getCategories();
+					categoryDAO.closeConnections();
+
+					request.setAttribute("errors", errors);
+					request.setAttribute("title", title);
+					request.setAttribute("categoryId", categoryId);
+					request.setAttribute("content", content);
+					request.setAttribute("categories", categories);
+					getServletContext().getRequestDispatcher("/problem.jsp").forward(request, response);
 				}
-			} else {
-				// response.sendRedirect("problem?id=" + problemId);
+
+				problemDAO.closeConnections();
+			} else if (problemId != null) {
+				// display problem
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,6 +233,10 @@ public class ProblemServlet extends HttpServlet {
 
 	private boolean validTitle(String title) {
 		return !title.isEmpty() && title.length() <= 100;
+	}
+
+	private boolean validCategoryId(String categoryId) {
+		return !categoryId.equals("0");
 	}
 
 	private boolean validContent(String content) {

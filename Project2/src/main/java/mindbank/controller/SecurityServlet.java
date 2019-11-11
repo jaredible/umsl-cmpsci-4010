@@ -37,6 +37,7 @@ public class SecurityServlet extends HttpServlet {
 			int userId = (int) request.getSession(false).getAttribute("userId");
 			UserDAO userDAO = new UserDAOImpl();
 			User user = userDAO.getUserById(userId);
+			userDAO.closeConnections();
 
 			String phoneNumber = user.getPhoneNumber();
 
@@ -89,6 +90,8 @@ public class SecurityServlet extends HttpServlet {
 				request.setAttribute("phoneNumber", phoneNumber);
 				getServletContext().getRequestDispatcher("/security.jsp").forward(request, response);
 			}
+
+			userDAO.closeConnections();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

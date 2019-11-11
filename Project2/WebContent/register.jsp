@@ -20,15 +20,18 @@ if (errors != null) {
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<title>Register | Mindbank</title>
+		<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css">
-		<link rel="stylesheet" href="css/styles.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 	</head>
 	<body>
 		<div class="wrapper">
 			<div class="main d-flex justify-content-center align-items-center">
 				<div class="container mw-300">
+					<a class="text-center text-dark" href="${pageContext.request.contextPath}"><div class="h1 mb-5">Mindbank</div></a>
+					
 					<form class="text-center" action="register" method="post" novalidate>
 						<p class="h4 mb-3">Register</p>
 						
@@ -62,11 +65,11 @@ if (errors != null) {
 							<a href="#" class="mx-2" role="button"><i class="fab fa-github black-text"></i></a>
 					    </div>
 					    
-					    <p>Already a member?<a href="login">Login</a></p>
+					    <p>Already a member?<a href="login"> Login</a></p>
 		    			
 		    			<hr>
 		    			
-		    			<small><small><p>By clicking <em>Register</em> you agree to our <a href="" target="_blank">terms of service</a></p></small></small>
+		    			<small><small><p>By clicking <em>Register</em> you agree to our <a href="terms" target="_blank">terms of service</a></p></small></small>
 					</form>
 				</div>
 			</div>

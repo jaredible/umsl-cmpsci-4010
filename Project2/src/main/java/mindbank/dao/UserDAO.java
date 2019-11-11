@@ -36,4 +36,6 @@ public interface UserDAO {
 
 	public Connection getConnection();
 
+	public void closeConnections();
+
 }
