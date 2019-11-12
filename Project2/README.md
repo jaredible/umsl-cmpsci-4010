@@ -11,7 +11,8 @@
 ### Install
 
 - Execute the file, init.sql, within the directory, src, on phpMyAdmin.
+- Update the file, dp.properties, within the directoy, src.
 
 ### Deployment
 
-- Run this project on Tomcat.
+- Run this project in Tomcat.
