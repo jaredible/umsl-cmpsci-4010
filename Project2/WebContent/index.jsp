@@ -109,6 +109,9 @@ try {
 				</div>
 			</nav>
 			
+			[[${(param.intA > param.intB) ? "greater" : "less or equal"}]]
+			${(param.intA > param.intB) ? "greater" : "less or equal"}
+			
 			<div class="main d-flex justify-content-center align-items-center">
 				<div class="container">
 					<div class="row justify-content-center align-items-center my-2">
