@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.servlet.UnavailableException;
 
-import edu.umsl.java.beans.Problem;
+import edu.umsl.java.model.Problem;
 
 public class ProblemDao {
 	private Connection connection;

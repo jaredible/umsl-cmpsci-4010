@@ -1,4 +1,4 @@
-package edu.umsl.java.web;
+package edu.umsl.java.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.umsl.java.beans.Problem;
 import edu.umsl.java.dao.ProblemDao;
+import edu.umsl.java.model.Problem;
 
 /**
- * Servlet implementation class ListMathServlet
+ * Servlet implementation class ListServlet
  */
-@WebServlet("/listmath")
-public class ListMathServlet extends HttpServlet {
+@WebServlet("/")
+public class ListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -1,4 +1,4 @@
-package edu.umsl.java.beans;
+package edu.umsl.java.model;
 
 public class Problem {
 	private int pid;
