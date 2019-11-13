@@ -1,16 +1,48 @@
 package edu.umsl.java.model;
 
-public class Problem {
-	private int pid;
-	private String content;
-	private int order_num;
+import java.sql.Timestamp;
 
-	public int getPid() {
-		return pid;
+public class Problem {
+
+	private int id;
+	private int categoryId;
+	private String title;
+	private String content;
+	private Timestamp createdTime;
+
+	public Problem() {
 	}
 
-	public void setPid(int pid) {
-		this.pid = pid;
+	public Problem(int id, int categoryId, String title, String content, Timestamp createdTime) {
+		this.id = id;
+		this.categoryId = categoryId;
+		this.title = title;
+		this.content = content;
+		this.createdTime = createdTime;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getContent() {
@@ -21,12 +53,12 @@ public class Problem {
 		this.content = content;
 	}
 
-	public int getOrder_num() {
-		return order_num;
+	public Timestamp getCreatedTime() {
+		return createdTime;
 	}
 
-	public void setOrder_num(int order_num) {
-		this.order_num = order_num;
+	public void setCreatedTime(Timestamp createdTime) {
+		this.createdTime = createdTime;
 	}
 
 }

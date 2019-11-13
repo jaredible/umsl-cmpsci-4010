@@ -1,17 +1,11 @@
 package edu.umsl.java.controller;
 
 import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import edu.umsl.java.dao.ProblemDao;
-import edu.umsl.java.model.Problem;
 
 /**
  * Servlet implementation class ListServlet
@@ -21,57 +15,24 @@ public class ListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ListServlet() {
+		super();
+	}
+
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProblemDao probdao = null;
+		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+	}
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-
-		int pg = 0;
-		String initpg = request.getParameter("pg");
-
-		if (initpg != null) {
-			try {
-				pg = Integer.parseInt(initpg);
-			} catch (Exception e) {
-				// skip
-			}
-		}
-
-		if (pg == 0) {
-			pg = 1;
-		}
-
-		try {
-			probdao = new ProblemDao();
-
-			int cnt = probdao.getProblemCount();
-
-			int totalpg = (int) Math.ceil(cnt / 10.0);
-
-			request.setAttribute("maxpg", totalpg);
-
-			if (pg < 1) {
-				pg = 1;
-			} else if (pg > totalpg) {
-				pg = totalpg;
-			}
-
-			List<Problem> problist = probdao.getProblemListByPage(pg);
-
-			request.setAttribute("problist", problist);
-
-			request.setAttribute("maxordernum", probdao.getMaxOrderNum());
-
-			request.setAttribute("crtpg", pg);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		dispatcher.forward(request, response);
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 }
