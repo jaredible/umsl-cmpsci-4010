@@ -3,7 +3,6 @@ package edu.umsl.java.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +15,13 @@ public class CategoryDaoImpl implements CategoryDao {
 	private Connection connection;
 	private PreparedStatement addCategory;
 	private PreparedStatement getCategories;
+	private PreparedStatement getCategoryIdExists;
 
 	public CategoryDaoImpl() throws Exception {
 		connection = DbConn.openConn();
 		addCategory = connection.prepareStatement("INSERT INTO Category (ID, Name, Description, CreatedTime) VALUES (?, ?, ?, ?);");
 		getCategories = connection.prepareStatement("SELECT * FROM Category;");
+		getCategoryIdExists = connection.prepareStatement("SELECT * FROM Category WHERE ID = ?;");
 	}
 
 	@Override
@@ -55,6 +56,24 @@ public class CategoryDaoImpl implements CategoryDao {
 		}
 
 		return null;
+	}
+
+	@Override
+	public boolean getCategoryIdExists(int id) {
+		try {
+			getCategoryIdExists.setInt(1, id);
+			ResultSet rs = getCategoryIdExists.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	protected void finalize() {
 	}
 
 }

@@ -1,4 +1,4 @@
-package edu.umsl.java.controller;
+package edu.umsl.java.controller.category;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

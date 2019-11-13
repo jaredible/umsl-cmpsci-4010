@@ -1,4 +1,4 @@
-package edu.umsl.java.controller;
+package edu.umsl.java.controller.problem;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ProblemServlet
+ * Servlet implementation class ProblemListServlet
  */
-@WebServlet("/problem")
-public class ProblemServlet extends HttpServlet {
+@WebServlet("/problemList")
+public class ProblemListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ProblemServlet() {
+	public ProblemListServlet() {
 		super();
 	}
 
@@ -25,14 +25,13 @@ public class ProblemServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/problem.jsp").forward(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("HERE");
 		doGet(request, response);
 	}
 

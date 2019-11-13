@@ -10,4 +10,10 @@ public interface ProblemDao {
 
 	public List<Problem> getProblems();
 
+	public boolean getProblemIdExists(int i);
+
+	public boolean getTitleExists(String s);
+
+	public Problem getProblemById(int i);
+
 }

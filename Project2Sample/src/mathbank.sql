@@ -23,3 +23,13 @@ CREATE TABLE Problem (
     PRIMARY KEY (ID),
     FOREIGN KEY (CategoryID) REFERENCES Category(ID)
 );
+
+INSERT INTO Category (ID, Name, Description, CreatedTime) VALUES
+(NULL, "Test1", "Test1", "2019-11-11 11:11:11"),
+(NULL, "Test2", "Test2", "2019-11-11 11:11:12"),
+(NULL, "Test3", "Test3", "2019-11-11 11:11:13");
+
+INSERT INTO Problem (ID, CategoryID, Title, Content, CreatedTime) VALUES
+(NULL, 1, "Test1", "Test1", "2019-11-11 11:11:11"),
+(NULL, 2, "Test2", "Test2", "2019-11-11 11:11:12"),
+(NULL, 3, "Test3", "Test3", "2019-11-11 11:11:13");

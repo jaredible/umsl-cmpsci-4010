@@ -10,4 +10,6 @@ public interface CategoryDao {
 
 	public List<Category> getCategories();
 
+	public boolean getCategoryIdExists(int i);
+
 }
