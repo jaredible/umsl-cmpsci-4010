@@ -1,0 +1,25 @@
+
+DROP DATABASE IF EXISTS mathbank;
+
+CREATE DATABASE mathbank;
+
+USE mathbank;
+
+
+CREATE TABLE Category (
+    ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR (20) NOT NULL UNIQUE,
+    Description VARCHAR (420) NOT NULL,
+	CreatedTime TIMESTAMP NOT NULL,
+    PRIMARY KEY (ID)
+);
+
+CREATE TABLE Problem (
+    ID INT NOT NULL AUTO_INCREMENT,
+    CategoryID INT NOT NULL,
+    Title VARCHAR (50) NOT NULL UNIQUE,
+    Content TEXT NOT NULL,
+	CreatedTime TIMESTAMP NOT NULL,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (CategoryID) REFERENCES Category(ID)
+);

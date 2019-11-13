@@ -16,7 +16,7 @@ import edu.umsl.java.model.Problem;
 /**
  * Servlet implementation class ListServlet
  */
-@WebServlet("/")
+@WebServlet("")
 public class ListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class ListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProblemDao probdao = null;
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 
 		int pg = 0;
 		String initpg = request.getParameter("pg");
