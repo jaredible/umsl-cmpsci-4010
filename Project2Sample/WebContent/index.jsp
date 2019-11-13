@@ -14,76 +14,34 @@
 	<body>
 		<div class="wrapper">
 			<div class="main">
-				<div class="container">
+				<!-- BEGIN TABS -->
+				<header>
 					<ul id="pills-tab" class="nav nav-pills justify-content-center my-3" role="tablist">
 						<li class="nav-item">
-							<a id="pills-home-tab" class="nav-link active" href="#pills-home" data-toggle="pill" role="tab" aria-contols="pills-home" aria-selected="true">Home</a>
+							<a id="pills-home-tab" class="nav-link active" href="${pageContext.request.contextPath}">Home</a>
 						</li>
 						<li class="nav-item">
-							<a id="pills-problems-tab" class="nav-link" href="#pills-problems" data-toggle="pill" role="tab" aria-contols="pills-problems" aria-selected="true">Problems</a>
+							<a id="pills-problems-tab" class="nav-link" href="problem">Problems</a>
 						</li>
 						<li class="nav-item">
-							<a id="pills-categories-tab" class="nav-link" href="#pills-categories" data-toggle="pill" role="tab" aria-contols="pills-categories" aria-selected="true">Categories</a>
+							<a id="pills-categories-tab" class="nav-link" href="category">Categories</a>
 						</li>
 					</ul>
-					<div id="pills-content" class="tab-content">
-						<div id="pills-home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="pills-home-tab">
+				</header>
+				<!-- END TABS -->
+				
+				<!-- BEGIN HOME CONTENT -->
+				<div class="container">
+					<div class="row">
+						<div class="col-6">
+							Test1
 						</div>
-						<div id="pills-problems" class="tab-pane fade" role="tabpanel" aria-labelledby="pills-problems-tab">
-							<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 id="modelTitle" class="modal-title">Modal title</h5>
-											<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true"><i class="fas fa-times"></i></span>
-											</button>
-										</div>
-										<div class="modal-body">
-											Testing
-											<div id="disqus_thread"></div>
-										</div>
-										<div class="modal-footer">
-											<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">PID</th>
-										<th scope="col">CID</th>
-										<th scope="col">Title</th>
-										<th scope="col"></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">1</th>
-										<td>2</td>
-										<td>Testing</td>
-										<td><button class="btn btn-sm btn-secondary" type="button" data-toggle="modal" data-target="#modal">View</button></td>
-									</tr>
-									<tr>
-										<th scope="row">1</th>
-										<td>2</td>
-										<td>Testing Testing</td>
-										<td><button class="btn btn-sm btn-secondary">View</button></td>
-									</tr>
-									<tr>
-										<th scope="row">1</th>
-										<td>2</td>
-										<td>Testing Testing Testing</td>
-										<td><button class="btn btn-sm btn-secondary">View</button></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div id="pills-categories" class="tab-pane fade" role="tabpanel" aria-labelledby="pills-categories-tab">
+						<div class="col-6">
+							Test2
 						</div>
 					</div>
 				</div>
+				<!-- END HOME CONTENT -->
 			</div>
 		</div>
 	</body>
