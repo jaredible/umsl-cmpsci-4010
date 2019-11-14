@@ -48,6 +48,8 @@ public class ProblemServlet extends HttpServlet {
 					id = Integer.parseInt(problemId);
 					if (id > 0) {
 						if (problemDao.getProblemIdExists(id)) {
+							problemDao.incrementViewCountById(id);
+
 							Problem problem = problemDao.getProblemById(id);
 
 							request.setAttribute("problem", problem);

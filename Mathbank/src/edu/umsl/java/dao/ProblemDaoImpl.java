@@ -21,6 +21,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	private PreparedStatement getTitleExists;
 	private PreparedStatement getProblemById;
 	private PreparedStatement updateProblem;
+	private PreparedStatement incrementViewCountById;
 
 	public ProblemDaoImpl() throws Exception {
 		connection = DbConn.openConn();
@@ -31,6 +32,7 @@ public class ProblemDaoImpl implements ProblemDao {
 		getTitleExists = connection.prepareStatement("SELECT * FROM Problem WHERE Title = ?;");
 		getProblemById = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
 		updateProblem = connection.prepareStatement("UPDATE Problem SET Title = ?, CategoryID = ?, Content = ?, Edited = TRUE, TrackingID = ? WHERE ID = ?;");
+		incrementViewCountById = connection.prepareStatement("UPDATE Problem SET ViewCount = ViewCount + 1 WHERE ID = ?;");
 	}
 
 	@Override
@@ -82,6 +84,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setContent(rs.getString("Content"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				problem.setEdited(rs.getBoolean("Edited"));
+				problem.setViewCount(rs.getInt("ViewCount"));
 				problems.add(problem);
 			}
 			return problems;
@@ -116,6 +119,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setContent(rs.getString("Content"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				problem.setEdited(rs.getBoolean("Edited"));
+				problem.setViewCount(rs.getInt("ViewCount"));
 				problems.add(problem);
 			}
 			return problems;
@@ -199,6 +203,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setContent(rs.getString("Content"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				problem.setEdited(rs.getBoolean("Edited"));
+				problem.setViewCount(rs.getInt("ViewCount"));
 				problem.setTrackingId(rs.getInt("TrackingID"));
 				return problem;
 			}
@@ -231,6 +236,16 @@ public class ProblemDaoImpl implements ProblemDao {
 		}
 	}
 
+	@Override
+	public void incrementViewCountById(int id) {
+		try {
+			incrementViewCountById.setInt(1, id);
+			incrementViewCountById.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	protected void finalize() {
 		try {
 			if (addProblem != null && !addProblem.isClosed()) {
@@ -253,6 +268,9 @@ public class ProblemDaoImpl implements ProblemDao {
 			}
 			if (updateProblem != null && !updateProblem.isClosed()) {
 				updateProblem.close();
+			}
+			if (incrementViewCountById != null && !incrementViewCountById.isClosed()) {
+				incrementViewCountById.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

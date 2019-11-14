@@ -20,4 +20,6 @@ public interface ProblemDao {
 
 	public void updateProblem(Problem p);
 
+	public void incrementViewCountById(int i);
+
 }

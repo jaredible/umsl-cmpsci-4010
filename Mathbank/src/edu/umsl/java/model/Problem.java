@@ -10,18 +10,20 @@ public class Problem {
 	private String content;
 	private Timestamp createdTime;
 	private boolean edited;
+	private int viewCount;
 	private int trackingId;
 
 	public Problem() {
 	}
 
-	public Problem(int id, int categoryId, String title, String content, Timestamp createdTime, boolean edited, int trackingId) {
+	public Problem(int id, int categoryId, String title, String content, Timestamp createdTime, boolean edited, int viewCount, int trackingId) {
 		this.id = id;
 		this.categoryId = categoryId;
 		this.title = title;
 		this.content = content;
 		this.createdTime = createdTime;
 		this.edited = edited;
+		this.viewCount = viewCount;
 		this.trackingId = trackingId;
 	}
 
@@ -71,6 +73,14 @@ public class Problem {
 
 	public void setEdited(boolean edited) {
 		this.edited = edited;
+	}
+
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
 	}
 
 	public int getTrackingId() {
