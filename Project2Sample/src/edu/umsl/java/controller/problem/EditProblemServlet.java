@@ -16,8 +16,13 @@ import edu.umsl.java.dao.CategoryDao;
 import edu.umsl.java.dao.CategoryDaoImpl;
 import edu.umsl.java.dao.ProblemDao;
 import edu.umsl.java.dao.ProblemDaoImpl;
+import edu.umsl.java.dao.TrackingDao;
+import edu.umsl.java.dao.TrackingDaoImpl;
 import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Problem;
+import edu.umsl.java.model.Tracking;
+import edu.umsl.java.util.TrackingType;
+import edu.umsl.java.util.Util;
 
 /**
  * Servlet implementation class EditProblemServlet
@@ -122,14 +127,25 @@ public class EditProblemServlet extends HttpServlet {
 			}
 
 			if (errors.isEmpty()) {
-				Problem problem = new Problem();
-				problem.setId(Integer.parseInt(problemId));
+				TrackingDao trackingDao = new TrackingDaoImpl();
+
+				Problem problem = problemDao.getProblemById(Integer.parseInt(problemId));
+				Tracking tracking = new Tracking();
+
+				tracking.setTrackingType(TrackingType.PROBLEM.getId());
+				tracking.setIp(Util.getIPFromServletRequest(request));
+				tracking.setUserAgent(request.getHeader("User-Agent"));
+				tracking.setCreatedTime(new Timestamp(new Date().getTime()));
+				tracking.setPreviousTrackingId(problem.getTrackingId());
+				int trackingId = trackingDao.addTracking(tracking);
+
 				problem.setTitle(title);
 				problem.setCategoryId(id);
 				problem.setContent(content);
+				problem.setTrackingId(trackingId);
 				problemDao.updateProblem(problem);
 
-				response.sendRedirect("problemList");
+				response.sendRedirect("problem?id=" + problemId);
 			} else {
 				Map<Integer, Category> categories = categoryDao.getCategories();
 

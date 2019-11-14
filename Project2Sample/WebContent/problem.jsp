@@ -57,6 +57,8 @@
 						</a>
 					</p>
 					
+					<a class="btn btn-sm btn-secondary" href="editProblem?id=${problem.id}">Edit</a>
+					
 					<hr>
 					
 					<div class="d-flex justify-content-center align-items-center">

@@ -21,6 +21,7 @@ import edu.umsl.java.dao.TrackingDaoImpl;
 import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Problem;
 import edu.umsl.java.model.Tracking;
+import edu.umsl.java.util.TrackingType;
 import edu.umsl.java.util.Util;
 
 /**
@@ -102,6 +103,7 @@ public class AddProblemServlet extends HttpServlet {
 				Problem problem = new Problem();
 				Tracking tracking = new Tracking();
 
+				tracking.setTrackingType(TrackingType.PROBLEM.getId());
 				tracking.setIp(Util.getIPFromServletRequest(request));
 				tracking.setUserAgent(request.getHeader("User-Agent"));
 				tracking.setCreatedTime(new Timestamp(new Date().getTime()));

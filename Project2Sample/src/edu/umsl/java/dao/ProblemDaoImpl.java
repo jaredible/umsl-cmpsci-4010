@@ -24,13 +24,13 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	public ProblemDaoImpl() throws Exception {
 		connection = DbConn.openConn();
-		addProblem = connection.prepareStatement("INSERT INTO Problem (ID, CategoryID, Title, Content, CreatedTime) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+		addProblem = connection.prepareStatement("INSERT INTO Problem (ID, CategoryID, Title, Content, CreatedTime, TrackingId) VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getProblems = connection.prepareStatement("SELECT * FROM Problem ORDER BY CreatedTime DESC;");
 		getProblemsByCategoryId = connection.prepareStatement("SELECT * FROM Problem WHERE CategoryID = ? ORDER BY CreatedTime DESC;");
 		getProblemIdExists = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
 		getTitleExists = connection.prepareStatement("SELECT * FROM Problem WHERE Title = ?;");
 		getProblemById = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
-		updateProblem = connection.prepareStatement("UPDATE Problem SET Title = ?, CategoryID = ?, Content = ?, Edited = TRUE WHERE ID = ?;");
+		updateProblem = connection.prepareStatement("UPDATE Problem SET Title = ?, CategoryID = ?, Content = ?, Edited = TRUE, TrackingID = ? WHERE ID = ?;");
 	}
 
 	@Override
@@ -44,6 +44,7 @@ public class ProblemDaoImpl implements ProblemDao {
 			addProblem.setString(3, problem.getTitle());
 			addProblem.setString(4, problem.getContent());
 			addProblem.setTimestamp(5, problem.getCreatedTime());
+			addProblem.setInt(6, problem.getTrackingId());
 			int rowAffected = addProblem.executeUpdate();
 			if (rowAffected == 1) {
 				rs = addProblem.getGeneratedKeys();
@@ -198,6 +199,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setContent(rs.getString("Content"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				problem.setEdited(rs.getBoolean("Edited"));
+				problem.setTrackingId(rs.getInt("TrackingID"));
 				return problem;
 			}
 		} catch (Exception e) {
@@ -221,7 +223,8 @@ public class ProblemDaoImpl implements ProblemDao {
 			updateProblem.setString(1, problem.getTitle());
 			updateProblem.setInt(2, problem.getCategoryId());
 			updateProblem.setString(3, problem.getContent());
-			updateProblem.setInt(4, problem.getId());
+			updateProblem.setInt(4, problem.getTrackingId());
+			updateProblem.setInt(5, problem.getId());
 			updateProblem.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

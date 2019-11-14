@@ -5,12 +5,13 @@ CREATE DATABASE mathbank;
 
 USE mathbank;
 
-
 CREATE TABLE Tracking (
 	ID INT NOT NULL AUTO_INCREMENT,
+	TrackingType INT NOT NULL,
 	IP VARCHAR (15) NOT NULL,
 	UserAgent TEXT NOT NULL,
 	CreatedTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PreviousTrackingID INT DEFAULT NULL,
 	PRIMARY KEY (ID)
 );
 
@@ -38,8 +39,8 @@ CREATE TABLE Problem (
     FOREIGN KEY (TrackingID) REFERENCES Tracking(ID)
 );
 
-INSERT INTO Tracking (ID, IP, UserAgent, CreatedTime) VALUES
-(NULL, "", "", "");
+INSERT INTO Tracking (ID, TrackingType, IP, UserAgent, CreatedTime) VALUES
+(NULL, 0, "test", "test", "2019-11-11 11:11:11");
 
 INSERT INTO Category (ID, Name, Description, CreatedTime, Edited, TrackingID) VALUES
 (NULL, "Test1", "Test1", "2019-11-11 11:11:11", FALSE, 1),

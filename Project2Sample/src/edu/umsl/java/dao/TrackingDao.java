@@ -8,4 +8,6 @@ public interface TrackingDao {
 
 	public Tracking getTrackingById(int i);
 
+	public int getViewCount();
+
 }
