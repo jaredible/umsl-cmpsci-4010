@@ -46,10 +46,8 @@ public class ProblemServlet extends HttpServlet {
 
 				try {
 					id = Integer.parseInt(problemId);
-					System.out.println(id);
 					if (id > 0) {
 						if (problemDao.getProblemIdExists(id)) {
-							System.out.println("HERE");
 							Problem problem = problemDao.getProblemById(id);
 
 							request.setAttribute("problem", problem);
