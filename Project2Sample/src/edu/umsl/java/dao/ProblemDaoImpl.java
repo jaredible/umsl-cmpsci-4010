@@ -3,6 +3,8 @@ package edu.umsl.java.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,31 +17,54 @@ public class ProblemDaoImpl implements ProblemDao {
 	private Connection connection;
 	private PreparedStatement addProblem;
 	private PreparedStatement getProblems;
+	private PreparedStatement getProblemsByCategoryId;
 	private PreparedStatement getProblemIdExists;
 	private PreparedStatement getTitleExists;
 	private PreparedStatement getProblemById;
+	private PreparedStatement updateProblem;
 
 	public ProblemDaoImpl() throws Exception {
 		connection = DbConn.openConn();
-		addProblem = connection.prepareStatement("INSERT INTO Problem (ID, CategoryID, Title, Content, CreatedTime) VALUES (?, ?, ?, ?, ?);");
-		getProblems = connection.prepareStatement("SELECT * FROM Problem;");
+		addProblem = connection.prepareStatement("INSERT INTO Problem (ID, CategoryID, Title, Content, CreatedTime) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+		getProblems = connection.prepareStatement("SELECT * FROM Problem ORDER BY CreatedTime DESC;");
+		getProblemsByCategoryId = connection.prepareStatement("SELECT * FROM Problem WHERE CategoryID = ? ORDER BY CreatedTime DESC;");
 		getProblemIdExists = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
 		getTitleExists = connection.prepareStatement("SELECT * FROM Problem WHERE Title = ?;");
 		getProblemById = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
+		updateProblem = connection.prepareStatement("UPDATE Problem SET Title = ?, CategoryID = ?, Content = ?, Edited = TRUE WHERE ID = ?;");
 	}
 
 	@Override
-	public void addProblem(Problem problem) {
+	public int addProblem(Problem problem) {
+		ResultSet rs = null;
+		int resultId = 0;
+
 		try {
 			addProblem.setNull(1, Types.INTEGER);
 			addProblem.setInt(2, problem.getCategoryId());
 			addProblem.setString(3, problem.getTitle());
 			addProblem.setString(4, problem.getContent());
 			addProblem.setTimestamp(5, problem.getCreatedTime());
-			addProblem.execute();
+			int rowAffected = addProblem.executeUpdate();
+			if (rowAffected == 1) {
+				rs = addProblem.getGeneratedKeys();
+				if (rs.next()) {
+					resultId = rs.getInt(1);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
+
+		return resultId;
 	}
 
 	@Override
@@ -54,6 +79,31 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setTitle(rs.getString("Title"));
 				problem.setContent(rs.getString("Content"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
+				problem.setEdited(rs.getBoolean("Edited"));
+				problems.add(problem);
+			}
+			return problems;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<Problem> getProblemsByCategoryId(int categoryId) {
+		try {
+			getProblemsByCategoryId.setInt(1, categoryId);
+			ResultSet rs = getProblemsByCategoryId.executeQuery();
+			List<Problem> problems = new ArrayList<Problem>();
+			while (rs.next()) {
+				Problem problem = new Problem();
+				problem.setId(rs.getInt("ID"));
+				problem.setCategoryId(rs.getInt("CategoryID"));
+				problem.setTitle(rs.getString("Title"));
+				problem.setContent(rs.getString("Content"));
+				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
+				problem.setEdited(rs.getBoolean("Edited"));
 				problems.add(problem);
 			}
 			return problems;
@@ -106,6 +156,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setTitle(rs.getString("Title"));
 				problem.setContent(rs.getString("Content"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
+				problem.setEdited(rs.getBoolean("Edited"));
 				return problem;
 			}
 		} catch (Exception e) {
@@ -116,6 +167,19 @@ public class ProblemDaoImpl implements ProblemDao {
 	}
 
 	protected void finalize() {
+	}
+
+	@Override
+	public void updateProblem(Problem problem) {
+		try {
+			updateProblem.setString(1, problem.getTitle());
+			updateProblem.setInt(2, problem.getCategoryId());
+			updateProblem.setString(3, problem.getContent());
+			updateProblem.setInt(4, problem.getId());
+			updateProblem.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

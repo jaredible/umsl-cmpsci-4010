@@ -21,7 +21,7 @@
 							<a id="pills-home-tab" class="nav-link active" href="${pageContext.request.contextPath}">Home</a>
 						</li>
 						<li class="nav-item">
-							<a id="pills-problems-tab" class="nav-link" href="problem">Problems</a>
+							<a id="pills-problems-tab" class="nav-link" href="problemList">Problems</a>
 						</li>
 						<li class="nav-item">
 							<a id="pills-categories-tab" class="nav-link" href="category">Categories</a>

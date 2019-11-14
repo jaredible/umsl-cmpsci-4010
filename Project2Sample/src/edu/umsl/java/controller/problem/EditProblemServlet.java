@@ -20,16 +20,16 @@ import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Problem;
 
 /**
- * Servlet implementation class AddProblemServlet
+ * Servlet implementation class EditProblemServlet
  */
-@WebServlet("/addProblem")
-public class AddProblemServlet extends HttpServlet {
+@WebServlet("/editProblem")
+public class EditProblemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AddProblemServlet() {
+	public EditProblemServlet() {
 		super();
 	}
 
@@ -38,12 +38,40 @@ public class AddProblemServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			CategoryDao categoryDao = new CategoryDaoImpl();
+			String problemId = request.getParameter("id");
 
-			Map<Integer, Category> categories = categoryDao.getCategories();
+			if (problemId == null) {
+				response.sendRedirect("problemList");
+				return;
+			} else {
+				ProblemDao problemDao = new ProblemDaoImpl();
+				CategoryDao categoryDao = new CategoryDaoImpl();
 
-			request.setAttribute("categories", categories);
-			getServletContext().getRequestDispatcher("/addProblem.jsp").forward(request, response);
+				int id = 0;
+
+				try {
+					id = Integer.parseInt(problemId);
+					if (id > 0) {
+						if (problemDao.getProblemIdExists(id)) {
+							Problem problem = problemDao.getProblemById(id);
+							Map<Integer, Category> categories = categoryDao.getCategories();
+
+							request.setAttribute("id", problem.getId());
+							request.setAttribute("title", problem.getTitle());
+							request.setAttribute("categoryId", problem.getCategoryId());
+							request.setAttribute("content", problem.getContent());
+							request.setAttribute("categories", categories);
+							getServletContext().getRequestDispatcher("/editProblem.jsp").forward(request, response);
+						} else {
+							response.sendRedirect("problemList");
+						}
+					} else {
+						response.sendRedirect("problemList");
+					}
+				} catch (Exception e) {
+					response.sendRedirect("problemList");
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,6 +82,7 @@ public class AddProblemServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String problemId = request.getParameter("id");
 			String title = request.getParameter("title");
 			String categoryId = request.getParameter("categoryId");
 			String content = request.getParameter("content");
@@ -69,7 +98,7 @@ public class AddProblemServlet extends HttpServlet {
 				errors.put("title", "Cannot be empty!");
 			} else if (title.length() > 50) {
 				errors.put("title", "Max length is 50!");
-			} else if (problemDao.getTitleExists(title)) {
+			} else if (problemDao.getTitleExists(title) && !problemDao.getProblemById(Integer.parseInt(problemId)).getTitle().equals(title)) {
 				errors.put("title", "Already exists!");
 			}
 			if (categoryId != null) {
@@ -94,19 +123,22 @@ public class AddProblemServlet extends HttpServlet {
 
 			if (errors.isEmpty()) {
 				Problem problem = new Problem();
+				problem.setId(Integer.parseInt(problemId));
 				problem.setTitle(title);
 				problem.setCategoryId(id);
 				problem.setContent(content);
-				problem.setCreatedTime(new Timestamp(new Date().getTime()));
-				problemDao.addProblem(problem);
+				problemDao.updateProblem(problem);
 
 				response.sendRedirect("problemList");
 			} else {
+				Map<Integer, Category> categories = categoryDao.getCategories();
+
+				request.setAttribute("categories", categories);
 				request.setAttribute("title", title);
 				request.setAttribute("categoryId", categoryId);
 				request.setAttribute("content", content);
 				request.setAttribute("errors", errors);
-				doGet(request, response);
+				getServletContext().getRequestDispatcher("/editProblem.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

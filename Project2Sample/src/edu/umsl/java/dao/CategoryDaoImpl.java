@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.umsl.java.model.Category;
 import edu.umsl.java.util.DbConn;
@@ -20,7 +20,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	public CategoryDaoImpl() throws Exception {
 		connection = DbConn.openConn();
 		addCategory = connection.prepareStatement("INSERT INTO Category (ID, Name, Description, CreatedTime) VALUES (?, ?, ?, ?);");
-		getCategories = connection.prepareStatement("SELECT * FROM Category;");
+		getCategories = connection.prepareStatement("SELECT * FROM Category ORDER BY Name ASC;");
 		getCategoryIdExists = connection.prepareStatement("SELECT * FROM Category WHERE ID = ?;");
 	}
 
@@ -38,17 +38,17 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public List<Category> getCategories() {
+	public Map<Integer, Category> getCategories() {
 		try {
 			ResultSet rs = getCategories.executeQuery();
-			List<Category> categories = new ArrayList<Category>();
+			Map<Integer, Category> categories = new HashMap<Integer, Category>();
 			while (rs.next()) {
 				Category category = new Category();
 				category.setId(rs.getInt("ID"));
 				category.setName(rs.getString("Name"));
 				category.setDescription(rs.getString("Description"));
 				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				categories.add(category);
+				categories.put(category.getId(), category);
 			}
 			return categories;
 		} catch (Exception e) {

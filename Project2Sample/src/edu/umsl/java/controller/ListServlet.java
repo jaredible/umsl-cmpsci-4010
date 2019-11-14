@@ -2,6 +2,7 @@ package edu.umsl.java.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,7 +40,7 @@ public class ListServlet extends HttpServlet {
 			CategoryDao categoryDao = new CategoryDaoImpl();
 
 			List<Problem> problems = problemDao.getProblems();
-			List<Category> categories = categoryDao.getCategories();
+			Map<Integer, Category> categories = categoryDao.getCategories();
 
 			request.setAttribute("problems", problems);
 			request.setAttribute("categories", categories);

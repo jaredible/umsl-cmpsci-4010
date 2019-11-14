@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:parseDate value="${problem.createdTime}" pattern="yyyy-MM-dd HH:mm:ss" var="createdTime"/>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>${problem.title} | Mathbank</title>
+		<title>New Problem | Mathbank</title>
 		<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -35,37 +33,41 @@
 				
 				<!-- BEGIN MAIN CONTENT -->
 				<div class="container">
-					<p>
-						Title: 
-						<a href="#">
-							<c:out value="${problem.title}">Unknown</c:out>
-						</a>
-						<c:if test="${problem.edited}">
-							<small class="text-muted"><i> (edited)</i></small>
-						</c:if>
-					</p>
-					<p>
-						Category: 
-						<a href="category?id=${problem.categoryId}">
-							${problem.categoryId}
-						</a>
-					</p>
-					<p>
-						Created: 
-						<a href="#">
-							<fmt:formatDate value="${createdTime}" pattern="MMMM d, yyyy h:mm a" />
-						</a>
-					</p>
-					
-					<hr>
-					
-					<div class="d-flex justify-content-center align-items-center">
-						<p class="mb-0"><c:out value="${problem.content}">Unknown</c:out></p>
-					</div>
-					
-					<hr>
-					
-					<div id="disqus_thread"></div>
+					<!-- BEGIN ADD-PROBLEM FORM -->
+					<form class="text-center my-3" action="addProblem" method="post">
+						<div class="h5 text-center mb-3">New problem</div>
+						
+						<div class="form-row justify-content-center align-items-center">
+							<div class="form-group col-sm-12 col-md-6">
+								<input class="form-control${errors.title != null ? ' is-invalid' : ''}" name="title" placeholder="Title" value="${title}">
+								<c:if test="${errors.title != null}">
+									<div class="invalid-feedback">${errors.title}</div>
+								</c:if>
+							</div>
+							<div class="form-group col-sm-12 col-md-6">
+								<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="categoryId">
+									<option value="0"${categoryId == null ? ' selected' : ''}>Select a category</option>
+									<c:forEach var="category" items="${categories}">
+										<option value="${category.key}"${categoryId == category.key ? ' selected' : ''}>${category.value.name}</option>
+									</c:forEach>
+								</select>
+								<c:if test="${errors.categoryId != null}">
+									<div class="invalid-feedback">${errors.categoryId}</div>
+								</c:if>
+							</div>
+							<div class="form-group col-12">
+								<textarea class="form-control${errors.content != null ? ' is-invalid' : ''}" name="content" rows="10" placeholder="Type a problem">${content}</textarea>
+								<c:if test="${errors.content != null}">
+									<div class="invalid-feedback">${errors.content}</div>
+								</c:if>
+							</div>
+						</div>
+						
+						<div class="d-flex justify-content-center align-items-center">
+							<input class="btn btn-lg btn-primary" type="submit" value="Submit">
+						</div>
+					</form>
+					<!-- END ADD-PROBLEM FORM -->
 				</div>
 				<!-- END MAIN CONTENT -->
 			</div>
@@ -76,23 +78,4 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
-	<script>
-		var PAGE_URL = window.location.href;
-		var PAGE_IDENTIFIER = window.location.pathname;
-		
-		var disqus_config = function () {
-			this.page.url = PAGE_URL;
-			this.page.identifier = PAGE_IDENTIFIER; 
-		};
-		
-    	(function() {
-			var d = document, s = d.createElement('script');
-			s.src = 'https://jaredible.disqus.com/embed.js';
-			s.setAttribute('data-timestamp', +new Date());
-			(d.head || d.body).appendChild(s);
-		})();
-	</script>
-	<noscript>
-		Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
-	</noscript>
 </html>
