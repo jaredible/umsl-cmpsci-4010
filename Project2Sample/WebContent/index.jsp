@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -32,17 +33,14 @@
 				
 				<!-- BEGIN HOME CONTENT -->
 				<div class="container">
-					<div class="row">
-						<div class="col-6">
-							Test1
-						</div>
-						<div class="col-6">
-							Test2
-						</div>
+					<div class="d-flex justify-content-center align-items-center">
+						View Count: <c:out value="${viewCount}" />
 					</div>
 				</div>
 				<!-- END HOME CONTENT -->
 			</div>
+			
+			<%@ include file="footer.jsp" %>
 		</div>
 	</body>
 	

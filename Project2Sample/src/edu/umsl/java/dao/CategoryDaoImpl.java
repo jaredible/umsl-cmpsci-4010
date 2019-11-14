@@ -74,6 +74,19 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	protected void finalize() {
+		try {
+			if (addCategory != null && !addCategory.isClosed()) {
+				addCategory.close();
+			}
+			if (getCategories != null && !getCategories.isClosed()) {
+				getCategories.close();
+			}
+			if (getCategoryIdExists != null && !getCategoryIdExists.isClosed()) {
+				getCategoryIdExists.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

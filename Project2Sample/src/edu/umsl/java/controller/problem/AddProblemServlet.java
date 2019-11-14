@@ -114,9 +114,9 @@ public class AddProblemServlet extends HttpServlet {
 				problem.setContent(content);
 				problem.setCreatedTime(new Timestamp(new Date().getTime()));
 				problem.setTrackingId(trackingId);
-				problemDao.addProblem(problem);
+				int problemId = problemDao.addProblem(problem);
 
-				response.sendRedirect("problemList");
+				response.sendRedirect("problem?id=" + problemId);
 			} else {
 				request.setAttribute("title", title);
 				request.setAttribute("categoryId", categoryId);

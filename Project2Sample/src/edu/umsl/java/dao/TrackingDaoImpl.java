@@ -122,6 +122,9 @@ public class TrackingDaoImpl implements TrackingDao {
 			if (getTrackingById != null && !getTrackingById.isClosed()) {
 				getTrackingById.close();
 			}
+			if (getViewCount != null && !getViewCount.isClosed()) {
+				getViewCount.close();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

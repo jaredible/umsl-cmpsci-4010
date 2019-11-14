@@ -233,8 +233,26 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	protected void finalize() {
 		try {
-			if (!addProblem.isClosed()) {
+			if (addProblem != null && !addProblem.isClosed()) {
 				addProblem.close();
+			}
+			if (getProblems != null && !getProblems.isClosed()) {
+				getProblems.close();
+			}
+			if (getProblemsByCategoryId != null && !getProblemsByCategoryId.isClosed()) {
+				getProblemsByCategoryId.close();
+			}
+			if (getProblemIdExists != null && !getProblemIdExists.isClosed()) {
+				getProblemIdExists.close();
+			}
+			if (getTitleExists != null && !getTitleExists.isClosed()) {
+				getTitleExists.close();
+			}
+			if (getProblemById != null && !getProblemById.isClosed()) {
+				getProblemById.close();
+			}
+			if (updateProblem != null && !updateProblem.isClosed()) {
+				updateProblem.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
