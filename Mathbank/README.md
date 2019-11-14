@@ -1,4 +1,4 @@
-# [Mathbank](https://umsl.jaredible.net/Project2Sample)
+# [Mathbank](https://umsl.jaredible.net/Mathbank)
 [View the syllabus](http://htmlpreview.github.io/?https://github.com/jaredible/umsl-cmpsci-4010/blob/master/Project2/CS4010Fall2019Project2.html)
 <br/>
 
