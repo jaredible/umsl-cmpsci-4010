@@ -16,8 +16,12 @@ import edu.umsl.java.dao.CategoryDao;
 import edu.umsl.java.dao.CategoryDaoImpl;
 import edu.umsl.java.dao.ProblemDao;
 import edu.umsl.java.dao.ProblemDaoImpl;
+import edu.umsl.java.dao.TrackingDao;
+import edu.umsl.java.dao.TrackingDaoImpl;
 import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Problem;
+import edu.umsl.java.model.Tracking;
+import edu.umsl.java.util.Util;
 
 /**
  * Servlet implementation class AddProblemServlet
@@ -93,11 +97,21 @@ public class AddProblemServlet extends HttpServlet {
 			}
 
 			if (errors.isEmpty()) {
+				TrackingDao trackingDao = new TrackingDaoImpl();
+
 				Problem problem = new Problem();
+				Tracking tracking = new Tracking();
+
+				tracking.setIp(Util.getIPFromServletRequest(request));
+				tracking.setUserAgent(request.getHeader("User-Agent"));
+				tracking.setCreatedTime(new Timestamp(new Date().getTime()));
+				int trackingId = trackingDao.addTracking(tracking);
+
 				problem.setTitle(title);
 				problem.setCategoryId(id);
 				problem.setContent(content);
 				problem.setCreatedTime(new Timestamp(new Date().getTime()));
+				problem.setTrackingId(trackingId);
 				problemDao.addProblem(problem);
 
 				response.sendRedirect("problemList");

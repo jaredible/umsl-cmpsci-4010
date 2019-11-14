@@ -3,7 +3,6 @@ package edu.umsl.java.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -69,8 +68,10 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	@Override
 	public List<Problem> getProblems() {
+		ResultSet rs = null;
+
 		try {
-			ResultSet rs = getProblems.executeQuery();
+			rs = getProblems.executeQuery();
 			List<Problem> problems = new ArrayList<Problem>();
 			while (rs.next()) {
 				Problem problem = new Problem();
@@ -85,6 +86,14 @@ public class ProblemDaoImpl implements ProblemDao {
 			return problems;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return null;
@@ -92,9 +101,11 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	@Override
 	public List<Problem> getProblemsByCategoryId(int categoryId) {
+		ResultSet rs = null;
+
 		try {
 			getProblemsByCategoryId.setInt(1, categoryId);
-			ResultSet rs = getProblemsByCategoryId.executeQuery();
+			rs = getProblemsByCategoryId.executeQuery();
 			List<Problem> problems = new ArrayList<Problem>();
 			while (rs.next()) {
 				Problem problem = new Problem();
@@ -109,6 +120,14 @@ public class ProblemDaoImpl implements ProblemDao {
 			return problems;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return null;
@@ -116,14 +135,24 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	@Override
 	public boolean getProblemIdExists(int id) {
+		ResultSet rs = null;
+
 		try {
 			getProblemIdExists.setInt(1, id);
-			ResultSet rs = getProblemIdExists.executeQuery();
+			rs = getProblemIdExists.executeQuery();
 			if (rs.next()) {
 				return true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return false;
@@ -131,14 +160,24 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	@Override
 	public boolean getTitleExists(String title) {
+		ResultSet rs = null;
+
 		try {
 			getTitleExists.setString(1, title);
-			ResultSet rs = getTitleExists.executeQuery();
+			rs = getTitleExists.executeQuery();
 			if (rs.next()) {
 				return true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return false;
@@ -146,9 +185,11 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	@Override
 	public Problem getProblemById(int id) {
+		ResultSet rs = null;
+
 		try {
 			getProblemById.setInt(1, id);
-			ResultSet rs = getProblemById.executeQuery();
+			rs = getProblemById.executeQuery();
 			if (rs.next()) {
 				Problem problem = new Problem();
 				problem.setId(rs.getInt("ID"));
@@ -161,12 +202,17 @@ public class ProblemDaoImpl implements ProblemDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return null;
-	}
-
-	protected void finalize() {
 	}
 
 	@Override
@@ -177,6 +223,16 @@ public class ProblemDaoImpl implements ProblemDao {
 			updateProblem.setString(3, problem.getContent());
 			updateProblem.setInt(4, problem.getId());
 			updateProblem.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void finalize() {
+		try {
+			if (!addProblem.isClosed()) {
+				addProblem.close();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

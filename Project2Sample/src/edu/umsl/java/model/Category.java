@@ -8,15 +8,17 @@ public class Category {
 	private String name;
 	private String description;
 	private Timestamp createdTime;
+	private int trackingId;
 
 	public Category() {
 	}
 
-	public Category(int id, String name, String description, Timestamp createdTime) {
+	public Category(int id, String name, String description, Timestamp createdTime, int trackingId) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.createdTime = createdTime;
+		this.trackingId = trackingId;
 	}
 
 	public int getId() {
@@ -49,6 +51,14 @@ public class Category {
 
 	public void setCreatedTime(Timestamp createdTime) {
 		this.createdTime = createdTime;
+	}
+
+	public int getTrackingId() {
+		return trackingId;
+	}
+
+	public void setTrackingId(int trackingId) {
+		this.trackingId = trackingId;
 	}
 
 }
