@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -25,16 +26,16 @@ import edu.umsl.java.util.TrackingType;
 import edu.umsl.java.util.Util;
 
 /**
- * Servlet implementation class AddProblemServlet
+ * Servlet implementation class NewProblemServlet
  */
-@WebServlet("/addProblem")
-public class AddProblemServlet extends HttpServlet {
+@WebServlet("/newProblem")
+public class NewProblemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AddProblemServlet() {
+	public NewProblemServlet() {
 		super();
 	}
 
@@ -45,10 +46,10 @@ public class AddProblemServlet extends HttpServlet {
 		try {
 			CategoryDao categoryDao = new CategoryDaoImpl();
 
-			Map<Integer, Category> categories = categoryDao.getCategories();
+			List<Category> categories = categoryDao.getCategories();
 
 			request.setAttribute("categories", categories);
-			getServletContext().getRequestDispatcher("/addProblem.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/newProblem.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

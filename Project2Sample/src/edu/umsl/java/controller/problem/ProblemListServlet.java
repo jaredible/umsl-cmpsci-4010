@@ -77,7 +77,7 @@ public class ProblemListServlet extends HttpServlet {
 				request.setAttribute("problems", problems);
 			}
 
-			Map<Integer, Category> categories = categoryDao.getCategories();
+			List<Category> categories = categoryDao.getCategories();
 
 			request.setAttribute("categories", categories);
 			request.setAttribute("categoryId", categoryId);

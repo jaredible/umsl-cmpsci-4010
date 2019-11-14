@@ -1,7 +1,6 @@
 package edu.umsl.java.controller.problem;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +12,6 @@ import edu.umsl.java.dao.CategoryDao;
 import edu.umsl.java.dao.CategoryDaoImpl;
 import edu.umsl.java.dao.ProblemDao;
 import edu.umsl.java.dao.ProblemDaoImpl;
-import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Problem;
 
 /**
@@ -48,13 +46,14 @@ public class ProblemServlet extends HttpServlet {
 
 				try {
 					id = Integer.parseInt(problemId);
+					System.out.println(id);
 					if (id > 0) {
 						if (problemDao.getProblemIdExists(id)) {
+							System.out.println("HERE");
 							Problem problem = problemDao.getProblemById(id);
-							Map<Integer, Category> categories = categoryDao.getCategories();
 
 							request.setAttribute("problem", problem);
-							request.setAttribute("categories", categories);
+							request.setAttribute("categoryName", categoryDao.getCategoryById(problem.getCategoryId()).getName());
 							getServletContext().getRequestDispatcher("/problem.jsp").forward(request, response);
 						} else {
 							response.sendRedirect("problemList");
@@ -63,6 +62,7 @@ public class ProblemServlet extends HttpServlet {
 						response.sendRedirect("problemList");
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					response.sendRedirect("problemList");
 				}
 			}

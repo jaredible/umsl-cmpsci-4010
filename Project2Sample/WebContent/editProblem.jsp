@@ -8,7 +8,6 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<title>Edit Problem | Mathbank</title>
 		<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 	</head>
@@ -33,13 +32,13 @@
 				
 				<!-- BEGIN MAIN CONTENT -->
 				<div class="container">
-					<!-- BEGIN ADD-PROBLEM FORM -->
+					<!-- BEGIN EDIT-PROBLEM FORM -->
 					<form class="text-center my-3" action="editProblem?id=${id}" method="post">
 						<div class="h5 text-center mb-3">Edit problem</div>
 						
 						<div class="form-row justify-content-center align-items-center">
 							<div class="form-group col-sm-12 col-md-6">
-								<input class="form-control${errors.title != null ? ' is-invalid' : ''}" name="title" placeholder="Title" value="${title}">
+								<input class="form-control${errors.title != null ? ' is-invalid' : ''}" name="title" placeholder="Title" value="${title}" maxlength="50" autofocus>
 								<c:if test="${errors.title != null}">
 									<div class="invalid-feedback">${errors.title}</div>
 								</c:if>
@@ -48,7 +47,7 @@
 								<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="categoryId">
 									<option value="0"${categoryId == null ? ' selected' : ''}>Select a category</option>
 									<c:forEach var="category" items="${categories}">
-										<option value="${category.key}"${categoryId == category.key ? ' selected' : ''}>${category.value.name}</option>
+										<option value="${category.id}"${categoryId == category.id ? ' selected' : ''}>${category.name}</option>
 									</c:forEach>
 								</select>
 								<c:if test="${errors.categoryId != null}">
@@ -67,7 +66,7 @@
 							<input class="btn btn-lg btn-primary" type="submit" value="Update">
 						</div>
 					</form>
-					<!-- END ADD-PROBLEM FORM -->
+					<!-- END EDIT-PROBLEM FORM -->
 				</div>
 				<!-- END MAIN CONTENT -->
 			</div>

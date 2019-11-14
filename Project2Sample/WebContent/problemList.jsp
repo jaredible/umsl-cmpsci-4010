@@ -9,7 +9,6 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<title>Problems | Mathbank</title>
 		<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 	</head>
@@ -26,7 +25,7 @@
 							<a id="pills-problems-tab" class="nav-link active" href="problemList">Problems</a>
 						</li>
 						<li class="nav-item">
-							<a id="pills-categories-tab" class="nav-link" href="category">Categories</a>
+							<a id="pills-categories-tab" class="nav-link" href="categoryList">Categories</a>
 						</li>
 					</ul>
 				</header>
@@ -42,7 +41,7 @@
 									<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="id">
 										<option value="0"${categoryId == null ? ' selected' : ''}>Any category</option>
 										<c:forEach var="category" items="${categories}">
-											<option value="${category.key}"${category.key}"${categoryId == category.key ? ' selected' : ''}>${category.value.name}</option>
+											<option value="${category.id}"${category.id}"${categoryId == category.id ? ' selected' : ''}>${category.name}</option>
 										</c:forEach>
 									</select>
 									<div class="input-group-append">
@@ -83,7 +82,7 @@
 					<!-- END PROBLEM-LIST TABLE -->
 					
 					<div class="d-flex justify-content-center align-items-center mt-3">
-						<a class="btn btn-lg btn-primary" href="addProblem">Add problem</a>
+						<a class="btn btn-lg btn-primary" href="newProblem">Add problem</a>
 					</div>
 				</div>
 				<!-- END MAIN CONTENT -->

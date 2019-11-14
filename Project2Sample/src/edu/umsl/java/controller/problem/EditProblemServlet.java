@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -59,7 +60,7 @@ public class EditProblemServlet extends HttpServlet {
 					if (id > 0) {
 						if (problemDao.getProblemIdExists(id)) {
 							Problem problem = problemDao.getProblemById(id);
-							Map<Integer, Category> categories = categoryDao.getCategories();
+							List<Category> categories = categoryDao.getCategories();
 
 							request.setAttribute("id", problem.getId());
 							request.setAttribute("title", problem.getTitle());
@@ -147,7 +148,7 @@ public class EditProblemServlet extends HttpServlet {
 
 				response.sendRedirect("problem?id=" + problemId);
 			} else {
-				Map<Integer, Category> categories = categoryDao.getCategories();
+				List<Category> categories = categoryDao.getCategories();
 
 				request.setAttribute("categories", categories);
 				request.setAttribute("title", title);
