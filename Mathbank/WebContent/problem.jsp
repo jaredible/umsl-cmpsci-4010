@@ -88,9 +88,10 @@
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<script type="text/javascript" color="0,0,0" opacity='0.3' zIndex="-2" count="60" src="js/canvas-nest.js"></script>
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
+	<script id="dsq-count-scr" src="//mathbank.disqus.com/count.js" async></script>
 	<script>
 		var PAGE_URL = window.location.href;
-		var PAGE_IDENTIFIER = window.location.pathname;
+		var PAGE_IDENTIFIER = window.location.href;
 		
 		var disqus_config = function () {
 			this.page.url = PAGE_URL;
@@ -99,7 +100,7 @@
 		
     	(function() {
 			var d = document, s = d.createElement('script');
-			s.src = 'https://jaredible.disqus.com/embed.js';
+			s.src = 'https://mathbank.disqus.com/embed.js';
 			s.setAttribute('data-timestamp', +new Date());
 			(d.head || d.body).appendChild(s);
 		})();
