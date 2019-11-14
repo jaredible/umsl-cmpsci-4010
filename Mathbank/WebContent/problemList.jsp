@@ -60,7 +60,7 @@
 					
 					<!-- BEGIN PROBLEM-LIST TABLE -->
 					<div class="border rounded overflow-auto vh-50">
-						<table class="table table-striped">
+						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
 									<th scope="col">PID</th>

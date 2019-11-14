@@ -37,7 +37,7 @@
 				<div class="container">					
 					<!-- BEGIN CATEGORY-LIST TABLE -->
 					<div class="border rounded overflow-auto mt-5 vh-50">
-						<table class="table table-striped">
+						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
 									<th scope="col">ID</th>
