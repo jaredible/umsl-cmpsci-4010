@@ -37,3 +37,9 @@ input, select, textarea {
 textarea {
 	resize: none;
 }
+
+@media (max-width: 767.98px) {
+	.forkMe {
+		display: none !important;
+	}
+}

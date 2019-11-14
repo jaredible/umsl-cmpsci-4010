@@ -12,6 +12,8 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 	</head>
 	<body>
+		<a class="position-fixed forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+		
 		<div class="wrapper">
 			<div class="main">
 				<!-- BEGIN TABS -->
@@ -38,7 +40,7 @@
 						
 						<div class="form-row justify-content-center align-items-center">
 							<div class="form-group col-sm-12 col-md-6">
-								<input class="form-control${errors.name != null ? ' is-invalid' : ''}" name="name" placeholder="Name" value="${name}" maxlength="20" autofocus>
+								<input class="form-control${errors.name != null ? ' is-invalid' : ''}" name="name" placeholder="Name" value="${name}" autofocus>
 								<c:if test="${errors.name != null}">
 									<div class="invalid-feedback">${errors.name}</div>
 								</c:if>
@@ -46,7 +48,7 @@
 						</div>
 						<div class="form-row justify-content-center align-items-center">
 							<div class="form-group col-sm-12 col-md-6">
-								<textarea class="form-control${errors.description != null ? ' is-invalid' : ''}" name="description" rows="10" placeholder="Type a description" maxlength="420">${description}</textarea>
+								<textarea class="form-control${errors.description != null ? ' is-invalid' : ''}" name="description" rows="10" placeholder="Type a description">${description}</textarea>
 								<c:if test="${errors.description != null}">
 									<div class="invalid-feedback">${errors.description}</div>
 								</c:if>
