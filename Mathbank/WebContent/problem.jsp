@@ -39,7 +39,7 @@
 					<p>
 						Title: 
 						<a href="#">
-							<c:out value="${problem.title}">Unknown</c:out>
+							<c:out value="${problem.title}" />
 						</a>
 						<c:if test="${problem.edited}">
 							<small class="text-muted"><i> (edited)</i></small>
@@ -48,7 +48,7 @@
 					<p>
 						Category: 
 						<a href="category?id=${problem.categoryId}">
-							${categoryName}
+							<c:out value="${categoryName}" />
 						</a>
 					</p>
 					<p>
@@ -69,7 +69,7 @@
 					<hr>
 					
 					<div class="d-flex justify-content-center align-items-center">
-						<p class="mb-0"><c:out value="${problem.content}">Unknown</c:out></p>
+						<p class="mb-0"><c:out value="${problem.content}" /></p>
 					</div>
 					
 					<hr>

@@ -49,7 +49,7 @@
 								<c:forEach var="category" items="${categories}">
 									<tr>
 										<th scope="row" width="5%"><a href="category?id=${category.id}">${category.id}</a></th>
-										<td width="90%">${category.name}</td>
+										<td width="90%"><c:out value="${category.name}" /></td>
 										<td width="5%"><c:out value="${fn:toUpperCase(category.edited)}">Unknown</c:out></td>
 									</tr>
 								</c:forEach>

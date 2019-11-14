@@ -49,7 +49,7 @@
 								<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="categoryId">
 									<option value="0"${categoryId == null ? ' selected' : ''}>Select a category</option>
 									<c:forEach var="category" items="${categories}">
-										<option value="${category.id}"${categoryId == category.id ? ' selected' : ''}>${category.name}</option>
+										<option value="${category.id}"${categoryId == category.id ? ' selected' : ''}><c:out value="${category.name}" /></option>
 									</c:forEach>
 								</select>
 								<c:if test="${errors.categoryId != null}">

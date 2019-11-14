@@ -39,7 +39,7 @@
 					<p>
 						Name: 
 						<a href="#">
-							<c:out value="${category.name}">Unknown</c:out>
+							<c:out value="${category.name}" />
 						</a>
 						<c:if test="${category.edited}">
 							<small class="text-muted"><i> (edited)</i></small>
@@ -57,7 +57,7 @@
 					<hr>
 					
 					<div class="d-flex justify-content-center align-items-center">
-						<p class="mb-0"><c:out value="${category.description}">Unknown</c:out></p>
+						<p class="mb-0"><c:out value="${category.description}" /></p>
 					</div>
 					
 					<hr>

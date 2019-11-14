@@ -43,11 +43,11 @@
 									<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="id">
 										<option value="0"${categoryId == null ? ' selected' : ''}>Any category</option>
 										<c:forEach var="category" items="${categories}">
-											<option value="${category.id}"${category.id}"${categoryId == category.id ? ' selected' : ''}>${category.name}</option>
+											<option value="${category.id}"${category.id}"${categoryId == category.id ? ' selected' : ''}><c:out value="${category.name}" /></option>
 										</c:forEach>
 									</select>
 									<div class="input-group-append">
-										<input class="btn btn-outline-secondary rounded-right" type="submit" value="Filter">
+										<button class="btn btn-outline-secondary rounded-right" type="submit">Filter</button>
 									</div>
 									<c:if test="${errors.categoryId != null}">
 										<div class="invalid-feedback">${errors.categoryId}</div>
@@ -75,7 +75,7 @@
 									<tr>
 										<th scope="row" width="5%"><a href="problem?id=${problem.id}">${problem.id}</a></th>
 										<td width="5%"><a href="category?id=${problem.categoryId}">${problem.categoryId}</a></td>
-										<td width="80%">${problem.title}</td>
+										<td width="80%"><c:out value="${problem.title}" /></td>
 										<td width="5%"><c:out value="${fn:toUpperCase(problem.edited)}">Unknown</c:out></td>
 										<td width="5%">${problem.viewCount}</td>
 									</tr>

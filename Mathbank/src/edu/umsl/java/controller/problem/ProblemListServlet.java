@@ -49,7 +49,6 @@ public class ProblemListServlet extends HttpServlet {
 
 				try {
 					id = Integer.parseInt(categoryId);
-					System.out.println(id);
 					if (id > 0) {
 						if (!categoryDao.getCategoryIdExists(id)) {
 							errors.put("categoryId", "Does not exist!");
