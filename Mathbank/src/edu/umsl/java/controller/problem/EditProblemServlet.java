@@ -67,7 +67,7 @@ public class EditProblemServlet extends HttpServlet {
 							request.setAttribute("categoryId", problem.getCategoryId());
 							request.setAttribute("content", problem.getContent());
 							request.setAttribute("categories", categories);
-							getServletContext().getRequestDispatcher("/editProblem.jsp").forward(request, response);
+							getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/editProblem.jsp").forward(request, response);
 						} else {
 							response.sendRedirect("problemList");
 						}
@@ -155,7 +155,7 @@ public class EditProblemServlet extends HttpServlet {
 				request.setAttribute("categoryId", categoryId);
 				request.setAttribute("content", content);
 				request.setAttribute("errors", errors);
-				getServletContext().getRequestDispatcher("/editProblem.jsp").forward(request, response);
+				getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/editProblem.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -80,7 +80,7 @@ public class ProblemListServlet extends HttpServlet {
 
 			request.setAttribute("categories", categories);
 			request.setAttribute("categoryId", categoryId);
-			getServletContext().getRequestDispatcher("/problemList.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/problemList.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

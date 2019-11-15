@@ -14,7 +14,7 @@ import edu.umsl.java.dao.TrackingDaoImpl;
 /**
  * Servlet implementation class HomeServlet
  */
-@WebServlet("")
+@WebServlet("home")
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class HomeServlet extends HttpServlet {
 			TrackingDao trackingDao = new TrackingDaoImpl();
 			int viewCount = trackingDao.getViewCount();
 			request.setAttribute("viewCount", viewCount);
-			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/WEB-INF/jsp/home/home.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

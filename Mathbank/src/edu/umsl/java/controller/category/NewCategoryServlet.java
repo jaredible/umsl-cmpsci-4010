@@ -39,7 +39,7 @@ public class NewCategoryServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/newCategory.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/newCategory.jsp").forward(request, response);
 	}
 
 	/**

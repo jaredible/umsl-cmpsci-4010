@@ -22,4 +22,6 @@ public interface ProblemDao {
 
 	public void incrementViewCountById(int i);
 
+	public void deleteProblemById(int i);
+
 }

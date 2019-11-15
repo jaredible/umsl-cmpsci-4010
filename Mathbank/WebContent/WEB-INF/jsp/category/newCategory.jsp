@@ -1,19 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:parseDate value="${category.createdTime}" pattern="yyyy-MM-dd HH:mm:ss" var="createdTime"/>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>${category.name} | Mathbank</title>
-		<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
+		<title>New Category | Mathbank</title>
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+		<link rel="stylesheet" href="css/styles.css">
 	</head>
-	<body>		
+	<body>
 		<div class="wrapper">
 			<a class="position-fixed forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
 			
@@ -36,36 +34,37 @@
 				
 				<!-- BEGIN MAIN CONTENT -->
 				<div class="container">
-					<p>
-						Name: 
-						<a href="#">
-							<c:out value="${category.name}" />
-						</a>
-						<c:if test="${category.edited}">
-							<small class="text-muted"><i> (edited)</i></small>
-						</c:if>
-					</p>
-					<p>
-						Created: 
-						<a href="#">
-							<fmt:formatDate value="${createdTime}" pattern="MMMM d, yyyy h:mm a" />
-						</a>
-					</p>
-					
-					<a class="btn btn-sm btn-secondary" href="editCategory?id=${category.id}">Edit</a>
-					
-					<hr>
-					
-					<div class="d-flex justify-content-center align-items-center">
-						<p class="mb-0"><c:out value="${category.description}" /></p>
-					</div>
-					
-					<hr>
+					<!-- BEGIN ADD-CATEGORY FORM -->
+					<form class="text-center my-3" action="newCategory" method="post">
+						<div class="h5 text-center mb-3">New category</div>
+						
+						<div class="form-row justify-content-center align-items-center">
+							<div class="form-group col-sm-12 col-md-6">
+								<input class="form-control${errors.name != null ? ' is-invalid' : ''}" name="name" placeholder="Name" value="${name}" autofocus>
+								<c:if test="${errors.name != null}">
+									<div class="invalid-feedback">${errors.name}</div>
+								</c:if>
+							</div>
+						</div>
+						<div class="form-row justify-content-center align-items-center">
+							<div class="form-group col-sm-12 col-md-6">
+								<textarea class="form-control${errors.description != null ? ' is-invalid' : ''}" name="description" rows="10" placeholder="Type a description">${description}</textarea>
+								<c:if test="${errors.description != null}">
+									<div class="invalid-feedback">${errors.description}</div>
+								</c:if>
+							</div>
+						</div>
+						
+						<div class="d-flex justify-content-center align-items-center">
+							<button class="btn btn-lg btn-primary" type="submit">Submit</button>
+						</div>
+					</form>
+					<!-- END ADD-CATEGORY FORM -->
 				</div>
 				<!-- END MAIN CONTENT -->
 			</div>
 			
-			<%@ include file="footer.jsp" %>
+			<%@ include file="../footer.jsp" %>
 		</div>
 	</body>
 	
@@ -73,5 +72,5 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<script type="text/javascript" color="0,0,0" opacity='0.3' zIndex="-2" count="60" src="js/canvas-nest.js"></script>
-	<script src="${pageContext.request.contextPath}/js/main.js"></script>
+	<script src="js/main.js"></script>
 </html>

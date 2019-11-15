@@ -54,7 +54,7 @@ public class ProblemServlet extends HttpServlet {
 
 							request.setAttribute("problem", problem);
 							request.setAttribute("categoryName", categoryDao.getCategoryById(problem.getCategoryId()).getName());
-							getServletContext().getRequestDispatcher("/problem.jsp").forward(request, response);
+							getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/problem.jsp").forward(request, response);
 						} else {
 							response.sendRedirect("problemList");
 						}

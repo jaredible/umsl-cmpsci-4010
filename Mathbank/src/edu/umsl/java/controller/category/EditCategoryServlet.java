@@ -59,7 +59,7 @@ public class EditCategoryServlet extends HttpServlet {
 							request.setAttribute("id", category.getId());
 							request.setAttribute("name", category.getName());
 							request.setAttribute("description", category.getDescription());
-							getServletContext().getRequestDispatcher("/editCategory.jsp").forward(request, response);
+							getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/editCategory.jsp").forward(request, response);
 						} else {
 							response.sendRedirect("categoryList");
 						}
@@ -125,7 +125,7 @@ public class EditCategoryServlet extends HttpServlet {
 				request.setAttribute("name", name);
 				request.setAttribute("description", description);
 				request.setAttribute("errors", errors);
-				getServletContext().getRequestDispatcher("/editCategory.jsp").forward(request, response);
+				getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/editCategory.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

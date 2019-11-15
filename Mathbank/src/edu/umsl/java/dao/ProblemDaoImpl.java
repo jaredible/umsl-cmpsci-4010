@@ -22,6 +22,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	private PreparedStatement getProblemById;
 	private PreparedStatement updateProblem;
 	private PreparedStatement incrementViewCountById;
+	private PreparedStatement deleteProblemById;
 
 	public ProblemDaoImpl() throws Exception {
 		connection = DbConn.openConn();
@@ -33,6 +34,7 @@ public class ProblemDaoImpl implements ProblemDao {
 		getProblemById = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
 		updateProblem = connection.prepareStatement("UPDATE Problem SET Title = ?, CategoryID = ?, Content = ?, Edited = TRUE, TrackingID = ? WHERE ID = ?;");
 		incrementViewCountById = connection.prepareStatement("UPDATE Problem SET ViewCount = ViewCount + 1 WHERE ID = ?;");
+		deleteProblemById = connection.prepareStatement("DELETE FROM Problem WHERE ID = ?;");
 	}
 
 	@Override
@@ -241,6 +243,16 @@ public class ProblemDaoImpl implements ProblemDao {
 		try {
 			incrementViewCountById.setInt(1, id);
 			incrementViewCountById.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void deleteProblemById(int id) {
+		try {
+			deleteProblemById.setInt(1, id);
+			deleteProblemById.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

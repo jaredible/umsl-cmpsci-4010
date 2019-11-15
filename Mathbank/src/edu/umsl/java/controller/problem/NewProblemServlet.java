@@ -49,7 +49,7 @@ public class NewProblemServlet extends HttpServlet {
 			List<Category> categories = categoryDao.getCategories();
 
 			request.setAttribute("categories", categories);
-			getServletContext().getRequestDispatcher("/newProblem.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/newProblem.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

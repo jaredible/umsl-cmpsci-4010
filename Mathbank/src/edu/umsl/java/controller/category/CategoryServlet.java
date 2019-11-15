@@ -48,7 +48,7 @@ public class CategoryServlet extends HttpServlet {
 							Category category = categoryDao.getCategoryById(id);
 
 							request.setAttribute("category", category);
-							getServletContext().getRequestDispatcher("/category.jsp").forward(request, response);
+							getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/category.jsp").forward(request, response);
 						} else {
 							response.sendRedirect("categoryList");
 						}
