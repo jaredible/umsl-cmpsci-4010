@@ -12,11 +12,11 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 	</head>
-	<body>
-		<a class="position-fixed forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
-		
+	<body>		
 		<div class="wrapper">
-			<div class="main">				
+			<a class="position-fixed forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+			
+			<div class="main">
 				<!-- BEGIN TABS -->
 				<header>
 					<ul id="pills-tab" class="nav nav-pills justify-content-center my-3" role="tablist">
@@ -50,7 +50,7 @@
 									<tr>
 										<th scope="row" width="5%"><a href="category?id=${category.id}">${category.id}</a></th>
 										<td width="90%"><c:out value="${category.name}" /></td>
-										<td width="5%"><c:out value="${fn:toUpperCase(category.edited)}">Unknown</c:out></td>
+										<td width="5%"><c:out value="${fn:toUpperCase(category.edited)}" /></td>
 									</tr>
 								</c:forEach>
 							</tbody>

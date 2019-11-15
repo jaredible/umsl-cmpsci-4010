@@ -12,10 +12,10 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 	</head>
-	<body>
-		<a class="position-fixed forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
-		
+	<body>		
 		<div class="wrapper">
+			<a class="position-fixed forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+			
 			<div class="main">
 				<!-- BEGIN TABS -->
 				<header>
@@ -76,7 +76,7 @@
 										<th scope="row" width="5%"><a href="problem?id=${problem.id}">${problem.id}</a></th>
 										<td width="5%"><a href="category?id=${problem.categoryId}">${problem.categoryId}</a></td>
 										<td width="80%"><c:out value="${problem.title}" /></td>
-										<td width="5%"><c:out value="${fn:toUpperCase(problem.edited)}">Unknown</c:out></td>
+										<td width="5%"><c:out value="${fn:toUpperCase(problem.edited)}" /></td>
 										<td width="5%">${problem.viewCount}</td>
 									</tr>
 								</c:forEach>
