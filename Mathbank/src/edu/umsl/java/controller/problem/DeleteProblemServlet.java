@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.umsl.java.dao.ProblemDao;
-import edu.umsl.java.dao.ProblemDaoImpl;
+import edu.umsl.java.dao.problem.ProblemDao;
+import edu.umsl.java.dao.problem.ProblemDaoImpl;
 
 /**
  * Servlet implementation class DeleteProblemServlet

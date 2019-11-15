@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.umsl.java.dao.CategoryDao;
-import edu.umsl.java.dao.CategoryDaoImpl;
+import edu.umsl.java.dao.category.CategoryDao;
+import edu.umsl.java.dao.category.CategoryDaoImpl;
 import edu.umsl.java.model.Category;
 
 /**

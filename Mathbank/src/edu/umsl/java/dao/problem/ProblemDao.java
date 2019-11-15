@@ -1,4 +1,4 @@
-package edu.umsl.java.dao;
+package edu.umsl.java.dao.problem;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package edu.umsl.java.dao;
+package edu.umsl.java.dao.category;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -184,6 +184,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		}
 	}
 
+	@Override
 	protected void finalize() {
 		try {
 			if (addCategory != null && !addCategory.isClosed()) {

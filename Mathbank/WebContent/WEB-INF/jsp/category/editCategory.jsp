@@ -13,7 +13,7 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<a class="position-absolute forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+			<%@ include file="../ribbon.jsp" %>
 			
 			<div class="main">
 				<!-- BEGIN TABS -->
@@ -36,7 +36,7 @@
 				<div class="container">
 					<!-- BEGIN EDIT-CATEGORY FORM -->
 					<form class="text-center my-3" action="editCategory?id=${id}" method="post">
-						<div class="h5 text-center mb-3">Edit problem</div>
+						<div class="h5 text-center mb-3">Edit category</div>
 						
 						<div class="form-row justify-content-center align-items-center">
 							<div class="form-group col-sm-12 col-md-6">
@@ -56,7 +56,8 @@
 						</div>
 						
 						<div class="d-flex justify-content-center align-items-center">
-							<button class="btn btn-lg btn-primary" type="submit">Update</button>
+							<a class="btn btn-lg btn-secondary mx-1" href="category?id=${id}">Cancel</a>
+							<button class="btn btn-lg btn-primary mx-1" type="submit">Update</button>
 						</div>
 					</form>
 					<!-- END EDIT-CATEGORY FORM -->

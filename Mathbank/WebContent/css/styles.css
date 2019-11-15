@@ -37,8 +37,13 @@ textarea {
 	resize: none;
 }
 
-@media (max-width: 767.98px) {
-	.forkMe {
+.gh-ribbon {
+	position: absolute;
+	right: 0;
+}
+
+@media ( max-width : 767.98px) {
+	.gh-ribbon {
 		display: none !important;
 	}
 }

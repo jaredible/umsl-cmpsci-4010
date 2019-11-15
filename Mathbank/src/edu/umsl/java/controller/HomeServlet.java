@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.umsl.java.dao.TrackingDao;
-import edu.umsl.java.dao.TrackingDaoImpl;
+import edu.umsl.java.dao.tracking.TrackingDao;
+import edu.umsl.java.dao.tracking.TrackingDaoImpl;
 
 /**
  * Servlet implementation class HomeServlet

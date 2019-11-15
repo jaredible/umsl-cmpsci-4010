@@ -13,8 +13,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import edu.umsl.java.dao.TrackingDao;
-import edu.umsl.java.dao.TrackingDaoImpl;
+import edu.umsl.java.dao.tracking.TrackingDao;
+import edu.umsl.java.dao.tracking.TrackingDaoImpl;
 import edu.umsl.java.model.Tracking;
 import edu.umsl.java.util.TrackingType;
 import edu.umsl.java.util.Util;

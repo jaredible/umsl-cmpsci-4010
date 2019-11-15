@@ -35,8 +35,8 @@
 			</div>
 		</div>
 		<div class="wrapper">
-			<a class="position-absolute forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
-			
+			<%@ include file="../ribbon.jsp" %>
+						
 			<div class="main">
 				<!-- BEGIN TABS -->
 				<header>
@@ -61,16 +61,16 @@
 						<a href="#">
 							<c:out value="${category.name}" />
 						</a>
-						<c:if test="${category.edited}">
-							<small class="text-muted"><i> (edited)</i></small>
-						</c:if>
 					</p>
 					<p class="mb-0">
 						Created: 
 						<a href="#">
 							<fmt:formatDate value="${createdTime}" pattern="MMMM d, yyyy h:mm a" />
 						</a>
-					<p class="mb-0">
+					</p>
+					<c:if test="${category.edited}">
+						<p class="mb-0"><small class="text-muted"><i>edited</i></small></p>
+					</c:if>
 					
 					<br>
 					

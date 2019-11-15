@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.umsl.java.dao.CategoryDao;
-import edu.umsl.java.dao.CategoryDaoImpl;
-import edu.umsl.java.dao.ProblemDao;
-import edu.umsl.java.dao.ProblemDaoImpl;
-import edu.umsl.java.dao.TrackingDao;
-import edu.umsl.java.dao.TrackingDaoImpl;
+import edu.umsl.java.dao.category.CategoryDao;
+import edu.umsl.java.dao.category.CategoryDaoImpl;
+import edu.umsl.java.dao.problem.ProblemDao;
+import edu.umsl.java.dao.problem.ProblemDaoImpl;
+import edu.umsl.java.dao.tracking.TrackingDao;
+import edu.umsl.java.dao.tracking.TrackingDaoImpl;
 import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Problem;
 import edu.umsl.java.model.Tracking;

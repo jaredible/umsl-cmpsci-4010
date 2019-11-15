@@ -1,4 +1,4 @@
-package edu.umsl.java.dao;
+package edu.umsl.java.dao.tracking;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -114,6 +114,7 @@ public class TrackingDaoImpl implements TrackingDao {
 		return 0;
 	}
 
+	@Override
 	protected void finalize() {
 		try {
 			if (addTracking != null && !addTracking.isClosed()) {

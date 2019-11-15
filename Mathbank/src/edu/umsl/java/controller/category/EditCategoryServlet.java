@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.umsl.java.dao.CategoryDao;
-import edu.umsl.java.dao.CategoryDaoImpl;
-import edu.umsl.java.dao.TrackingDao;
-import edu.umsl.java.dao.TrackingDaoImpl;
+import edu.umsl.java.dao.category.CategoryDao;
+import edu.umsl.java.dao.category.CategoryDaoImpl;
+import edu.umsl.java.dao.tracking.TrackingDao;
+import edu.umsl.java.dao.tracking.TrackingDaoImpl;
 import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Tracking;
 import edu.umsl.java.util.TrackingType;
@@ -120,6 +120,7 @@ public class EditCategoryServlet extends HttpServlet {
 
 				response.sendRedirect("category?id=" + categoryId);
 			} else {
+				request.setAttribute("id", categoryId);
 				request.setAttribute("name", name);
 				request.setAttribute("description", description);
 				request.setAttribute("errors", errors);

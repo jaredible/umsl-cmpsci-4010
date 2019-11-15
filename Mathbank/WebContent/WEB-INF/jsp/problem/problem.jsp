@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<div class="wrapper">
-			<a class="position-absolute forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+			<%@ include file="../ribbon.jsp" %>
 			
 			<div class="main">				
 				<!-- BEGIN TABS -->
@@ -73,9 +73,6 @@
 						<a href="#">
 							<c:out value="${problem.title}" />
 						</a>
-						<c:if test="${problem.edited}">
-							<small class="text-muted"><i> (edited)</i></small>
-						</c:if>
 					</p>
 					<p class="mb-0">
 						Category: 
@@ -95,6 +92,9 @@
 							${problem.viewCount}
 						</a>
 					</p>
+					<c:if test="${problem.edited}">
+						<p class="mb-0"><small class="text-muted"><i>edited</i></small></p>
+					</c:if>
 					
 					<br>
 					
@@ -104,12 +104,39 @@
 					<hr>
 					
 					<div class="d-flex justify-content-center align-items-center">
-						<p class="mb-0"><c:out value="${problem.content}" /></p>
+						<p class="mb-0 markdown"><c:out value="${problem.content}" /></p>
 					</div>
 					
 					<hr>
 					
-					<div id="disqus_thread"></div>
+					<form action="" method="post">
+						<div class="form-group">
+							<textarea class="form-control" name="comment" rows="5" placeholder="Leave a comment" maxlength="1000"></textarea>
+						</div>
+						<div class="form-group d-flex justify-content-between mx-2 text-muted">
+							<span class="text-muted">
+								<small id="charactersRemaining">1000</small>
+								<small> characters remaining</small>
+							</span>
+							<button class="btn btn-lg btn-primary" type="submit">Post</button>
+						</div>
+					</form>
+					
+					<div class="d-flex justify-content-center">
+						<div class="card">
+							<div class="card-body">
+								<p class="card-text markdown"><c:out value="${problem.content}" /></p>
+								<p class="card-text"><small class="text-muted">Posted 3 mins ago</small></p>
+							</div>
+							
+							<hr>
+							
+							<div class="card-body">
+								<p class="card-text markdown"><c:out value="${problem.content}" /></p>
+								<p class="card-text"><small class="text-muted">Posted 3 mins ago</small></p>
+							</div>
+						</div>
+					</div>
 				</div>
 				<!-- END MAIN CONTENT -->
 			</div>
@@ -121,6 +148,7 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
 	<script type="text/javascript">
 		window.MathJax = {
 			tex2jax: {

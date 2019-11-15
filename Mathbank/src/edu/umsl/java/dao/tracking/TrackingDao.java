@@ -1,4 +1,4 @@
-package edu.umsl.java.dao;
+package edu.umsl.java.dao.tracking;
 
 import edu.umsl.java.model.Tracking;
 

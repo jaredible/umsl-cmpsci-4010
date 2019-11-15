@@ -1,4 +1,4 @@
-package edu.umsl.java.dao;
+package edu.umsl.java.dao.problem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -258,6 +258,7 @@ public class ProblemDaoImpl implements ProblemDao {
 		}
 	}
 
+	@Override
 	protected void finalize() {
 		try {
 			if (addProblem != null && !addProblem.isClosed()) {
