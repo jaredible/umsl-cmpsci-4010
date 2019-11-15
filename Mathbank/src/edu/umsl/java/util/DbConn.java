@@ -59,7 +59,4 @@ public class DbConn {
 		return url + name;
 	}
 
-	public static void main(String[] args) {
-	}
-
 }

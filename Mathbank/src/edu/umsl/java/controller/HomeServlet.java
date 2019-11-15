@@ -29,6 +29,7 @@ public class HomeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//System.out.println(request.getHeader("referer"));
 		try {
 			TrackingDao trackingDao = new TrackingDaoImpl();
 			int viewCount = trackingDao.getViewCount();

@@ -62,6 +62,12 @@
 									<div class="invalid-feedback">${errors.content}</div>
 								</c:if>
 							</div>
+							<div class="form-group col-sm-12 col-md-6">
+								<input class="form-control${errors.title != null ? ' is-invalid' : ''}" name="title" placeholder="Password (optional)" value="${title}" autofocus>
+								<c:if test="${errors.title != null}">
+									<div class="invalid-feedback">${errors.title}</div>
+								</c:if>
+							</div>
 						</div>
 						
 						<div class="d-flex justify-content-center align-items-center">

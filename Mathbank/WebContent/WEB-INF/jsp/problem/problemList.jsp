@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -66,6 +65,7 @@
 									<th scope="col">PID</th>
 									<th scope="col">CID</th>
 									<th scope="col">Title</th>
+									<th scope="col">Password</th>
 									<th scope="col">Edited</th>
 									<th scope="col">Views</th>
 								</tr>
@@ -75,8 +75,9 @@
 									<tr>
 										<th scope="row" width="5%"><a href="problem?id=${problem.id}">${problem.id}</a></th>
 										<td width="5%"><a href="category?id=${problem.categoryId}">${problem.categoryId}</a></td>
-										<td width="80%"><c:out value="${problem.title}" /></td>
-										<td width="5%"><c:out value="${fn:toUpperCase(problem.edited)}" /></td>
+										<td width="75%"><c:out value="${problem.title}" /></td>
+										<td width="5%"><c:out value="Yes" /></td>
+										<td width="5%"><c:out value="${problem.edited ? 'Yes' : 'No'}" /></td>
 										<td width="5%">${problem.viewCount}</td>
 									</tr>
 								</c:forEach>
