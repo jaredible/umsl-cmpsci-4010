@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.umsl.java.dao.category.CategoryDao;
 import edu.umsl.java.dao.category.CategoryDaoImpl;
+import edu.umsl.java.dao.comment.CommentDao;
+import edu.umsl.java.dao.comment.CommentDaoImpl;
 import edu.umsl.java.dao.problem.ProblemDao;
 import edu.umsl.java.dao.problem.ProblemDaoImpl;
 import edu.umsl.java.model.Problem;
@@ -39,14 +41,15 @@ public class ProblemServlet extends HttpServlet {
 				response.sendRedirect("problemList");
 				return;
 			} else {
-				ProblemDao problemDao = new ProblemDaoImpl();
-				CategoryDao categoryDao = new CategoryDaoImpl();
-
 				int id = 0;
 
 				try {
 					id = Integer.parseInt(problemId);
 					if (id > 0) {
+						ProblemDao problemDao = new ProblemDaoImpl();
+						CategoryDao categoryDao = new CategoryDaoImpl();
+						CommentDao commentDao = new CommentDaoImpl();
+
 						if (problemDao.getProblemIdExists(id)) {
 							problemDao.incrementViewCountById(id);
 
@@ -54,6 +57,7 @@ public class ProblemServlet extends HttpServlet {
 
 							request.setAttribute("problem", problem);
 							request.setAttribute("categoryName", categoryDao.getCategoryById(problem.getCategoryId()).getName());
+							request.setAttribute("comments", commentDao.getCommentsByProblemId(id));
 							getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/problem.jsp").forward(request, response);
 						} else {
 							response.sendRedirect("problemList");

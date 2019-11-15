@@ -33,6 +33,7 @@ CREATE TABLE Problem (
     Content TEXT NOT NULL,
     PasswordHash TEXT,
 	CreatedTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	LastEditTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	Edited BOOLEAN DEFAULT FALSE,
 	ViewCount INT DEFAULT 0,
 	TrackingID INT NOT NULL,
@@ -60,7 +61,7 @@ INSERT INTO Category (ID, Name, Description, CreatedTime, Edited, TrackingID) VA
 (NULL, "Test2", "Test2", "2019-11-11 11:11:12", TRUE, 1),
 (NULL, "Test3", "Test3", "2019-11-11 11:11:13", FALSE, 1);
 
-INSERT INTO Problem (ID, CategoryID, Title, Content, CreatedTime, Edited, TrackingID) VALUES
-(NULL, 1, "Test1", "Test1", "2019-11-11 11:11:11", TRUE, 1),
-(NULL, 2, "Test2", "Test2", "2019-11-11 11:11:12", FALSE, 1),
-(NULL, 3, "Test3", "Test3", "2019-11-11 11:11:13", TRUE, 1);
+INSERT INTO Problem (ID, CategoryID, Title, Content, CreatedTime, LastEditTime, Edited, TrackingID) VALUES
+(NULL, 1, "Test1", "Test1", "2019-11-11 11:11:11", "2019-11-11 11:11:11", TRUE, 1),
+(NULL, 2, "Test2", "Test2", "2019-11-11 11:11:12", "2019-11-11 11:11:11", FALSE, 1),
+(NULL, 3, "Test3", "Test3", "2019-11-11 11:11:13", "2019-11-11 11:11:11", TRUE, 1);

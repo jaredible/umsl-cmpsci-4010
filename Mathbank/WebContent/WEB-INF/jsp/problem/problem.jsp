@@ -1,7 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.util.concurrent.TimeUnit" %>
+<%@ page import="edu.umsl.java.model.Comment" %>
 <fmt:parseDate value="${problem.createdTime}" pattern="yyyy-MM-dd HH:mm:ss" var="createdTime"/>
+<fmt:parseDate value="${problem.lastEditTime}" pattern="yyyy-MM-dd HH:mm:ss" var="lastEditTime"/>
+<%
+	List<Comment> comments = (List<Comment>) request.getAttribute("comments");
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -92,28 +103,28 @@
 							${problem.viewCount}
 						</a>
 					</p>
-					<c:if test="${problem.edited}">
-						<p class="mb-0"><small class="text-muted"><i>edited</i></small></p>
-					</c:if>
 					
 					<br>
 					
 					<button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#deleteModal">Delete</button>
 					<a class="btn btn-sm btn-secondary" href="editProblem?id=${problem.id}">Edit</a>
 					
-					<hr>
+					<hr class="mt-3">
 					
-					<div class="d-flex justify-content-center align-items-center">
-						<p class="mb-0 markdown"><c:out value="${problem.content}" /></p>
-					</div>
+					<p class="mb-0 markdown"><c:out value="${problem.content}" /></p>
 					
-					<hr>
+					<hr class="mb-0">
 					
-					<form action="" method="post">
+					<c:if test="${problem.edited}">
+						<p><small class="text-muted"><i>Last edit at <fmt:formatDate value="${lastEditTime}" pattern="MMMM d, yyyy h:mm a" /></i></small></p>
+					</c:if>
+					
+					<form class="mt-3" action="addComment" method="post">
+						<input type="hidden" name="problemId" value="${problem.id}">
 						<div class="form-group">
 							<textarea class="form-control" name="comment" rows="5" placeholder="Leave a comment" maxlength="1000"></textarea>
 						</div>
-						<div class="form-group d-flex justify-content-between mx-2 text-muted">
+						<div class="form-group d-flex justify-content-between text-muted">
 							<span class="text-muted">
 								<small id="charactersRemaining">1000</small>
 								<small> characters remaining</small>
@@ -122,21 +133,59 @@
 						</div>
 					</form>
 					
-					<div class="d-flex justify-content-center">
-						<div class="card">
+					<% if (comments != null && !comments.isEmpty()) { %>
+					<div class="d-flex justify-content-center my-3">
+						<div class="card w-100">
+							<%
+								int commentsLength = comments.size();
+								for (int i = 0; i < commentsLength; i++) {
+									Comment comment = comments.get(i);
+									long hoursAgo = -1;
+									long daysAgo = -1;
+									long minutesAgo = -1;
+									long secondsAgo = -1;
+									
+									try {
+										Timestamp stamp = comment.getCreatedTime();
+										Date past = new Date(stamp.getTime());
+										Date now = new Date();
+										
+										hoursAgo = TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime());
+										daysAgo = TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime());
+										minutesAgo = TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime());
+										secondsAgo = TimeUnit.MILLISECONDS.toMillis(now.getTime() - past.getTime()) / 1000;
+									}
+									catch (Exception e) {
+										e.printStackTrace();
+									}
+									
+									boolean displayDate = secondsAgo > 0;
+									boolean justNow = secondsAgo == 0;
+									String ago = "";
+									
+									if (daysAgo >= 1) {
+										ago = " " + daysAgo + " " + (daysAgo == 1 ? "day" : "days") + " ago";
+									} else if (hoursAgo >= 1) {
+										ago = " " + hoursAgo + " " + (hoursAgo == 1 ? "hour" : "hours") + " ago";
+									} else if (minutesAgo >= 1) {
+										ago = " " + minutesAgo + " " + (minutesAgo == 1 ? "minute" : "minutes") + " ago";
+									} else {
+										ago = " " + secondsAgo + " " + (secondsAgo == 1 ? "second" : "seconds") + " ago";
+									}
+							%>
 							<div class="card-body">
-								<p class="card-text markdown"><c:out value="${problem.content}" /></p>
-								<p class="card-text"><small class="text-muted">Posted 3 mins ago</small></p>
+								<p class="card-text"><c:out value="<%= comment.getContent() %>" /></p>
+								<p class="card-text"><small class="text-muted"><% if (displayDate) { %><%= ago %><% } else if (justNow) { %> just now<% } %></small></p>
 							</div>
-							
-							<hr>
-							
-							<div class="card-body">
-								<p class="card-text markdown"><c:out value="${problem.content}" /></p>
-								<p class="card-text"><small class="text-muted">Posted 3 mins ago</small></p>
-							</div>
+							<% if (commentsLength > 1 && i != commentsLength - 1) { %><hr><% } %>
+							<% } %>
 						</div>
 					</div>
+					<% } else { %>
+					<div class="d-flex justify-content-center align-items-center mt-5">
+						<p><i>No comments</i></p>
+					</div>
+					<% } %>
 				</div>
 				<!-- END MAIN CONTENT -->
 			</div>

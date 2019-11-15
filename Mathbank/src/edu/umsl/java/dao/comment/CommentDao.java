@@ -6,6 +6,8 @@ import edu.umsl.java.model.Comment;
 
 public interface CommentDao {
 
+	public int addComment(Comment c);
+
 	public List<Comment> getCommentsByProblemId(int i);
 
 }

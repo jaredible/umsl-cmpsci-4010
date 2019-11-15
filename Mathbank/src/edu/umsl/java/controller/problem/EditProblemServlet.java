@@ -97,7 +97,7 @@ public class EditProblemServlet extends HttpServlet {
 			CategoryDao categoryDao = new CategoryDaoImpl();
 
 			Map<String, String> errors = new HashMap<String, String>();
-			
+
 			int id = 0;
 
 			if (title.isEmpty()) {
@@ -143,6 +143,7 @@ public class EditProblemServlet extends HttpServlet {
 				problem.setTitle(title);
 				problem.setCategoryId(id);
 				problem.setContent(content);
+				problem.setLastEditTime(new Timestamp(new Date().getTime()));
 				problem.setTrackingId(trackingId);
 				problemDao.updateProblem(problem);
 

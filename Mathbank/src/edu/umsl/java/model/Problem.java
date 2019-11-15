@@ -9,6 +9,7 @@ public class Problem {
 	private String title;
 	private String content;
 	private Timestamp createdTime;
+	private Timestamp lastEditTime;
 	private boolean edited;
 	private int viewCount;
 	private int trackingId;
@@ -16,12 +17,13 @@ public class Problem {
 	public Problem() {
 	}
 
-	public Problem(int id, int categoryId, String title, String content, Timestamp createdTime, boolean edited, int viewCount, int trackingId) {
+	public Problem(int id, int categoryId, String title, String content, Timestamp createdTime, Timestamp lastEditTime, boolean edited, int viewCount, int trackingId) {
 		this.id = id;
 		this.categoryId = categoryId;
 		this.title = title;
 		this.content = content;
 		this.createdTime = createdTime;
+		this.lastEditTime = lastEditTime;
 		this.edited = edited;
 		this.viewCount = viewCount;
 		this.trackingId = trackingId;
@@ -65,6 +67,14 @@ public class Problem {
 
 	public void setCreatedTime(Timestamp createdTime) {
 		this.createdTime = createdTime;
+	}
+
+	public Timestamp getLastEditTime() {
+		return lastEditTime;
+	}
+
+	public void setLastEditTime(Timestamp lastEditTime) {
+		this.lastEditTime = lastEditTime;
 	}
 
 	public boolean isEdited() {

@@ -4,7 +4,8 @@ public enum TrackingType {
 
 	VIEW(0, "VIEW", ""),
 	PROBLEM(1, "PROBLEM", ""),
-	CATEGORY(2, "CATEGORY", "");
+	CATEGORY(2, "CATEGORY", ""),
+	COMMENT(3, "COMMENT", "");
 
 	private int id;
 	private String name;

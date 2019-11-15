@@ -78,7 +78,7 @@ public class NewProblemServlet extends HttpServlet {
 			} else if (problemDao.getTitleExists(title)) {
 				errors.put("title", "Already exists!");
 			}
-			if (categoryId != null) {
+			if (categoryId != null) { // TODO: check when null
 				try {
 					id = Integer.parseInt(categoryId);
 					if (id > 0) {
