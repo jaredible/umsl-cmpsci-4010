@@ -284,6 +284,9 @@ public class ProblemDaoImpl implements ProblemDao {
 			if (incrementViewCountById != null && !incrementViewCountById.isClosed()) {
 				incrementViewCountById.close();
 			}
+			if (deleteProblemById != null && !deleteProblemById.isClosed()) {
+				deleteProblemById.close();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -14,14 +14,14 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<a class="position-fixed forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+			<a class="position-absolute forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
 			
 			<div class="main">
 				<!-- BEGIN TABS -->
 				<header>
 					<ul id="pills-tab" class="nav nav-pills justify-content-center my-3" role="tablist">
 						<li class="nav-item">
-							<a id="pills-home-tab" class="nav-link" href="${pageContext.request.contextPath}">Home</a>
+							<a id="pills-home-tab" class="nav-link" href="home">Home</a>
 						</li>
 						<li class="nav-item">
 							<a id="pills-problems-tab" class="nav-link active" href="problem">Problems</a>

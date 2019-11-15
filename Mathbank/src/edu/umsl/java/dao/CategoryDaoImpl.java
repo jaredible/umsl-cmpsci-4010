@@ -20,6 +20,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	private PreparedStatement getNameExists;
 	private PreparedStatement getCategoryById;
 	private PreparedStatement updateCategory;
+	private PreparedStatement deleteCategoryById;
 
 	public CategoryDaoImpl() throws Exception {
 		connection = DbConn.openConn();
@@ -29,6 +30,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		getNameExists = connection.prepareStatement("SELECT * FROM Category WHERE Name = ?;");
 		getCategoryById = connection.prepareStatement("SELECT * FROM Category WHERE ID = ?;");
 		updateCategory = connection.prepareStatement("UPDATE Category SET Name = ?, Description = ?, Edited = TRUE, TrackingID = ? WHERE ID = ?;");
+		deleteCategoryById = connection.prepareStatement("DELETE FROM Category WHERE ID = ?;");
 	}
 
 	@Override
@@ -172,6 +174,16 @@ public class CategoryDaoImpl implements CategoryDao {
 		}
 	}
 
+	@Override
+	public void deleteCategoryById(int id) {
+		try {
+			deleteCategoryById.setInt(1, id);
+			deleteCategoryById.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	protected void finalize() {
 		try {
 			if (addCategory != null && !addCategory.isClosed()) {
@@ -191,6 +203,9 @@ public class CategoryDaoImpl implements CategoryDao {
 			}
 			if (updateCategory != null && !updateCategory.isClosed()) {
 				updateCategory.close();
+			}
+			if (deleteCategoryById != null && !deleteCategoryById.isClosed()) {
+				deleteCategoryById.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

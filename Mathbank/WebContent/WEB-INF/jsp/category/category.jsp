@@ -14,15 +14,35 @@
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
+		<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0">
+						<h5 class="modal-title">Are you sure?</h5>
+						<button class="close" type="button" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<div class="modal-body p-0">
+						<form action="deleteCategory" method="post">
+							<input type="hidden" name="id" value="${category.id}">
+							<div class="modal-footer justify-content-center border-0">
+								<button id="deleteButton" class="btn btn-outline-danger" type="submit">Delete this category</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="wrapper">
-			<a class="position-fixed forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+			<a class="position-absolute forkMe" href="https://github.com/jaredible/umsl-cmpsci-4010/tree/master/Mathbank" target="_blank"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
 			
 			<div class="main">
 				<!-- BEGIN TABS -->
 				<header>
 					<ul id="pills-tab" class="nav nav-pills justify-content-center my-3" role="tablist">
 						<li class="nav-item">
-							<a id="pills-home-tab" class="nav-link" href="${pageContext.request.contextPath}">Home</a>
+							<a id="pills-home-tab" class="nav-link" href="home">Home</a>
 						</li>
 						<li class="nav-item">
 							<a id="pills-problems-tab" class="nav-link" href="problem">Problems</a>
@@ -54,12 +74,24 @@
 					
 					<br>
 					
+					<c:if test="${canDelete}">
+						<button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#deleteModal">Delete</button>
+					</c:if>
 					<a class="btn btn-sm btn-secondary" href="editCategory?id=${category.id}">Edit</a>
 					
 					<hr>
 					
 					<div class="d-flex justify-content-center align-items-center">
-						<p class="mb-0"><c:out value="${category.description}" /></p>
+						<p class="mb-0">
+							<c:choose>
+								<c:when test="${empty category.description}">
+									<i>No description</i>
+								</c:when>
+								<c:otherwise>
+									<c:out value="${category.description}" />
+								</c:otherwise>
+							</c:choose>
+						</p>
 					</div>
 					
 					<hr>

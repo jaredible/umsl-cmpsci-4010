@@ -97,7 +97,7 @@ public class EditProblemServlet extends HttpServlet {
 			CategoryDao categoryDao = new CategoryDaoImpl();
 
 			Map<String, String> errors = new HashMap<String, String>();
-
+			
 			int id = 0;
 
 			if (title.isEmpty()) {
@@ -150,6 +150,7 @@ public class EditProblemServlet extends HttpServlet {
 			} else {
 				List<Category> categories = categoryDao.getCategories();
 
+				request.setAttribute("id", problemId);
 				request.setAttribute("categories", categories);
 				request.setAttribute("title", title);
 				request.setAttribute("categoryId", categoryId);

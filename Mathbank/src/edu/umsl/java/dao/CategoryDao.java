@@ -18,4 +18,6 @@ public interface CategoryDao {
 
 	public void updateCategory(Category c);
 
+	public void deleteCategoryById(int i);
+
 }

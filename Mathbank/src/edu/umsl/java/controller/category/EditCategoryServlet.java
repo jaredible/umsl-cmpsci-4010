@@ -95,9 +95,7 @@ public class EditCategoryServlet extends HttpServlet {
 			} else if (categoryDao.getNameExists(name) && !categoryDao.getCategoryById(Integer.parseInt(categoryId)).getName().equals(name)) {
 				errors.put("name", "Already exists!");
 			}
-			if (description.isEmpty()) {
-				errors.put("description", "Cannot be empty!");
-			} else if (description.length() > 420) {
+			if (description.length() > 420) {
 				errors.put("description", "Max length is 420!");
 			}
 

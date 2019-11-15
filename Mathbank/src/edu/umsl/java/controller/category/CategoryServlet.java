@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.umsl.java.dao.CategoryDao;
 import edu.umsl.java.dao.CategoryDaoImpl;
+import edu.umsl.java.dao.ProblemDao;
+import edu.umsl.java.dao.ProblemDaoImpl;
 import edu.umsl.java.model.Category;
 
 /**
@@ -37,6 +39,7 @@ public class CategoryServlet extends HttpServlet {
 				response.sendRedirect("categoryList");
 				return;
 			} else {
+				ProblemDao problemDao = new ProblemDaoImpl();
 				CategoryDao categoryDao = new CategoryDaoImpl();
 
 				int id = 0;
@@ -48,6 +51,7 @@ public class CategoryServlet extends HttpServlet {
 							Category category = categoryDao.getCategoryById(id);
 
 							request.setAttribute("category", category);
+							request.setAttribute("canDelete", problemDao.getProblemsByCategoryId(id).isEmpty());
 							getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/category.jsp").forward(request, response);
 						} else {
 							response.sendRedirect("categoryList");
