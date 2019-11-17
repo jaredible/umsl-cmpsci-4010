@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AdminServlet
+ * Servlet implementation class AdminController
  */
 @WebServlet("/admin")
-public class AdminServlet extends HttpServlet {
+public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AdminServlet() {
+	public AdminController() {
 		super();
 	}
 

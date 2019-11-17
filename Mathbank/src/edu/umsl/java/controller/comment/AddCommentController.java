@@ -22,16 +22,16 @@ import edu.umsl.java.util.TrackingType;
 import edu.umsl.java.util.Util;
 
 /**
- * Servlet implementation class AddCommentServlet
+ * Servlet implementation class AddCommentController
  */
 @WebServlet("/addComment")
-public class AddCommentServlet extends HttpServlet {
+public class AddCommentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AddCommentServlet() {
+	public AddCommentController() {
 		super();
 	}
 

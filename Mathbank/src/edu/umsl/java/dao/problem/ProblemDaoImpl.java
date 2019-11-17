@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.umsl.java.model.Problem;
-import edu.umsl.java.util.DbConn;
+import edu.umsl.java.util.DbUtil;
 
 public class ProblemDaoImpl implements ProblemDao {
 
@@ -25,8 +25,8 @@ public class ProblemDaoImpl implements ProblemDao {
 	private PreparedStatement deleteProblemById;
 
 	public ProblemDaoImpl() throws Exception {
-		connection = DbConn.openConn();
-		addProblem = connection.prepareStatement("INSERT INTO Problem (ID, CategoryID, Title, Content, CreatedTime, LastEditTime, TrackingID) VALUES (?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+		connection = DbUtil.openConn();
+		addProblem = connection.prepareStatement("INSERT INTO Problem (ID, CategoryID, Title, Content, PasswordHash, CreatedTime, LastEditTime, TrackingID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getProblems = connection.prepareStatement("SELECT * FROM Problem ORDER BY CreatedTime DESC;");
 		getProblemsByCategoryId = connection.prepareStatement("SELECT * FROM Problem WHERE CategoryID = ? ORDER BY CreatedTime DESC;");
 		getProblemIdExists = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
@@ -47,9 +47,10 @@ public class ProblemDaoImpl implements ProblemDao {
 			addProblem.setInt(2, problem.getCategoryId());
 			addProblem.setString(3, problem.getTitle());
 			addProblem.setString(4, problem.getContent());
-			addProblem.setTimestamp(5, problem.getCreatedTime());
-			addProblem.setTimestamp(6, problem.getLastEditTime());
-			addProblem.setInt(7, problem.getTrackingId());
+			addProblem.setString(5, problem.getPasswordHash());
+			addProblem.setTimestamp(6, problem.getCreatedTime());
+			addProblem.setTimestamp(7, problem.getLastEditTime());
+			addProblem.setInt(8, problem.getTrackingId());
 			int rowAffected = addProblem.executeUpdate();
 			if (rowAffected == 1) {
 				rs = addProblem.getGeneratedKeys();
@@ -85,6 +86,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setCategoryId(rs.getInt("CategoryID"));
 				problem.setTitle(rs.getString("Title"));
 				problem.setContent(rs.getString("Content"));
+				problem.setPasswordHash(rs.getString("PasswordHash"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
 				problem.setEdited(rs.getBoolean("Edited"));
@@ -121,6 +123,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setCategoryId(rs.getInt("CategoryID"));
 				problem.setTitle(rs.getString("Title"));
 				problem.setContent(rs.getString("Content"));
+				problem.setPasswordHash(rs.getString("PasswordHash"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
 				problem.setEdited(rs.getBoolean("Edited"));
@@ -206,6 +209,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setCategoryId(rs.getInt("CategoryID"));
 				problem.setTitle(rs.getString("Title"));
 				problem.setContent(rs.getString("Content"));
+				problem.setPasswordHash(rs.getString("PasswordHash"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
 				problem.setEdited(rs.getBoolean("Edited"));

@@ -12,16 +12,16 @@ import edu.umsl.java.dao.problem.ProblemDao;
 import edu.umsl.java.dao.problem.ProblemDaoImpl;
 
 /**
- * Servlet implementation class DeleteProblemServlet
+ * Servlet implementation class DeleteProblemController
  */
 @WebServlet("/deleteProblem")
-public class DeleteProblemServlet extends HttpServlet {
+public class DeleteProblemController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DeleteProblemServlet() {
+	public DeleteProblemController() {
 		super();
 	}
 

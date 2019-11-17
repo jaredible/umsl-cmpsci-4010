@@ -76,7 +76,7 @@
 										<th scope="row" width="5%"><a href="problem?id=${problem.id}">${problem.id}</a></th>
 										<td width="5%"><a href="category?id=${problem.categoryId}">${problem.categoryId}</a></td>
 										<td width="75%"><c:out value="${problem.title}" /></td>
-										<td width="5%"><c:out value="Yes" /></td>
+										<td width="5%"><c:out value="No" /></td>
 										<td width="5%"><c:out value="${problem.edited ? 'Yes' : 'No'}" /></td>
 										<td width="5%">${problem.viewCount}</td>
 									</tr>

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.crypto.SecretKey;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,20 +23,21 @@ import edu.umsl.java.dao.tracking.TrackingDaoImpl;
 import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Problem;
 import edu.umsl.java.model.Tracking;
+import edu.umsl.java.util.SecurityUtil;
 import edu.umsl.java.util.TrackingType;
 import edu.umsl.java.util.Util;
 
 /**
- * Servlet implementation class EditProblemServlet
+ * Servlet implementation class NewProblemController
  */
-@WebServlet("/editProblem")
-public class EditProblemServlet extends HttpServlet {
+@WebServlet("/newProblem")
+public class NewProblemController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public EditProblemServlet() {
+	public NewProblemController() {
 		super();
 	}
 
@@ -44,40 +46,12 @@ public class EditProblemServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String problemId = request.getParameter("id");
+			CategoryDao categoryDao = new CategoryDaoImpl();
 
-			if (problemId == null) {
-				response.sendRedirect("problemList");
-				return;
-			} else {
-				ProblemDao problemDao = new ProblemDaoImpl();
-				CategoryDao categoryDao = new CategoryDaoImpl();
+			List<Category> categories = categoryDao.getCategories();
 
-				int id = 0;
-
-				try {
-					id = Integer.parseInt(problemId);
-					if (id > 0) {
-						if (problemDao.getProblemIdExists(id)) {
-							Problem problem = problemDao.getProblemById(id);
-							List<Category> categories = categoryDao.getCategories();
-
-							request.setAttribute("id", problem.getId());
-							request.setAttribute("title", problem.getTitle());
-							request.setAttribute("categoryId", problem.getCategoryId());
-							request.setAttribute("content", problem.getContent());
-							request.setAttribute("categories", categories);
-							getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/editProblem.jsp").forward(request, response);
-						} else {
-							response.sendRedirect("problemList");
-						}
-					} else {
-						response.sendRedirect("problemList");
-					}
-				} catch (Exception e) {
-					response.sendRedirect("problemList");
-				}
-			}
+			request.setAttribute("categories", categories);
+			getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/newProblem.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,10 +62,10 @@ public class EditProblemServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String problemId = request.getParameter("id");
 			String title = request.getParameter("title");
 			String categoryId = request.getParameter("categoryId");
 			String content = request.getParameter("content");
+			String password = request.getParameter("password");
 
 			ProblemDao problemDao = new ProblemDaoImpl();
 			CategoryDao categoryDao = new CategoryDaoImpl();
@@ -100,14 +74,26 @@ public class EditProblemServlet extends HttpServlet {
 
 			int id = 0;
 
+			String hash = SecurityUtil.generateSHA512Hash("testing");
+			String[] split = hash.split(":");
+			System.out.println(hash);
+			System.out.println(split[0]);
+			System.out.println(split[1]);
+
+			String data = "testing";
+			SecretKey secretKey = SecurityUtil.generateSecretKey();
+			String encrypt = SecurityUtil.encrypt(data, secretKey);
+			System.out.println(encrypt);
+			System.out.println(SecurityUtil.decrypt(encrypt, secretKey));
+
 			if (title.isEmpty()) {
 				errors.put("title", "Cannot be empty!");
 			} else if (title.length() > 50) {
 				errors.put("title", "Max length is 50!");
-			} else if (problemDao.getTitleExists(title) && !problemDao.getProblemById(Integer.parseInt(problemId)).getTitle().equals(title)) {
+			} else if (problemDao.getTitleExists(title)) {
 				errors.put("title", "Already exists!");
 			}
-			if (categoryId != null) {
+			if (categoryId != null) { // TODO: check when null
 				try {
 					id = Integer.parseInt(categoryId);
 					if (id > 0) {
@@ -130,34 +116,30 @@ public class EditProblemServlet extends HttpServlet {
 			if (errors.isEmpty()) {
 				TrackingDao trackingDao = new TrackingDaoImpl();
 
-				Problem problem = problemDao.getProblemById(Integer.parseInt(problemId));
+				Problem problem = new Problem();
 				Tracking tracking = new Tracking();
 
 				tracking.setTrackingType(TrackingType.PROBLEM.getId());
 				tracking.setIp(Util.getIPFromServletRequest(request));
 				tracking.setUserAgent(request.getHeader("User-Agent"));
 				tracking.setCreatedTime(new Timestamp(new Date().getTime()));
-				tracking.setPreviousTrackingId(problem.getTrackingId());
 				int trackingId = trackingDao.addTracking(tracking);
 
-				problem.setTitle(title);
 				problem.setCategoryId(id);
+				problem.setTitle(title);
 				problem.setContent(content);
-				problem.setLastEditTime(new Timestamp(new Date().getTime()));
+				problem.setPasswordHash(SecurityUtil.generateSHA512Hash(password));
+				problem.setCreatedTime(new Timestamp(new Date().getTime()));
 				problem.setTrackingId(trackingId);
-				problemDao.updateProblem(problem);
+				int problemId = problemDao.addProblem(problem);
 
 				response.sendRedirect("problem?id=" + problemId);
 			} else {
-				List<Category> categories = categoryDao.getCategories();
-
-				request.setAttribute("id", problemId);
-				request.setAttribute("categories", categories);
 				request.setAttribute("title", title);
 				request.setAttribute("categoryId", categoryId);
 				request.setAttribute("content", content);
 				request.setAttribute("errors", errors);
-				getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/editProblem.jsp").forward(request, response);
+				doGet(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

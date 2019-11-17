@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.umsl.java.model.Comment;
-import edu.umsl.java.util.DbConn;
+import edu.umsl.java.util.DbUtil;
 
 public class CommentDaoImpl implements CommentDao {
 
@@ -18,7 +18,7 @@ public class CommentDaoImpl implements CommentDao {
 	private PreparedStatement getCommentsByProblemId;
 
 	public CommentDaoImpl() throws Exception {
-		connection = DbConn.openConn();
+		connection = DbUtil.openConn();
 		addComment = connection.prepareStatement("INSERT INTO Comment (ID, ProblemID, Content, CreatedTime, TrackingID) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getCommentsByProblemId = connection.prepareStatement("SELECT * FROM Comment WHERE ProblemID = ? ORDER BY CreatedTime DESC;");
 	}

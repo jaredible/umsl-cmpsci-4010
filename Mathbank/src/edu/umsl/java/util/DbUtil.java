@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-public class DbConn {
+public class DbUtil {
 
 	private static String driver;
 	private static String url;

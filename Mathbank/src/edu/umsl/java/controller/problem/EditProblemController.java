@@ -26,16 +26,16 @@ import edu.umsl.java.util.TrackingType;
 import edu.umsl.java.util.Util;
 
 /**
- * Servlet implementation class NewProblemServlet
+ * Servlet implementation class EditProblemController
  */
-@WebServlet("/newProblem")
-public class NewProblemServlet extends HttpServlet {
+@WebServlet("/editProblem")
+public class EditProblemController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public NewProblemServlet() {
+	public EditProblemController() {
 		super();
 	}
 
@@ -44,12 +44,40 @@ public class NewProblemServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			CategoryDao categoryDao = new CategoryDaoImpl();
+			String problemId = request.getParameter("id");
 
-			List<Category> categories = categoryDao.getCategories();
+			if (problemId == null) {
+				response.sendRedirect("problemList");
+				return;
+			} else {
+				ProblemDao problemDao = new ProblemDaoImpl();
+				CategoryDao categoryDao = new CategoryDaoImpl();
 
-			request.setAttribute("categories", categories);
-			getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/newProblem.jsp").forward(request, response);
+				int id = 0;
+
+				try {
+					id = Integer.parseInt(problemId);
+					if (id > 0) {
+						if (problemDao.getProblemIdExists(id)) {
+							Problem problem = problemDao.getProblemById(id);
+							List<Category> categories = categoryDao.getCategories();
+
+							request.setAttribute("id", problem.getId());
+							request.setAttribute("title", problem.getTitle());
+							request.setAttribute("categoryId", problem.getCategoryId());
+							request.setAttribute("content", problem.getContent());
+							request.setAttribute("categories", categories);
+							getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/editProblem.jsp").forward(request, response);
+						} else {
+							response.sendRedirect("problemList");
+						}
+					} else {
+						response.sendRedirect("problemList");
+					}
+				} catch (Exception e) {
+					response.sendRedirect("problemList");
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,6 +88,7 @@ public class NewProblemServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String problemId = request.getParameter("id");
 			String title = request.getParameter("title");
 			String categoryId = request.getParameter("categoryId");
 			String content = request.getParameter("content");
@@ -75,10 +104,10 @@ public class NewProblemServlet extends HttpServlet {
 				errors.put("title", "Cannot be empty!");
 			} else if (title.length() > 50) {
 				errors.put("title", "Max length is 50!");
-			} else if (problemDao.getTitleExists(title)) {
+			} else if (problemDao.getTitleExists(title) && !problemDao.getProblemById(Integer.parseInt(problemId)).getTitle().equals(title)) {
 				errors.put("title", "Already exists!");
 			}
-			if (categoryId != null) { // TODO: check when null
+			if (categoryId != null) {
 				try {
 					id = Integer.parseInt(categoryId);
 					if (id > 0) {
@@ -101,29 +130,34 @@ public class NewProblemServlet extends HttpServlet {
 			if (errors.isEmpty()) {
 				TrackingDao trackingDao = new TrackingDaoImpl();
 
-				Problem problem = new Problem();
+				Problem problem = problemDao.getProblemById(Integer.parseInt(problemId));
 				Tracking tracking = new Tracking();
 
 				tracking.setTrackingType(TrackingType.PROBLEM.getId());
 				tracking.setIp(Util.getIPFromServletRequest(request));
 				tracking.setUserAgent(request.getHeader("User-Agent"));
 				tracking.setCreatedTime(new Timestamp(new Date().getTime()));
+				tracking.setPreviousTrackingId(problem.getTrackingId());
 				int trackingId = trackingDao.addTracking(tracking);
 
 				problem.setTitle(title);
 				problem.setCategoryId(id);
 				problem.setContent(content);
-				problem.setCreatedTime(new Timestamp(new Date().getTime()));
+				problem.setLastEditTime(new Timestamp(new Date().getTime()));
 				problem.setTrackingId(trackingId);
-				int problemId = problemDao.addProblem(problem);
+				problemDao.updateProblem(problem);
 
 				response.sendRedirect("problem?id=" + problemId);
 			} else {
+				List<Category> categories = categoryDao.getCategories();
+
+				request.setAttribute("id", problemId);
+				request.setAttribute("categories", categories);
 				request.setAttribute("title", title);
 				request.setAttribute("categoryId", categoryId);
 				request.setAttribute("content", content);
 				request.setAttribute("errors", errors);
-				doGet(request, response);
+				getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/editProblem.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

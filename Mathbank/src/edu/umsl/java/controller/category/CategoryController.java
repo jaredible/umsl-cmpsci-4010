@@ -15,16 +15,16 @@ import edu.umsl.java.dao.problem.ProblemDaoImpl;
 import edu.umsl.java.model.Category;
 
 /**
- * Servlet implementation class CategoryServlet
+ * Servlet implementation class CategoryController
  */
 @WebServlet("/category")
-public class CategoryServlet extends HttpServlet {
+public class CategoryController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CategoryServlet() {
+	public CategoryController() {
 		super();
 	}
 

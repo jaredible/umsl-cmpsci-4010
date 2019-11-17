@@ -17,16 +17,16 @@ import edu.umsl.java.dao.problem.ProblemDaoImpl;
 import edu.umsl.java.model.Problem;
 
 /**
- * Servlet implementation class ProblemServlet
+ * Servlet implementation class ProblemController
  */
 @WebServlet("/problem")
-public class ProblemServlet extends HttpServlet {
+public class ProblemController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ProblemServlet() {
+	public ProblemController() {
 		super();
 	}
 

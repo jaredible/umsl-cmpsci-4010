@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.umsl.java.model.Category;
-import edu.umsl.java.util.DbConn;
+import edu.umsl.java.util.DbUtil;
 
 public class CategoryDaoImpl implements CategoryDao {
 
@@ -23,7 +23,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	private PreparedStatement deleteCategoryById;
 
 	public CategoryDaoImpl() throws Exception {
-		connection = DbConn.openConn();
+		connection = DbUtil.openConn();
 		addCategory = connection.prepareStatement("INSERT INTO Category (ID, Name, Description, CreatedTime, Edited, TrackingID) VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getCategories = connection.prepareStatement("SELECT * FROM Category ORDER BY CreatedTime DESC;");
 		getCategoryIdExists = connection.prepareStatement("SELECT * FROM Category WHERE ID = ?;");

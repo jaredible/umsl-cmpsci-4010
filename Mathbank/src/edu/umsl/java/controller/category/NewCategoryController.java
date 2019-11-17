@@ -22,16 +22,16 @@ import edu.umsl.java.util.TrackingType;
 import edu.umsl.java.util.Util;
 
 /**
- * Servlet implementation class EditCategoryServlet
+ * Servlet implementation class NewCategoryController
  */
-@WebServlet("/editCategory")
-public class EditCategoryServlet extends HttpServlet {
+@WebServlet("/newCategory")
+public class NewCategoryController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public EditCategoryServlet() {
+	public NewCategoryController() {
 		super();
 	}
 
@@ -39,40 +39,7 @@ public class EditCategoryServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			String categoryId = request.getParameter("id");
-
-			if (categoryId == null) {
-				response.sendRedirect("categoryList");
-				return;
-			} else {
-				CategoryDao categoryDao = new CategoryDaoImpl();
-
-				int id = 0;
-
-				try {
-					id = Integer.parseInt(categoryId);
-					if (id > 0) {
-						if (categoryDao.getCategoryIdExists(id)) {
-							Category category = categoryDao.getCategoryById(id);
-
-							request.setAttribute("id", category.getId());
-							request.setAttribute("name", category.getName());
-							request.setAttribute("description", category.getDescription());
-							getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/editCategory.jsp").forward(request, response);
-						} else {
-							response.sendRedirect("categoryList");
-						}
-					} else {
-						response.sendRedirect("categoryList");
-					}
-				} catch (Exception e) {
-					response.sendRedirect("categoryList");
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/newCategory.jsp").forward(request, response);
 	}
 
 	/**
@@ -80,7 +47,6 @@ public class EditCategoryServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String categoryId = request.getParameter("id");
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
 
@@ -92,7 +58,7 @@ public class EditCategoryServlet extends HttpServlet {
 				errors.put("name", "Cannot be empty!");
 			} else if (name.length() > 20) {
 				errors.put("name", "Max length is 20!");
-			} else if (categoryDao.getNameExists(name) && !categoryDao.getCategoryById(Integer.parseInt(categoryId)).getName().equals(name)) {
+			} else if (categoryDao.getNameExists(name)) {
 				errors.put("name", "Already exists!");
 			}
 			if (description.length() > 420) {
@@ -102,29 +68,27 @@ public class EditCategoryServlet extends HttpServlet {
 			if (errors.isEmpty()) {
 				TrackingDao trackingDao = new TrackingDaoImpl();
 
-				Category category = categoryDao.getCategoryById(Integer.parseInt(categoryId));
+				Category category = new Category();
 				Tracking tracking = new Tracking();
 
-				tracking.setTrackingType(TrackingType.PROBLEM.getId());
+				tracking.setTrackingType(TrackingType.CATEGORY.getId());
 				tracking.setIp(Util.getIPFromServletRequest(request));
 				tracking.setUserAgent(request.getHeader("User-Agent"));
 				tracking.setCreatedTime(new Timestamp(new Date().getTime()));
-				tracking.setPreviousTrackingId(category.getTrackingId());
 				int trackingId = trackingDao.addTracking(tracking);
 
 				category.setName(name);
 				category.setDescription(description);
-				;
+				category.setCreatedTime(new Timestamp(new Date().getTime()));
 				category.setTrackingId(trackingId);
-				categoryDao.updateCategory(category);
+				int categoryId = categoryDao.addCategory(category);
 
 				response.sendRedirect("category?id=" + categoryId);
 			} else {
-				request.setAttribute("id", categoryId);
 				request.setAttribute("name", name);
 				request.setAttribute("description", description);
 				request.setAttribute("errors", errors);
-				getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/editCategory.jsp").forward(request, response);
+				doGet(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

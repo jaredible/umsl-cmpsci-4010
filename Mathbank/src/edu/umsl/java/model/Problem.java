@@ -8,6 +8,7 @@ public class Problem {
 	private int categoryId;
 	private String title;
 	private String content;
+	private String passwordHash;
 	private Timestamp createdTime;
 	private Timestamp lastEditTime;
 	private boolean edited;
@@ -17,11 +18,12 @@ public class Problem {
 	public Problem() {
 	}
 
-	public Problem(int id, int categoryId, String title, String content, Timestamp createdTime, Timestamp lastEditTime, boolean edited, int viewCount, int trackingId) {
+	public Problem(int id, int categoryId, String title, String content, String passwordHash, Timestamp createdTime, Timestamp lastEditTime, boolean edited, int viewCount, int trackingId) {
 		this.id = id;
 		this.categoryId = categoryId;
 		this.title = title;
 		this.content = content;
+		this.passwordHash = passwordHash;
 		this.createdTime = createdTime;
 		this.lastEditTime = lastEditTime;
 		this.edited = edited;
@@ -59,6 +61,14 @@ public class Problem {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
 	public Timestamp getCreatedTime() {

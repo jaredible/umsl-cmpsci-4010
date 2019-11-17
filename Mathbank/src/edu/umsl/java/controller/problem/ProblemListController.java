@@ -19,16 +19,16 @@ import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Problem;
 
 /**
- * Servlet implementation class ProblemListServlet
+ * Servlet implementation class ProblemListController
  */
 @WebServlet("/problemList")
-public class ProblemListServlet extends HttpServlet {
+public class ProblemListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ProblemListServlet() {
+	public ProblemListController() {
 		super();
 	}
 

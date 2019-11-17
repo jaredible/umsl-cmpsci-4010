@@ -116,7 +116,7 @@
 					<hr class="mb-0">
 					
 					<c:if test="${problem.edited}">
-						<p><small class="text-muted"><i>Last edit at <fmt:formatDate value="${lastEditTime}" pattern="MMMM d, yyyy h:mm a" /></i></small></p>
+						<p><small class="text-muted"><i>Last edited: <fmt:formatDate value="${lastEditTime}" pattern="MMMM d, yyyy h:mm a" /></i></small></p>
 					</c:if>
 					
 					<form class="mt-3" action="addComment" method="post">
@@ -177,13 +177,13 @@
 								<p class="card-text"><c:out value="<%= comment.getContent() %>" /></p>
 								<p class="card-text"><small class="text-muted"><% if (displayDate) { %><%= ago %><% } else if (justNow) { %> just now<% } %></small></p>
 							</div>
-							<% if (commentsLength > 1 && i != commentsLength - 1) { %><hr><% } %>
+							<% if (commentsLength > 1 && i != commentsLength - 1) { %><hr class="my-0"><% } %>
 							<% } %>
 						</div>
 					</div>
 					<% } else { %>
 					<div class="d-flex justify-content-center align-items-center mt-5">
-						<p><i>No comments</i></p>
+						<p><i>No comments yet</i></p>
 					</div>
 					<% } %>
 				</div>

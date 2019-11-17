@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.sql.Types;
 
 import edu.umsl.java.model.Tracking;
-import edu.umsl.java.util.DbConn;
+import edu.umsl.java.util.DbUtil;
 import edu.umsl.java.util.TrackingType;
 
 public class TrackingDaoImpl implements TrackingDao {
@@ -18,7 +18,7 @@ public class TrackingDaoImpl implements TrackingDao {
 	private PreparedStatement getViewCount;
 
 	public TrackingDaoImpl() throws Exception {
-		connection = DbConn.openConn();
+		connection = DbUtil.openConn();
 		addTracking = connection.prepareStatement("INSERT INTO Tracking (ID, TrackingType, IP, UserAgent, CreatedTime, PreviousTrackingID) VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getTrackingById = connection.prepareStatement("SELECT * FROM Tracking WHERE ID = ?;");
 		getViewCount = connection.prepareStatement("SELECT COUNT(*) AS ViewCount FROM Tracking WHERE TrackingType = " + TrackingType.VIEW.getId() + ";");
