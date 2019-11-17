@@ -34,7 +34,7 @@ public class DbUtil {
 		}
 	}
 
-	public static Connection openConn() {
+	public static Connection openConnection() {
 		if (!propsLoaded) {
 			loadProps();
 		}
@@ -51,7 +51,7 @@ public class DbUtil {
 		return conn;
 	}
 
-	public static String getDbUrl() {
+	private static String getDbUrl() {
 		if (!propsLoaded) {
 			loadProps();
 		}

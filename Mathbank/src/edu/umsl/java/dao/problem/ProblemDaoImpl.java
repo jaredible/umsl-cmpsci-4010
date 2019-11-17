@@ -25,7 +25,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	private PreparedStatement deleteProblemById;
 
 	public ProblemDaoImpl() throws Exception {
-		connection = DbUtil.openConn();
+		connection = DbUtil.openConnection();
 		addProblem = connection.prepareStatement("INSERT INTO Problem (ID, CategoryID, Title, Content, PasswordHash, CreatedTime, LastEditTime, TrackingID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getProblems = connection.prepareStatement("SELECT * FROM Problem ORDER BY CreatedTime DESC;");
 		getProblemsByCategoryId = connection.prepareStatement("SELECT * FROM Problem WHERE CategoryID = ? ORDER BY CreatedTime DESC;");

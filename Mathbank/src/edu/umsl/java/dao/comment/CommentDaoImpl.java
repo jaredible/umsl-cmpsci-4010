@@ -18,7 +18,7 @@ public class CommentDaoImpl implements CommentDao {
 	private PreparedStatement getCommentsByProblemId;
 
 	public CommentDaoImpl() throws Exception {
-		connection = DbUtil.openConn();
+		connection = DbUtil.openConnection();
 		addComment = connection.prepareStatement("INSERT INTO Comment (ID, ProblemID, Content, CreatedTime, TrackingID) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getCommentsByProblemId = connection.prepareStatement("SELECT * FROM Comment WHERE ProblemID = ? ORDER BY CreatedTime DESC;");
 	}

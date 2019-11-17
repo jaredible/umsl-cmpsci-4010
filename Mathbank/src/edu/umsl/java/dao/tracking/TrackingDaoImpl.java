@@ -18,7 +18,7 @@ public class TrackingDaoImpl implements TrackingDao {
 	private PreparedStatement getViewCount;
 
 	public TrackingDaoImpl() throws Exception {
-		connection = DbUtil.openConn();
+		connection = DbUtil.openConnection();
 		addTracking = connection.prepareStatement("INSERT INTO Tracking (ID, TrackingType, IP, UserAgent, CreatedTime, PreviousTrackingID) VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getTrackingById = connection.prepareStatement("SELECT * FROM Tracking WHERE ID = ?;");
 		getViewCount = connection.prepareStatement("SELECT COUNT(*) AS ViewCount FROM Tracking WHERE TrackingType = " + TrackingType.VIEW.getId() + ";");
