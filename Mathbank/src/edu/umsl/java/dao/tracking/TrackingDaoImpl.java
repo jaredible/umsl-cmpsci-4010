@@ -117,6 +117,9 @@ public class TrackingDaoImpl implements TrackingDao {
 	@Override
 	protected void finalize() {
 		try {
+			if (connection != null && !connection.isClosed()) {
+				connection.close();
+			}
 			if (addTracking != null && !addTracking.isClosed()) {
 				addTracking.close();
 			}

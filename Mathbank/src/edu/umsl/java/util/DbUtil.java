@@ -17,16 +17,16 @@ public class DbUtil {
 	private static void loadProps() {
 		try {
 			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties");
-			Properties prop = new Properties();
+			Properties props = new Properties();
 
-			prop.load(is);
+			props.load(is);
 			is.close();
 
-			driver = prop.getProperty("db.driver");
-			url = prop.getProperty("db.url");
-			name = prop.getProperty("db.name");
-			user = prop.getProperty("db.user");
-			password = prop.getProperty("db.password");
+			driver = props.getProperty("db.driver");
+			url = props.getProperty("db.url");
+			name = props.getProperty("db.name");
+			user = props.getProperty("db.user");
+			password = props.getProperty("db.password");
 
 			propsLoaded = true;
 		} catch (Exception e) {

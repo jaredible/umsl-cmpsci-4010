@@ -270,6 +270,9 @@ public class ProblemDaoImpl implements ProblemDao {
 	@Override
 	protected void finalize() {
 		try {
+			if (connection != null && !connection.isClosed()) {
+				connection.close();
+			}
 			if (addProblem != null && !addProblem.isClosed()) {
 				addProblem.close();
 			}

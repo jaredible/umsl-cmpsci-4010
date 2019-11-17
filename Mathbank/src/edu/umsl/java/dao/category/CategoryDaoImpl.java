@@ -187,6 +187,9 @@ public class CategoryDaoImpl implements CategoryDao {
 	@Override
 	protected void finalize() {
 		try {
+			if (connection != null && !connection.isClosed()) {
+				connection.close();
+			}
 			if (addCategory != null && !addCategory.isClosed()) {
 				addCategory.close();
 			}

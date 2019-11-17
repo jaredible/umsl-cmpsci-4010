@@ -92,6 +92,9 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	protected void finalize() {
 		try {
+			if (connection != null && !connection.isClosed()) {
+				connection.close();
+			}
 			if (addComment != null && !addComment.isClosed()) {
 				addComment.close();
 			}
