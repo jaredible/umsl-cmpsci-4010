@@ -79,6 +79,7 @@ public class CategoryDaoImpl implements CategoryDao {
 				category.setDescription(rs.getString("Description"));
 				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				category.setEdited(rs.getBoolean("Edited"));
+				category.setTrackingId(rs.getInt("TrackingID"));
 				categories.add(category);
 			}
 			return categories;

@@ -17,6 +17,8 @@ public class ProblemDaoImpl implements ProblemDao {
 	private PreparedStatement addProblem;
 	private PreparedStatement getProblems;
 	private PreparedStatement getProblemsByCategoryId;
+	private PreparedStatement getProblemsByTagNames;
+	private PreparedStatement getProblemsByCategoryIdOrTagNames;
 	private PreparedStatement getProblemIdExists;
 	private PreparedStatement getTitleExists;
 	private PreparedStatement getProblemById;
@@ -29,6 +31,8 @@ public class ProblemDaoImpl implements ProblemDao {
 		addProblem = connection.prepareStatement("INSERT INTO Problem (ID, CategoryID, Title, Content, PasswordHash, CreatedTime, LastEditTime, TrackingID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getProblems = connection.prepareStatement("SELECT * FROM Problem ORDER BY CreatedTime DESC;");
 		getProblemsByCategoryId = connection.prepareStatement("SELECT * FROM Problem WHERE CategoryID = ? ORDER BY CreatedTime DESC;");
+		getProblemsByTagNames = connection.prepareStatement("SELECT * FROM Problem LEFT OUTER JOIN ProblemTag ON ProblemTag.ProblemID = Problem.ID LEFT OUTER JOIN Tag ON Tag.ID = ProblemTag.TagID WHERE Tag.Name REGEXP ? ORDER BY Problem.CreatedTime DESC;");
+		getProblemsByCategoryIdOrTagNames = connection.prepareStatement("SELECT * FROM Problem LEFT OUTER JOIN ProblemTag ON ProblemTag.ProblemID = Problem.ID LEFT OUTER JOIN Tag ON Tag.ID = ProblemTag.TagID WHERE Problem.CategoryID = ? OR Tag.Name REGEXP ? ORDER BY Problem.CreatedTime DESC;");
 		getProblemIdExists = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
 		getTitleExists = connection.prepareStatement("SELECT * FROM Problem WHERE Title = ?;");
 		getProblemById = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
@@ -128,6 +132,84 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
 				problem.setEdited(rs.getBoolean("Edited"));
 				problem.setViewCount(rs.getInt("ViewCount"));
+				problem.setTrackingId(rs.getInt("TrackingID"));
+				problems.add(problem);
+			}
+			return problems;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<Problem> getProblemsByTagNames(String tagNames) {
+		ResultSet rs = null;
+
+		try {
+			getProblemsByTagNames.setString(1, tagNames);
+			rs = getProblemsByTagNames.executeQuery();
+			List<Problem> problems = new ArrayList<Problem>();
+			while (rs.next()) {
+				Problem problem = new Problem();
+				problem.setId(rs.getInt("ID"));
+				problem.setCategoryId(rs.getInt("CategoryID"));
+				problem.setTitle(rs.getString("Title"));
+				problem.setContent(rs.getString("Content"));
+				problem.setPasswordHash(rs.getString("PasswordHash"));
+				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
+				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
+				problem.setEdited(rs.getBoolean("Edited"));
+				problem.setViewCount(rs.getInt("ViewCount"));
+				problem.setTrackingId(rs.getInt("TrackingID"));
+				problems.add(problem);
+			}
+			return problems;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<Problem> getProblemsByCategoryIdOrTagNames(String categoryId, String tagNames) {
+		ResultSet rs = null;
+
+		try {
+			getProblemsByCategoryIdOrTagNames.setString(1, categoryId);
+			getProblemsByCategoryIdOrTagNames.setString(2, tagNames);
+			rs = getProblemsByCategoryIdOrTagNames.executeQuery();
+			List<Problem> problems = new ArrayList<Problem>();
+			while (rs.next()) {
+				Problem problem = new Problem();
+				problem.setId(rs.getInt("ID"));
+				problem.setCategoryId(rs.getInt("CategoryID"));
+				problem.setTitle(rs.getString("Title"));
+				problem.setContent(rs.getString("Content"));
+				problem.setPasswordHash(rs.getString("PasswordHash"));
+				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
+				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
+				problem.setEdited(rs.getBoolean("Edited"));
+				problem.setViewCount(rs.getInt("ViewCount"));
+				problem.setTrackingId(rs.getInt("TrackingID"));
 				problems.add(problem);
 			}
 			return problems;
@@ -281,6 +363,12 @@ public class ProblemDaoImpl implements ProblemDao {
 			}
 			if (getProblemsByCategoryId != null && !getProblemsByCategoryId.isClosed()) {
 				getProblemsByCategoryId.close();
+			}
+			if (getProblemsByTagNames != null && !getProblemsByTagNames.isClosed()) {
+				getProblemsByTagNames.close();
+			}
+			if (getProblemsByCategoryIdOrTagNames != null && !getProblemsByCategoryIdOrTagNames.isClosed()) {
+				getProblemsByCategoryIdOrTagNames.close();
 			}
 			if (getProblemIdExists != null && !getProblemIdExists.isClosed()) {
 				getProblemIdExists.close();

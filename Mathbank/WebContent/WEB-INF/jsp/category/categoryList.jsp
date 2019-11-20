@@ -29,6 +29,9 @@
 						<li class="nav-item">
 							<a id="pills-categories-tab" class="nav-link active" href="category">Categories</a>
 						</li>
+						<li class="nav-item">
+							<a id="pills-tags-tab" class="nav-link" href="tag">Tags</a>
+						</li>
 					</ul>
 				</header>
 				<!-- END TABS -->

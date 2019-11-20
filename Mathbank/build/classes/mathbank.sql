@@ -56,7 +56,11 @@ CREATE TABLE Comment (
 CREATE TABLE Tag (
 	ID INT NOT NULL AUTO_INCREMENT,
 	Name VARCHAR (20) NOT NULL,
-	PRIMARY KEY (ID)
+	CreatedTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	Edited BOOLEAN DEFAULT FALSE,
+	TrackingID INT NOT NULL,
+	PRIMARY KEY (ID),
+	FOREIGN KEY (TrackingID) REFERENCES Tracking(ID)
 );
 
 CREATE TABLE ProblemTag (
@@ -80,3 +84,13 @@ INSERT INTO Problem (ID, CategoryID, Title, Content, CreatedTime, LastEditTime, 
 (NULL, 1, "Test1", "Test1", "2019-11-11 11:11:11", "2019-11-11 11:11:11", TRUE, 1),
 (NULL, 2, "Test2", "Test2", "2019-11-11 11:11:12", "2019-11-11 11:11:11", FALSE, 1),
 (NULL, 3, "Test3", "Test3", "2019-11-11 11:11:13", "2019-11-11 11:11:11", TRUE, 1);
+
+INSERT INTO Tag (ID, Name, CreatedTime, Edited, TrackingID) VALUES
+(NULL, "Test1", "2019-11-11 11:11:11", FALSE, 1),
+(NULL, "Test2", "2019-11-11 11:11:11", TRUE, 1),
+(NULL, "Test3", "2019-11-11 11:11:11", FALSE, 1);
+
+INSERT INTO ProblemTag (ID, ProblemID, TagID) VALUES
+(NULL, 1, 3),
+(NULL, 2, 2),
+(NULL, 3, 1);

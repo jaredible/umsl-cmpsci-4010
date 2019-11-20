@@ -28,6 +28,9 @@
 						<li class="nav-item">
 							<a id="pills-categories-tab" class="nav-link" href="category">Categories</a>
 						</li>
+						<li class="nav-item">
+							<a id="pills-tags-tab" class="nav-link" href="tag">Tags</a>
+						</li>
 					</ul>
 				</header>
 				<!-- END TABS -->
@@ -36,22 +39,27 @@
 				<div class="container">
 					<!-- BEGIN FILTER -->
 					<form class="text-center" action="problemList" method="get">
-						<div class="form-row justify-content-center align-items-center">
-							<div class="form-group col-sm-12 col-md-6 my-3">
-								<div class="input-group">
-									<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="id" autofocus>
-										<option value="0"${categoryId == null ? ' selected' : ''}>Any category</option>
-										<c:forEach var="category" items="${categories}">
-											<option value="${category.id}"${category.id}"${categoryId == category.id ? ' selected' : ''}><c:out value="${category.name}" /></option>
-										</c:forEach>
-									</select>
-									<div class="input-group-append">
-										<button class="btn btn-outline-secondary rounded-right" type="submit">Filter</button>
-									</div>
-									<c:if test="${errors.categoryId != null}">
-										<div class="invalid-feedback">${errors.categoryId}</div>
-									</c:if>
-								</div>
+						<div class="form-row justify-content-around align-items-center my-3">
+							<div class="col-sm-12 col-md-5 my-2">
+								<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="categoryId" autofocus>
+									<option value=""${categoryId == null ? ' selected disabled hidden' : ''}>Select a category</option>
+									<option value="0">Any category</option>
+									<c:forEach var="category" items="${categories}">
+										<option value="${category.id}"${category.id}"${categoryId == category.id ? ' selected' : ''}><c:out value="${category.name}" /></option>
+									</c:forEach>
+								</select>
+								<c:if test="${errors.categoryId != null}">
+									<div class="invalid-feedback">${errors.categoryId}</div>
+								</c:if>
+							</div>
+							<div class="col-sm-12 col-md-5 my-2">
+								<input class="form-control" type="text" name="tagNames" placeholder="Search by tag(s)" value="${tagNames}">
+								<c:if test="${errors.tagNames != null}">
+									<div class="invalid-feedback">${errors.tagNames}</div>
+								</c:if>
+							</div>
+							<div class="col-sm-12 col-md-2 text-right my-2">
+								<button class="btn btn-outline-secondary w-100" type="submit">Filter</button>
 							</div>
 						</div>
 					</form>

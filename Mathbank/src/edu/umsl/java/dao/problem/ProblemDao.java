@@ -12,6 +12,10 @@ public interface ProblemDao {
 
 	public List<Problem> getProblemsByCategoryId(int i);
 
+	public List<Problem> getProblemsByTagNames(String s);
+
+	public List<Problem> getProblemsByCategoryIdOrTagNames(String s1, String s2);
+
 	public boolean getProblemIdExists(int i);
 
 	public boolean getTitleExists(String s);
