@@ -4,3 +4,5 @@ https://umsl.jaredible.net/Project1
 https://umsl.jaredible.net/Project2
 <br>
 https://mathbank.jaredible.net
+<br>
+https://umsl.jaredible.net/Project3 (Coming soon)
