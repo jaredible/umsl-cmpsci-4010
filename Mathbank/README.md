@@ -14,4 +14,4 @@
 
 ### Deployment
 
-- Run this project in Tomcat.
+- Run this project on Tomcat.
