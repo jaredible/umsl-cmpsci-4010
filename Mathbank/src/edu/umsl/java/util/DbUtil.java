@@ -10,6 +10,7 @@ public class DbUtil {
 	private static String driver;
 	private static String url;
 	private static String name;
+	private static String options;
 	private static String user;
 	private static String password;
 	private static boolean propsLoaded = false;
@@ -25,6 +26,7 @@ public class DbUtil {
 			driver = props.getProperty("db.driver");
 			url = props.getProperty("db.url");
 			name = props.getProperty("db.name");
+			options = props.getProperty("db.options");
 			user = props.getProperty("db.user");
 			password = props.getProperty("db.password");
 
@@ -43,7 +45,7 @@ public class DbUtil {
 
 		try {
 			Class.forName(driver).newInstance();
-			conn = DriverManager.getConnection(getDbUrl(), user, password);
+			conn = DriverManager.getConnection(getConnectionString(), user, password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,12 +53,12 @@ public class DbUtil {
 		return conn;
 	}
 
-	private static String getDbUrl() {
+	private static String getConnectionString() {
 		if (!propsLoaded) {
 			loadProps();
 		}
 
-		return url + name;
+		return url + name + options;
 	}
 
 }

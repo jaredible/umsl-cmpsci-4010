@@ -68,9 +68,9 @@
 								</c:choose>
 							</div>
 							<div class="form-group col-sm-12 col-md-6">
-								<input class="form-control${errors.title != null ? ' is-invalid' : ''}" name="password" placeholder="Password (optional)" value="${title}">
-								<c:if test="${errors.title != null}">
-									<div class="invalid-feedback">${errors.title}</div>
+								<input class="form-control${errors.password != null ? ' is-invalid' : ''}" name="password" placeholder="Password (optional)" value="${password}">
+								<c:if test="${errors.password != null}">
+									<div class="invalid-feedback">${errors.password}</div>
 								</c:if>
 							</div>
 						</div>

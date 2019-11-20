@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.crypto.SecretKey;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -74,17 +73,21 @@ public class NewProblemController extends HttpServlet {
 
 			int id = 0;
 
-			String hash = SecurityUtil.generateSHA512Hash("testing");
-			String[] split = hash.split(":");
-			System.out.println(hash);
-			System.out.println(split[0]);
-			System.out.println(split[1]);
+			String s = "Test1|Test2";
+			List<Problem> test = problemDao.getTest(s, s);
+			System.out.println(test.size());
 
-			String data = "testing";
-			SecretKey secretKey = SecurityUtil.generateSecretKey();
-			String encrypt = SecurityUtil.encrypt(data, secretKey);
-			System.out.println(encrypt);
-			System.out.println(SecurityUtil.decrypt(encrypt, secretKey));
+			// String hash = SecurityUtil.generateSHA512Hash("testing");
+			// String[] split = hash.split(":");
+			// System.out.println(hash);
+			// System.out.println(split[0]);
+			// System.out.println(split[1]);
+
+			// String data = "testing";
+			// SecretKey secretKey = SecurityUtil.generateSecretKey();
+			// String encrypt = SecurityUtil.encrypt(data, secretKey);
+			// System.out.println(encrypt);
+			// System.out.println(SecurityUtil.decrypt(encrypt, secretKey));
 
 			if (title.isEmpty()) {
 				errors.put("title", "Cannot be empty!");
@@ -138,6 +141,7 @@ public class NewProblemController extends HttpServlet {
 				request.setAttribute("title", title);
 				request.setAttribute("categoryId", categoryId);
 				request.setAttribute("content", content);
+				request.setAttribute("password", password);
 				request.setAttribute("errors", errors);
 				doGet(request, response);
 			}
