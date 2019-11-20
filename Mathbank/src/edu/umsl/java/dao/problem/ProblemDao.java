@@ -23,7 +23,5 @@ public interface ProblemDao {
 	public void incrementViewCountById(int i);
 
 	public void deleteProblemById(int i);
-	
-	public List<Problem> getTest(String s1, String s2);
 
 }

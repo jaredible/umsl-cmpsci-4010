@@ -23,7 +23,6 @@ public class ProblemDaoImpl implements ProblemDao {
 	private PreparedStatement updateProblem;
 	private PreparedStatement incrementViewCountById;
 	private PreparedStatement deleteProblemById;
-	private PreparedStatement getTest;
 
 	public ProblemDaoImpl() throws Exception {
 		connection = DbUtil.openConnection();
@@ -36,45 +35,6 @@ public class ProblemDaoImpl implements ProblemDao {
 		updateProblem = connection.prepareStatement("UPDATE Problem SET Title = ?, CategoryID = ?, Content = ?, LastEditTime = ?, Edited = TRUE, TrackingID = ? WHERE ID = ?;");
 		incrementViewCountById = connection.prepareStatement("UPDATE Problem SET ViewCount = ViewCount + 1 WHERE ID = ?;");
 		deleteProblemById = connection.prepareStatement("DELETE FROM Problem WHERE ID = ?;");
-		getTest = connection.prepareStatement("SELECT * FROM Problem WHERE Title REGEXP ? OR Content REGEXP ?;");
-	}
-
-	@Override
-	public List<Problem> getTest(String titleRegex, String contentRegex) {
-		ResultSet rs = null;
-
-		try {
-			getTest.setString(1, titleRegex);
-			getTest.setString(2, contentRegex);
-			rs = getTest.executeQuery();
-			List<Problem> problems = new ArrayList<Problem>();
-			while (rs.next()) {
-				Problem problem = new Problem();
-				problem.setId(rs.getInt("ID"));
-				problem.setCategoryId(rs.getInt("CategoryID"));
-				problem.setTitle(rs.getString("Title"));
-				problem.setContent(rs.getString("Content"));
-				problem.setPasswordHash(rs.getString("PasswordHash"));
-				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
-				problem.setEdited(rs.getBoolean("Edited"));
-				problem.setViewCount(rs.getInt("ViewCount"));
-				problems.add(problem);
-			}
-			return problems;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		return null;
 	}
 
 	@Override

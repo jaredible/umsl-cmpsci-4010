@@ -73,10 +73,6 @@ public class NewProblemController extends HttpServlet {
 
 			int id = 0;
 
-			String s = "Test1|Test2";
-			List<Problem> test = problemDao.getTest(s, s);
-			System.out.println(test.size());
-
 			// String hash = SecurityUtil.generateSHA512Hash("testing");
 			// String[] split = hash.split(":");
 			// System.out.println(hash);
