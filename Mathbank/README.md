@@ -9,8 +9,8 @@
 
 ### Preparations
 
-- Execute the file, mathbank.sql, within the directory, src, on phpMyAdmin.
-- Update the file, dp.properties, within the directoy, src.
+- Execute the mathbank.sql file within the src directory on phpMyAdmin.
+- Update the db.properties file within the src directoy to your needs.
 
 ### Deployment
 
