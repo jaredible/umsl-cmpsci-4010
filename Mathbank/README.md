@@ -2,6 +2,7 @@
 
 ### Prerequisites
 
+* Eclipse IDE for Java EE developers
 * Java Development Kit (JDK) 8+
 * Apache Tomcat 7+
 * XAMPP
