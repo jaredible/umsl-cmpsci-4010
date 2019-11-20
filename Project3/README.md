@@ -1,6 +1,4 @@
 # [Project 3](https://umsl.jaredible.net/Project3)
-[View the syllabus](http://htmlpreview.github.io/?https://github.com/jaredible/umsl-cmpsci-4010/blob/master/Project3/CS4010Fall2019Project3.html)
-<br/>
 
 ### Prerequisites
 
