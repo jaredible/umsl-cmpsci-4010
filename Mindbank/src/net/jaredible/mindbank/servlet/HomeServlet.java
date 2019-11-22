@@ -1,4 +1,4 @@
-package net.jaredible.mindbank.servlet;
+package net.jaredible.mindbank.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,7 +16,7 @@ import net.jaredible.mindbank.dao.ProblemDAO;
 import net.jaredible.mindbank.dao.ProblemDAOImpl;
 import net.jaredible.mindbank.model.Category;
 import net.jaredible.mindbank.model.ProblemInfo;
-import net.jaredible.mindbank.util.DbConn;
+import net.jaredible.mindbank.util.DbUtil;
 import net.jaredible.mindbank.util.EnumLimit;
 
 /**
@@ -43,7 +43,7 @@ public class HomeServlet extends HttpServlet {
 			String page = request.getParameter("page");
 			String categoryId = request.getParameter("category");
 
-			Connection conn = DbConn.openConn();
+			Connection conn = DbUtil.openConn();
 			CategoryDAO categoryDAO = new CategoryDAOImpl(conn);
 			ProblemDAO problemDAO = new ProblemDAOImpl(conn);
 

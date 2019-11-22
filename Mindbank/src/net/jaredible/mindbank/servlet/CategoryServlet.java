@@ -1,4 +1,4 @@
-package net.jaredible.mindbank.servlet;
+package net.jaredible.mindbank.controller;
 
 import java.io.IOException;
 import java.util.Map;

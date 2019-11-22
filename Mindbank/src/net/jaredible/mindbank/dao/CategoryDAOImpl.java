@@ -8,7 +8,7 @@ import java.sql.Types;
 
 import net.jaredible.mindbank.model.Category;
 import net.jaredible.mindbank.util.CategoryList;
-import net.jaredible.mindbank.util.DbConn;
+import net.jaredible.mindbank.util.DbUtil;
 
 public class CategoryDAOImpl implements CategoryDAO {
 
@@ -28,7 +28,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	private PreparedStatement deleteCategoryById;
 
 	public CategoryDAOImpl() throws SQLException {
-		this(DbConn.openConn());
+		this(DbUtil.openConn());
 	}
 
 	public CategoryDAOImpl(Connection connection) throws SQLException {

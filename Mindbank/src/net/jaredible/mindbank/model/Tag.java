@@ -2,16 +2,16 @@ package net.jaredible.mindbank.model;
 
 import java.sql.Timestamp;
 
-public class Category {
+public class Tag {
 
 	private int id;
 	private String name;
 	private Timestamp createdTime;
 
-	public Category() {
+	public Tag() {
 	}
 
-	public Category(int id, String name, Timestamp createdTime) {
+	public Tag(int id, String name, Timestamp createdTime) {
 		this.id = id;
 		this.name = name;
 		this.createdTime = createdTime;

@@ -5,23 +5,22 @@ import java.sql.Timestamp;
 public class Problem {
 
 	private int id;
-	private int categoryId;
 	private String title;
 	private String content;
 	private boolean edited;
-	private int createdByUserId;
-	private Timestamp createdTimestamp;
+	private Timestamp createdTime;
+	private Timestamp lastEditTime;
 
 	public Problem() {
 	}
 
-	public Problem(int id, int categoryId, String title, String content, boolean edited, int createdByUserId, Timestamp createdTimestamp) {
+	public Problem(int id, String title, String content, boolean edited, Timestamp createdTime, Timestamp lastEditTime) {
 		this.id = id;
-		this.categoryId = categoryId;
+		this.title = title;
 		this.content = content;
 		this.edited = edited;
-		this.createdByUserId = createdByUserId;
-		this.createdTimestamp = createdTimestamp;
+		this.createdTime = createdTime;
+		this.lastEditTime = lastEditTime;
 	}
 
 	public int getId() {
@@ -30,14 +29,6 @@ public class Problem {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
 	}
 
 	public String getTitle() {
@@ -64,20 +55,20 @@ public class Problem {
 		this.edited = edited;
 	}
 
-	public int getCreatedByUserId() {
-		return createdByUserId;
+	public Timestamp getCreatedTime() {
+		return createdTime;
 	}
 
-	public void setCreatedByUserId(int createdByUserId) {
-		this.createdByUserId = createdByUserId;
+	public void setCreatedTime(Timestamp createdTime) {
+		this.createdTime = createdTime;
 	}
 
-	public Timestamp getCreatedTimestamp() {
-		return createdTimestamp;
+	public Timestamp getLastEditTime() {
+		return lastEditTime;
 	}
 
-	public void setCreatedTimestamp(Timestamp createdTimestamp) {
-		this.createdTimestamp = createdTimestamp;
+	public void setLastEditTime(Timestamp lastEditTime) {
+		this.lastEditTime = lastEditTime;
 	}
 
 }

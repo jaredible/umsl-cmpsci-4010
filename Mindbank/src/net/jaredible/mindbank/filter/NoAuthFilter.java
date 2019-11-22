@@ -8,49 +8,43 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Servlet Filter implementation class NoAuthFilter
  */
-@WebFilter(urlPatterns = { "/login", "/register" })
+@WebFilter("/NoAuthFilter")
 public class NoAuthFilter implements Filter {
 
-	/**
-	 * Default constructor.
-	 */
-	public NoAuthFilter() {
-	}
+    /**
+     * Default constructor. 
+     */
+    public NoAuthFilter() {
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
+		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
-		HttpSession session = req.getSession(false);
+		// TODO Auto-generated method stub
+		// place your code here
 
-		boolean loggedIn = session != null && session.getAttribute("userId") != null;
-
-		if (loggedIn) {
-			res.sendRedirect(req.getContextPath());
-		} else {
-			chain.doFilter(req, res);
-		}
+		// pass the request along the filter chain
+		chain.doFilter(request, response);
 	}
 
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
+		// TODO Auto-generated method stub
 	}
 
 }

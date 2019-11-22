@@ -10,7 +10,7 @@ import java.sql.Types;
 import net.jaredible.mindbank.model.Problem;
 import net.jaredible.mindbank.model.ProblemInfo;
 import net.jaredible.mindbank.model.User;
-import net.jaredible.mindbank.util.DbConn;
+import net.jaredible.mindbank.util.DbUtil;
 import net.jaredible.mindbank.util.ProblemInfoList;
 
 public class ProblemDAOImpl implements ProblemDAO {
@@ -39,7 +39,7 @@ public class ProblemDAOImpl implements ProblemDAO {
 	private PreparedStatement deleteProblemById;
 
 	public ProblemDAOImpl() throws SQLException {
-		this(DbConn.openConn());
+		this(DbUtil.openConn());
 	}
 
 	public ProblemDAOImpl(Connection connection) throws SQLException {

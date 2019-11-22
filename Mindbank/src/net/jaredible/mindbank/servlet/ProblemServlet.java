@@ -1,4 +1,4 @@
-package net.jaredible.mindbank.servlet;
+package net.jaredible.mindbank.controller;
 
 import java.sql.Connection;
 import java.sql.Timestamp;
@@ -22,7 +22,7 @@ import net.jaredible.mindbank.dao.UserDAOImpl;
 import net.jaredible.mindbank.model.Category;
 import net.jaredible.mindbank.model.Problem;
 import net.jaredible.mindbank.model.ProblemInfo;
-import net.jaredible.mindbank.util.DbConn;
+import net.jaredible.mindbank.util.DbUtil;
 import net.jaredible.mindbank.util.StringMap;
 
 /**
@@ -48,7 +48,7 @@ public class ProblemServlet extends HttpServlet {
 			String edit = request.getParameter("edit");
 			String delete = request.getParameter("delete");
 
-			Connection conn = DbConn.openConn();
+			Connection conn = DbUtil.openConn();
 
 			String title = "";
 			String time = "";
@@ -131,7 +131,7 @@ public class ProblemServlet extends HttpServlet {
 			String problemId = request.getParameter("id");
 			String edit = request.getParameter("edit");
 
-			Connection conn = DbConn.openConn();
+			Connection conn = DbUtil.openConn();
 
 			HttpSession session = request.getSession(false);
 			int userId = (int) session.getAttribute("userId");
