@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="main.java.mindbank.model.Category" %>
-<%@ page import="main.java.mindbank.util.CategoryList" %>
-<%@ page import="main.java.mindbank.model.Problem" %>
-<%@ page import="main.java.mindbank.util.ProblemList" %>
+<%@ page import="net.jaredible.mindbank.model.Category" %>
+<%@ page import="net.jaredible.mindbank.util.CategoryList" %>
+<%@ page import="net.jaredible.mindbank.model.Problem" %>
+<%@ page import="net.jaredible.mindbank.util.ProblemList" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="main.java.mindbank.util.StringMap" %>
+<%@ page import="net.jaredible.mindbank.util.StringMap" %>
 <%
 boolean loggedIn = false;
 int userId = -1;

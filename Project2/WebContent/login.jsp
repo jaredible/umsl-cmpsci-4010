@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Map" %>
-<%@ page import="main.java.mindbank.util.StringMap" %>
-<%@ page import="main.java.mindbank.model.User" %>
+<%@ page import="net.jaredible.mindbank.util.StringMap" %>
+<%@ page import="net.jaredible.mindbank.model.User" %>
 <%
 Map<String, String> errors = (StringMap) request.getAttribute("errors");
 String error = null;
