@@ -2,19 +2,19 @@ package net.jaredible.mindbank.model;
 
 import java.sql.Timestamp;
 
-public class Tag {
+public class Comment {
 
 	private long id;
-	private String name;
+	private String content;
 	private Timestamp createdTime;
 	private int createdByUserId;
 
-	public Tag() {
+	public Comment() {
 	}
 
-	public Tag(long id, String name, Timestamp createdTime, int createdByUserId) {
+	public Comment(long id, String content, Timestamp createdTime, int createdByUserId) {
 		this.id = id;
-		this.name = name;
+		this.content = content;
 		this.createdTime = createdTime;
 		this.createdByUserId = createdByUserId;
 	}
@@ -27,12 +27,12 @@ public class Tag {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getContent() {
+		return content;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Timestamp getCreatedTime() {

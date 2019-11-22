@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<jsp:include page="../partial/head.jsp">
-			<jsp:param name="title" value="Problems" />
+			<jsp:param name="title" value="Login" />
 		</jsp:include>
 	</head>
 <body>
@@ -15,12 +15,19 @@
 			</header>
 			
 			<div class="container">
-				Testing
+				<form action="login" method="post">
+					<input type="email" name="email" placeholder="Email">
+					<input type="text" name="userName" placeholder="Username">
+					<input type="password" name="password" placeholder="Password">
+					<input type="password" name="confirmPassword" placeholder="Confirm password">
+					<button type="submit">Login</button>
+				</form>
 			</div>
 		</div>
+		
+		<%@ include file="../partial/footer.jsp" %>
 	</div>
 	
-	<%@ include file="../partial/footer.jsp" %>
 	<jsp:include page="../partial/scripts.jsp" />
 </body>
 </html>

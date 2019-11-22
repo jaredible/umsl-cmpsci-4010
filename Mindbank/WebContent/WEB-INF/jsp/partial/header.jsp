@@ -2,11 +2,13 @@
 
 <c:choose>
 	<c:when test="${sessionScope.userId != null}">
-		Logged In
+		<a href="profile">Profile</a>
+		<a href="addProblem">Add problem</a>
+		<a href="addCategory">Add category</a>
+		<a href="addTag">Add tag</a>
 	</c:when>
 	<c:otherwise>
-		Not Logged In
+		<a href="login">Login</a>
+		<a href="register">Register</a>
 	</c:otherwise>
 </c:choose>
-
-<c:out value="${sessionScope.userId}" />
