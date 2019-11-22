@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Map" %>
-<%@ page import="net.jaredible.mindbank.util.StringMap" %>
+<%@ page import="main.java.mindbank.util.StringMap" %>
 <%
 Map<String, String> errors = (StringMap) request.getAttribute("errors");
 String emailError = null;
