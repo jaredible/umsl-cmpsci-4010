@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter(urlPatterns = { "/problem", "/profile" })
+@WebFilter(urlPatterns = { "/logout", "/problem", "/profile" })
 public class AuthFilter implements Filter {
 
 	public AuthFilter() {
