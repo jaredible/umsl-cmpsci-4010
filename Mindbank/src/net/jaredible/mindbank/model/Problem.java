@@ -4,30 +4,40 @@ import java.sql.Timestamp;
 
 public class Problem {
 
-	private int id;
+	public static final int ID = 0;
+	public static final int TITLE = 1;
+	public static final int CONTENT = 2;
+	public static final int EDITED = 3;
+	public static final int CREATED_TIME = 4;
+	public static final int LAST_EDITED_TIME = 5;
+	public static final int CREATED_BY_USER_ID = 6;
+
+	private long id;
 	private String title;
 	private String content;
 	private boolean edited;
 	private Timestamp createdTime;
-	private Timestamp lastEditTime;
+	private Timestamp lastEditedTime;
+	private int createdByUserId;
 
 	public Problem() {
 	}
 
-	public Problem(int id, String title, String content, boolean edited, Timestamp createdTime, Timestamp lastEditTime) {
+	public Problem(long id, String title, String content, boolean edited, Timestamp createdTime, Timestamp lastEditedTime, int createdByUserId) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.edited = edited;
 		this.createdTime = createdTime;
-		this.lastEditTime = lastEditTime;
+		this.lastEditedTime = lastEditedTime;
+		this.createdByUserId = createdByUserId;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -63,12 +73,20 @@ public class Problem {
 		this.createdTime = createdTime;
 	}
 
-	public Timestamp getLastEditTime() {
-		return lastEditTime;
+	public Timestamp getLastEditedTime() {
+		return lastEditedTime;
 	}
 
-	public void setLastEditTime(Timestamp lastEditTime) {
-		this.lastEditTime = lastEditTime;
+	public void setLastEditedTime(Timestamp lastEditedTime) {
+		this.lastEditedTime = lastEditedTime;
+	}
+
+	public int getCreatedByUserId() {
+		return createdByUserId;
+	}
+
+	public void setCreatedByUserId(int createdByUserId) {
+		this.createdByUserId = createdByUserId;
 	}
 
 }

@@ -1,18 +1,17 @@
 package net.jaredible.mindbank.dao;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface Dao<T> {
+public abstract interface Dao<T> {
 
-	Optional<T> get(long id);
+	T get(long id);
 
 	List<T> getAll();
 
-	boolean save(T t);
+	int save(T t);
 
-	int update(T t, String[] params);
+	int update(T t, int[] params);
 
-	boolean delete(T t);
+	int delete(long id);
 
 }
