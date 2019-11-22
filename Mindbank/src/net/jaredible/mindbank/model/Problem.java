@@ -4,13 +4,13 @@ import java.sql.Timestamp;
 
 public class Problem {
 
-	public static final int ID = 0;
-	public static final int TITLE = 1;
-	public static final int CONTENT = 2;
-	public static final int EDITED = 3;
-	public static final int CREATED_TIME = 4;
-	public static final int LAST_EDITED_TIME = 5;
-	public static final int CREATED_BY_USER_ID = 6;
+	public static final int ID = 1;
+	public static final int TITLE = 2;
+	public static final int CONTENT = 3;
+	public static final int EDITED = 4;
+	public static final int CREATED_TIME = 5;
+	public static final int LAST_EDITED_TIME = 6;
+	public static final int CREATED_BY_USER_ID = 7;
 
 	private long id;
 	private String title;

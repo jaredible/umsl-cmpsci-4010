@@ -1,1 +1,1 @@
-<% response.sendRedirect("problemList"); %>
+<% response.sendRedirect("problems"); %>

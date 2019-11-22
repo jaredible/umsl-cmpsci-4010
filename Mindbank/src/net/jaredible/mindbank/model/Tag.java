@@ -4,24 +4,31 @@ import java.sql.Timestamp;
 
 public class Tag {
 
-	private int id;
+	public static final int ID = 1;
+	public static final int NAME = 2;
+	public static final int CREATED_TIME = 3;
+	public static final int CREATED_BY_USER_ID = 4;
+
+	private long id;
 	private String name;
 	private Timestamp createdTime;
+	private int createdByUserId;
 
 	public Tag() {
 	}
 
-	public Tag(int id, String name, Timestamp createdTime) {
+	public Tag(long id, String name, Timestamp createdTime, int createdByUserId) {
 		this.id = id;
 		this.name = name;
 		this.createdTime = createdTime;
+		this.createdByUserId = createdByUserId;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -39,6 +46,14 @@ public class Tag {
 
 	public void setCreatedTime(Timestamp createdTime) {
 		this.createdTime = createdTime;
+	}
+
+	public int getCreatedByUserId() {
+		return createdByUserId;
+	}
+
+	public void setCreatedByUserId(int createdByUserId) {
+		this.createdByUserId = createdByUserId;
 	}
 
 }
