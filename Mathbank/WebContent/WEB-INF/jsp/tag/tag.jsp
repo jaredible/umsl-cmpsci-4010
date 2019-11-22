@@ -80,7 +80,7 @@
 					<c:if test="${canDelete}">
 						<button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#deleteModal">Delete</button>
 					</c:if>
-					<a class="btn btn-sm btn-secondary" href="editTag?id=${category.id}">Edit</a>
+					<a class="btn btn-sm btn-secondary" href="editTag?id=${tag.id}">Edit</a>
 				</div>
 				<!-- END MAIN CONTENT -->
 			</div>

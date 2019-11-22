@@ -12,6 +12,8 @@ public interface TagDao {
 
 	public boolean getTagIdExists(int i);
 
+	public boolean getNameExists(String s);
+
 	public Tag getTagById(int i);
 
 	public void updateTag(Tag t);

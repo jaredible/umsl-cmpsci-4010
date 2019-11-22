@@ -42,53 +42,43 @@ public class ProblemListController extends HttpServlet {
 		try {
 			String categoryId = request.getParameter("categoryId");
 			String tagNames = request.getParameter("tagNames");
+			
+			System.out.println("categoryId: " + categoryId + ", tagNames: " + tagNames);
 
 			ProblemDao problemDao = new ProblemDaoImpl();
 			CategoryDao categoryDao = new CategoryDaoImpl();
 			TagDao tagDao = new TagDaoImpl();
 
-			Map<String, String> errors = new HashMap<String, String>();
-
-			if (categoryId != null) {
-				int id = 0;
-
-				try {
-					id = Integer.parseInt(categoryId);
-					if (id > 0) {
-						if (!categoryDao.getCategoryIdExists(id)) {
-							errors.put("categoryId", "Does not exist!");
-						}
-					} else if (id == 0) {
-						response.sendRedirect("problemList");
-						return;
-					} else {
-						errors.put("categoryId", "Invalid id!");
-					}
-				} catch (Exception e) {
-					errors.put("categoryId", "Expected a number!");
-				}
-
-				if (errors.isEmpty()) {
-					List<Problem> problems = problemDao.getProblemsByCategoryId(id);
-					request.setAttribute("problems", problems);
-				} else {
-					request.setAttribute("errors", errors);
-					List<Problem> problems = problemDao.getProblems();
-					request.setAttribute("problems", problems);
-				}
-			}
-			if (tagNames != null) {
-				List<Problem> problems = problemDao.getProblemsByTagNames(tagNames.replaceAll("\\s", "").replaceAll(",", "|"));
-				request.setAttribute("problems", problems);
-			}
-			if (categoryId == null && tagNames == null) {
-				List<Problem> problems = problemDao.getProblems();
-				request.setAttribute("problems", problems);
-			}
-
+			List<Problem> problems;
 			List<Category> categories = categoryDao.getCategories();
 			List<Tag> tags = tagDao.getTags();
 
+			Map<String, String> errors = new HashMap<String, String>();
+
+			if ((categoryId == null || categoryId.isEmpty()) && (tagNames == null || tagNames.isEmpty())) {
+				problems = problemDao.getProblems();
+			} else {
+				int id = -1;
+				String names = null;
+
+				if (categoryId != null) {
+					try {
+						id = Integer.parseInt(categoryId);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					errors.put("categoryId", "Select a category!");
+				}
+				if (tagNames != null) {
+					names = tagNames.replaceAll(" ", "").replaceAll(",", "|");
+				}
+
+				problems = problemDao.getProblemsByCategoryIdOrTagNames(id, names);
+			}
+
+			request.setAttribute("errors", errors);
+			request.setAttribute("problems", problems);
 			request.setAttribute("categories", categories);
 			request.setAttribute("tags", tags);
 			request.setAttribute("categoryId", categoryId);

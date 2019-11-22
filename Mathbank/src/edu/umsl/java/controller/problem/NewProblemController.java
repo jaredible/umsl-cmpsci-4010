@@ -17,10 +17,13 @@ import edu.umsl.java.dao.category.CategoryDao;
 import edu.umsl.java.dao.category.CategoryDaoImpl;
 import edu.umsl.java.dao.problem.ProblemDao;
 import edu.umsl.java.dao.problem.ProblemDaoImpl;
+import edu.umsl.java.dao.tag.TagDao;
+import edu.umsl.java.dao.tag.TagDaoImpl;
 import edu.umsl.java.dao.tracking.TrackingDao;
 import edu.umsl.java.dao.tracking.TrackingDaoImpl;
 import edu.umsl.java.model.Category;
 import edu.umsl.java.model.Problem;
+import edu.umsl.java.model.Tag;
 import edu.umsl.java.model.Tracking;
 import edu.umsl.java.util.SecurityUtil;
 import edu.umsl.java.util.TrackingType;
@@ -46,10 +49,13 @@ public class NewProblemController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			CategoryDao categoryDao = new CategoryDaoImpl();
+			TagDao tagDao = new TagDaoImpl();
 
 			List<Category> categories = categoryDao.getCategories();
+			List<Tag> tags = tagDao.getTags();
 
 			request.setAttribute("categories", categories);
+			request.setAttribute("tags", tags);
 			getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/newProblem.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,11 +69,13 @@ public class NewProblemController extends HttpServlet {
 		try {
 			String title = request.getParameter("title");
 			String categoryId = request.getParameter("categoryId");
+			String tagId = request.getParameter("tagId");
 			String content = request.getParameter("content");
 			String password = request.getParameter("password");
 
 			ProblemDao problemDao = new ProblemDaoImpl();
 			CategoryDao categoryDao = new CategoryDaoImpl();
+			TagDao tagDao = new TagDaoImpl();
 
 			Map<String, String> errors = new HashMap<String, String>();
 
@@ -108,6 +116,22 @@ public class NewProblemController extends HttpServlet {
 					errors.put("categoryId", "Expected a number!");
 				}
 			}
+			if (tagId != null) { // TODO: check when null
+				try {
+					id = Integer.parseInt(tagId);
+					if (id > 0) {
+						if (!tagDao.getTagIdExists(id)) {
+							errors.put("tagId", "Does not exist!");
+						}
+					} else if (id == 0) {
+						errors.put("tagId", "Select a category!");
+					} else {
+						errors.put("tagId", "Invalid id!");
+					}
+				} catch (Exception e) {
+					errors.put("tagId", "Expected a number!");
+				}
+			}
 			if (content.isEmpty()) {
 				errors.put("content", "Cannot be empty!");
 			}
@@ -136,6 +160,7 @@ public class NewProblemController extends HttpServlet {
 			} else {
 				request.setAttribute("title", title);
 				request.setAttribute("categoryId", categoryId);
+				request.setAttribute("tagId", tagId);
 				request.setAttribute("content", content);
 				request.setAttribute("password", password);
 				request.setAttribute("errors", errors);

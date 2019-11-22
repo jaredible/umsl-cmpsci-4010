@@ -62,7 +62,7 @@
 					<!-- END TAG-LIST TABLE -->
 					
 					<div class="d-flex justify-content-center align-items-center mt-3">
-						<a class="btn btn-lg btn-primary" href="newTagz">Add tag</a>
+						<a class="btn btn-lg btn-primary" href="newTag">Add tag</a>
 					</div>
 				</div>
 				<!-- END MAIN CONTENT -->

@@ -91,6 +91,6 @@ INSERT INTO Tag (ID, Name, CreatedTime, Edited, TrackingID) VALUES
 (NULL, "Test3", "2019-11-11 11:11:11", FALSE, 1);
 
 INSERT INTO ProblemTag (ID, ProblemID, TagID) VALUES
-(NULL, 1, 3),
+(NULL, 1, 1),
 (NULL, 2, 2),
-(NULL, 3, 1);
+(NULL, 3, 3);

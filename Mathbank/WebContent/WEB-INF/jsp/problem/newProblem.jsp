@@ -48,6 +48,9 @@
 									<div class="invalid-feedback">${errors.title}</div>
 								</c:if>
 							</div>
+						</div>
+						
+						<div class="form-row justify-content-center align-items-center">
 							<div class="form-group col-sm-12 col-md-6">
 								<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="categoryId">
 									<option value="0"${categoryId == null ? ' selected' : ''}>Select a category</option>
@@ -57,6 +60,17 @@
 								</select>
 								<c:if test="${errors.categoryId != null}">
 									<div class="invalid-feedback">${errors.categoryId}</div>
+								</c:if>
+							</div>
+							<div class="form-group col-sm-12 col-md-6">
+								<select class="custom-select${errors.tagId != null ? ' is-invalid' : ''}" name="tagId">
+									<option value="0"${tagId == null ? ' selected' : ''}>Select a tag</option>
+									<c:forEach var="tag" items="${tags}">
+										<option value="${tag.id}"${tagId == tag.id ? ' selected' : ''}><c:out value="${tag.name}" /></option>
+									</c:forEach>
+								</select>
+								<c:if test="${errors.tagId != null}">
+									<div class="invalid-feedback">${errors.tagId}</div>
 								</c:if>
 							</div>
 							<div class="form-group col-12">

@@ -1,4 +1,4 @@
-package edu.umsl.java.controller.category;
+package edu.umsl.java.controller.tag;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -12,26 +12,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.umsl.java.dao.category.CategoryDao;
-import edu.umsl.java.dao.category.CategoryDaoImpl;
+import edu.umsl.java.dao.tag.TagDao;
+import edu.umsl.java.dao.tag.TagDaoImpl;
 import edu.umsl.java.dao.tracking.TrackingDao;
 import edu.umsl.java.dao.tracking.TrackingDaoImpl;
-import edu.umsl.java.model.Category;
+import edu.umsl.java.model.Tag;
 import edu.umsl.java.model.Tracking;
 import edu.umsl.java.util.TrackingType;
 import edu.umsl.java.util.Util;
 
 /**
- * Servlet implementation class EditCategoryController
+ * Servlet implementation class EditTagController
  */
-@WebServlet("/editCategory")
-public class EditCategoryController extends HttpServlet {
+@WebServlet("/editTag")
+public class EditTagController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public EditCategoryController() {
+	public EditTagController() {
 		super();
 	}
 
@@ -40,34 +40,33 @@ public class EditCategoryController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String categoryId = request.getParameter("id");
+			String tagId = request.getParameter("id");
 
-			if (categoryId == null) {
-				response.sendRedirect("categoryList");
+			if (tagId == null) {
+				response.sendRedirect("tagList");
 				return;
 			} else {
-				CategoryDao categoryDao = new CategoryDaoImpl();
+				TagDao tagDao = new TagDaoImpl();
 
 				int id = 0;
 
 				try {
-					id = Integer.parseInt(categoryId);
+					id = Integer.parseInt(tagId);
 					if (id > 0) {
-						if (categoryDao.getCategoryIdExists(id)) {
-							Category category = categoryDao.getCategoryById(id);
+						if (tagDao.getTagIdExists(id)) {
+							Tag tag = tagDao.getTagById(id);
 
-							request.setAttribute("id", category.getId());
-							request.setAttribute("name", category.getName());
-							request.setAttribute("description", category.getDescription());
-							getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/editCategory.jsp").forward(request, response);
+							request.setAttribute("id", tag.getId());
+							request.setAttribute("name", tag.getName());
+							getServletContext().getRequestDispatcher("/WEB-INF/jsp/tag/editTag.jsp").forward(request, response);
 						} else {
-							response.sendRedirect("categoryList");
+							response.sendRedirect("tagList");
 						}
 					} else {
-						response.sendRedirect("categoryList");
+						response.sendRedirect("tagList");
 					}
 				} catch (Exception e) {
-					response.sendRedirect("categoryList");
+					response.sendRedirect("tagList");
 				}
 			}
 		} catch (Exception e) {
@@ -80,11 +79,10 @@ public class EditCategoryController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String categoryId = request.getParameter("id");
+			String tagId = request.getParameter("id");
 			String name = request.getParameter("name");
-			String description = request.getParameter("description");
 
-			CategoryDao categoryDao = new CategoryDaoImpl();
+			TagDao tagDao = new TagDaoImpl();
 
 			Map<String, String> errors = new HashMap<String, String>();
 
@@ -92,38 +90,33 @@ public class EditCategoryController extends HttpServlet {
 				errors.put("name", "Cannot be empty!");
 			} else if (name.length() > 20) {
 				errors.put("name", "Max length is 20!");
-			} else if (categoryDao.getNameExists(name) && !categoryDao.getCategoryById(Integer.parseInt(categoryId)).getName().equals(name)) {
+			} else if (tagDao.getNameExists(name) && !tagDao.getTagById(Integer.parseInt(tagId)).getName().equals(name)) {
 				errors.put("name", "Already exists!");
-			}
-			if (description.length() > 420) {
-				errors.put("description", "Max length is 420!");
 			}
 
 			if (errors.isEmpty()) {
 				TrackingDao trackingDao = new TrackingDaoImpl();
 
-				Category category = categoryDao.getCategoryById(Integer.parseInt(categoryId));
+				Tag tag = tagDao.getTagById(Integer.parseInt(tagId));
 				Tracking tracking = new Tracking();
 
 				tracking.setTrackingType(TrackingType.PROBLEM.getId());
 				tracking.setIp(Util.getIPFromServletRequest(request));
 				tracking.setUserAgent(request.getHeader("User-Agent"));
 				tracking.setCreatedTime(new Timestamp(new Date().getTime()));
-				tracking.setPreviousTrackingId(category.getTrackingId());
+				tracking.setPreviousTrackingId(tag.getTrackingId());
 				int trackingId = trackingDao.addTracking(tracking);
 
-				category.setName(name);
-				category.setDescription(description);
-				category.setTrackingId(trackingId);
-				categoryDao.updateCategory(category);
+				tag.setName(name);
+				tag.setTrackingId(trackingId);
+				tagDao.updateTag(tag);
 
-				response.sendRedirect("category?id=" + categoryId);
+				response.sendRedirect("tag?id=" + tagId);
 			} else {
-				request.setAttribute("id", categoryId);
+				request.setAttribute("id", tagId);
 				request.setAttribute("name", name);
-				request.setAttribute("description", description);
 				request.setAttribute("errors", errors);
-				getServletContext().getRequestDispatcher("/WEB-INF/jsp/category/editCategory.jsp").forward(request, response);
+				getServletContext().getRequestDispatcher("/WEB-INF/jsp/tag/editTag.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

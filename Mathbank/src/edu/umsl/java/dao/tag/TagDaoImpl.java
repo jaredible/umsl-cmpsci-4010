@@ -17,6 +17,7 @@ public class TagDaoImpl implements TagDao {
 	private PreparedStatement addTag;
 	private PreparedStatement getTags;
 	private PreparedStatement getTagIdExists;
+	private PreparedStatement getNameExists;
 	private PreparedStatement getTagById;
 	private PreparedStatement updateTag;
 	private PreparedStatement deleteTagById;
@@ -26,6 +27,7 @@ public class TagDaoImpl implements TagDao {
 		addTag = connection.prepareStatement("INSERT INTO Tag (ID, Name, CreatedTime, Edited, TrackingID) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		getTags = connection.prepareStatement("SELECT * FROM Tag ORDER BY CreatedTime DESC;");
 		getTagIdExists = connection.prepareStatement("SELECT * FROM Tag WHERE ID = ?;");
+		getNameExists = connection.prepareStatement("SELECT * FROM Tag WHERE Name = ?;");
 		getTagById = connection.prepareStatement("SELECT * FROM Tag WHERE ID = ?;");
 		updateTag = connection.prepareStatement("UPDATE Tag SET Name = ?, Edited = TRUE, TrackingID = ? WHERE ID = ?;");
 		deleteTagById = connection.prepareStatement("DELETE FROM Tag WHERE ID = ?;");
@@ -103,6 +105,31 @@ public class TagDaoImpl implements TagDao {
 		try {
 			getTagIdExists.setInt(1, id);
 			rs = getTagIdExists.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean getNameExists(String name) {
+		ResultSet rs = null;
+
+		try {
+			getNameExists.setString(1, name);
+			rs = getNameExists.executeQuery();
 			if (rs.next()) {
 				return true;
 			}

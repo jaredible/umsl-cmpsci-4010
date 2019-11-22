@@ -41,11 +41,12 @@
 					<form class="text-center" action="problemList" method="get">
 						<div class="form-row justify-content-around align-items-center my-3">
 							<div class="col-sm-12 col-md-5 my-2">
-								<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="categoryId" autofocus>
-									<option value=""${categoryId == null ? ' selected disabled hidden' : ''}>Select a category</option>
-									<option value="0">Any category</option>
+								<select class="custom-select${errors.categoryId != null ? ' is-invalid' : ''}" name="categoryId">
+									<option value=""${categoryId == null ? ' selected' : ''} disabled hidden>Select a category</option>
+									<option value="-1${(categoryId != null && categoryId eq '-1') ? ' selected' : ''}">Any category</option>
+									<option value="0"${(categoryId != null && categoryId eq '0') ? ' selected' : ''}>No category</option>
 									<c:forEach var="category" items="${categories}">
-										<option value="${category.id}"${category.id}"${categoryId == category.id ? ' selected' : ''}><c:out value="${category.name}" /></option>
+										<option value="${category.id}"${categoryId == category.id ? ' selected' : ''}><c:out value="${category.name}" /></option>
 									</c:forEach>
 								</select>
 								<c:if test="${errors.categoryId != null}">
@@ -54,9 +55,6 @@
 							</div>
 							<div class="col-sm-12 col-md-5 my-2">
 								<input class="form-control" type="text" name="tagNames" placeholder="Search by tag(s)" value="${tagNames}">
-								<c:if test="${errors.tagNames != null}">
-									<div class="invalid-feedback">${errors.tagNames}</div>
-								</c:if>
 							</div>
 							<div class="col-sm-12 col-md-2 text-right my-2">
 								<button class="btn btn-outline-secondary w-100" type="submit">Filter</button>

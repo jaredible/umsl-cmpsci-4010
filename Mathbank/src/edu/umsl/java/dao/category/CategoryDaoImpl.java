@@ -25,7 +25,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	public CategoryDaoImpl() throws Exception {
 		connection = DbUtil.openConnection();
 		addCategory = connection.prepareStatement("INSERT INTO Category (ID, Name, Description, CreatedTime, Edited, TrackingID) VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-		getCategories = connection.prepareStatement("SELECT * FROM Category ORDER BY CreatedTime DESC;");
+		getCategories = connection.prepareStatement("SELECT * FROM Category ORDER BY Name ASC;");
 		getCategoryIdExists = connection.prepareStatement("SELECT * FROM Category WHERE ID = ?;");
 		getNameExists = connection.prepareStatement("SELECT * FROM Category WHERE Name = ?;");
 		getCategoryById = connection.prepareStatement("SELECT * FROM Category WHERE ID = ?;");

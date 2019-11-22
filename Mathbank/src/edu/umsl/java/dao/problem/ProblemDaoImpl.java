@@ -25,6 +25,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	private PreparedStatement updateProblem;
 	private PreparedStatement incrementViewCountById;
 	private PreparedStatement deleteProblemById;
+	private PreparedStatement deleteProblemTagById;
 
 	public ProblemDaoImpl() throws Exception {
 		connection = DbUtil.openConnection();
@@ -32,13 +33,14 @@ public class ProblemDaoImpl implements ProblemDao {
 		getProblems = connection.prepareStatement("SELECT * FROM Problem ORDER BY CreatedTime DESC;");
 		getProblemsByCategoryId = connection.prepareStatement("SELECT * FROM Problem WHERE CategoryID = ? ORDER BY CreatedTime DESC;");
 		getProblemsByTagNames = connection.prepareStatement("SELECT * FROM Problem LEFT OUTER JOIN ProblemTag ON ProblemTag.ProblemID = Problem.ID LEFT OUTER JOIN Tag ON Tag.ID = ProblemTag.TagID WHERE Tag.Name REGEXP ? ORDER BY Problem.CreatedTime DESC;");
-		getProblemsByCategoryIdOrTagNames = connection.prepareStatement("SELECT * FROM Problem LEFT OUTER JOIN ProblemTag ON ProblemTag.ProblemID = Problem.ID LEFT OUTER JOIN Tag ON Tag.ID = ProblemTag.TagID WHERE Problem.CategoryID = ? OR Tag.Name REGEXP ? ORDER BY Problem.CreatedTime DESC;");
+		getProblemsByCategoryIdOrTagNames = connection.prepareStatement("SELECT * FROM Problem LEFT OUTER JOIN ProblemTag ON ProblemTag.ProblemID = Problem.ID LEFT OUTER JOIN Tag ON Tag.ID = ProblemTag.TagID WHERE Problem.CategoryID LIKE ? OR Tag.Name REGEXP ? ORDER BY Problem.CreatedTime DESC;");
 		getProblemIdExists = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
 		getTitleExists = connection.prepareStatement("SELECT * FROM Problem WHERE Title = ?;");
 		getProblemById = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
 		updateProblem = connection.prepareStatement("UPDATE Problem SET Title = ?, CategoryID = ?, Content = ?, LastEditTime = ?, Edited = TRUE, TrackingID = ? WHERE ID = ?;");
 		incrementViewCountById = connection.prepareStatement("UPDATE Problem SET ViewCount = ViewCount + 1 WHERE ID = ?;");
 		deleteProblemById = connection.prepareStatement("DELETE FROM Problem WHERE ID = ?;");
+		deleteProblemTagById = connection.prepareStatement("DELETE FROM ProblemTag WHERE ProblemID = ?;");
 	}
 
 	@Override
@@ -48,7 +50,7 @@ public class ProblemDaoImpl implements ProblemDao {
 
 		try {
 			addProblem.setNull(1, Types.INTEGER);
-			addProblem.setInt(2, problem.getCategoryId());
+			addProblem.setObject(2, problem.getCategoryId());
 			addProblem.setString(3, problem.getTitle());
 			addProblem.setString(4, problem.getContent());
 			addProblem.setString(5, problem.getPasswordHash());
@@ -95,6 +97,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
 				problem.setEdited(rs.getBoolean("Edited"));
 				problem.setViewCount(rs.getInt("ViewCount"));
+				problem.setTrackingId(rs.getInt("TrackingID"));
 				problems.add(problem);
 			}
 			return problems;
@@ -161,16 +164,16 @@ public class ProblemDaoImpl implements ProblemDao {
 			List<Problem> problems = new ArrayList<Problem>();
 			while (rs.next()) {
 				Problem problem = new Problem();
-				problem.setId(rs.getInt("ID"));
-				problem.setCategoryId(rs.getInt("CategoryID"));
-				problem.setTitle(rs.getString("Title"));
-				problem.setContent(rs.getString("Content"));
-				problem.setPasswordHash(rs.getString("PasswordHash"));
-				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
-				problem.setEdited(rs.getBoolean("Edited"));
-				problem.setViewCount(rs.getInt("ViewCount"));
-				problem.setTrackingId(rs.getInt("TrackingID"));
+				problem.setId(rs.getInt("Problem.ID"));
+				problem.setCategoryId(rs.getInt("Problem.CategoryID"));
+				problem.setTitle(rs.getString("Problem.Title"));
+				problem.setContent(rs.getString("Problem.Content"));
+				problem.setPasswordHash(rs.getString("Problem.PasswordHash"));
+				problem.setCreatedTime(rs.getTimestamp("Problem.CreatedTime"));
+				problem.setLastEditTime(rs.getTimestamp("Problem.LastEditTime"));
+				problem.setEdited(rs.getBoolean("Problem.Edited"));
+				problem.setViewCount(rs.getInt("Problem.ViewCount"));
+				problem.setTrackingId(rs.getInt("Problem.TrackingID"));
 				problems.add(problem);
 			}
 			return problems;
@@ -190,26 +193,26 @@ public class ProblemDaoImpl implements ProblemDao {
 	}
 
 	@Override
-	public List<Problem> getProblemsByCategoryIdOrTagNames(String categoryId, String tagNames) {
+	public List<Problem> getProblemsByCategoryIdOrTagNames(int categoryId, String tagNames) {
 		ResultSet rs = null;
 
 		try {
-			getProblemsByCategoryIdOrTagNames.setString(1, categoryId);
+			getProblemsByCategoryIdOrTagNames.setString(1, "%" + (categoryId >= 0 ? categoryId : "") + "%");
 			getProblemsByCategoryIdOrTagNames.setString(2, tagNames);
 			rs = getProblemsByCategoryIdOrTagNames.executeQuery();
 			List<Problem> problems = new ArrayList<Problem>();
 			while (rs.next()) {
 				Problem problem = new Problem();
-				problem.setId(rs.getInt("ID"));
-				problem.setCategoryId(rs.getInt("CategoryID"));
-				problem.setTitle(rs.getString("Title"));
-				problem.setContent(rs.getString("Content"));
-				problem.setPasswordHash(rs.getString("PasswordHash"));
-				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				problem.setLastEditTime(rs.getTimestamp("LastEditTime"));
-				problem.setEdited(rs.getBoolean("Edited"));
-				problem.setViewCount(rs.getInt("ViewCount"));
-				problem.setTrackingId(rs.getInt("TrackingID"));
+				problem.setId(rs.getInt("Problem.ID"));
+				problem.setCategoryId(rs.getInt("Problem.CategoryID"));
+				problem.setTitle(rs.getString("Problem.Title"));
+				problem.setContent(rs.getString("Problem.Content"));
+				problem.setPasswordHash(rs.getString("Problem.PasswordHash"));
+				problem.setCreatedTime(rs.getTimestamp("Problem.CreatedTime"));
+				problem.setLastEditTime(rs.getTimestamp("Problem.LastEditTime"));
+				problem.setEdited(rs.getBoolean("Problem.Edited"));
+				problem.setViewCount(rs.getInt("Problem.ViewCount"));
+				problem.setTrackingId(rs.getInt("Problem.TrackingID"));
 				problems.add(problem);
 			}
 			return problems;
@@ -341,9 +344,20 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	@Override
 	public void deleteProblemById(int id) {
+		deleteProblemByIdFromProblemTag(id);
+
 		try {
 			deleteProblemById.setInt(1, id);
 			deleteProblemById.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void deleteProblemByIdFromProblemTag(int id) {
+		try {
+			deleteProblemTagById.setInt(1, id);
+			deleteProblemTagById.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -387,6 +401,9 @@ public class ProblemDaoImpl implements ProblemDao {
 			}
 			if (deleteProblemById != null && !deleteProblemById.isClosed()) {
 				deleteProblemById.close();
+			}
+			if (deleteProblemTagById != null && !deleteProblemTagById.isClosed()) {
+				deleteProblemTagById.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
