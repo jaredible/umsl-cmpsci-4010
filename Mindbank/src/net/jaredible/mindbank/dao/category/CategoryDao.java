@@ -12,7 +12,7 @@ public interface CategoryDao {
 
 	List<Category> getAllCategories();
 
-	int addCategory(Category c);
+	long addCategory(Category c);
 
 	int deleteCategoryById(long i);
 

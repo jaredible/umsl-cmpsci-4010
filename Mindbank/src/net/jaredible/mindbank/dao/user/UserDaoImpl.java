@@ -3,6 +3,7 @@ package net.jaredible.mindbank.dao.user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -216,7 +217,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int addUser(User user) {
+	public long addUser(User user) {
 		ResultSet rs = null;
 
 		try {
@@ -224,18 +225,18 @@ public class UserDaoImpl implements UserDao {
 				connection = DbUtil.openConnection();
 			}
 			if (addUser == null) {
-				addUser = connection.prepareStatement("INSERT INTO User (ID, Email, UserName, Name, Bio, ProfileImage, RegisteredTime, LastLoginTime, EmailVerified, PasswordSalt, PasswordHash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+				addUser = connection.prepareStatement("INSERT INTO User (ID, Email, UserName, Name, Bio, ProfileImage, RegisteredTime, LastLoginTime, EmailVerified, PasswordSalt, PasswordHash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 			}
 
 			addUser.setNull(1, Types.INTEGER);
-			addUser.setLong(2, user.getId());
-			addUser.setString(3, user.getEmail());
-			addUser.setString(4, user.getUserName());
-			addUser.setString(5, user.getName());
-			addUser.setString(6, user.getBio());
-			addUser.setBlob(7, user.getProfileImage());
-			addUser.setTimestamp(8, user.getRegisteredTime());
-			addUser.setTimestamp(9, user.getLastLoginTime());
+			addUser.setString(2, user.getEmail());
+			addUser.setString(3, user.getUserName());
+			addUser.setString(4, user.getName());
+			addUser.setString(5, user.getBio());
+			addUser.setBlob(6, user.getProfileImage());
+			addUser.setTimestamp(7, user.getRegisteredTime());
+			addUser.setTimestamp(8, user.getLastLoginTime());
+			addUser.setBoolean(9, user.isEmailVerified());
 			addUser.setString(10, user.getPasswordSalt());
 			addUser.setString(11, user.getPasswordHash());
 
@@ -245,7 +246,7 @@ public class UserDaoImpl implements UserDao {
 				rs = addUser.getGeneratedKeys();
 
 				if (rs.next()) {
-					return rs.getInt(1);
+					return rs.getLong(1);
 				}
 			}
 		} catch (Exception e) {

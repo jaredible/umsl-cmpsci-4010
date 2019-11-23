@@ -11,39 +11,10 @@ html, body {
 	flex-direction: column;
 	min-height: 100vh;
 	width: 100%;
-	/* box-shadow: inset 0 0 2rem rgba(0, 0, 0, 0.2); */
 }
 
 .main {
 	flex-grow: 1;
 	flex-shrink: 0;
 	flex-basis: auto;
-}
-
-#filterBy {
-	text-align: center;
-	text-align-last: center;
-}
-
-.vh-50 {
-	height: calc(100vh/ 2);
-}
-
-input, select, textarea {
-	background-color: rgba(0, 0, 0, 0) !important;
-}
-
-textarea {
-	resize: none;
-}
-
-.gh-ribbon {
-	position: absolute;
-	right: 0;
-}
-
-@media ( max-width : 767.98px) {
-	.gh-ribbon {
-		display: none !important;
-	}
 }

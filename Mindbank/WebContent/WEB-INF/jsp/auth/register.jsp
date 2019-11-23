@@ -16,11 +16,29 @@
 			
 			<div class="container">
 				<form action="register" method="post">
-					<input type="email" name="email" placeholder="Email">
-					<input type="text" name="userName" placeholder="Username">
-					<input type="password" name="password" placeholder="Password">
-					<input type="password" name="passwordConfirm" placeholder="Confirm password">
-					<button type="submit">Register</button>
+					<div>
+						<label>Email</label>
+						<input type="email" name="email" placeholder="Email" value="${email}">
+						<div>Error</div>
+					</div>
+					<div>
+						<label>Username</label>
+						<input type="text" name="userName" placeholder="Username" value="${userName}">
+						<div>Error</div>
+					</div>
+					<div>
+						<label>Password</label>
+						<input type="password" name="password" placeholder="Password" value="${password}">
+						<div>Error</div>
+					</div>
+					<div>
+						<label>Confirm password</label>
+						<input type="password" name="passwordConfirm" placeholder="Confirm password" value="${passwordConfirm}">
+						<div>Error</div>
+					</div>
+					<div>
+						<button type="submit">Register</button>
+					</div>
 				</form>
 			</div>
 		</div>

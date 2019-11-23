@@ -10,7 +10,7 @@ public interface ProblemDao {
 
 	List<Problem> getAllProblems();
 
-	int addProblem(Problem p);
+	long addProblem(Problem p);
 
 	int updateProblem(Problem p, int[] arr);
 

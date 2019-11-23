@@ -3,6 +3,7 @@ package net.jaredible.mindbank.dao.auth;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Types;
 
 import net.jaredible.mindbank.model.AuthToken;
@@ -58,7 +59,7 @@ public class TokenDaoImpl implements TokenDao {
 	}
 
 	@Override
-	public int addToken(AuthToken token) {
+	public long addToken(AuthToken token) {
 		ResultSet rs = null;
 
 		try {
@@ -66,7 +67,7 @@ public class TokenDaoImpl implements TokenDao {
 				connection = DbUtil.openConnection();
 			}
 			if (addToken == null) {
-				addToken = connection.prepareStatement("INSERT INTO Token (ID, UserID, Selector, Validator, CreatedTime) VALUES (?, ?, ?, ?, ?);");
+				addToken = connection.prepareStatement("INSERT INTO Token (ID, UserID, Selector, Validator, CreatedTime) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 			}
 
 			addToken.setNull(1, Types.INTEGER);
@@ -81,7 +82,7 @@ public class TokenDaoImpl implements TokenDao {
 				rs = addToken.getGeneratedKeys();
 
 				if (rs.next()) {
-					return rs.getInt(1);
+					return rs.getLong(1);
 				}
 			}
 		} catch (Exception e) {

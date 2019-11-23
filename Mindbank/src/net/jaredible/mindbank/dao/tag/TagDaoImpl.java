@@ -146,7 +146,7 @@ public class TagDaoImpl implements TagDao {
 	}
 
 	@Override
-	public int addTag(Tag tag) {
+	public long addTag(Tag tag) {
 		ResultSet rs = null;
 
 		try {
@@ -168,7 +168,7 @@ public class TagDaoImpl implements TagDao {
 				rs = addTag.getGeneratedKeys();
 
 				if (rs.next()) {
-					return rs.getInt(1);
+					return rs.getLong(1);
 				}
 			}
 		} catch (Exception e) {

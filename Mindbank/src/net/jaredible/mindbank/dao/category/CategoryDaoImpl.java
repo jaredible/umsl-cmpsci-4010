@@ -146,7 +146,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public int addCategory(Category category) {
+	public long addCategory(Category category) {
 		ResultSet rs = null;
 
 		try {
@@ -168,7 +168,7 @@ public class CategoryDaoImpl implements CategoryDao {
 				rs = addCategory.getGeneratedKeys();
 
 				if (rs.next()) {
-					return rs.getInt(1);
+					return rs.getLong(1);
 				}
 			}
 		} catch (Exception e) {

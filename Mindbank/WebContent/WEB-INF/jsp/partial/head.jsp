@@ -7,5 +7,4 @@
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <title><c:out value="${param.title} | Mindbank" default="Mindbank" /></title>
 <link rel="icon" type="image/x-icon" href="css/favicon.ico">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/styles.css">

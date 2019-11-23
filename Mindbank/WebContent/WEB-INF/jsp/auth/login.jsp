@@ -16,9 +16,19 @@
 			
 			<div class="container">
 				<form action="login" method="post">
-					<input type="email" name="email" placeholder="Email">
-					<input type="password" name="password" placeholder="Password">
-					<button type="submit">Login</button>
+					<div>
+						<label>Email or Username</label>
+						<input type="text" name="emailUsername" placeholder="Email or Username" value="${emailUsername}">
+						<div>Error</div>
+					</div>
+					<div>
+						<label>Password</label>
+						<input type="password" name="password" placeholder="Password" value="${password}">
+						<div>Error</div>
+					</div>
+					<div>
+						<button type="submit">Login</button>
+					</div>
 				</form>
 			</div>
 		</div>

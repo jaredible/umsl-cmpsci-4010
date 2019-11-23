@@ -6,7 +6,7 @@ public interface TokenDao {
 
 	AuthToken getTokenBySelector(String s);
 
-	int addToken(AuthToken t);
+	long addToken(AuthToken t);
 
 	int deleteTokenById(long i);
 

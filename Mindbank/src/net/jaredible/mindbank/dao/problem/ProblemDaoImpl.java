@@ -111,7 +111,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	}
 
 	@Override
-	public int addProblem(Problem problem) {
+	public long addProblem(Problem problem) {
 		ResultSet rs = null;
 
 		try {
@@ -136,7 +136,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				rs = addProblem.getGeneratedKeys();
 
 				if (rs.next()) {
-					return rs.getInt(1);
+					return rs.getLong(1);
 				}
 			}
 		} catch (Exception e) {

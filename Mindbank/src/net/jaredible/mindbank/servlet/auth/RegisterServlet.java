@@ -36,13 +36,38 @@ public class RegisterServlet extends HttpServlet {
 		String passwordParam = request.getParameter("password");
 		String passwordConfirmParam = request.getParameter("passwordConfirm");
 
+		UserDao userDao = new UserDaoImpl();
+
 		Map<String, String> errors = new HashMap<String, String>();
 
 		// TODO: validate params
+		if (emailParam.isEmpty()) {
+			errors.put("email", "Cannot be empty!");
+		} else if (emailParam.length() > 50) {
+			errors.put("email", "Max length is 50!");
+		} else if (userDao.getUserByEmail(emailParam) != null) {
+			errors.put("email", "Already exists!");
+		}
+
+		if (userNameParam.isEmpty()) {
+			errors.put("userName", "Cannot be empty!");
+		} else if (userNameParam.length() > 20) {
+			errors.put("userName", "Max length is 20!");
+		} else if (userDao.getUserByUserName(userNameParam) != null) {
+			errors.put("userName", "Already exists!");
+		}
+
+		if (passwordParam.isEmpty()) {
+			errors.put("password", "Cannot be empty!");
+		}
+
+		if (passwordConfirmParam.isEmpty()) {
+			errors.put("passwordConfirm", "Cannot be empty!");
+		} else if (!passwordConfirmParam.equals(passwordParam)) {
+			errors.put("passwordConfirm", "Doesn't match!");
+		}
 
 		if (errors.isEmpty()) {
-			UserDao userDao = new UserDaoImpl();
-
 			User user = new User();
 
 			Timestamp nowTime = new Timestamp(new Date().getTime());
@@ -56,7 +81,9 @@ public class RegisterServlet extends HttpServlet {
 			user.setPasswordSalt(passwordSalt);
 			user.setPasswordHash(passwordHash);
 
-			userDao.addUser(user);
+			long userId = userDao.addUser(user);
+
+			LoginServlet.doLogin(userId);
 
 			response.sendRedirect("problems");
 		} else {

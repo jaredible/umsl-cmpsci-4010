@@ -14,7 +14,7 @@ public interface UserDao {
 
 	List<User> getAllUsers();
 
-	int addUser(User u);
+	long addUser(User u);
 
 	int updateUser(User u, int[] arr);
 
