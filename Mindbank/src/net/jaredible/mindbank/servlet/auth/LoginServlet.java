@@ -32,19 +32,6 @@ public class LoginServlet extends HttpServlet {
 		super();
 	}
 
-	public static void doLogin(long userId, HttpServletRequest request, HttpServletResponse response) {
-		UserDao userDao = new UserDaoImpl();
-		User user = userDao.getUserById(userId);
-
-		Timestamp nowTime = new Timestamp(new Date().getTime());
-
-		user.setLastLoginTime(nowTime);
-
-		if (userDao.updateUser(user) > 0) {
-			request.getSession().setAttribute("user", user);
-		}
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/auth/login.jsp").forward(request, response);
 	}
@@ -64,11 +51,6 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		Map<String, String> errors = new HashMap<String, String>();
-
-		System.out.println(passwordParam);
-		System.out.println(user.getPasswordSalt());
-		System.out.println(user.getPasswordHash());
-		System.out.println(SecurityUtil.generateSHA512Hash(passwordParam, user.getPasswordSalt()));
 
 		if (user == null || !user.getPasswordHash().equals(SecurityUtil.generateSHA512Hash(passwordParam, user.getPasswordSalt()))) {
 			errors.put("error", "Incorrect email or password!");
