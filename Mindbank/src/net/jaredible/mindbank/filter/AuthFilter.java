@@ -9,8 +9,22 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = { "/logout", "/problem", "/profile" })
+import org.apache.commons.lang3.RandomStringUtils;
+
+import net.jaredible.mindbank.dao.auth.TokenDao;
+import net.jaredible.mindbank.dao.auth.TokenDaoImpl;
+import net.jaredible.mindbank.dao.user.UserDao;
+import net.jaredible.mindbank.dao.user.UserDaoImpl;
+import net.jaredible.mindbank.model.AuthToken;
+import net.jaredible.mindbank.model.User;
+import net.jaredible.mindbank.util.SecurityUtil;
+
+@WebFilter(urlPatterns = { "/logout", "/profile" })
 public class AuthFilter implements Filter {
 
 	public AuthFilter() {
@@ -20,7 +34,69 @@ public class AuthFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		chain.doFilter(request, response);
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+		HttpSession session = req.getSession(false);
+
+		boolean loggedIn = session != null && session.getAttribute("user") != null;
+
+		Cookie[] cookies = req.getCookies();
+
+		if (!loggedIn && cookies != null) {
+			String selector = null;
+			String rawValidator = null;
+
+			for (Cookie c : cookies) {
+				if (c.getName().equals("selector")) {
+					selector = c.getValue();
+				} else if (c.getName().equals("validator")) {
+					rawValidator = c.getValue();
+				}
+			}
+
+			if (selector != null && rawValidator != null) {
+				TokenDao tokenDao = new TokenDaoImpl();
+				AuthToken authToken = tokenDao.getTokenBySelector(selector);
+
+				if (authToken != null) {
+					String tokenSecretKey = authToken.getSecretKey();
+					String hashedValidatorDatabase = authToken.getValidator();
+					String hashedValidatorCookie = SecurityUtil.generateSHA512Hash(rawValidator, tokenSecretKey);
+
+					if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
+						UserDao userDao = new UserDaoImpl();
+						User user = userDao.getUserById(authToken.getId());
+
+						session = req.getSession();
+						session.setAttribute("user", user);
+						loggedIn = true;
+
+						String newSelector = RandomStringUtils.randomAlphanumeric(12);
+						String newRawValidator = RandomStringUtils.randomAlphanumeric(64);
+						String newHashedValidator = SecurityUtil.generateSHA512Hash(newRawValidator, tokenSecretKey);
+
+						authToken.setSelector(newSelector);
+						authToken.setValidator(newHashedValidator);
+						tokenDao.updateToken(authToken);
+
+						int cookieMaxAge = 60 * 60 * 24;
+						Cookie cookieSelector = new Cookie("selector", newSelector);
+						cookieSelector.setMaxAge(cookieMaxAge);
+						Cookie cookieValidator = new Cookie("validator", newRawValidator);
+						cookieValidator.setMaxAge(cookieMaxAge);
+
+						res.addCookie(cookieSelector);
+						res.addCookie(cookieValidator);
+					}
+				}
+			}
+		}
+
+		if (loggedIn) {
+			chain.doFilter(request, response);
+		} else {
+			res.sendRedirect("login");
+		}
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

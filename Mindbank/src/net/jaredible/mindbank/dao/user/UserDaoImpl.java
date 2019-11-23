@@ -265,7 +265,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int updateUser(User user, int[] params) {
+	public int updateUser(User user) {
 		try {
 			if (connection == null) {
 				connection = DbUtil.openConnection();
@@ -274,45 +274,17 @@ public class UserDaoImpl implements UserDao {
 				updateUser = connection.prepareStatement("UPDATE User SET ID = ?, Email = ?, UserName = ?, Name = ?, Bio = ?, ProfileImage = ?, RegisteredTime = ?, LastLoginTime = ?, EmailVerified = ?, PasswordSalt = ?, PasswordHash = ? WHERE ID = ?;");
 			}
 
-			for (int param : params) {
-				switch (param) {
-				case User.ID:
-					updateUser.setLong(1, user.getId());
-					break;
-				case User.EMAIL:
-					updateUser.setString(2, user.getEmail());
-					break;
-				case User.USER_NAME:
-					updateUser.setString(3, user.getUserName());
-					break;
-				case User.NAME:
-					updateUser.setString(4, user.getName());
-					break;
-				case User.BIO:
-					updateUser.setString(5, user.getBio());
-					break;
-				case User.PROFILE_IMAGE:
-					updateUser.setBlob(6, user.getProfileImage());
-					break;
-				case User.REGISTERED_TIME:
-					updateUser.setTimestamp(7, user.getRegisteredTime());
-					break;
-				case User.LAST_LOGIN_TIME:
-					updateUser.setTimestamp(8, user.getLastLoginTime());
-					break;
-				case User.EMAIL_VERIFIED:
-					updateUser.setBoolean(9, user.isEmailVerified());
-					break;
-				case User.PASSWORD_SALT:
-					updateUser.setString(10, user.getPasswordSalt());
-					break;
-				case User.PASSWORD_HASH:
-					updateUser.setString(11, user.getPasswordHash());
-					break;
-				default:
-					throw new Exception("Unknown parameter!");
-				}
-			}
+			updateUser.setLong(1, user.getId());
+			updateUser.setString(2, user.getEmail());
+			updateUser.setString(3, user.getUserName());
+			updateUser.setString(4, user.getName());
+			updateUser.setString(5, user.getBio());
+			updateUser.setBlob(6, user.getProfileImage());
+			updateUser.setTimestamp(7, user.getRegisteredTime());
+			updateUser.setTimestamp(8, user.getLastLoginTime());
+			updateUser.setBoolean(9, user.isEmailVerified());
+			updateUser.setString(10, user.getPasswordSalt());
+			updateUser.setString(11, user.getPasswordHash());
 
 			updateUser.setLong(12, user.getId());
 

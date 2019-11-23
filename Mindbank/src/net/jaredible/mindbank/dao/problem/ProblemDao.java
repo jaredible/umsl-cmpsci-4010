@@ -12,7 +12,7 @@ public interface ProblemDao {
 
 	long addProblem(Problem p);
 
-	int updateProblem(Problem p, int[] arr);
+	int updateProblem(Problem p);
 
 	int deleteProblemById(long i);
 

@@ -8,6 +8,8 @@ public interface TokenDao {
 
 	long addToken(AuthToken t);
 
+	int updateToken(AuthToken t);
+
 	int deleteTokenById(long i);
 
 }

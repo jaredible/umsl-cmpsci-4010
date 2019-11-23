@@ -27,6 +27,9 @@
 						<div>Error</div>
 					</div>
 					<div>
+						<input type="checkbox" name="remember" ${(remember eq 'on') ? 'checked' : ''}>
+					</div>
+					<div>
 						<button type="submit">Login</button>
 					</div>
 				</form>

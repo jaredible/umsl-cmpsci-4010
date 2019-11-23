@@ -16,7 +16,7 @@ public interface UserDao {
 
 	long addUser(User u);
 
-	int updateUser(User u, int[] arr);
+	int updateUser(User u);
 
 	int deleteUserById(long i);
 

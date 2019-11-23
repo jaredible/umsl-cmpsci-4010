@@ -26,7 +26,7 @@ public class SecurityUtil {
 			SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
 			byte[] salt = new byte[16];
 			sr.nextBytes(salt);
-			return new String(salt);
+			return String.valueOf(salt);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

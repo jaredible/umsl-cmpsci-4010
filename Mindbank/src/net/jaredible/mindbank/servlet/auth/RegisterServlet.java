@@ -40,7 +40,6 @@ public class RegisterServlet extends HttpServlet {
 
 		Map<String, String> errors = new HashMap<String, String>();
 
-		// TODO: validate params
 		if (emailParam.isEmpty()) {
 			errors.put("email", "Cannot be empty!");
 		} else if (emailParam.length() > 50) {
@@ -74,6 +73,10 @@ public class RegisterServlet extends HttpServlet {
 			String passwordSalt = SecurityUtil.generateRandomSalt();
 			String passwordHash = SecurityUtil.generateSHA512Hash(passwordParam, passwordSalt);
 
+			System.out.println(passwordParam);
+			System.out.println(passwordSalt);
+			System.out.println(passwordHash);
+
 			user.setEmail(emailParam);
 			user.setUserName(userNameParam);
 			user.setRegisteredTime(nowTime);
@@ -81,11 +84,9 @@ public class RegisterServlet extends HttpServlet {
 			user.setPasswordSalt(passwordSalt);
 			user.setPasswordHash(passwordHash);
 
-			long userId = userDao.addUser(user);
+			userDao.addUser(user);
 
-			LoginServlet.doLogin(userId);
-
-			response.sendRedirect("problems");
+			response.sendRedirect("login");
 		} else {
 			request.setAttribute("email", emailParam);
 			request.setAttribute("userName", userNameParam);

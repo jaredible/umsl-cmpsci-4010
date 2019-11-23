@@ -155,7 +155,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	}
 
 	@Override
-	public int updateProblem(Problem problem, int[] params) {
+	public int updateProblem(Problem problem) {
 		try {
 			if (connection == null) {
 				connection = DbUtil.openConnection();
@@ -164,32 +164,13 @@ public class ProblemDaoImpl implements ProblemDao {
 				updateProblem = connection.prepareStatement("UPDATE Problem SET ID = ?, Title = ?, Content = ?, Edited = ?, CreatedTime = ?, LastEditedTime = ?, CreatedByUserID = ? WHERE ID = ?;");
 			}
 
-			for (int param : params) {
-				switch (param) {
-				case Problem.ID:
-					updateProblem.setLong(1, problem.getId());
-				case Problem.TITLE:
-					updateProblem.setString(2, problem.getTitle());
-					break;
-				case Problem.CONTENT:
-					updateProblem.setString(3, problem.getContent());
-					break;
-				case Problem.EDITED:
-					updateProblem.setBoolean(4, problem.isEdited());
-					break;
-				case Problem.CREATED_TIME:
-					updateProblem.setTimestamp(5, problem.getCreatedTime());
-					break;
-				case Problem.LAST_EDITED_TIME:
-					updateProblem.setTimestamp(6, problem.getLastEditedTime());
-					break;
-				case Problem.CREATED_BY_USER_ID:
-					updateProblem.setInt(7, problem.getCreatedByUserId());
-					break;
-				default:
-					throw new Exception("Unknown parameter!");
-				}
-			}
+			updateProblem.setLong(1, problem.getId());
+			updateProblem.setString(2, problem.getTitle());
+			updateProblem.setString(3, problem.getContent());
+			updateProblem.setBoolean(4, problem.isEdited());
+			updateProblem.setTimestamp(5, problem.getCreatedTime());
+			updateProblem.setTimestamp(6, problem.getLastEditedTime());
+			updateProblem.setInt(7, problem.getCreatedByUserId());
 
 			updateProblem.setLong(8, problem.getId());
 

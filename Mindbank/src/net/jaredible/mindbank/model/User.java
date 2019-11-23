@@ -5,18 +5,6 @@ import java.sql.Timestamp;
 
 public class User {
 
-	public static final int ID = 1;
-	public static final int EMAIL = 2;
-	public static final int USER_NAME = 3;
-	public static final int NAME = 4;
-	public static final int BIO = 5;
-	public static final int PROFILE_IMAGE = 6;
-	public static final int REGISTERED_TIME = 7;
-	public static final int LAST_LOGIN_TIME = 8;
-	public static final int EMAIL_VERIFIED = 9;
-	public static final int PASSWORD_SALT = 10;
-	public static final int PASSWORD_HASH = 11;
-
 	private long id;
 	private String email;
 	private String userName;
@@ -133,6 +121,10 @@ public class User {
 
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
+	}
+
+	public static boolean isEmail(String text) {
+		return text.contains("@");
 	}
 
 }
