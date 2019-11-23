@@ -15,25 +15,23 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	private Connection connection;
 	private PreparedStatement getCategoryById;
+	private PreparedStatement getCategoryByName;
 	private PreparedStatement getAllCategories;
 	private PreparedStatement addCategory;
 	private PreparedStatement deleteCategoryById;
-	private PreparedStatement getCategoryExistsByName;
-
-	public CategoryDaoImpl() throws Exception {
-		connection = DbUtil.openConnection();
-		getCategoryById = connection.prepareStatement("SELECT * FROM Category WHERE ID = ?;");
-		getAllCategories = connection.prepareStatement("SELECT * FROM Category;");
-		addCategory = connection.prepareStatement("INSERT INTO Category (ID, Name, CreatedTime, CreatedByUserID) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-		deleteCategoryById = connection.prepareStatement("DELETE FROM Category WHERE ID = ?;");
-		getCategoryExistsByName = connection.prepareStatement("SELECT * FROM Category WHERE Name = ?;");
-	}
 
 	@Override
 	public Category getCategoryById(long id) {
 		ResultSet rs = null;
 
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (getCategoryById == null) {
+				getCategoryById = connection.prepareStatement("SELECT * FROM Category WHERE ID = ?;");
+			}
+
 			getCategoryById.setLong(1, id);
 
 			rs = getCategoryById.executeQuery();
@@ -64,9 +62,59 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public List<Category> getAllCategories() {
+	public Category getCategoryByName(String name) {
+		ResultSet rs = null;
+
 		try {
-			ResultSet rs = getAllCategories.executeQuery();
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (getCategoryByName == null) {
+				getCategoryByName = connection.prepareStatement("SELECT * FROM Category WHERE Name = ?;");
+			}
+
+			getCategoryByName.setString(1, name);
+
+			rs = getCategoryByName.executeQuery();
+
+			if (rs.next()) {
+				Category category = new Category();
+
+				category.setId(rs.getInt("ID"));
+				category.setName(rs.getString("Title"));
+				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
+				category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
+
+				return category;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<Category> getAllCategories() {
+		ResultSet rs = null;
+
+		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (getAllCategories == null) {
+				getAllCategories = connection.prepareStatement("SELECT * FROM Category;");
+			}
+
+			rs = getAllCategories.executeQuery();
 
 			List<Category> categories = new ArrayList<Category>();
 
@@ -84,6 +132,14 @@ public class CategoryDaoImpl implements CategoryDao {
 			return categories;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return null;
@@ -94,6 +150,13 @@ public class CategoryDaoImpl implements CategoryDao {
 		ResultSet rs = null;
 
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (addCategory == null) {
+				addCategory = connection.prepareStatement("INSERT INTO Category (ID, Name, CreatedTime, CreatedByUserID) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+			}
+
 			addCategory.setNull(1, Types.INTEGER);
 			addCategory.setString(2, category.getName());
 			addCategory.setTimestamp(3, category.getCreatedTime());
@@ -126,6 +189,13 @@ public class CategoryDaoImpl implements CategoryDao {
 	@Override
 	public int deleteCategoryById(long id) {
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (deleteCategoryById == null) {
+				deleteCategoryById = connection.prepareStatement("DELETE FROM Category WHERE ID = ?;");
+			}
+
 			deleteCategoryById.setLong(1, id);
 
 			return deleteCategoryById.executeUpdate();
@@ -137,21 +207,6 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public boolean getCategoryExistsByName(String name) {
-		try {
-			getCategoryExistsByName.setString(1, name);
-
-			ResultSet rs = getCategoryExistsByName.executeQuery();
-
-			return rs.next();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return false;
-	}
-
-	@Override
 	protected void finalize() {
 		try {
 			if (connection != null && !connection.isClosed()) {
@@ -159,6 +214,9 @@ public class CategoryDaoImpl implements CategoryDao {
 			}
 			if (getCategoryById != null && !getCategoryById.isClosed()) {
 				getCategoryById.close();
+			}
+			if (getCategoryByName != null && !getCategoryByName.isClosed()) {
+				getCategoryByName.close();
 			}
 			if (getAllCategories != null && !getAllCategories.isClosed()) {
 				getAllCategories.close();
@@ -168,9 +226,6 @@ public class CategoryDaoImpl implements CategoryDao {
 			}
 			if (deleteCategoryById != null && !deleteCategoryById.isClosed()) {
 				deleteCategoryById.close();
-			}
-			if (getCategoryExistsByName != null && !getCategoryExistsByName.isClosed()) {
-				getCategoryExistsByName.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

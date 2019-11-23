@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class TagListServlet
  */
-@WebServlet("/TagListServlet")
+@WebServlet("/tags")
 public class TagListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

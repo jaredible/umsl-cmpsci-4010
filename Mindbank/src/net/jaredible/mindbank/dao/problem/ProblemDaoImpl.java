@@ -20,20 +20,18 @@ public class ProblemDaoImpl implements ProblemDao {
 	private PreparedStatement updateProblem;
 	private PreparedStatement deleteProblemById;
 
-	public ProblemDaoImpl() throws Exception {
-		connection = DbUtil.openConnection();
-		getProblemById = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
-		getAllProblems = connection.prepareStatement("SELECT * FROM Problem;");
-		addProblem = connection.prepareStatement("INSERT INTO Problem (ID, Title, Content, Edited, CreatedTime, LastEditedTime, CreatedByUserID) VALUES (?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-		updateProblem = connection.prepareStatement("UPDATE Problem SET Title = ?, Content = ?, Edited = ?, CreatedTime = ?, LastEditedTime = ?, CreatedByUserID = ? WHERE ID = ?;");
-		deleteProblemById = connection.prepareStatement("DELETE FROM Problem WHERE ID = ?;");
-	}
-
 	@Override
 	public Problem getProblemById(long id) {
 		ResultSet rs = null;
 
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (getProblemById == null) {
+				getProblemById = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
+			}
+
 			getProblemById.setLong(1, id);
 
 			rs = getProblemById.executeQuery();
@@ -68,8 +66,17 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	@Override
 	public List<Problem> getAllProblems() {
+		ResultSet rs = null;
+
 		try {
-			ResultSet rs = getAllProblems.executeQuery();
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (getAllProblems == null) {
+				getAllProblems = connection.prepareStatement("SELECT * FROM Problem;");
+			}
+
+			rs = getAllProblems.executeQuery();
 
 			List<Problem> problems = new ArrayList<Problem>();
 
@@ -90,6 +97,14 @@ public class ProblemDaoImpl implements ProblemDao {
 			return problems;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return null;
@@ -100,6 +115,13 @@ public class ProblemDaoImpl implements ProblemDao {
 		ResultSet rs = null;
 
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (addProblem == null) {
+				addProblem = connection.prepareStatement("INSERT INTO Problem (ID, Title, Content, Edited, CreatedTime, LastEditedTime, CreatedByUserID) VALUES (?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+			}
+
 			addProblem.setNull(1, Types.INTEGER);
 			addProblem.setString(2, problem.getTitle());
 			addProblem.setString(3, problem.getContent());
@@ -135,32 +157,41 @@ public class ProblemDaoImpl implements ProblemDao {
 	@Override
 	public int updateProblem(Problem problem, int[] params) {
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (updateProblem == null) {
+				updateProblem = connection.prepareStatement("UPDATE Problem SET ID = ?, Title = ?, Content = ?, Edited = ?, CreatedTime = ?, LastEditedTime = ?, CreatedByUserID = ? WHERE ID = ?;");
+			}
+
 			for (int param : params) {
 				switch (param) {
+				case Problem.ID:
+					updateProblem.setLong(1, problem.getId());
 				case Problem.TITLE:
-					updateProblem.setString(1, problem.getTitle());
+					updateProblem.setString(2, problem.getTitle());
 					break;
 				case Problem.CONTENT:
-					updateProblem.setString(2, problem.getContent());
+					updateProblem.setString(3, problem.getContent());
 					break;
 				case Problem.EDITED:
-					updateProblem.setBoolean(3, problem.isEdited());
+					updateProblem.setBoolean(4, problem.isEdited());
 					break;
 				case Problem.CREATED_TIME:
-					updateProblem.setTimestamp(4, problem.getCreatedTime());
+					updateProblem.setTimestamp(5, problem.getCreatedTime());
 					break;
 				case Problem.LAST_EDITED_TIME:
-					updateProblem.setTimestamp(5, problem.getLastEditedTime());
+					updateProblem.setTimestamp(6, problem.getLastEditedTime());
 					break;
 				case Problem.CREATED_BY_USER_ID:
-					updateProblem.setInt(6, problem.getCreatedByUserId());
+					updateProblem.setInt(7, problem.getCreatedByUserId());
 					break;
 				default:
 					throw new Exception("Unknown parameter!");
 				}
 			}
 
-			updateProblem.setLong(7, problem.getId());
+			updateProblem.setLong(8, problem.getId());
 
 			return updateProblem.executeUpdate();
 		} catch (Exception e) {
@@ -173,6 +204,13 @@ public class ProblemDaoImpl implements ProblemDao {
 	@Override
 	public int deleteProblemById(long id) {
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (deleteProblemById == null) {
+				deleteProblemById = connection.prepareStatement("DELETE FROM Problem WHERE ID = ?;");
+			}
+
 			deleteProblemById.setLong(1, id);
 
 			return deleteProblemById.executeUpdate();

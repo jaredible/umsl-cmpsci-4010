@@ -4,7 +4,13 @@ import java.sql.Timestamp;
 
 public class AuthToken {
 
-	private int id;
+	public static final int ID = 1;
+	public static final int USER_ID = 2;
+	public static final int SELECTOR = 3;
+	public static final int VALIDATOR = 4;
+	public static final int CREATED_TIME = 5;
+
+	private long id;
 	private int userId;
 	private String selector;
 	private String validator;
@@ -13,7 +19,7 @@ public class AuthToken {
 	public AuthToken() {
 	}
 
-	public AuthToken(int id, int userId, String selector, String validator, Timestamp createdTime) {
+	public AuthToken(long id, int userId, String selector, String validator, Timestamp createdTime) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -22,11 +28,11 @@ public class AuthToken {
 		this.createdTime = createdTime;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

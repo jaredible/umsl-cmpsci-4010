@@ -17,9 +17,7 @@
 			<div class="container">
 				<form action="login" method="post">
 					<input type="email" name="email" placeholder="Email">
-					<input type="text" name="userName" placeholder="Username">
 					<input type="password" name="password" placeholder="Password">
-					<input type="password" name="confirmPassword" placeholder="Confirm password">
 					<button type="submit">Login</button>
 				</form>
 			</div>

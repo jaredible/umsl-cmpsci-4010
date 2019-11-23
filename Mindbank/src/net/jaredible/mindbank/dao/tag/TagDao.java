@@ -8,12 +8,12 @@ public interface TagDao {
 
 	Tag getTagById(long i);
 
+	Tag getTagByName(String s);
+
 	List<Tag> getAllTags();
 
 	int addTag(Tag t);
 
 	int deleteTagById(long i);
-
-	boolean getTagExistsByName(String s);
 
 }

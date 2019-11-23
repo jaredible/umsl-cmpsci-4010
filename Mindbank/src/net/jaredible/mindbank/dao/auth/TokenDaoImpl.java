@@ -15,18 +15,18 @@ public class TokenDaoImpl implements TokenDao {
 	private PreparedStatement addToken;
 	private PreparedStatement deleteTokenById;
 
-	public TokenDaoImpl() throws Exception {
-		connection = DbUtil.openConnection();
-		getTokenBySelector = connection.prepareStatement("SELECT * FROM Token WHERE Selector = ?;");
-		addToken = connection.prepareStatement("INSERT INTO Token (ID, UserID, Selector, Validator, CreatedTime) VALUES (?, ?, ?, ?, ?);");
-		deleteTokenById = connection.prepareStatement("DELETE FROM Token WHERE ID = ?;");
-	}
-
 	@Override
 	public AuthToken getTokenBySelector(String selector) {
 		ResultSet rs = null;
 
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (getTokenBySelector == null) {
+				getTokenBySelector = connection.prepareStatement("SELECT * FROM Token WHERE Selector = ?;");
+			}
+
 			getTokenBySelector.setString(1, selector);
 
 			rs = getTokenBySelector.executeQuery();
@@ -62,6 +62,13 @@ public class TokenDaoImpl implements TokenDao {
 		ResultSet rs = null;
 
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (addToken == null) {
+				addToken = connection.prepareStatement("INSERT INTO Token (ID, UserID, Selector, Validator, CreatedTime) VALUES (?, ?, ?, ?, ?);");
+			}
+
 			addToken.setNull(1, Types.INTEGER);
 			addToken.setInt(2, token.getUserId());
 			addToken.setString(3, token.getSelector());
@@ -95,6 +102,13 @@ public class TokenDaoImpl implements TokenDao {
 	@Override
 	public int deleteTokenById(long id) {
 		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (deleteTokenById == null) {
+				deleteTokenById = connection.prepareStatement("DELETE FROM Token WHERE ID = ?;");
+			}
+
 			deleteTokenById.setLong(1, id);
 
 			return deleteTokenById.executeUpdate();

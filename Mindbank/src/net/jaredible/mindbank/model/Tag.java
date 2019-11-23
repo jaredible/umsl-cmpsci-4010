@@ -4,6 +4,11 @@ import java.sql.Timestamp;
 
 public class Tag {
 
+	public static final int ID = 1;
+	public static final int NAME = 2;
+	public static final int CREATED_TIME = 3;
+	public static final int CREATED_BY_USER_ID = 4;
+
 	private long id;
 	private String name;
 	private Timestamp createdTime;

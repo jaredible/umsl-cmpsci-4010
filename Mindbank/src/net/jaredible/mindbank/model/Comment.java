@@ -4,6 +4,11 @@ import java.sql.Timestamp;
 
 public class Comment {
 
+	public static final int ID = 1;
+	public static final int CONTENT = 2;
+	public static final int CREATED_TIME = 3;
+	public static final int CREATED_BY_USER_ID = 4;
+
 	private long id;
 	private String content;
 	private Timestamp createdTime;

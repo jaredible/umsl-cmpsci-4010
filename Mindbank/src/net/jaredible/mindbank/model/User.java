@@ -5,7 +5,19 @@ import java.sql.Timestamp;
 
 public class User {
 
-	private int id;
+	public static final int ID = 1;
+	public static final int EMAIL = 2;
+	public static final int USER_NAME = 3;
+	public static final int NAME = 4;
+	public static final int BIO = 5;
+	public static final int PROFILE_IMAGE = 6;
+	public static final int REGISTERED_TIME = 7;
+	public static final int LAST_LOGIN_TIME = 8;
+	public static final int EMAIL_VERIFIED = 9;
+	public static final int PASSWORD_SALT = 10;
+	public static final int PASSWORD_HASH = 11;
+
+	private long id;
 	private String email;
 	private String userName;
 	private String name;
@@ -14,12 +26,13 @@ public class User {
 	private Timestamp registeredTime;
 	private Timestamp lastLoginTime;
 	private boolean emailVerified;
+	private String passwordSalt;
 	private String passwordHash;
 
 	public User() {
 	}
 
-	public User(int id, String email, String userName, String name, String bio, Blob profileImage, Timestamp registeredTime, Timestamp lastLoginTime, boolean emailVerified, String passwordHash) {
+	public User(long id, String email, String userName, String name, String bio, Blob profileImage, Timestamp registeredTime, Timestamp lastLoginTime, boolean emailVerified, String passwordSalt, String passwordHash) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -30,14 +43,15 @@ public class User {
 		this.registeredTime = registeredTime;
 		this.lastLoginTime = lastLoginTime;
 		this.emailVerified = emailVerified;
+		this.passwordSalt = passwordSalt;
 		this.passwordHash = passwordHash;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -103,6 +117,14 @@ public class User {
 
 	public void setEmailVerified(boolean emailVerified) {
 		this.emailVerified = emailVerified;
+	}
+
+	public String getPasswordSalt() {
+		return passwordSalt;
+	}
+
+	public void setPasswordSalt(String passwordSalt) {
+		this.passwordSalt = passwordSalt;
 	}
 
 	public String getPasswordHash() {
