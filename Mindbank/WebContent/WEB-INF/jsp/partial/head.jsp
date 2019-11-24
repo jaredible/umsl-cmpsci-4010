@@ -5,10 +5,10 @@
 <meta name="description" content="Mindbank">
 <meta name="keywords" content="UMSL,CMP,SCI,CMPSCI,4010,Java,Servlet,JSP,Jaredible">
 <meta name="author" content="Jared Diehl">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-<title><c:out value="${param.title} | Mindbank" default="Mindbank" /></title>
+<title><c:out value="${requestScope.pageTitle} | Mindbank" default="Mindbank" /></title>
 
-<link rel="icon" type="image/x-icon" href="css/favicon.ico">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.2/dist/semantic.min.css">
 <link rel="stylesheet" type="text/css" href="css/styles.css">

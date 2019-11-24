@@ -101,11 +101,16 @@ INSERT INTO User (ID, Email, UserName, Name, Bio, ProfileImage, RegisteredTime, 
 (NULL, "jared@jaredible.net", "Jaredible", NULL, NULL, NULL, "2019-11-23 21:52:24", "2019-11-23 21:52:24", FALSE, "[B@396502b9", "e3d51346952c09d8fca12fc2011cff8a79031c9dfb56cafdf147a8cd85d6a2f1050efa26bbde4c2bc27ffa941a775121ea79e1a58a9f2e266e4b1876db10e5be");
 
 INSERT INTO Category (ID, Name, CreatedTime, CreatedByUserID) VALUES
-(NULL, "Test1", "2019-11-23 21:52:24", 1),
-(NULL, "Test2", "2019-11-23 21:52:24", 1),
-(NULL, "Test3", "2019-11-23 21:52:24", 1);
+(NULL, "Cat 1", "2019-11-23 21:52:24", 1),
+(NULL, "Cat 2", "2019-11-23 21:52:25", 1),
+(NULL, "Cat 3", "2019-11-23 21:52:26", 1);
 
 INSERT INTO Tag (ID, Name, CreatedTime, CreatedByUserID) VALUES
-(NULL, "Test1", "2019-11-23 21:52:24", 1),
-(NULL, "Test2", "2019-11-23 21:52:24", 1),
-(NULL, "Test3", "2019-11-23 21:52:24", 1);
+(NULL, "Tag 1", "2019-11-23 21:52:24", 1),
+(NULL, "Tag 2", "2019-11-23 21:52:25", 1),
+(NULL, "Tag 3", "2019-11-23 21:52:26", 1);
+
+INSERT INTO Problem (ID, Title, Content, Edited, CreatedTime, LastEditedTime, CreatedByUserID) VALUES
+(NULL, "Problem 1", "This is the first problem.", FALSE, "2019-11-23 21:52:24", "2019-11-23 21:52:24", 1),
+(NULL, "Problem 2", "This is the second problem.", FALSE, "2019-11-23 21:52:25", "2019-11-23 21:52:25", 1),
+(NULL, "Problem 3", "This is the third problem.", FALSE, "2019-11-23 21:52:26", "2019-11-23 21:52:26", 1);

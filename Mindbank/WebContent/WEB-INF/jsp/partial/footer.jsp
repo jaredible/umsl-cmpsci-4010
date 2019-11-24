@@ -1,5 +1,5 @@
-<footer class="page-footer font-small">
-	<div class="footer-copyright text-center py-3">
-		&copy; 2019 <a href="https://jaredible.net" target="_blank">Jaredible</a>
+<div class="ui vertical center aligned segment">
+	<div class="ui container">
+		&copy; 2019 <a href="https://www.jaredible.net" target="_blank">Jaredible</a>
 	</div>
-</footer>
+</div>

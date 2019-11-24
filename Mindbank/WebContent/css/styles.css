@@ -6,6 +6,27 @@ html, body {
 	padding: 0;
 }
 
-.main {
-	background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+.pusher .ui.menu .ui.button {
+	margin-left: 0.5em;
+}
+
+.hidden.menu {
+	display: none;
+}
+
+.pointing.menu .toc.item {
+	display: none;
+}
+
+@media only screen and (max-width: 700px) {
+	.ui.fixed.menu {
+		display: none !important;
+	}
+	.secondary.pointing.menu .item,
+	.secondary.pointing.menu .menu {
+		display: none;
+	}
+	.secondary.pointing.menu .toc.item {
+		display: block;
+	}
 }
