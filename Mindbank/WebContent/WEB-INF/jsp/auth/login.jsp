@@ -14,8 +14,8 @@
 				<%@ include file="../partial/header.jsp" %>
 			</header>
 			
-			<div class="container">
-				<form action="login" method="post">
+			<div class="ui container">
+				<form class="ui form" action="login" method="post">
 					<div>
 						<label>Email or Username</label>
 						<input type="text" name="emailUsername" placeholder="Email or Username" value="${emailUsername}">

@@ -40,7 +40,7 @@ public class CategoryDaoImpl implements CategoryDao {
 				Category category = new Category();
 
 				category.setId(rs.getInt("ID"));
-				category.setName(rs.getString("Title"));
+				category.setName(rs.getString("Name"));
 				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
 
@@ -81,7 +81,7 @@ public class CategoryDaoImpl implements CategoryDao {
 				Category category = new Category();
 
 				category.setId(rs.getInt("ID"));
-				category.setName(rs.getString("Title"));
+				category.setName(rs.getString("Name"));
 				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
 
@@ -122,7 +122,7 @@ public class CategoryDaoImpl implements CategoryDao {
 				Category category = new Category();
 
 				category.setId(rs.getInt("ID"));
-				category.setName(rs.getString("Title"));
+				category.setName(rs.getString("Name"));
 				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
 

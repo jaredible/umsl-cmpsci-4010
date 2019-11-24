@@ -96,3 +96,16 @@ CREATE TABLE ProblemComment (
 	FOREIGN KEY (ProblemID) REFERENCES Problem(ID),
 	FOREIGN KEY (CommentID) REFERENCES Comment(ID)
 );
+
+INSERT INTO User (ID, Email, UserName, Name, Bio, ProfileImage, RegisteredTime, LastLoginTime, EmailVerified, PasswordSalt, PasswordHash) VALUES
+(NULL, "jared@jaredible.net", "Jaredible", NULL, NULL, NULL, "2019-11-23 21:52:24", "2019-11-23 21:52:24", FALSE, "[B@396502b9", "e3d51346952c09d8fca12fc2011cff8a79031c9dfb56cafdf147a8cd85d6a2f1050efa26bbde4c2bc27ffa941a775121ea79e1a58a9f2e266e4b1876db10e5be");
+
+INSERT INTO Category (ID, Name, CreatedTime, CreatedByUserID) VALUES
+(NULL, "Test1", "2019-11-23 21:52:24", 1),
+(NULL, "Test2", "2019-11-23 21:52:24", 1),
+(NULL, "Test3", "2019-11-23 21:52:24", 1);
+
+INSERT INTO Tag (ID, Name, CreatedTime, CreatedByUserID) VALUES
+(NULL, "Test1", "2019-11-23 21:52:24", 1),
+(NULL, "Test2", "2019-11-23 21:52:24", 1),
+(NULL, "Test3", "2019-11-23 21:52:24", 1);

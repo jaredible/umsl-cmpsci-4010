@@ -40,7 +40,7 @@ public class TagDaoImpl implements TagDao {
 				Tag tag = new Tag();
 
 				tag.setId(rs.getInt("ID"));
-				tag.setName(rs.getString("Title"));
+				tag.setName(rs.getString("Name"));
 				tag.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				tag.setCreatedByUserId(rs.getInt("CreatedByUserID"));
 
@@ -81,7 +81,7 @@ public class TagDaoImpl implements TagDao {
 				Tag tag = new Tag();
 
 				tag.setId(rs.getInt("ID"));
-				tag.setName(rs.getString("Title"));
+				tag.setName(rs.getString("Name"));
 				tag.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				tag.setCreatedByUserId(rs.getInt("CreatedByUserID"));
 
@@ -122,7 +122,7 @@ public class TagDaoImpl implements TagDao {
 				Tag tag = new Tag();
 
 				tag.setId(rs.getInt("ID"));
-				tag.setName(rs.getString("Title"));
+				tag.setName(rs.getString("Name"));
 				tag.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				tag.setCreatedByUserId(rs.getInt("CreatedByUserID"));
 

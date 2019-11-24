@@ -60,9 +60,7 @@ public class RegisterServlet extends HttpServlet {
 			errors.put("password", "Cannot be empty!");
 		}
 
-		if (passwordConfirmParam.isEmpty()) {
-			errors.put("passwordConfirm", "Cannot be empty!");
-		} else if (!passwordConfirmParam.equals(passwordParam)) {
+		if (!passwordConfirmParam.equals(passwordParam)) {
 			errors.put("passwordConfirm", "Doesn't match!");
 		}
 

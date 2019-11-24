@@ -8,6 +8,7 @@
 		<a href="addTag">Add tag</a>
 	</c:when>
 	<c:otherwise>
+		<a href="${pageContext.request.contextPath}">Home</a>
 		<a href="login">Login</a>
 		<a href="register">Register</a>
 	</c:otherwise>
