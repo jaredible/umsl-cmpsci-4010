@@ -24,7 +24,7 @@ import net.jaredible.mindbank.model.AuthToken;
 import net.jaredible.mindbank.model.User;
 import net.jaredible.mindbank.util.SecurityUtil;
 
-@WebFilter(urlPatterns = { "/logout", "/profile" })
+@WebFilter(urlPatterns = { "/logout" })
 public class AuthFilter implements Filter {
 
 	public AuthFilter() {

@@ -6,6 +6,10 @@ html, body {
 	padding: 0;
 }
 
+main {
+	min-height: 100%;
+}
+
 .pusher .ui.menu .ui.button {
 	margin-left: 0.5em;
 }
@@ -18,15 +22,43 @@ html, body {
 	display: none;
 }
 
+.ui.menu .item img.logo {
+	margin-right: 1.5em !important;
+}
+
+.header.item .ui.logo.image {
+	display: inline-block;
+}
+
+.ui.centered.grid .wide.column {
+	width: 50% !important;
+}
+
+#profileEdit {
+	position: relative;
+	top: -3em;
+	left: 0.5em;
+}
+
+.ui.form input[type=file] {
+	display: none !important;
+}
+
+.menu .item {
+	align-self: center !important;
+}
+
 @media only screen and (max-width: 700px) {
 	.ui.fixed.menu {
 		display: none !important;
 	}
-	.secondary.pointing.menu .item,
-	.secondary.pointing.menu .menu {
+	.secondary.pointing.menu .item, .secondary.pointing.menu .menu {
 		display: none;
 	}
 	.secondary.pointing.menu .toc.item {
 		display: block;
+	}
+	.ui.centered.grid .wide.column {
+		width: 100% !important;
 	}
 }

@@ -20,10 +20,42 @@ $('#rangeEnd').calendar({
 	startCalendar : $('#rangeStart')
 });
 
-$(document).ready(function() {
+$("#profileEdit").click(function() {
+	$("input[name='profileImage'").trigger("click");
+});
 
-	// fix menu when passed
-	$('.masthead').visibility({
+$uploadCrop = $('#upload-demo').croppie({
+	enableExif : true,
+	viewport : {
+		width : 200,
+		height : 200,
+		type : 'circle'
+	},
+	boundary : {
+		width : 300,
+		height : 300
+	}
+});
+
+var profileImage = document.getElementsByName("profileImage")[0];
+if (profileImage) {
+	profileImage.onchange = function(event) {
+		var target = event.target || window.event.srcElement;
+		var files = target.files;
+
+		if (FileReader && files && files.length) {
+			var fr = new FileReader();
+			fr.onload = function() {
+				document.getElementById("profilePicture").src = fr.result;
+			};
+			fr.readAsDataURL(files[0]);
+		} else {
+		}
+	};
+}
+
+$(document).ready(function() {
+	$('header').visibility({
 		once : false,
 		onBottomPassed : function() {
 			$('.fixed.menu').transition('fade in');
@@ -33,7 +65,6 @@ $(document).ready(function() {
 		}
 	});
 
-	// create sidebar and attach to menu open
 	$('.ui.sidebar').sidebar('attach events', '.toc.item');
 
 });
