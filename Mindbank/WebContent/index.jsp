@@ -1,1 +1,1 @@
-<% response.sendRedirect("problems"); %>
+<% response.sendRedirect(pageContext.getRequest().getServletContext().getContextPath()); %>

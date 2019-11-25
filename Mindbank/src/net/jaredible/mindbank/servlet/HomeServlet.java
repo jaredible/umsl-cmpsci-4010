@@ -1,4 +1,4 @@
-package net.jaredible.mindbank.servlet.problem;
+package net.jaredible.mindbank.servlet;
 
 import java.io.IOException;
 
@@ -17,12 +17,12 @@ import net.jaredible.mindbank.dao.tag.TagDaoImpl;
 import net.jaredible.mindbank.dao.user.UserDao;
 import net.jaredible.mindbank.dao.user.UserDaoImpl;
 
-@WebServlet("/problems")
-public class ProblemListServlet extends HttpServlet {
+@WebServlet("")
+public class HomeServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	public ProblemListServlet() {
+	public HomeServlet() {
 		super();
 	}
 
@@ -36,7 +36,7 @@ public class ProblemListServlet extends HttpServlet {
 		request.setAttribute("categories", categoryDao.getAllCategories());
 		request.setAttribute("tags", tagDao.getAllTags());
 		request.setAttribute("users", userDao.getAllUsers());
-		getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/problemList.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

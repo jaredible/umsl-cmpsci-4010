@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="pageTitle" value="Problems" scope="request" />
+<c:set var="pageTitle" value="Home" scope="request" />
 
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="../partial/head.jsp" %>
+		<%@ include file="partial/head.jsp" %>
 	</head>
 	<body>
-		<%@ include file="../partial/sidemenu.jsp" %>
+		<%@ include file="partial/sidemenu.jsp" %>
 		
 		<div class="pusher">
 			<main>
-				<%@ include file="../partial/header.jsp" %>
+				<%@ include file="partial/header.jsp" %>
 				
 				<div class="ui vertical segment">
 					<div class="ui container">
@@ -106,10 +106,10 @@
 					</div>
 				</div>
 				
-				<%@ include file="../partial/footer.jsp" %>
+				<%@ include file="partial/footer.jsp" %>
 			</main>
 		</div>
 		
-		<jsp:include page="../partial/scripts.jsp" />
+		<jsp:include page="partial/scripts.jsp" />
 	</body>
 </html>

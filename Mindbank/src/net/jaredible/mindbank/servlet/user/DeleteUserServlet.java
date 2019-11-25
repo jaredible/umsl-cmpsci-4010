@@ -1,4 +1,4 @@
-package net.jaredible.mindbank.servlet.category;
+package net.jaredible.mindbank.servlet.user;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DeleteCategoryServlet
+ * Servlet implementation class DeleteUserServlet
  */
-@WebServlet("/DeleteCategoryServlet")
-public class DeleteCategoryServlet extends HttpServlet {
+@WebServlet("/DeleteUserServlet")
+public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteCategoryServlet() {
+    public DeleteUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
