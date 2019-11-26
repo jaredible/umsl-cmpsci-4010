@@ -123,8 +123,4 @@ public class User {
 		this.passwordHash = passwordHash;
 	}
 
-	public static boolean isEmail(String text) {
-		return text.contains("@");
-	}
-
 }

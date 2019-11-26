@@ -8,32 +8,45 @@
 		<%@ include file="../partial/head.jsp" %>
 	</head>
 	<body>
-		<main>
-			<div class="ui vertical segment">
+		<main class="d-flex justify-content-center align-items-center h-100">
+			<div class="ui vertical basic segment">
 				<div class="ui container">
 					<div class="ui centered grid">
 						<div class="row">
 							<div class="wide column">
-								<form class="ui form" action="profile" method="post">
-									<div class="ui field">
-										<label>Profile picture</label>
-										<img id="profilePicture" class="ui small rounded image" src="https://fomantic-ui.com/images/wireframe/image.png">
-										<button id="profileEdit" class="mini ui secondary button" type="button">
-											<i class="pencil alternate icon"></i>
-											Edit
-										</button>
-										<input type="file" name="profileImage" accept="image/*" value="Edit">
+								<a href="${pageContext.request.contextPath}">
+									<img class="ui small rounded image m-auto" src="img/brand.png">
+								</a>
+								<h1 class="ui header">Log in</h1>
+								<form class="ui form" action="login" method="post">
+									<c:if test="${errors.error != null}">
+										<div class="ui negative message">
+											<i class="close icon"></i>
+											<div class="header">${errors.error}</div>
+										</div>
+									</c:if>
+									<div class="field">
+										<label>Username</label>
+										<input type="text" name="username" value="${username}">
 									</div>
-									<div class="ui field ${(errors.name != null) ? 'error' : ''}">
-										<label>Name</label>
-										<input type="text" name="name" value="${name}">
+									<div class="field">
+										<label>Password</label>
+										<input type="password" name="password" value="${password}">
 									</div>
-									<div class="ui field ${(errors.bio != null) ? 'error' : ''}">
-										<label>Bio</label>
-										<textarea name="bio" placeholder="Tell us a little about yourself"><c:out value="${bio}" /></textarea>
+									<div class="field">
+										<p><a href="forgotPassword">Forgot Password?</a></p>
+									</div>
+									<div class="inline field">
+										<div class="ui checkbox">
+											<input id="rememberMe" type="checkbox" name="remember" ${(remember eq 'on') ? 'checked' : ''}>
+											<label for="rememberMe">Remember me</label>
+										</div>
 									</div>
 									<div class="ui center aligned basic segment">
-										<button class="ui positive button" type="submit">Update profile</button>
+										<button class="ui primary button" type="submit">Log in</button>
+									</div>
+									<div class="field d-flex justify-content-center">
+										<p>Not a member? <a href="register">Register</a></p>
 									</div>
 								</form>
 							</div>

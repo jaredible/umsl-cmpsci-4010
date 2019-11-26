@@ -11,25 +11,23 @@
 		<%@ include file="partial/sidemenu.jsp" %>
 		
 		<div class="pusher">
-			<main>
-				<%@ include file="partial/header.jsp" %>
-				
+			<%@ include file="partial/header.jsp" %>
+			
+			<main class="mb-3">
 				<div class="ui vertical segment">
 					<div class="ui container">
 						<div class="ui secondary raised top attached segment">
 							<h3 class="ui header">Problem search</h3>
 						</div>
-						<form class="ui form raised bottom attached segment" action="problems" method="post">
+						<form class="ui form raised bottom attached segment" action="" method="post">
 							<div class="field">
-								<div class="ui sub header">Title</div>
-								<input type="text" name="title" value="${title}">
+								<input type="text" name="title" value="${title}" placeholder="Title">
 							</div>
 							<div class="field">
-								<div class="ui sub header">Category</div>
 								<div class="ui fluid multiple search normal selection dropdown">
-									<input type="hidden" name="categoryIds">
+									<input type="hidden" name="categoryIds" value="${categoryIds}">
 									<i class="dropdown icon"></i>
-									<div class="default text">Select categories</div>
+									<div class="default text">Categories</div>
 									<div class="menu">
 										<c:forEach var="category" items="${categories}">
 											<div class="item" data-value="${category.id}"><c:out value="${category.name}" /></div>
@@ -38,11 +36,10 @@
 								</div>
 							</div>
 							<div id="tag" class="field">
-								<div class="ui sub header">Tag</div>
 								<div class="ui fluid multiple search normal selection dropdown">
-									<input type="hidden" name="tagIds">
+									<input type="hidden" name="tagIds" value="${tagIds}">
 									<i class="dropdown icon"></i>
-									<div class="default text">Select tags</div>
+									<div class="default text">Tags</div>
 									<div class="menu">
 										<c:forEach var="tag" items="${tags}">
 											<div class="item" data-value="${tag.id}"><c:out value="${tag.name}" /></div>
@@ -51,35 +48,31 @@
 								</div>
 							</div>
 							<div class="field">
-								<div class="ui sub header">Content</div>
-								<input type="text" name="content" value="${content}">
+								<input type="text" name="content" value="${content}" placeholder="Content">
 							</div>
 							<div class="two fields">
 								<div class="field">
-									<div class="ui sub header">Date created</div>
-									<div id="rangeStart" class="ui calendar">
+									<div id="datetimeRangeStart" class="ui calendar">
 										<div class="ui input left icon">
 											<i class="calendar icon"></i>
-											<input type="text" name="dateStart" placeholder="Start date">
+											<input type="text" name="datetimeStart" value="${datetimeStart}" placeholder="Minimum time created">
 										</div>
 									</div>
 								</div>
 								<div class="field">
-									<div class="ui sub header">Date created</div>
-									<div id="rangeEnd" class="ui calendar">
+									<div id="datetimeRangeEnd" class="ui calendar">
 										<div class="ui input left icon">
 											<i class="calendar icon"></i>
-											<input type="text" name="dateEnd" placeholder="End date">
+											<input type="text" name="datetimeEnd" value="${datetimeEnd}" placeholder="Maximum time created">
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="field">
-								<div class="ui sub header">User</div>
 								<div class="ui fluid multiple search normal selection dropdown">
-									<input type="hidden" name="userIds">
+									<input type="hidden" name="userIds" value="${userIds}">
 									<i class="dropdown icon"></i>
-									<div class="default text">Select users</div>
+									<div class="default text">Users</div>
 									<div class="menu">
 										<c:forEach var="user" items="${users}">
 											<div class="item" data-value="${user.id}" data-text="${user.userName}">

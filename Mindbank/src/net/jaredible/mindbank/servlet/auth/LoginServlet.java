@@ -37,23 +37,17 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String emailUsernameParam = request.getParameter("emailUsername");
-		String passwordParam = request.getParameter("password");
-		String rememberParam = request.getParameter("remember");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String remember = request.getParameter("remember");
 
 		UserDao userDao = new UserDaoImpl();
-		User user;
-
-		if (User.isEmail(emailUsernameParam)) {
-			user = userDao.getUserByEmail(emailUsernameParam);
-		} else {
-			user = userDao.getUserByUserName(emailUsernameParam);
-		}
+		User user = userDao.getUserByUserName(username);
 
 		Map<String, String> errors = new HashMap<String, String>();
 
-		if (user == null || !user.getPasswordHash().equals(SecurityUtil.generateSHA512Hash(passwordParam, user.getPasswordSalt()))) {
-			errors.put("error", "Incorrect email or password!");
+		if (user == null || !user.getPasswordHash().equals(SecurityUtil.generateSHA512Hash(password, user.getPasswordSalt()))) {
+			errors.put("error", "Incorrect username or password");
 		}
 
 		if (errors.isEmpty()) {
@@ -65,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 			}
 
-			if (rememberParam != null && rememberParam.equals("on")) {
+			if (remember != null && remember.equals("on")) {
 				AuthToken authToken = new AuthToken();
 
 				String secretKey = SecurityUtil.generateRandomSalt();
@@ -77,6 +71,7 @@ public class LoginServlet extends HttpServlet {
 				authToken.setSecretKey(secretKey);
 				authToken.setSelector(selector);
 				authToken.setValidator(hashedValidator);
+				authToken.setCreatedTime(nowTime);
 
 				TokenDao tokenDao = new TokenDaoImpl();
 				tokenDao.addToken(authToken);
@@ -93,9 +88,9 @@ public class LoginServlet extends HttpServlet {
 
 			response.sendRedirect(request.getContextPath());
 		} else {
-			request.setAttribute("emailUsername", emailUsernameParam);
-			request.setAttribute("password", passwordParam);
-			request.setAttribute("remember", rememberParam);
+			request.setAttribute("username", username);
+			request.setAttribute("password", password);
+			request.setAttribute("remember", remember);
 			request.setAttribute("errors", errors);
 			getServletContext().getRequestDispatcher("/WEB-INF/jsp/auth/login.jsp").forward(request, response);
 		}

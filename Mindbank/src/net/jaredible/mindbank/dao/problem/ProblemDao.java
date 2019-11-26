@@ -6,16 +6,18 @@ import net.jaredible.mindbank.model.Problem;
 
 public interface ProblemDao {
 
-	Problem getProblemById(long i);
+	Problem getProblemById(long id);
 
 	List<Problem> getAllProblems();
 
-	long addProblem(Problem p);
+	List<Problem> getProblemsByFields(String titleLike, String categoryIdsRegex, String tagIdsRegex, String contentLike, String dateCreatedStart, String dateCreatedEnd, String userIdsRegex);
 
-	int updateProblem(Problem p);
+	long addProblem(Problem problem);
 
-	int deleteProblemById(long i);
+	int updateProblem(Problem problem);
 
-	boolean getProblemExistsById(long i);
+	int deleteProblemById(long id);
+
+	boolean getProblemExistsById(long id);
 
 }

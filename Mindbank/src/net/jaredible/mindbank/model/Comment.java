@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class Comment {
 
 	private long id;
+	private long problemId;
 	private String content;
 	private Timestamp createdTime;
 	private int createdByUserId;
@@ -12,8 +13,9 @@ public class Comment {
 	public Comment() {
 	}
 
-	public Comment(long id, String content, Timestamp createdTime, int createdByUserId) {
+	public Comment(long id, long problemId, String content, Timestamp createdTime, int createdByUserId) {
 		this.id = id;
+		this.problemId = problemId;
 		this.content = content;
 		this.createdTime = createdTime;
 		this.createdByUserId = createdByUserId;
@@ -25,6 +27,14 @@ public class Comment {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public long getProblemId() {
+		return problemId;
+	}
+
+	public void setProblemId(long problemId) {
+		this.problemId = problemId;
 	}
 
 	public String getContent() {

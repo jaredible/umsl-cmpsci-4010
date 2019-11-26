@@ -5,19 +5,21 @@ window.MathJax = {
 	}
 };
 
+$('.message .close').on('click', function() {
+	$(this).closest('.message').transition('fade');
+});
+
 $(".ui.dropdown").dropdown();
 
 $("#tag .ui.dropdown").dropdown({
 	maxSelections : 3
 });
 
-$('#rangeStart').calendar({
-	type : 'date',
-	endCalendar : $('#rangeEnd')
+$('#datetimeRangeStart').calendar({
+	endCalendar : $('#datetimeRangeEnd')
 });
-$('#rangeEnd').calendar({
-	type : 'date',
-	startCalendar : $('#rangeStart')
+$('#datetimeRangeEnd').calendar({
+	startCalendar : $('#datetimeRangeStart')
 });
 
 $("#profileEdit").click(function() {

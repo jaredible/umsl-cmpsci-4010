@@ -2,6 +2,9 @@ package net.jaredible.mindbank.servlet.user;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Base64;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -40,8 +43,24 @@ public class ProfileServlet extends HttpServlet {
 			user = (User) request.getSession(false).getAttribute("user");
 		}
 
-		//request.setAttribute("name", user.getName());
-		//request.setAttribute("bio", user.getBio());
+		user = userDao.getUserById(1);
+
+		InputStream is = null;
+		try {
+			Blob blob = user.getProfileImage();
+			if (blob != null) {
+				is = blob.getBinaryStream();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (is != null) {
+			String test = Base64.getEncoder().encodeToString(IOUtils.toByteArray(is));
+			request.setAttribute("test", test);
+		}
+
+		// request.setAttribute("name", user.getName());
+		// request.setAttribute("bio", user.getBio());
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/user/profile.jsp").forward(request, response);
 	}
 
@@ -63,7 +82,8 @@ public class ProfileServlet extends HttpServlet {
 			is = filePart.getInputStream();
 		}
 
-		User user = new User();
+		UserDao userDao = new UserDaoImpl();
+		User user = userDao.getUserById(1);
 
 		user.setName(name);
 		user.setBio(bio);
@@ -74,6 +94,21 @@ public class ProfileServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+
+		userDao.updateUser(user);
+
+		try {
+			Blob blob = user.getProfileImage();
+			if (blob != null) {
+				is = blob.getBinaryStream();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (is != null) {
+			String test = Base64.getEncoder().encodeToString(IOUtils.toByteArray(is));
+			request.setAttribute("test", test);
 		}
 
 		request.setAttribute("name", name);

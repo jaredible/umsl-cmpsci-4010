@@ -31,37 +31,37 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String emailParam = request.getParameter("email");
-		String userNameParam = request.getParameter("userName");
-		String passwordParam = request.getParameter("password");
-		String passwordConfirmParam = request.getParameter("passwordConfirm");
+		String email = request.getParameter("email");
+		String username = request.getParameter("userName");
+		String password = request.getParameter("password");
+		String passwordConfirm = request.getParameter("passwordConfirm");
 
 		UserDao userDao = new UserDaoImpl();
 
 		Map<String, String> errors = new HashMap<String, String>();
 
-		if (emailParam.isEmpty()) {
-			errors.put("email", "Cannot be empty!");
-		} else if (emailParam.length() > 50) {
-			errors.put("email", "Max length is 50!");
-		} else if (userDao.getUserByEmail(emailParam) != null) {
-			errors.put("email", "Already exists!");
+		if (email == null || email.isEmpty()) {
+			errors.put("email", "This field is required");
+		} else if (email.length() > 50) {
+			errors.put("email", "Max 50 characters");
+		} else if (userDao.getUserByEmail(email) != null) {
+			errors.put("email", "Already in use");
 		}
 
-		if (userNameParam.isEmpty()) {
-			errors.put("userName", "Cannot be empty!");
-		} else if (userNameParam.length() > 20) {
-			errors.put("userName", "Max length is 20!");
-		} else if (userDao.getUserByUserName(userNameParam) != null) {
-			errors.put("userName", "Already exists!");
+		if (username == null || username.isEmpty()) {
+			errors.put("userName", "This field is required");
+		} else if (username.length() > 20) {
+			errors.put("userName", "Max 20 characters");
+		} else if (userDao.getUserByUserName(username) != null) {
+			errors.put("userName", "Already in use");
 		}
 
-		if (passwordParam.isEmpty()) {
-			errors.put("password", "Cannot be empty!");
+		if (password == null || password.isEmpty()) {
+			errors.put("password", "This field is required");
 		}
 
-		if (!passwordConfirmParam.equals(passwordParam)) {
-			errors.put("passwordConfirm", "Doesn't match!");
+		if (passwordConfirm != null && !passwordConfirm.equals(password)) {
+			errors.put("passwordConfirm", "Does not match");
 		}
 
 		if (errors.isEmpty()) {
@@ -69,14 +69,14 @@ public class RegisterServlet extends HttpServlet {
 
 			Timestamp nowTime = new Timestamp(new Date().getTime());
 			String passwordSalt = SecurityUtil.generateRandomSalt();
-			String passwordHash = SecurityUtil.generateSHA512Hash(passwordParam, passwordSalt);
+			String passwordHash = SecurityUtil.generateSHA512Hash(password, passwordSalt);
 
-			System.out.println(passwordParam);
+			System.out.println(password);
 			System.out.println(passwordSalt);
 			System.out.println(passwordHash);
 
-			user.setEmail(emailParam);
-			user.setUserName(userNameParam);
+			user.setEmail(email);
+			user.setUserName(username);
 			user.setRegisteredTime(nowTime);
 			user.setLastLoginTime(nowTime);
 			user.setPasswordSalt(passwordSalt);
@@ -86,10 +86,10 @@ public class RegisterServlet extends HttpServlet {
 
 			response.sendRedirect("login");
 		} else {
-			request.setAttribute("email", emailParam);
-			request.setAttribute("userName", userNameParam);
-			request.setAttribute("password", passwordParam);
-			request.setAttribute("passwordConfirm", passwordConfirmParam);
+			request.setAttribute("email", email);
+			request.setAttribute("userName", username);
+			request.setAttribute("password", password);
+			request.setAttribute("passwordConfirm", passwordConfirm);
 			request.setAttribute("errors", errors);
 			getServletContext().getRequestDispatcher("/WEB-INF/jsp/auth/register.jsp").forward(request, response);
 		}
