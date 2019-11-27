@@ -43,7 +43,7 @@ public class HomeServlet extends HttpServlet {
 		request.setAttribute("categories", categoryDao.getAllCategories());
 		request.setAttribute("tags", tagDao.getAllTags());
 		request.setAttribute("users", userDao.getAllUsers());
-		getServletContext().getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -135,7 +135,7 @@ public class HomeServlet extends HttpServlet {
 		request.setAttribute("categories", categoryDao.getAllCategories());
 		request.setAttribute("tags", tagDao.getAllTags());
 		request.setAttribute("users", userDao.getAllUsers());
-		getServletContext().getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
 	}
 
 }

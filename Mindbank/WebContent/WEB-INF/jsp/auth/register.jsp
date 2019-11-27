@@ -15,10 +15,10 @@
 						<div class="row">
 							<div class="wide column">
 								<a href="${pageContext.request.contextPath}">
-									<img class="ui small rounded image m-auto" src="img/brand.png">
+									<img class="ui small rounded image m-auto" src="${pageContext.request.contextPath}/img/brand.png">
 								</a>
 								<h1 class="ui header">Register</h1>
-								<form class="ui form" action="register" method="post">
+								<form class="ui form" action="${pageContext.request.contextPath}/register" method="post">
 									<div class="ui required field ${(errors.email != null) ? 'error' : ''}">
 										<label>Email</label>
 										<input type="email" name="email" value="${email}">
@@ -51,7 +51,7 @@
 										<button class="ui primary button" type="submit">Register</button>
 									</div>
 									<div class="field d-flex justify-content-center">
-										<p>Already a member? <a href="login">Login</a></p>
+										<p>Already a member? <a href="${pageContext.request.contextPath}/login">Login</a></p>
 									</div>
 								</form>
 							</div>

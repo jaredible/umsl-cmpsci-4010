@@ -19,7 +19,7 @@
 						<div class="ui secondary raised top attached segment">
 							<h3 class="ui header">Problem search</h3>
 						</div>
-						<form class="ui form raised bottom attached segment" action="" method="post">
+						<form class="ui form raised bottom attached segment" action="${pageContext.request.contextPath}" method="post">
 							<div class="field">
 								<input type="text" name="title" value="${title}" placeholder="Title">
 							</div>
@@ -91,7 +91,7 @@
 						<c:forEach var="problem" items="${problems}">
 							<div class="ui piled raised segment">
 								<h3 class="ui header">
-									<a href="problem?id=${problem.id}"><c:out value="${problem.title}" /></a>
+									<a href="${pageContext.request.contextPath}/problem?id=${problem.id}"><c:out value="${problem.title}" /></a>
 								</h3>
 								<p><c:out value="${problem.content}" /></p>
 							</div>

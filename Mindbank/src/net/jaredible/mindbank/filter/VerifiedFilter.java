@@ -1,4 +1,4 @@
-package net.jaredible.mindbank.servlet.auth;
+package net.jaredible.mindbank.filter;
 
 import java.io.IOException;
 import javax.servlet.Filter;

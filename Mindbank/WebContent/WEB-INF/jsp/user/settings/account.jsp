@@ -5,15 +5,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="../partial/head.jsp" %>
+		<%@ include file="../../partial/head.jsp" %>
 	</head>
 <body>
-	<%@ include file="../partial/sidemenu.jsp" %>
+	<%@ include file="../../partial/sidemenu.jsp" %>
 	
 	<div class="pusher">
 		<div class="main">
 			<div class="ui container">
-				<%@ include file="../partial/header.jsp" %>
+				<%@ include file="../../partial/header.jsp" %>
 				
 				<form class="ui form" action="account" method="post">
 					<div class="ui field ${(errors.name != null) ? 'error' : ''}">
@@ -34,10 +34,10 @@
 				</form>
 			</div>
 			
-			<%@ include file="../partial/footer.jsp" %>
+			<%@ include file="../../partial/footer.jsp" %>
 		</div>
 	</div>
 	
-	<jsp:include page="../partial/scripts.jsp" />
+	<jsp:include page="../../partial/scripts.jsp" />
 </body>
 </html>

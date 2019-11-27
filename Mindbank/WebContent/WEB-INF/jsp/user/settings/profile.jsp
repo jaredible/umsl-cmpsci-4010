@@ -5,13 +5,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="../partial/head.jsp" %>
+		<%@ include file="../../partial/head.jsp" %>
 	</head>
 	<body>
-		<%@ include file="../partial/sidemenu.jsp" %>
+		<%@ include file="../../partial/sidemenu.jsp" %>
 		
 		<div class="pusher">
-			<%@ include file="../partial/header.jsp" %>
+			<%@ include file="../../partial/header.jsp" %>
 			
 			<main class="mb-3">
 				<div class="ui vertical segment">
@@ -22,7 +22,7 @@
 									<div class="ui secondary raised top attached segment">
 										<h3 class="ui header">Public profile</h3>
 									</div>
-									<form class="ui form raised stacked bottom attached segment" action="profile" method="post" enctype="multipart/form-data">
+									<form class="ui form raised stacked bottom attached segment" action="${pageContext.request.contextPath}/profile" method="post" enctype="multipart/form-data">
 										<div class="ui stackable two column grid">
 											<div class="six wide column">
 												<div class="ui field">
@@ -103,10 +103,10 @@
 					</div>
 				</div>
 				
-				<%@ include file="../partial/footer.jsp" %>
+				<%@ include file="../../partial/footer.jsp" %>
 			</main>
 		</div>
 		
-		<jsp:include page="../partial/scripts.jsp" />
+		<jsp:include page="../../partial/scripts.jsp" />
 	</body>
 </html>

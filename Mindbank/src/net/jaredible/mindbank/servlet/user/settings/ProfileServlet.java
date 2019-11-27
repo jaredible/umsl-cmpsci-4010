@@ -1,4 +1,4 @@
-package net.jaredible.mindbank.servlet.user;
+package net.jaredible.mindbank.servlet.user.settings;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ import net.jaredible.mindbank.dao.user.UserDao;
 import net.jaredible.mindbank.dao.user.UserDaoImpl;
 import net.jaredible.mindbank.model.User;
 
-@WebServlet("/profile")
+@WebServlet("/settings/profile")
 @MultipartConfig(maxFileSize = 16777216)
 public class ProfileServlet extends HttpServlet {
 
@@ -61,7 +61,7 @@ public class ProfileServlet extends HttpServlet {
 
 		// request.setAttribute("name", user.getName());
 		// request.setAttribute("bio", user.getBio());
-		getServletContext().getRequestDispatcher("/WEB-INF/jsp/user/profile.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/user/settings/profile.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -113,7 +113,7 @@ public class ProfileServlet extends HttpServlet {
 
 		request.setAttribute("name", name);
 		request.setAttribute("bio", bio);
-		getServletContext().getRequestDispatcher("/WEB-INF/jsp/user/profile.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/user/settings/profile.jsp").forward(request, response);
 	}
 
 }
