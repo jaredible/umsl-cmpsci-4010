@@ -6,18 +6,20 @@ import net.jaredible.mindbank.model.User;
 
 public interface UserDao {
 
-	User getUserById(long i);
+	User getUserById(long id);
 
-	User getUserByEmail(String s);
+	User getUserByEmail(String email);
 
-	User getUserByUserName(String s);
+	User getUserByUserName(String userName);
+
+	User getUserByCookieSelector(String cookieSelector);
 
 	List<User> getAllUsers();
 
-	long addUser(User u);
+	long addUser(User user);
 
-	int updateUser(User u);
+	int updateUser(User user);
 
-	int deleteUserById(long i);
+	int deleteUserById(long id);
 
 }

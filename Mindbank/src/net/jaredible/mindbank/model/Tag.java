@@ -9,16 +9,6 @@ public class Tag {
 	private Timestamp createdTime;
 	private long createdByUserId;
 
-	public Tag() {
-	}
-
-	public Tag(long id, String name, Timestamp createdTime, long createdByUserId) {
-		this.id = id;
-		this.name = name;
-		this.createdTime = createdTime;
-		this.createdByUserId = createdByUserId;
-	}
-
 	public long getId() {
 		return id;
 	}

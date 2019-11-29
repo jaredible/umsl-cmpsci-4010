@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.jaredible.mindbank.dao.auth.TokenDao;
-import net.jaredible.mindbank.dao.auth.TokenDaoImpl;
-import net.jaredible.mindbank.model.AuthToken;
+import net.jaredible.mindbank.dao.user.UserDao;
+import net.jaredible.mindbank.dao.user.UserDaoImpl;
+import net.jaredible.mindbank.model.User;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
@@ -36,20 +36,24 @@ public class LogoutServlet extends HttpServlet {
 			}
 
 			if (selector != null) {
-				TokenDao tokenDao = new TokenDaoImpl();
-				AuthToken authToken = tokenDao.getTokenBySelector(selector);
+				UserDao userDao = new UserDaoImpl();
+				User user = userDao.getUserByCookieSelector(selector);
 
-				if (authToken != null) {
-					tokenDao.deleteTokenById(authToken.getId());
+				if (user != null) {
+					user.setCookieSecretKey(null);
+					user.setCookieSelector(null);
+					user.setHashedCookieValidator(null);
 
-					int cookieMaxAge = 0;
-					Cookie cookieSelector = new Cookie("selector", null);
-					cookieSelector.setMaxAge(cookieMaxAge);
-					Cookie cookieValidator = new Cookie("validator", null);
-					cookieValidator.setMaxAge(cookieMaxAge);
+					if (userDao.updateUser(user) > 0) {
+						int cookieMaxAge = 0;
+						Cookie cookieSelector = new Cookie("selector", null);
+						cookieSelector.setMaxAge(cookieMaxAge);
+						Cookie cookieValidator = new Cookie("validator", null);
+						cookieValidator.setMaxAge(cookieMaxAge);
 
-					response.addCookie(cookieSelector);
-					response.addCookie(cookieValidator);
+						response.addCookie(cookieSelector);
+						response.addCookie(cookieValidator);
+					}
 				}
 			}
 		}

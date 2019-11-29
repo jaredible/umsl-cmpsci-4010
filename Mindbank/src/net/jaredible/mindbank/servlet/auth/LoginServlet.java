@@ -15,13 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import net.jaredible.mindbank.dao.auth.TokenDao;
-import net.jaredible.mindbank.dao.auth.TokenDaoImpl;
 import net.jaredible.mindbank.dao.user.UserDao;
 import net.jaredible.mindbank.dao.user.UserDaoImpl;
-import net.jaredible.mindbank.model.AuthToken;
 import net.jaredible.mindbank.model.User;
 import net.jaredible.mindbank.util.SecurityUtil;
+import net.jaredible.mindbank.util.TimeUtil;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -55,28 +53,17 @@ public class LoginServlet extends HttpServlet {
 
 			user.setLastLoginTime(nowTime);
 
-			if (userDao.updateUser(user) > 0) {
-				request.getSession().setAttribute("user", user);
-			}
-
 			if (remember != null && remember.equals("on")) {
-				AuthToken authToken = new AuthToken();
-
 				String secretKey = SecurityUtil.generateRandomSalt();
 				String selector = RandomStringUtils.randomAlphanumeric(12);
 				String rawValidator = RandomStringUtils.randomAlphanumeric(64);
 				String hashedValidator = SecurityUtil.generateSHA512Hash(rawValidator, secretKey);
 
-				authToken.setUserId(user.getId());
-				authToken.setSecretKey(secretKey);
-				authToken.setSelector(selector);
-				authToken.setValidator(hashedValidator);
-				authToken.setCreatedTime(nowTime);
+				user.setCookieSecretKey(secretKey);
+				user.setCookieSelector(selector);
+				user.setHashedCookieValidator(hashedValidator);
 
-				TokenDao tokenDao = new TokenDaoImpl();
-				tokenDao.addToken(authToken);
-
-				int cookieMaxAge = 60 * 60 * 24;
+				int cookieMaxAge = TimeUtil.getNumSecondsInDay();
 				Cookie cookieSelector = new Cookie("selector", selector);
 				cookieSelector.setMaxAge(cookieMaxAge);
 				Cookie cookieValidator = new Cookie("validator", rawValidator);
@@ -84,6 +71,10 @@ public class LoginServlet extends HttpServlet {
 
 				response.addCookie(cookieSelector);
 				response.addCookie(cookieValidator);
+			}
+
+			if (userDao.updateUser(user) > 0) {
+				request.getSession().setAttribute("user", user);
 			}
 
 			response.sendRedirect(request.getContextPath());

@@ -10,17 +10,6 @@ public class Problem {
 	private Timestamp createdTime;
 	private long createdByUserId;
 
-	public Problem() {
-	}
-
-	public Problem(long id, String title, String content, Timestamp createdTime, long createdByUserId) {
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.createdTime = createdTime;
-		this.createdByUserId = createdByUserId;
-	}
-
 	public long getId() {
 		return id;
 	}

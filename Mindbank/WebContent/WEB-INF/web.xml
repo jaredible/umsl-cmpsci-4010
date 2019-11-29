@@ -43,7 +43,12 @@
 	
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/</url-pattern>
+		<url-pattern>/problem/new</url-pattern>
+		<url-pattern>/problem/edit</url-pattern>
+		<url-pattern>/category/new</url-pattern>
+		<url-pattern>/tag/new</url-pattern>
+		<url-pattern>/settings/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>AuthFilter</filter-name>

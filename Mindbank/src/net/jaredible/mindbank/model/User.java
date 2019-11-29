@@ -18,26 +18,9 @@ public class User {
 	private boolean emailVerified;
 	private String passwordSalt;
 	private String passwordHash;
-
-	public User() {
-	}
-
-	public User(long id, String email, String userName, String name, String bio, Blob profileImage, String statusEmoji, String statusText, Timestamp registeredTime, Timestamp lastLoginTime, boolean emailVerified, String passwordSalt, String passwordHash) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.userName = userName;
-		this.name = name;
-		this.bio = bio;
-		this.profileImage = profileImage;
-		this.statusEmoji = statusEmoji;
-		this.statusText = statusText;
-		this.registeredTime = registeredTime;
-		this.lastLoginTime = lastLoginTime;
-		this.emailVerified = emailVerified;
-		this.passwordSalt = passwordSalt;
-		this.passwordHash = passwordHash;
-	}
+	private String cookieSecretKey;
+	private String cookieSelector;
+	private String hashedCookieValidator;
 
 	public long getId() {
 		return id;
@@ -141,6 +124,30 @@ public class User {
 
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
+	}
+
+	public String getCookieSecretKey() {
+		return cookieSecretKey;
+	}
+
+	public void setCookieSecretKey(String cookieSecretKey) {
+		this.cookieSecretKey = cookieSecretKey;
+	}
+
+	public String getCookieSelector() {
+		return cookieSelector;
+	}
+
+	public void setCookieSelector(String cookieSelector) {
+		this.cookieSelector = cookieSelector;
+	}
+
+	public String getHashedCookieValidator() {
+		return hashedCookieValidator;
+	}
+
+	public void setHashedCookieValidator(String hashedCookieValidator) {
+		this.hashedCookieValidator = hashedCookieValidator;
 	}
 
 }

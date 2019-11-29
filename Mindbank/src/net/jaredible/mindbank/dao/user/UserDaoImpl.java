@@ -17,6 +17,7 @@ public class UserDaoImpl implements UserDao {
 	private PreparedStatement getUserById;
 	private PreparedStatement getUserByEmail;
 	private PreparedStatement getUserByUserName;
+	private PreparedStatement getUserByCookieSelector;
 	private PreparedStatement getAllUsers;
 	private PreparedStatement addUser;
 	private PreparedStatement updateUser;
@@ -54,6 +55,9 @@ public class UserDaoImpl implements UserDao {
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
 				user.setPasswordSalt(rs.getString("PasswordSalt"));
 				user.setPasswordHash(rs.getString("PasswordHash"));
+				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
+				user.setCookieSelector(rs.getString("CookieSelector"));
+				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
 
 				return user;
 			}
@@ -104,6 +108,9 @@ public class UserDaoImpl implements UserDao {
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
 				user.setPasswordSalt(rs.getString("PasswordSalt"));
 				user.setPasswordHash(rs.getString("PasswordHash"));
+				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
+				user.setCookieSelector(rs.getString("CookieSelector"));
+				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
 
 				return user;
 			}
@@ -154,6 +161,62 @@ public class UserDaoImpl implements UserDao {
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
 				user.setPasswordSalt(rs.getString("PasswordSalt"));
 				user.setPasswordHash(rs.getString("PasswordHash"));
+				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
+				user.setCookieSelector(rs.getString("CookieSelector"));
+				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
+
+				return user;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public User getUserByCookieSelector(String cookieSelector) {
+		ResultSet rs = null;
+
+		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (getUserByCookieSelector == null) {
+				getUserByCookieSelector = connection.prepareStatement("SELECT * FROM User WHERE CookieSelector = ?;");
+			}
+
+			getUserByCookieSelector.setString(1, cookieSelector);
+
+			rs = getUserByCookieSelector.executeQuery();
+
+			if (rs.next()) {
+				User user = new User();
+
+				user.setId(rs.getInt("ID"));
+				user.setEmail(rs.getString("Email"));
+				user.setUserName(rs.getString("UserName"));
+				user.setName(rs.getString("Name"));
+				user.setBio(rs.getString("Bio"));
+				user.setProfileImage(rs.getBlob("ProfileImage"));
+				user.setStatusEmoji(rs.getString("StatusEmoji"));
+				user.setStatusText(rs.getString("StatusText"));
+				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
+				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
+				user.setEmailVerified(rs.getBoolean("EmailVerified"));
+				user.setPasswordSalt(rs.getString("PasswordSalt"));
+				user.setPasswordHash(rs.getString("PasswordHash"));
+				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
+				user.setCookieSelector(rs.getString("CookieSelector"));
+				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
 
 				return user;
 			}
@@ -204,6 +267,9 @@ public class UserDaoImpl implements UserDao {
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
 				user.setPasswordSalt(rs.getString("PasswordSalt"));
 				user.setPasswordHash(rs.getString("PasswordHash"));
+				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
+				user.setCookieSelector(rs.getString("CookieSelector"));
+				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
 
 				users.add(user);
 			}
@@ -233,7 +299,7 @@ public class UserDaoImpl implements UserDao {
 				connection = DbUtil.openConnection();
 			}
 			if (addUser == null) {
-				addUser = connection.prepareStatement("INSERT INTO User (ID, Email, UserName, Name, Bio, ProfileImage, StatusEmoji, StatusText, RegisteredTime, LastLoginTime, EmailVerified, PasswordSalt, PasswordHash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+				addUser = connection.prepareStatement("INSERT INTO User (ID, Email, UserName, Name, Bio, ProfileImage, StatusEmoji, StatusText, RegisteredTime, LastLoginTime, EmailVerified, PasswordSalt, PasswordHash, CookieSecretKey, CookieSelector, HashedCookieValidator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 			}
 
 			addUser.setNull(1, Types.INTEGER);
@@ -249,6 +315,9 @@ public class UserDaoImpl implements UserDao {
 			addUser.setBoolean(11, user.isEmailVerified());
 			addUser.setString(12, user.getPasswordSalt());
 			addUser.setString(13, user.getPasswordHash());
+			updateUser.setString(14, user.getCookieSecretKey());
+			updateUser.setString(15, user.getCookieSelector());
+			updateUser.setString(16, user.getHashedCookieValidator());
 
 			int rowAffected = addUser.executeUpdate();
 
@@ -281,7 +350,7 @@ public class UserDaoImpl implements UserDao {
 				connection = DbUtil.openConnection();
 			}
 			if (updateUser == null) {
-				updateUser = connection.prepareStatement("UPDATE User SET ID = ?, Email = ?, UserName = ?, Name = ?, Bio = ?, ProfileImage = ?, StatusEmoji = ?, StatusText = ?, RegisteredTime = ?, LastLoginTime = ?, EmailVerified = ?, PasswordSalt = ?, PasswordHash = ? WHERE ID = ?;");
+				updateUser = connection.prepareStatement("UPDATE User SET ID = ?, Email = ?, UserName = ?, Name = ?, Bio = ?, ProfileImage = ?, StatusEmoji = ?, StatusText = ?, RegisteredTime = ?, LastLoginTime = ?, EmailVerified = ?, PasswordSalt = ?, PasswordHash = ?, CookieSecretKey = ?, CookieSelector = ?, HashedCookieValidator = ? WHERE ID = ?;");
 			}
 
 			updateUser.setLong(1, user.getId());
@@ -297,8 +366,11 @@ public class UserDaoImpl implements UserDao {
 			updateUser.setBoolean(11, user.isEmailVerified());
 			updateUser.setString(12, user.getPasswordSalt());
 			updateUser.setString(13, user.getPasswordHash());
+			updateUser.setString(14, user.getCookieSecretKey());
+			updateUser.setString(15, user.getCookieSelector());
+			updateUser.setString(16, user.getHashedCookieValidator());
 
-			updateUser.setLong(14, user.getId());
+			updateUser.setLong(17, user.getId());
 
 			return updateUser.executeUpdate();
 		} catch (Exception e) {
@@ -342,6 +414,9 @@ public class UserDaoImpl implements UserDao {
 			}
 			if (getUserByUserName != null && !getUserByUserName.isClosed()) {
 				getUserByUserName.close();
+			}
+			if (getUserByCookieSelector != null && !getUserByCookieSelector.isClosed()) {
+				getUserByCookieSelector.close();
 			}
 			if (getAllUsers != null && !getAllUsers.isClosed()) {
 				getAllUsers.close();

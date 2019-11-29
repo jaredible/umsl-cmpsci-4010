@@ -71,10 +71,6 @@ public class RegisterServlet extends HttpServlet {
 			String passwordSalt = SecurityUtil.generateRandomSalt();
 			String passwordHash = SecurityUtil.generateSHA512Hash(password, passwordSalt);
 
-			System.out.println(password);
-			System.out.println(passwordSalt);
-			System.out.println(passwordHash);
-
 			user.setEmail(email);
 			user.setUserName(username);
 			user.setRegisteredTime(nowTime);
