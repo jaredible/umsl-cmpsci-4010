@@ -60,23 +60,6 @@ public class HomeServlet extends HttpServlet {
 		TagDao tagDao = new TagDaoImpl();
 		UserDao userDao = new UserDaoImpl();
 
-		System.out.println("title:" + title);
-		System.out.print("categoryIds:");
-		for (String categoryId : categoryIds) {
-			System.out.println(categoryId);
-		}
-		System.out.print("tagIds:");
-		for (String tagId : tagIds) {
-			System.out.println(tagId);
-		}
-		System.out.println("content:" + content);
-		System.out.println("datetimeStart:" + datetimeStart);
-		System.out.println("datetimeEnd:" + datetimeEnd);
-		System.out.print("userIds:");
-		for (String userId : userIds) {
-			System.out.println(userId);
-		}
-
 		String titleLike = title;
 		String categoryIdsRegex = StringUtils.join(Arrays.asList(categoryIds)).replaceAll(",", "|"); // TODO
 		String tagIdsRegex = StringUtils.join(Arrays.asList(tagIds)).replaceAll(",", "|"); // TODO
@@ -113,14 +96,6 @@ public class HomeServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("titleLike:" + titleLike + ":");
-		System.out.println("categoryIdsRegex:" + categoryIdsRegex + ":");
-		System.out.println("tagIdsRegex:" + tagIdsRegex + ":");
-		System.out.println("contentLike:" + contentLike + ":");
-		System.out.println("dateCreatedStart:" + dateCreatedStart + ":");
-		System.out.println("dateCreatedEnd:" + dateCreatedEnd + ":");
-		System.out.println("userIds:" + userIdsRegex + ":");
 
 		List<Problem> problems = problemDao.getProblemsByFields(titleLike, categoryIdsRegex, tagIdsRegex, contentLike, dateCreatedStart, dateCreatedEnd, userIdsRegex);
 

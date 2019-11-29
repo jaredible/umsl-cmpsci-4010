@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.jaredible.mindbank.dao.user.UserDao;
 import net.jaredible.mindbank.dao.user.UserDaoImpl;
@@ -22,41 +23,30 @@ public class LogoutServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().removeAttribute("user");
+		HttpSession session = request.getSession(false);
+		User user = (User) session.getAttribute("user");
 
-		Cookie[] cookies = request.getCookies();
+		if (user != null) {
+			UserDao userDao = new UserDaoImpl();
 
-		if (cookies != null) {
-			String selector = null;
+			user.setCookieSecretKey(null);
+			user.setCookieSelector(null);
+			user.setHashedCookieValidator(null);
 
-			for (Cookie c : cookies) {
-				if (c.getName().equals("selector")) {
-					selector = c.getValue();
-				}
-			}
+			if (userDao.updateUser(user) > 0) {
+				Cookie cookieSelector = new Cookie("selector", null);
+				cookieSelector.setPath(getServletContext().getContextPath());
+				cookieSelector.setMaxAge(0);
+				response.addCookie(cookieSelector);
 
-			if (selector != null) {
-				UserDao userDao = new UserDaoImpl();
-				User user = userDao.getUserByCookieSelector(selector);
-
-				if (user != null) {
-					user.setCookieSecretKey(null);
-					user.setCookieSelector(null);
-					user.setHashedCookieValidator(null);
-
-					if (userDao.updateUser(user) > 0) {
-						int cookieMaxAge = 0;
-						Cookie cookieSelector = new Cookie("selector", null);
-						cookieSelector.setMaxAge(cookieMaxAge);
-						Cookie cookieValidator = new Cookie("validator", null);
-						cookieValidator.setMaxAge(cookieMaxAge);
-
-						response.addCookie(cookieSelector);
-						response.addCookie(cookieValidator);
-					}
-				}
+				Cookie cookieValidator = new Cookie("validator", null);
+				cookieValidator.setPath(getServletContext().getContextPath());
+				cookieValidator.setMaxAge(0);
+				response.addCookie(cookieValidator);
 			}
 		}
+
+		session.removeAttribute("user");
 
 		response.sendRedirect(request.getServletContext().getContextPath());
 	}

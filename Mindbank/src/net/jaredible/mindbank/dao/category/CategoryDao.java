@@ -12,6 +12,8 @@ public interface CategoryDao {
 
 	List<Category> getAllCategories();
 
+	List<Category> getCategoriesByProblemId(long id);
+
 	long addCategory(Category category);
 
 }

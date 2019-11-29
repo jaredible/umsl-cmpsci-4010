@@ -64,12 +64,15 @@ public class LoginServlet extends HttpServlet {
 				user.setHashedCookieValidator(hashedValidator);
 
 				int cookieMaxAge = TimeUtil.getNumSecondsInDay();
-				Cookie cookieSelector = new Cookie("selector", selector);
-				cookieSelector.setMaxAge(cookieMaxAge);
-				Cookie cookieValidator = new Cookie("validator", rawValidator);
-				cookieValidator.setMaxAge(cookieMaxAge);
 
+				Cookie cookieSelector = new Cookie("selector", selector);
+				cookieSelector.setPath(getServletContext().getContextPath());
+				cookieSelector.setMaxAge(cookieMaxAge);
 				response.addCookie(cookieSelector);
+
+				Cookie cookieValidator = new Cookie("validator", rawValidator);
+				cookieSelector.setPath(getServletContext().getContextPath());
+				cookieValidator.setMaxAge(cookieMaxAge);
 				response.addCookie(cookieValidator);
 			}
 

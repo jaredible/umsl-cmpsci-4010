@@ -177,11 +177,11 @@ public class ProblemDaoImpl implements ProblemDao {
 			while (rs.next()) {
 				Problem problem = new Problem();
 
-				problem.setId(rs.getInt("Problem.ID"));
-				problem.setTitle(rs.getString("Problem.Title"));
-				problem.setContent(rs.getString("Problem.Content"));
-				problem.setCreatedTime(rs.getTimestamp("Problem.CreatedTime"));
-				problem.setCreatedByUserId(rs.getInt("Problem.CreatedByUserId"));
+				problem.setId(rs.getInt("ID"));
+				problem.setTitle(rs.getString("Title"));
+				problem.setContent(rs.getString("Content"));
+				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
+				problem.setCreatedByUserId(rs.getInt("CreatedByUserId"));
 
 				problems.add(problem);
 			}

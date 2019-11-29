@@ -42,11 +42,11 @@ public class LoginFilter implements Filter {
 			Cookie cookieSelector = null;
 			Cookie cookieRawValidator = null;
 
-			for (Cookie c : cookies) {
-				if (c.getName().equals("selector")) {
-					cookieSelector = c;
-				} else if (c.getName().equals("validator")) {
-					cookieRawValidator = c;
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("selector")) {
+					cookieSelector = cookie;
+				} else if (cookie.getName().equals("validator")) {
+					cookieRawValidator = cookie;
 				}
 			}
 
@@ -56,10 +56,10 @@ public class LoginFilter implements Filter {
 
 				if (user != null) {
 					String tokenSecretKey = user.getCookieSecretKey();
-					String hashedValidatorDatabase = user.getHashedCookieValidator();
-					String hashedValidatorCookie = SecurityUtil.generateSHA512Hash(cookieRawValidator.getValue(), tokenSecretKey);
+					String dbHashedValidatorDatabase = user.getHashedCookieValidator();
+					String clientHashedValidatorCookie = SecurityUtil.generateSHA512Hash(cookieRawValidator.getValue(), tokenSecretKey);
 
-					if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
+					if (clientHashedValidatorCookie.equals(dbHashedValidatorDatabase)) {
 						session = req.getSession();
 						session.setAttribute("user", user);
 						loggedIn = true;
@@ -75,12 +75,15 @@ public class LoginFilter implements Filter {
 
 						if (userDao.updateUser(user) > 0) {
 							int cookieMaxAge = TimeUtil.getNumSecondsInDay();
-							cookieSelector.setMaxAge(cookieMaxAge);
-							cookieSelector.setValue(newSelector);
-							cookieRawValidator.setMaxAge(cookieMaxAge);
-							cookieRawValidator.setValue(newRawValidator);
 
+							cookieSelector.setValue(newSelector);
+							cookieSelector.setPath(req.getServletContext().getContextPath());
+							cookieSelector.setMaxAge(cookieMaxAge);
 							res.addCookie(cookieSelector);
+
+							cookieRawValidator.setValue(newRawValidator);
+							cookieRawValidator.setPath(req.getServletContext().getContextPath());
+							cookieRawValidator.setMaxAge(cookieMaxAge);
 							res.addCookie(cookieRawValidator);
 						}
 					}

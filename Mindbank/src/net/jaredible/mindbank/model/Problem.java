@@ -1,6 +1,7 @@
 package net.jaredible.mindbank.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Problem {
 
@@ -9,6 +10,8 @@ public class Problem {
 	private String content;
 	private Timestamp createdTime;
 	private long createdByUserId;
+	private List<Category> categories;
+	private List<Tag> tags;
 
 	public long getId() {
 		return id;
@@ -48,6 +51,22 @@ public class Problem {
 
 	public void setCreatedByUserId(long createdByUserId) {
 		this.createdByUserId = createdByUserId;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
 }

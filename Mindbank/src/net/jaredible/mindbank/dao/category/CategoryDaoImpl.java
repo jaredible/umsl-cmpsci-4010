@@ -17,6 +17,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	private PreparedStatement getCategoryById;
 	private PreparedStatement getCategoryByName;
 	private PreparedStatement getAllCategories;
+	private PreparedStatement getCategoriesByProblemId;
 	private PreparedStatement addCategory;
 
 	@Override
@@ -145,6 +146,51 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
+	public List<Category> getCategoriesByProblemId(long id) {
+		ResultSet rs = null;
+
+		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (getCategoriesByProblemId == null) {
+				getCategoriesByProblemId = connection.prepareStatement("SELECT Category.* FROM ProblemCategory LEFT OUTER JOIN Category ON Category.ID = ProblemCategory.CategoryID WHERE ProblemCategory.ProblemID = ?;");
+			}
+
+			getCategoriesByProblemId.setLong(1, id);
+
+			rs = getCategoriesByProblemId.executeQuery();
+
+			List<Category> categories = new ArrayList<Category>();
+
+			while (rs.next()) {
+				Category category = new Category();
+
+				category.setId(rs.getInt("ID"));
+				category.setName(rs.getString("Name"));
+				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
+				category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
+
+				categories.add(category);
+			}
+
+			return categories;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public long addCategory(Category category) {
 		ResultSet rs = null;
 
@@ -199,6 +245,9 @@ public class CategoryDaoImpl implements CategoryDao {
 			}
 			if (getAllCategories != null && !getAllCategories.isClosed()) {
 				getAllCategories.close();
+			}
+			if (getCategoriesByProblemId != null && !getCategoriesByProblemId.isClosed()) {
+				getCategoriesByProblemId.close();
 			}
 			if (addCategory != null && !addCategory.isClosed()) {
 				addCategory.close();
