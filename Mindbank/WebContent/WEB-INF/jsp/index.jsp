@@ -35,7 +35,7 @@
 									</div>
 								</div>
 							</div>
-							<div id="tag" class="field">
+							<div class="field">
 								<div class="ui fluid multiple search normal selection dropdown">
 									<input type="hidden" name="tagIds" value="${tagIds}">
 									<i class="dropdown icon"></i>
@@ -84,7 +84,7 @@
 								</div>
 							</div>
 							<div class="ui center aligned basic segment">
-								<button class="ui primary submit button" type="submit">Search</button>
+								<button class="ui primary submit button" type="submit">Search problems</button>
 							</div>
 						</form>
 						

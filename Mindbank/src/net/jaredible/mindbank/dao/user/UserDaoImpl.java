@@ -47,6 +47,8 @@ public class UserDaoImpl implements UserDao {
 				user.setName(rs.getString("Name"));
 				user.setBio(rs.getString("Bio"));
 				user.setProfileImage(rs.getBlob("ProfileImage"));
+				user.setStatusEmoji(rs.getString("StatusEmoji"));
+				user.setStatusText(rs.getString("StatusText"));
 				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
 				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
@@ -95,6 +97,8 @@ public class UserDaoImpl implements UserDao {
 				user.setName(rs.getString("Name"));
 				user.setBio(rs.getString("Bio"));
 				user.setProfileImage(rs.getBlob("ProfileImage"));
+				user.setStatusEmoji(rs.getString("StatusEmoji"));
+				user.setStatusText(rs.getString("StatusText"));
 				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
 				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
@@ -143,6 +147,8 @@ public class UserDaoImpl implements UserDao {
 				user.setName(rs.getString("Name"));
 				user.setBio(rs.getString("Bio"));
 				user.setProfileImage(rs.getBlob("ProfileImage"));
+				user.setStatusEmoji(rs.getString("StatusEmoji"));
+				user.setStatusText(rs.getString("StatusText"));
 				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
 				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
@@ -191,6 +197,8 @@ public class UserDaoImpl implements UserDao {
 				user.setName(rs.getString("Name"));
 				user.setBio(rs.getString("Bio"));
 				user.setProfileImage(rs.getBlob("ProfileImage"));
+				user.setStatusEmoji(rs.getString("StatusEmoji"));
+				user.setStatusText(rs.getString("StatusText"));
 				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
 				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
 				user.setEmailVerified(rs.getBoolean("EmailVerified"));
@@ -225,7 +233,7 @@ public class UserDaoImpl implements UserDao {
 				connection = DbUtil.openConnection();
 			}
 			if (addUser == null) {
-				addUser = connection.prepareStatement("INSERT INTO User (ID, Email, UserName, Name, Bio, ProfileImage, RegisteredTime, LastLoginTime, EmailVerified, PasswordSalt, PasswordHash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+				addUser = connection.prepareStatement("INSERT INTO User (ID, Email, UserName, Name, Bio, ProfileImage, StatusEmoji, StatusText, RegisteredTime, LastLoginTime, EmailVerified, PasswordSalt, PasswordHash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 			}
 
 			addUser.setNull(1, Types.INTEGER);
@@ -234,11 +242,13 @@ public class UserDaoImpl implements UserDao {
 			addUser.setString(4, user.getName());
 			addUser.setString(5, user.getBio());
 			addUser.setBlob(6, user.getProfileImage());
-			addUser.setTimestamp(7, user.getRegisteredTime());
-			addUser.setTimestamp(8, user.getLastLoginTime());
-			addUser.setBoolean(9, user.isEmailVerified());
-			addUser.setString(10, user.getPasswordSalt());
-			addUser.setString(11, user.getPasswordHash());
+			addUser.setString(7, user.getStatusEmoji());
+			addUser.setString(8, user.getStatusText());
+			addUser.setTimestamp(9, user.getRegisteredTime());
+			addUser.setTimestamp(10, user.getLastLoginTime());
+			addUser.setBoolean(11, user.isEmailVerified());
+			addUser.setString(12, user.getPasswordSalt());
+			addUser.setString(13, user.getPasswordHash());
 
 			int rowAffected = addUser.executeUpdate();
 
@@ -271,7 +281,7 @@ public class UserDaoImpl implements UserDao {
 				connection = DbUtil.openConnection();
 			}
 			if (updateUser == null) {
-				updateUser = connection.prepareStatement("UPDATE User SET ID = ?, Email = ?, UserName = ?, Name = ?, Bio = ?, ProfileImage = ?, RegisteredTime = ?, LastLoginTime = ?, EmailVerified = ?, PasswordSalt = ?, PasswordHash = ? WHERE ID = ?;");
+				updateUser = connection.prepareStatement("UPDATE User SET ID = ?, Email = ?, UserName = ?, Name = ?, Bio = ?, ProfileImage = ?, StatusEmoji = ?, StatusText = ?, RegisteredTime = ?, LastLoginTime = ?, EmailVerified = ?, PasswordSalt = ?, PasswordHash = ? WHERE ID = ?;");
 			}
 
 			updateUser.setLong(1, user.getId());
@@ -280,13 +290,15 @@ public class UserDaoImpl implements UserDao {
 			updateUser.setString(4, user.getName());
 			updateUser.setString(5, user.getBio());
 			updateUser.setBlob(6, user.getProfileImage());
-			updateUser.setTimestamp(7, user.getRegisteredTime());
-			updateUser.setTimestamp(8, user.getLastLoginTime());
-			updateUser.setBoolean(9, user.isEmailVerified());
-			updateUser.setString(10, user.getPasswordSalt());
-			updateUser.setString(11, user.getPasswordHash());
+			updateUser.setString(7, user.getStatusEmoji());
+			updateUser.setString(8, user.getStatusText());
+			updateUser.setTimestamp(9, user.getRegisteredTime());
+			updateUser.setTimestamp(10, user.getLastLoginTime());
+			updateUser.setBoolean(11, user.isEmailVerified());
+			updateUser.setString(12, user.getPasswordSalt());
+			updateUser.setString(13, user.getPasswordHash());
 
-			updateUser.setLong(12, user.getId());
+			updateUser.setLong(14, user.getId());
 
 			return updateUser.executeUpdate();
 		} catch (Exception e) {

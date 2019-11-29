@@ -15,11 +15,10 @@ public class ProblemDaoImpl implements ProblemDao {
 
 	private Connection connection;
 	private PreparedStatement getProblemById;
+	private PreparedStatement getProblemByTitle;
 	private PreparedStatement getAllProblems;
 	private PreparedStatement getProblemsByFields;
 	private PreparedStatement addProblem;
-	private PreparedStatement updateProblem;
-	private PreparedStatement deleteProblemById;
 
 	@Override
 	public Problem getProblemById(long id) {
@@ -43,9 +42,49 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setId(rs.getInt("ID"));
 				problem.setTitle(rs.getString("Title"));
 				problem.setContent(rs.getString("Content"));
-				problem.setEdited(rs.getBoolean("Edited"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				problem.setLastEditedTime(rs.getTimestamp("LastEditedTime"));
+				problem.setCreatedByUserId(rs.getInt("CreatedByUserID"));
+
+				return problem;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public Problem getProblemByTitle(String title) {
+		ResultSet rs = null;
+
+		try {
+			if (connection == null) {
+				connection = DbUtil.openConnection();
+			}
+			if (getProblemByTitle == null) {
+				getProblemByTitle = connection.prepareStatement("SELECT * FROM Problem WHERE Title = ?;");
+			}
+
+			getProblemByTitle.setString(1, title);
+
+			rs = getProblemByTitle.executeQuery();
+
+			if (rs.next()) {
+				Problem problem = new Problem();
+
+				problem.setId(rs.getInt("ID"));
+				problem.setTitle(rs.getString("Title"));
+				problem.setContent(rs.getString("Content"));
+				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
 				problem.setCreatedByUserId(rs.getInt("CreatedByUserID"));
 
 				return problem;
@@ -87,9 +126,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setId(rs.getInt("ID"));
 				problem.setTitle(rs.getString("Title"));
 				problem.setContent(rs.getString("Content"));
-				problem.setEdited(rs.getBoolean("Edited"));
 				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				problem.setLastEditedTime(rs.getTimestamp("LastEditedTime"));
 				problem.setCreatedByUserId(rs.getInt("CreatedByUserId"));
 
 				problems.add(problem);
@@ -143,9 +180,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				problem.setId(rs.getInt("Problem.ID"));
 				problem.setTitle(rs.getString("Problem.Title"));
 				problem.setContent(rs.getString("Problem.Content"));
-				problem.setEdited(rs.getBoolean("Problem.Edited"));
 				problem.setCreatedTime(rs.getTimestamp("Problem.CreatedTime"));
-				problem.setLastEditedTime(rs.getTimestamp("Problem.LastEditedTime"));
 				problem.setCreatedByUserId(rs.getInt("Problem.CreatedByUserId"));
 
 				problems.add(problem);
@@ -182,10 +217,8 @@ public class ProblemDaoImpl implements ProblemDao {
 			addProblem.setNull(1, Types.INTEGER);
 			addProblem.setString(2, problem.getTitle());
 			addProblem.setString(3, problem.getContent());
-			addProblem.setBoolean(4, problem.isEdited());
 			addProblem.setTimestamp(5, problem.getCreatedTime());
-			addProblem.setTimestamp(6, problem.getLastEditedTime());
-			addProblem.setInt(7, problem.getCreatedByUserId());
+			addProblem.setLong(7, problem.getCreatedByUserId());
 
 			int rowAffected = addProblem.executeUpdate();
 
@@ -212,54 +245,6 @@ public class ProblemDaoImpl implements ProblemDao {
 	}
 
 	@Override
-	public int updateProblem(Problem problem) {
-		try {
-			if (connection == null) {
-				connection = DbUtil.openConnection();
-			}
-			if (updateProblem == null) {
-				updateProblem = connection.prepareStatement("UPDATE Problem SET ID = ?, Title = ?, Content = ?, Edited = ?, CreatedTime = ?, LastEditedTime = ?, CreatedByUserID = ? WHERE ID = ?;");
-			}
-
-			updateProblem.setLong(1, problem.getId());
-			updateProblem.setString(2, problem.getTitle());
-			updateProblem.setString(3, problem.getContent());
-			updateProblem.setBoolean(4, problem.isEdited());
-			updateProblem.setTimestamp(5, problem.getCreatedTime());
-			updateProblem.setTimestamp(6, problem.getLastEditedTime());
-			updateProblem.setInt(7, problem.getCreatedByUserId());
-
-			updateProblem.setLong(8, problem.getId());
-
-			return updateProblem.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return -1;
-	}
-
-	@Override
-	public int deleteProblemById(long id) {
-		try {
-			if (connection == null) {
-				connection = DbUtil.openConnection();
-			}
-			if (deleteProblemById == null) {
-				deleteProblemById = connection.prepareStatement("DELETE FROM Problem WHERE ID = ?;");
-			}
-
-			deleteProblemById.setLong(1, id);
-
-			return deleteProblemById.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return -1;
-	}
-
-	@Override
 	public boolean getProblemExistsById(long id) {
 		return getProblemById(id) != null;
 	}
@@ -273,17 +258,17 @@ public class ProblemDaoImpl implements ProblemDao {
 			if (getProblemById != null && !getProblemById.isClosed()) {
 				getProblemById.close();
 			}
+			if (getProblemByTitle != null && !getProblemByTitle.isClosed()) {
+				getProblemByTitle.close();
+			}
 			if (getAllProblems != null && !getAllProblems.isClosed()) {
 				getAllProblems.close();
 			}
+			if (getProblemsByFields != null && !getProblemsByFields.isClosed()) {
+				getProblemsByFields.close();
+			}
 			if (addProblem != null && !addProblem.isClosed()) {
 				addProblem.close();
-			}
-			if (updateProblem != null && !updateProblem.isClosed()) {
-				updateProblem.close();
-			}
-			if (deleteProblemById != null && !deleteProblemById.isClosed()) {
-				deleteProblemById.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

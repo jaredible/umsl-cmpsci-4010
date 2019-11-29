@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="Profile" scope="request" />
+<c:set var="profileImage" scope="page">
+	<c:out value="${profileImage}" default="${pageContext.request.contextPath}/img/missing.png" />
+</c:set>
 
 <!DOCTYPE html>
 <html>
@@ -22,13 +25,13 @@
 									<div class="ui secondary raised top attached segment">
 										<h3 class="ui header">Public profile</h3>
 									</div>
-									<form class="ui form raised stacked bottom attached segment" action="${pageContext.request.contextPath}/profile" method="post" enctype="multipart/form-data">
+									<form class="ui form raised stacked bottom attached segment" action="${pageContext.request.contextPath}/settings/profile" method="post" enctype="multipart/form-data">
 										<div class="ui stackable two column grid">
 											<div class="six wide column">
 												<div class="ui field">
 													<div class="m-auto">
 														<div class="ui basic segment">
-															<img id="profilePicture" class="ui medium segment rounded image m-auto p-0 mb-1" src="data:image/jpg;base64,${test}">
+															<img id="profilePicture" class="ui medium segment rounded image m-auto p-0 mb-1" src="${profileImage}">
 															<button id="profileEdit" class="ui secondary button d-block m-auto" type="button">
 																<i class="pencil alternate icon"></i>
 																Edit
@@ -44,7 +47,7 @@
 														<div class="column">
 															<div class="ui field">
 																<label>Email</label>
-																<input class="ui disabled input" type="email" name="email" value="${user.email}" disabled>
+																<input class="ui disabled input" type="email" name="email" value="${email}" disabled>
 															</div>
 														</div>
 													</div>
@@ -52,7 +55,7 @@
 														<div class="column">
 															<div class="ui field">
 																<label>Name</label>
-																<input type="text" name="name" value="${user.name}">
+																<input type="text" name="name" value="${name}">
 															</div>
 														</div>
 													</div>
@@ -62,7 +65,7 @@
 																<label>Status</label>
 																<div class="ui labeled input">
 																	<div class="ui dropdown label">
-																		<input type="hidden" name="statusEmoji" value="confused">
+																		<input type="hidden" name="statusEmoji" value="${statusEmoji}">
 																		<div class="text">
 																			<i class="smile outline icon"></i>
 																		</div>
@@ -79,7 +82,7 @@
 																			</div>
 																		</div>
 																	</div>
-																	<input type="text" name="statusText" value="${status}" placeholder="What's happening?">
+																	<input type="text" name="statusText" value="${statusText}" placeholder="What's happening?">
 																</div>
 															</div>
 														</div>
@@ -87,9 +90,9 @@
 												</div>
 											</div>
 											<div class="sixteen wide column">
-												<div class="ui field ${(errors.bio != null) ? 'error' : ''}">
+												<div class="ui field">
 													<label>Bio</label>
-													<textarea name="bio" placeholder="Tell us a little about yourself"><c:out value="${user.bio}" /></textarea>
+													<textarea name="bio" placeholder="Tell us a little about yourself"><c:out value="${bio}" /></textarea>
 												</div>
 												<div class="ui center aligned basic segment">
 													<button class="ui positive button" type="submit">Update</button>

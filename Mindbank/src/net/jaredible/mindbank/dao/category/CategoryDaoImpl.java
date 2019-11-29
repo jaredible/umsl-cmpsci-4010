@@ -18,7 +18,6 @@ public class CategoryDaoImpl implements CategoryDao {
 	private PreparedStatement getCategoryByName;
 	private PreparedStatement getAllCategories;
 	private PreparedStatement addCategory;
-	private PreparedStatement deleteCategoryById;
 
 	@Override
 	public Category getCategoryById(long id) {
@@ -160,7 +159,7 @@ public class CategoryDaoImpl implements CategoryDao {
 			addCategory.setNull(1, Types.INTEGER);
 			addCategory.setString(2, category.getName());
 			addCategory.setTimestamp(3, category.getCreatedTime());
-			addCategory.setInt(4, category.getCreatedByUserId());
+			addCategory.setLong(4, category.getCreatedByUserId());
 
 			int rowAffected = addCategory.executeUpdate();
 
@@ -187,26 +186,6 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public int deleteCategoryById(long id) {
-		try {
-			if (connection == null) {
-				connection = DbUtil.openConnection();
-			}
-			if (deleteCategoryById == null) {
-				deleteCategoryById = connection.prepareStatement("DELETE FROM Category WHERE ID = ?;");
-			}
-
-			deleteCategoryById.setLong(1, id);
-
-			return deleteCategoryById.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return -1;
-	}
-
-	@Override
 	protected void finalize() {
 		try {
 			if (connection != null && !connection.isClosed()) {
@@ -223,9 +202,6 @@ public class CategoryDaoImpl implements CategoryDao {
 			}
 			if (addCategory != null && !addCategory.isClosed()) {
 				addCategory.close();
-			}
-			if (deleteCategoryById != null && !deleteCategoryById.isClosed()) {
-				deleteCategoryById.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

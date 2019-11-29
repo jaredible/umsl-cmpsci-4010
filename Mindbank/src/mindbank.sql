@@ -12,6 +12,8 @@ CREATE TABLE User (
 	Name VARCHAR (20),
 	Bio VARCHAR (420),
 	ProfileImage BLOB,
+	StatusEmoji VARCHAR (50),
+	StatusText VARCHAR (50),
 	RegisteredTime DATETIME DEFAULT NOW(),
 	LastLoginTime DATETIME NOT NULL DEFAULT NOW(),
 	EmailVerified BOOLEAN NOT NULL DEFAULT FALSE,
@@ -51,24 +53,11 @@ CREATE TABLE Category (
 
 CREATE TABLE Problem (
 	ID INT NOT NULL AUTO_INCREMENT,
-	Title VARCHAR (50) NOT NULL,
+	Title VARCHAR (50) NOT NULL UNIQUE,
 	Content TEXT NOT NULL,
-	Edited BOOLEAN DEFAULT FALSE NOT NULL,
-	CreatedTime DATETIME NOT NULL DEFAULT NOW(),
-	LastEditedTime DATETIME NOT NULL DEFAULT NOW(),
-	CreatedByUserID INT NOT NULL,
-	PRIMARY KEY (ID),
-	FOREIGN KEY (CreatedByUserID) REFERENCES User(ID)
-);
-
-CREATE TABLE Comment (
-	ID INT NOT NULL AUTO_INCREMENT,
-	ProblemID INT NOT NULL,
-	Content VARCHAR (1000) NOT NULL,
 	CreatedTime DATETIME NOT NULL DEFAULT NOW(),
 	CreatedByUserID INT NOT NULL,
 	PRIMARY KEY (ID),
-	FOREIGN KEY (ProblemID) REFERENCES Problem(ID),
 	FOREIGN KEY (CreatedByUserID) REFERENCES User(ID)
 );
 
@@ -117,16 +106,12 @@ INSERT INTO Category (ID, Name, CreatedTime, CreatedByUserID) VALUES
 (NULL, "4010", "2019-11-23 21:52:29", 1),
 (NULL, "Quiz", "2019-11-23 21:52:30", 1);
 
-INSERT INTO Problem (ID, Title, Content, Edited, CreatedTime, LastEditedTime, CreatedByUserID) VALUES
-(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 1", "This is the first question.", FALSE, "2019-11-23 21:52:24", "2019-11-23 21:52:24", 1),
-(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 2", "This is the second question.", FALSE, "2019-11-23 21:52:25", "2019-11-23 21:52:25", 1),
-(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 3", "This is the third question.", FALSE, "2019-11-23 21:52:26", "2019-11-23 21:52:26", 1),
-(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 4", "This is the fourth question.", FALSE, "2019-11-23 21:52:27", "2019-11-23 21:52:27", 1),
-(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 5", "This is the fifth question.", FALSE, "2019-11-23 21:52:28", "2019-11-23 21:52:28", 1);
-
-INSERT INTO Comment (ID, ProblemID, Content, CreatedTime, CreatedByUserID) VALUES
-(NULL, 1, "This is the first comment.", "2019-11-23 21:52:24", 1),
-(NULL, 1, "This is the second comment.", "2019-11-23 21:52:25", 1);
+INSERT INTO Problem (ID, Title, Content, CreatedTime, CreatedByUserID) VALUES
+(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 1", "This is the first question.", "2019-11-23 21:52:24", 1),
+(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 2", "This is the second question.", "2019-11-23 21:52:25", 1),
+(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 3", "This is the third question.", "2019-11-23 21:52:26", 1),
+(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 4", "This is the fourth question.", "2019-11-23 21:52:27", 1),
+(NULL, "UMSL CMPSCI 4010 Quiz 3 Question 5", "This is the fifth question.", "2019-11-23 21:52:28", 1);
 
 INSERT INTO ProblemCategory (ID, ProblemID, CategoryID) VALUES
 (NULL, 1, 1),

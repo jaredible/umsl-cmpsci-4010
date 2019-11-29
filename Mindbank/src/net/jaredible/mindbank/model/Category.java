@@ -7,12 +7,12 @@ public class Category {
 	private long id;
 	private String name;
 	private Timestamp createdTime;
-	private int createdByUserId;
+	private long createdByUserId;
 
 	public Category() {
 	}
 
-	public Category(long id, String name, Timestamp createdTime, int createdByUserId) {
+	public Category(long id, String name, Timestamp createdTime, long createdByUserId) {
 		this.id = id;
 		this.name = name;
 		this.createdTime = createdTime;
@@ -43,11 +43,11 @@ public class Category {
 		this.createdTime = createdTime;
 	}
 
-	public int getCreatedByUserId() {
+	public long getCreatedByUserId() {
 		return createdByUserId;
 	}
 
-	public void setCreatedByUserId(int createdByUserId) {
+	public void setCreatedByUserId(long createdByUserId) {
 		this.createdByUserId = createdByUserId;
 	}
 

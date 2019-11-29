@@ -6,14 +6,12 @@ import net.jaredible.mindbank.model.Tag;
 
 public interface TagDao {
 
-	Tag getTagById(long i);
+	Tag getTagById(long id);
 
-	Tag getTagByName(String s);
+	Tag getTagByName(String name);
 
 	List<Tag> getAllTags();
 
-	long addTag(Tag t);
-
-	int deleteTagById(long i);
+	long addTag(Tag tag);
 
 }

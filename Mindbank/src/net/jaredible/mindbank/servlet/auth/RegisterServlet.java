@@ -84,7 +84,7 @@ public class RegisterServlet extends HttpServlet {
 
 			userDao.addUser(user);
 
-			response.sendRedirect("login");
+			response.sendRedirect(getServletContext().getContextPath() + "/login");
 		} else {
 			request.setAttribute("email", email);
 			request.setAttribute("userName", username);

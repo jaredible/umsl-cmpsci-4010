@@ -11,6 +11,8 @@ public class User {
 	private String name;
 	private String bio;
 	private Blob profileImage;
+	private String statusEmoji;
+	private String statusText;
 	private Timestamp registeredTime;
 	private Timestamp lastLoginTime;
 	private boolean emailVerified;
@@ -20,7 +22,7 @@ public class User {
 	public User() {
 	}
 
-	public User(long id, String email, String userName, String name, String bio, Blob profileImage, Timestamp registeredTime, Timestamp lastLoginTime, boolean emailVerified, String passwordSalt, String passwordHash) {
+	public User(long id, String email, String userName, String name, String bio, Blob profileImage, String statusEmoji, String statusText, Timestamp registeredTime, Timestamp lastLoginTime, boolean emailVerified, String passwordSalt, String passwordHash) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -28,6 +30,8 @@ public class User {
 		this.name = name;
 		this.bio = bio;
 		this.profileImage = profileImage;
+		this.statusEmoji = statusEmoji;
+		this.statusText = statusText;
 		this.registeredTime = registeredTime;
 		this.lastLoginTime = lastLoginTime;
 		this.emailVerified = emailVerified;
@@ -81,6 +85,22 @@ public class User {
 
 	public void setProfileImage(Blob profileImage) {
 		this.profileImage = profileImage;
+	}
+
+	public String getStatusEmoji() {
+		return statusEmoji;
+	}
+
+	public void setStatusEmoji(String statusEmoji) {
+		this.statusEmoji = statusEmoji;
+	}
+
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
 	}
 
 	public Timestamp getRegisteredTime() {

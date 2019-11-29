@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +23,6 @@ import net.jaredible.mindbank.model.AuthToken;
 import net.jaredible.mindbank.model.User;
 import net.jaredible.mindbank.util.SecurityUtil;
 
-@WebFilter(urlPatterns = { "/newProblem", "/newCategory", "/newTag", "/settings/*", "/logout" })
 public class AuthFilter implements Filter {
 
 	public AuthFilter() {
@@ -65,16 +63,18 @@ public class AuthFilter implements Filter {
 
 					if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
 						UserDao userDao = new UserDaoImpl();
-						User user = userDao.getUserById(authToken.getId());
+						User user = userDao.getUserById(authToken.getUserId());
 
 						session = req.getSession();
 						session.setAttribute("user", user);
 						loggedIn = true;
 
+						String newSecretKey = SecurityUtil.generateRandomSalt();
 						String newSelector = RandomStringUtils.randomAlphanumeric(12);
 						String newRawValidator = RandomStringUtils.randomAlphanumeric(64);
-						String newHashedValidator = SecurityUtil.generateSHA512Hash(newRawValidator, tokenSecretKey);
+						String newHashedValidator = SecurityUtil.generateSHA512Hash(newRawValidator, newSecretKey);
 
+						authToken.setSecretKey(newSecretKey);
 						authToken.setSelector(newSelector);
 						authToken.setValidator(newHashedValidator);
 						tokenDao.updateToken(authToken);
@@ -87,15 +87,16 @@ public class AuthFilter implements Filter {
 
 						res.addCookie(cookieSelector);
 						res.addCookie(cookieValidator);
+						// res.addCookie(new Cookie("selector", "test"));
 					}
 				}
 			}
 		}
 
 		if (loggedIn) {
-			chain.doFilter(request, response);
+			chain.doFilter(req, res);
 		} else {
-			res.sendRedirect("login");
+			res.sendRedirect(req.getServletContext().getContextPath() + "/login");
 		}
 	}
 

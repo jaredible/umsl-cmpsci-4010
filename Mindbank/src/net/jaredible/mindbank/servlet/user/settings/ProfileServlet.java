@@ -3,7 +3,6 @@ package net.jaredible.mindbank.servlet.user.settings;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.Base64;
 
 import javax.servlet.ServletException;
@@ -32,86 +31,80 @@ public class ProfileServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("id");
+		User user = (User) request.getSession(false).getAttribute("user");
 
-		UserDao userDao = new UserDaoImpl();
-		User user;
+		System.out.println(user.getEmail());
 
-		if (userId != null) {
-			user = userDao.getUserById(Long.parseLong(userId));
-		} else {
-			user = (User) request.getSession(false).getAttribute("user");
-		}
+		String profileImage = null;
+		String email = user.getEmail();
+		String name = user.getName();
+		String statusEmoji = user.getStatusEmoji();
+		String statusText = user.getStatusText();
+		String bio = user.getBio();
 
-		user = userDao.getUserById(1);
-
-		InputStream is = null;
 		try {
-			Blob blob = user.getProfileImage();
-			if (blob != null) {
-				is = blob.getBinaryStream();
+			Blob image = user.getProfileImage();
+			if (image != null) {
+				profileImage = "data:image/jpg;base64," + Base64.getEncoder().encodeToString(IOUtils.toByteArray(image.getBinaryStream()));
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (is != null) {
-			String test = Base64.getEncoder().encodeToString(IOUtils.toByteArray(is));
-			request.setAttribute("test", test);
-		}
 
-		// request.setAttribute("name", user.getName());
-		// request.setAttribute("bio", user.getBio());
+		request.setAttribute("profileImage", profileImage);
+		request.setAttribute("email", email);
+		request.setAttribute("name", name);
+		request.setAttribute("statusEmoji", statusEmoji);
+		request.setAttribute("statusText", statusText);
+		request.setAttribute("bio", bio);
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/user/settings/profile.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Part filePart = request.getPart("profileImage");
 		String name = request.getParameter("name");
+		String statusEmoji = request.getParameter("statusEmoji");
+		String statusText = request.getParameter("statusText");
 		String bio = request.getParameter("bio");
 
-		System.out.println(name);
-		System.out.println(bio);
+		UserDao userDao = new UserDaoImpl();
+		User user = (User) request.getSession(false).getAttribute("user");
 
 		InputStream is = null;
-
-		Part filePart = request.getPart("profileImage");
 		if (filePart != null) {
-			System.out.println(filePart.getName());
-			System.out.println(filePart.getSize());
-			System.out.println(filePart.getContentType());
-
 			is = filePart.getInputStream();
-		}
-
-		UserDao userDao = new UserDaoImpl();
-		User user = userDao.getUserById(1);
-
-		user.setName(name);
-		user.setBio(bio);
-
-		if (is != null) {
-			try {
-				user.setProfileImage(new SerialBlob(IOUtils.toByteArray(is)));
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (is != null) {
+				try {
+					user.setProfileImage(new SerialBlob(IOUtils.toByteArray(is)));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
+		user.setName(name);
+		user.setStatusEmoji(statusEmoji);
+		user.setStatusText(statusText);
+		user.setBio(bio);
 
 		userDao.updateUser(user);
 
+		String profileImage = null;
+		String email = user.getEmail();
+
 		try {
-			Blob blob = user.getProfileImage();
-			if (blob != null) {
-				is = blob.getBinaryStream();
+			Blob image = user.getProfileImage();
+			if (image != null) {
+				profileImage = "data:image/jpg;base64," + Base64.getEncoder().encodeToString(IOUtils.toByteArray(image.getBinaryStream()));
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (is != null) {
-			String test = Base64.getEncoder().encodeToString(IOUtils.toByteArray(is));
-			request.setAttribute("test", test);
-		}
 
+		request.setAttribute("profileImage", profileImage);
+		request.setAttribute("email", email);
 		request.setAttribute("name", name);
+		request.setAttribute("statusEmoji", statusEmoji);
+		request.setAttribute("statusText", statusText);
 		request.setAttribute("bio", bio);
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/user/settings/profile.jsp").forward(request, response);
 	}

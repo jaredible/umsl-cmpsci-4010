@@ -6,14 +6,12 @@ import net.jaredible.mindbank.model.Category;
 
 public interface CategoryDao {
 
-	Category getCategoryById(long i);
+	Category getCategoryById(long id);
 
-	Category getCategoryByName(String s);
+	Category getCategoryByName(String name);
 
 	List<Category> getAllCategories();
 
-	long addCategory(Category c);
-
-	int deleteCategoryById(long i);
+	long addCategory(Category category);
 
 }

@@ -18,7 +18,6 @@ public class TagDaoImpl implements TagDao {
 	private PreparedStatement getTagByName;
 	private PreparedStatement getAllTags;
 	private PreparedStatement addTag;
-	private PreparedStatement deleteTagById;
 
 	@Override
 	public Tag getTagById(long id) {
@@ -160,7 +159,7 @@ public class TagDaoImpl implements TagDao {
 			addTag.setNull(1, Types.INTEGER);
 			addTag.setString(2, tag.getName());
 			addTag.setTimestamp(3, tag.getCreatedTime());
-			addTag.setInt(4, tag.getCreatedByUserId());
+			addTag.setLong(4, tag.getCreatedByUserId());
 
 			int rowAffected = addTag.executeUpdate();
 
@@ -187,26 +186,6 @@ public class TagDaoImpl implements TagDao {
 	}
 
 	@Override
-	public int deleteTagById(long id) {
-		try {
-			if (connection == null) {
-				connection = DbUtil.openConnection();
-			}
-			if (deleteTagById == null) {
-				deleteTagById = connection.prepareStatement("DELETE FROM Tag WHERE ID = ?;");
-			}
-
-			deleteTagById.setLong(1, id);
-
-			return deleteTagById.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return -1;
-	}
-
-	@Override
 	protected void finalize() {
 		try {
 			if (connection != null && !connection.isClosed()) {
@@ -223,9 +202,6 @@ public class TagDaoImpl implements TagDao {
 			}
 			if (addTag != null && !addTag.isClosed()) {
 				addTag.close();
-			}
-			if (deleteTagById != null && !deleteTagById.isClosed()) {
-				deleteTagById.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

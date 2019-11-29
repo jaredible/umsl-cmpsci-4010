@@ -8,15 +8,13 @@ public interface ProblemDao {
 
 	Problem getProblemById(long id);
 
+	Problem getProblemByTitle(String title);
+
 	List<Problem> getAllProblems();
 
 	List<Problem> getProblemsByFields(String titleLike, String categoryIdsRegex, String tagIdsRegex, String contentLike, String dateCreatedStart, String dateCreatedEnd, String userIdsRegex);
 
 	long addProblem(Problem problem);
-
-	int updateProblem(Problem problem);
-
-	int deleteProblemById(long id);
 
 	boolean getProblemExistsById(long id);
 

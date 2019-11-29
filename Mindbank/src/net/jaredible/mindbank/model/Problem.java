@@ -7,21 +7,17 @@ public class Problem {
 	private long id;
 	private String title;
 	private String content;
-	private boolean edited;
 	private Timestamp createdTime;
-	private Timestamp lastEditedTime;
-	private int createdByUserId;
+	private long createdByUserId;
 
 	public Problem() {
 	}
 
-	public Problem(long id, String title, String content, boolean edited, Timestamp createdTime, Timestamp lastEditedTime, int createdByUserId) {
+	public Problem(long id, String title, String content, Timestamp createdTime, long createdByUserId) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
-		this.edited = edited;
 		this.createdTime = createdTime;
-		this.lastEditedTime = lastEditedTime;
 		this.createdByUserId = createdByUserId;
 	}
 
@@ -49,14 +45,6 @@ public class Problem {
 		this.content = content;
 	}
 
-	public boolean isEdited() {
-		return edited;
-	}
-
-	public void setEdited(boolean edited) {
-		this.edited = edited;
-	}
-
 	public Timestamp getCreatedTime() {
 		return createdTime;
 	}
@@ -65,19 +53,11 @@ public class Problem {
 		this.createdTime = createdTime;
 	}
 
-	public Timestamp getLastEditedTime() {
-		return lastEditedTime;
-	}
-
-	public void setLastEditedTime(Timestamp lastEditedTime) {
-		this.lastEditedTime = lastEditedTime;
-	}
-
-	public int getCreatedByUserId() {
+	public long getCreatedByUserId() {
 		return createdByUserId;
 	}
 
-	public void setCreatedByUserId(int createdByUserId) {
+	public void setCreatedByUserId(long createdByUserId) {
 		this.createdByUserId = createdByUserId;
 	}
 
