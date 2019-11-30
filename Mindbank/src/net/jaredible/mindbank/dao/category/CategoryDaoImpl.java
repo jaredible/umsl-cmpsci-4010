@@ -3,6 +3,7 @@ package net.jaredible.mindbank.dao.category;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -37,14 +38,7 @@ public class CategoryDaoImpl implements CategoryDao {
 			rs = getCategoryById.executeQuery();
 
 			if (rs.next()) {
-				Category category = new Category();
-
-				category.setId(rs.getInt("ID"));
-				category.setName(rs.getString("Name"));
-				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
-
-				return category;
+				return extractCategoryFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,14 +72,7 @@ public class CategoryDaoImpl implements CategoryDao {
 			rs = getCategoryByName.executeQuery();
 
 			if (rs.next()) {
-				Category category = new Category();
-
-				category.setId(rs.getInt("ID"));
-				category.setName(rs.getString("Name"));
-				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
-
-				return category;
+				return extractCategoryFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,14 +106,7 @@ public class CategoryDaoImpl implements CategoryDao {
 			List<Category> categories = new ArrayList<Category>();
 
 			while (rs.next()) {
-				Category category = new Category();
-
-				category.setId(rs.getInt("ID"));
-				category.setName(rs.getString("Name"));
-				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
-
-				categories.add(category);
+				categories.add(extractCategoryFromResultSet(rs));
 			}
 
 			return categories;
@@ -164,14 +144,7 @@ public class CategoryDaoImpl implements CategoryDao {
 			List<Category> categories = new ArrayList<Category>();
 
 			while (rs.next()) {
-				Category category = new Category();
-
-				category.setId(rs.getInt("ID"));
-				category.setName(rs.getString("Name"));
-				category.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
-
-				categories.add(category);
+				categories.add(extractCategoryFromResultSet(rs));
 			}
 
 			return categories;
@@ -229,6 +202,17 @@ public class CategoryDaoImpl implements CategoryDao {
 		}
 
 		return -1;
+	}
+
+	private Category extractCategoryFromResultSet(ResultSet rs) throws SQLException {
+		Category category = new Category();
+
+		category.setId(rs.getInt("ID"));
+		category.setName(rs.getString("Name"));
+		category.setCreatedTime(rs.getTimestamp("CreatedTime"));
+		category.setCreatedByUserId(rs.getInt("CreatedByUserID"));
+
+		return category;
 	}
 
 	@Override

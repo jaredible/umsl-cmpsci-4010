@@ -33,8 +33,6 @@ public class ProfileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User) request.getSession(false).getAttribute("user");
 
-		System.out.println(user.getEmail());
-
 		String profileImage = null;
 		String email = user.getEmail();
 		String name = user.getName();

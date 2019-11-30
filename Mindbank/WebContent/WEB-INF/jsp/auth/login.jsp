@@ -34,7 +34,15 @@
 										<input type="password" name="password" value="${password}">
 									</div>
 									<div class="field">
-										<p><a href="${pageContext.request.contextPath}/forgotPassword">Forgot Password?</a></p>
+										<div class="ui checkbox">
+											<input id="showPassword" type="checkbox">
+											<label for="showPassword">Show password</label>
+										</div>
+									</div>
+									<div class="field">
+										<p class="ui">
+											<a href="${pageContext.request.contextPath}/forgotPassword">Forgot Password?</a>
+										</p>
 									</div>
 									<div class="inline field">
 										<div class="ui checkbox">

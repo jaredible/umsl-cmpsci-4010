@@ -3,6 +3,7 @@ package net.jaredible.mindbank.dao.user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -40,26 +41,7 @@ public class UserDaoImpl implements UserDao {
 			rs = getUserById.executeQuery();
 
 			if (rs.next()) {
-				User user = new User();
-
-				user.setId(rs.getInt("ID"));
-				user.setEmail(rs.getString("Email"));
-				user.setUserName(rs.getString("UserName"));
-				user.setName(rs.getString("Name"));
-				user.setBio(rs.getString("Bio"));
-				user.setProfileImage(rs.getBlob("ProfileImage"));
-				user.setStatusEmoji(rs.getString("StatusEmoji"));
-				user.setStatusText(rs.getString("StatusText"));
-				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
-				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
-				user.setEmailVerified(rs.getBoolean("EmailVerified"));
-				user.setPasswordSalt(rs.getString("PasswordSalt"));
-				user.setPasswordHash(rs.getString("PasswordHash"));
-				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
-				user.setCookieSelector(rs.getString("CookieSelector"));
-				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
-
-				return user;
+				return extractUserFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,26 +75,7 @@ public class UserDaoImpl implements UserDao {
 			rs = getUserByEmail.executeQuery();
 
 			if (rs.next()) {
-				User user = new User();
-
-				user.setId(rs.getInt("ID"));
-				user.setEmail(rs.getString("Email"));
-				user.setUserName(rs.getString("UserName"));
-				user.setName(rs.getString("Name"));
-				user.setBio(rs.getString("Bio"));
-				user.setProfileImage(rs.getBlob("ProfileImage"));
-				user.setStatusEmoji(rs.getString("StatusEmoji"));
-				user.setStatusText(rs.getString("StatusText"));
-				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
-				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
-				user.setEmailVerified(rs.getBoolean("EmailVerified"));
-				user.setPasswordSalt(rs.getString("PasswordSalt"));
-				user.setPasswordHash(rs.getString("PasswordHash"));
-				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
-				user.setCookieSelector(rs.getString("CookieSelector"));
-				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
-
-				return user;
+				return extractUserFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,26 +109,7 @@ public class UserDaoImpl implements UserDao {
 			rs = getUserByUserName.executeQuery();
 
 			if (rs.next()) {
-				User user = new User();
-
-				user.setId(rs.getInt("ID"));
-				user.setEmail(rs.getString("Email"));
-				user.setUserName(rs.getString("UserName"));
-				user.setName(rs.getString("Name"));
-				user.setBio(rs.getString("Bio"));
-				user.setProfileImage(rs.getBlob("ProfileImage"));
-				user.setStatusEmoji(rs.getString("StatusEmoji"));
-				user.setStatusText(rs.getString("StatusText"));
-				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
-				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
-				user.setEmailVerified(rs.getBoolean("EmailVerified"));
-				user.setPasswordSalt(rs.getString("PasswordSalt"));
-				user.setPasswordHash(rs.getString("PasswordHash"));
-				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
-				user.setCookieSelector(rs.getString("CookieSelector"));
-				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
-
-				return user;
+				return extractUserFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -199,26 +143,7 @@ public class UserDaoImpl implements UserDao {
 			rs = getUserByCookieSelector.executeQuery();
 
 			if (rs.next()) {
-				User user = new User();
-
-				user.setId(rs.getInt("ID"));
-				user.setEmail(rs.getString("Email"));
-				user.setUserName(rs.getString("UserName"));
-				user.setName(rs.getString("Name"));
-				user.setBio(rs.getString("Bio"));
-				user.setProfileImage(rs.getBlob("ProfileImage"));
-				user.setStatusEmoji(rs.getString("StatusEmoji"));
-				user.setStatusText(rs.getString("StatusText"));
-				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
-				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
-				user.setEmailVerified(rs.getBoolean("EmailVerified"));
-				user.setPasswordSalt(rs.getString("PasswordSalt"));
-				user.setPasswordHash(rs.getString("PasswordHash"));
-				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
-				user.setCookieSelector(rs.getString("CookieSelector"));
-				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
-
-				return user;
+				return extractUserFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -252,26 +177,7 @@ public class UserDaoImpl implements UserDao {
 			List<User> users = new ArrayList<User>();
 
 			while (rs.next()) {
-				User user = new User();
-
-				user.setId(rs.getInt("ID"));
-				user.setEmail(rs.getString("Email"));
-				user.setUserName(rs.getString("UserName"));
-				user.setName(rs.getString("Name"));
-				user.setBio(rs.getString("Bio"));
-				user.setProfileImage(rs.getBlob("ProfileImage"));
-				user.setStatusEmoji(rs.getString("StatusEmoji"));
-				user.setStatusText(rs.getString("StatusText"));
-				user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
-				user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
-				user.setEmailVerified(rs.getBoolean("EmailVerified"));
-				user.setPasswordSalt(rs.getString("PasswordSalt"));
-				user.setPasswordHash(rs.getString("PasswordHash"));
-				user.setCookieSecretKey(rs.getString("CookieSecretKey"));
-				user.setCookieSelector(rs.getString("CookieSelector"));
-				user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
-
-				users.add(user);
+				users.add(extractUserFromResultSet(rs));
 			}
 
 			return users;
@@ -398,6 +304,29 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		return -1;
+	}
+
+	private User extractUserFromResultSet(ResultSet rs) throws SQLException {
+		User user = new User();
+
+		user.setId(rs.getInt("ID"));
+		user.setEmail(rs.getString("Email"));
+		user.setUserName(rs.getString("UserName"));
+		user.setName(rs.getString("Name"));
+		user.setBio(rs.getString("Bio"));
+		user.setProfileImage(rs.getBlob("ProfileImage"));
+		user.setStatusEmoji(rs.getString("StatusEmoji"));
+		user.setStatusText(rs.getString("StatusText"));
+		user.setRegisteredTime(rs.getTimestamp("RegisteredTime"));
+		user.setLastLoginTime(rs.getTimestamp("LastLoginTime"));
+		user.setEmailVerified(rs.getBoolean("EmailVerified"));
+		user.setPasswordSalt(rs.getString("PasswordSalt"));
+		user.setPasswordHash(rs.getString("PasswordHash"));
+		user.setCookieSecretKey(rs.getString("CookieSecretKey"));
+		user.setCookieSelector(rs.getString("CookieSelector"));
+		user.setHashedCookieValidator(rs.getString("HashedCookieValidator"));
+
+		return user;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package net.jaredible.mindbank.dao.tag;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -36,14 +37,7 @@ public class TagDaoImpl implements TagDao {
 			rs = getTagById.executeQuery();
 
 			if (rs.next()) {
-				Tag tag = new Tag();
-
-				tag.setId(rs.getInt("ID"));
-				tag.setName(rs.getString("Name"));
-				tag.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				tag.setCreatedByUserId(rs.getInt("CreatedByUserID"));
-
-				return tag;
+				return extractTagFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,14 +71,7 @@ public class TagDaoImpl implements TagDao {
 			rs = getTagByName.executeQuery();
 
 			if (rs.next()) {
-				Tag tag = new Tag();
-
-				tag.setId(rs.getInt("ID"));
-				tag.setName(rs.getString("Name"));
-				tag.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				tag.setCreatedByUserId(rs.getInt("CreatedByUserID"));
-
-				return tag;
+				return extractTagFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,14 +105,7 @@ public class TagDaoImpl implements TagDao {
 			List<Tag> tags = new ArrayList<Tag>();
 
 			while (rs.next()) {
-				Tag tag = new Tag();
-
-				tag.setId(rs.getInt("ID"));
-				tag.setName(rs.getString("Name"));
-				tag.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				tag.setCreatedByUserId(rs.getInt("CreatedByUserID"));
-
-				tags.add(tag);
+				tags.add(extractTagFromResultSet(rs));
 			}
 
 			return tags;
@@ -183,6 +163,17 @@ public class TagDaoImpl implements TagDao {
 		}
 
 		return -1;
+	}
+
+	private Tag extractTagFromResultSet(ResultSet rs) throws SQLException {
+		Tag tag = new Tag();
+
+		tag.setId(rs.getInt("ID"));
+		tag.setName(rs.getString("Name"));
+		tag.setCreatedTime(rs.getTimestamp("CreatedTime"));
+		tag.setCreatedByUserId(rs.getInt("CreatedByUserID"));
+
+		return tag;
 	}
 
 	@Override

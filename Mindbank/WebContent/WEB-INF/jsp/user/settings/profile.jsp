@@ -11,6 +11,7 @@
 		<%@ include file="../../partial/head.jsp" %>
 	</head>
 	<body>
+		<%@ include file="../../partial/modals.jsp" %>
 		<%@ include file="../../partial/sidemenu.jsp" %>
 		
 		<div class="pusher">
@@ -67,7 +68,7 @@
 																	<div class="ui dropdown label">
 																		<input type="hidden" name="statusEmoji" value="${statusEmoji}">
 																		<div class="text">
-																			<i class="smile outline icon"></i>
+																			<i class="grin outline icon"></i>
 																		</div>
 																		<i class="dropdown icon"></i>
 																		<div class="menu">

@@ -3,6 +3,7 @@ package net.jaredible.mindbank.dao.problem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -37,15 +38,7 @@ public class ProblemDaoImpl implements ProblemDao {
 			rs = getProblemById.executeQuery();
 
 			if (rs.next()) {
-				Problem problem = new Problem();
-
-				problem.setId(rs.getInt("ID"));
-				problem.setTitle(rs.getString("Title"));
-				problem.setContent(rs.getString("Content"));
-				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				problem.setCreatedByUserId(rs.getInt("CreatedByUserID"));
-
-				return problem;
+				return extractProblemFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,15 +72,7 @@ public class ProblemDaoImpl implements ProblemDao {
 			rs = getProblemByTitle.executeQuery();
 
 			if (rs.next()) {
-				Problem problem = new Problem();
-
-				problem.setId(rs.getInt("ID"));
-				problem.setTitle(rs.getString("Title"));
-				problem.setContent(rs.getString("Content"));
-				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				problem.setCreatedByUserId(rs.getInt("CreatedByUserID"));
-
-				return problem;
+				return extractProblemFromResultSet(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,7 +98,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				connection = DbUtil.openConnection();
 			}
 			if (getAllProblems == null) {
-				getAllProblems = connection.prepareStatement("SELECT * FROM Problem;");
+				getAllProblems = connection.prepareStatement("SELECT * FROM Problem ORDER BY CreatedTime DESC, Title ASC;");
 			}
 
 			rs = getAllProblems.executeQuery();
@@ -121,15 +106,7 @@ public class ProblemDaoImpl implements ProblemDao {
 			List<Problem> problems = new ArrayList<Problem>();
 
 			while (rs.next()) {
-				Problem problem = new Problem();
-
-				problem.setId(rs.getInt("ID"));
-				problem.setTitle(rs.getString("Title"));
-				problem.setContent(rs.getString("Content"));
-				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				problem.setCreatedByUserId(rs.getInt("CreatedByUserId"));
-
-				problems.add(problem);
+				problems.add(extractProblemFromResultSet(rs));
 			}
 
 			return problems;
@@ -157,7 +134,7 @@ public class ProblemDaoImpl implements ProblemDao {
 				connection = DbUtil.openConnection();
 			}
 			if (getProblemsByFields == null) {
-				getProblemsByFields = connection.prepareStatement("SELECT Problem.* FROM Problem LEFT OUTER JOIN ProblemCategory ON ProblemCategory.ProblemID = Problem.ID LEFT OUTER JOIN ProblemTag ON ProblemTag.ProblemID = Problem.ID WHERE Problem.Title LIKE ? AND ProblemCategory.CategoryID REGEXP ? AND ProblemTag.TagID REGEXP ? AND Problem.Content LIKE ? AND Problem.CreatedTime BETWEEN ? AND ? AND Problem.CreatedByUserID REGEXP ? GROUP BY Problem.ID;");
+				getProblemsByFields = connection.prepareStatement("SELECT Problem.* FROM Problem LEFT OUTER JOIN ProblemCategory ON ProblemCategory.ProblemID = Problem.ID LEFT OUTER JOIN ProblemTag ON ProblemTag.ProblemID = Problem.ID WHERE Problem.Title LIKE ? AND ProblemCategory.CategoryID REGEXP ? AND ProblemTag.TagID REGEXP ? AND Problem.Content LIKE ? AND Problem.CreatedTime BETWEEN ? AND ? AND Problem.CreatedByUserID REGEXP ? GROUP BY Problem.ID ORDER BY Problem.CreatedTime DESC, Problem.Title ASC;");
 			}
 
 			getProblemsByFields.setString(1, "%" + titleLike + "%");
@@ -168,22 +145,12 @@ public class ProblemDaoImpl implements ProblemDao {
 			getProblemsByFields.setString(6, dateCreatedEnd);
 			getProblemsByFields.setString(7, userIdsRegex);
 
-			System.out.println(getProblemsByFields.toString());
-
 			rs = getProblemsByFields.executeQuery();
 
 			List<Problem> problems = new ArrayList<Problem>();
 
 			while (rs.next()) {
-				Problem problem = new Problem();
-
-				problem.setId(rs.getInt("ID"));
-				problem.setTitle(rs.getString("Title"));
-				problem.setContent(rs.getString("Content"));
-				problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
-				problem.setCreatedByUserId(rs.getInt("CreatedByUserId"));
-
-				problems.add(problem);
+				problems.add(extractProblemFromResultSet(rs));
 			}
 
 			return problems;
@@ -211,14 +178,14 @@ public class ProblemDaoImpl implements ProblemDao {
 				connection = DbUtil.openConnection();
 			}
 			if (addProblem == null) {
-				addProblem = connection.prepareStatement("INSERT INTO Problem (ID, Title, Content, Edited, CreatedTime, LastEditedTime, CreatedByUserID) VALUES (?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+				addProblem = connection.prepareStatement("INSERT INTO Problem (ID, Title, Content, CreatedTime, CreatedByUserID) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 			}
 
 			addProblem.setNull(1, Types.INTEGER);
 			addProblem.setString(2, problem.getTitle());
 			addProblem.setString(3, problem.getContent());
-			addProblem.setTimestamp(5, problem.getCreatedTime());
-			addProblem.setLong(7, problem.getCreatedByUserId());
+			addProblem.setTimestamp(4, problem.getCreatedTime());
+			addProblem.setLong(5, problem.getCreatedByUserId());
 
 			int rowAffected = addProblem.executeUpdate();
 
@@ -247,6 +214,18 @@ public class ProblemDaoImpl implements ProblemDao {
 	@Override
 	public boolean getProblemExistsById(long id) {
 		return getProblemById(id) != null;
+	}
+
+	private Problem extractProblemFromResultSet(ResultSet rs) throws SQLException {
+		Problem problem = new Problem();
+
+		problem.setId(rs.getInt("ID"));
+		problem.setTitle(rs.getString("Title"));
+		problem.setContent(rs.getString("Content"));
+		problem.setCreatedTime(rs.getTimestamp("CreatedTime"));
+		problem.setCreatedByUserId(rs.getInt("CreatedByUserID"));
+
+		return problem;
 	}
 
 	@Override

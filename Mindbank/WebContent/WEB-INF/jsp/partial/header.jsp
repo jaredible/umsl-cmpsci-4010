@@ -26,10 +26,17 @@
 							<img class="ui mini rounded image" src="https://fomantic-ui.com/images/avatar/small/matt.jpg">
 							<i class="dropdown icon"></i>
 							<div class="menu">
-								<a class="item" href="${pageContext.request.contextPath}">Home</a>
-								<a class="item" href="${pageContext.request.contextPath}/settings/profile">Profile</a>
-								<a class="item" href="${pageContext.request.contextPath}/settings/account">Account</a>
-								<a class="item" href="${pageContext.request.contextPath}/settings/security">Security</a>
+								<a class="ui item" href="${pageContext.request.contextPath}">Logged in as <strong>${sessionScope.user.userName}</strong></a>
+								<div class="item">
+									<button class="ui basic button">
+										<i class="grin outline icon"></i>
+										Set status
+									</button>
+								</div>
+								<a class="item" href="${pageContext.request.contextPath}/${sessionScope.user.userName}">Your profile</a>
+								<a class="item" href="${pageContext.request.contextPath}/${sessionScope.user.userName}/problems">Your problems</a>
+								<div class="ui divider"></div>
+								<a class="item" href="${pageContext.request.contextPath}/settings/profile">Settings</a>
 								<a class="item" href="${pageContext.request.contextPath}/logout">Log out</a>
 							</div>
 						</div>

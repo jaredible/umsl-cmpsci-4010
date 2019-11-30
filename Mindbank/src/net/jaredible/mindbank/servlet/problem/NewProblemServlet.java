@@ -74,12 +74,14 @@ public class NewProblemServlet extends HttpServlet {
 		}
 
 		if (errors.isEmpty()) {
-			Problem newProblem = new Problem();
+			Problem problem = new Problem();
 
-			newProblem.setTitle(title);
-			newProblem.setContent(content);
-			newProblem.setCreatedTime(new Timestamp(new Date().getTime()));
-			newProblem.setCreatedByUserId(((User) request.getSession(false).getAttribute("user")).getId());
+			problem.setTitle(title);
+			problem.setContent(content);
+			problem.setCreatedTime(new Timestamp(new Date().getTime()));
+			problem.setCreatedByUserId(((User) request.getSession(false).getAttribute("user")).getId());
+			
+			problemDao.addProblem(problem);
 
 			response.sendRedirect(getServletContext().getContextPath() + "/problem/" + title);
 		} else {

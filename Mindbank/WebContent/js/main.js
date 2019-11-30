@@ -26,6 +26,15 @@ $("#profileEdit").click(function() {
 	$("input[name='profileImage'").trigger("click");
 });
 
+// TODO: setTimeout
+$("#showPassword").click(function() {
+	if (this.checked) {
+		$("input[name='password'").attr("type", "text");
+	} else {
+		$("input[name='password'").attr("type", "password");
+	}
+});
+
 $uploadCrop = $('#upload-demo').croppie({
 	enableExif : true,
 	viewport : {
