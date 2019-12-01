@@ -24,10 +24,10 @@
 								<input type="text" name="title" value="${title}" placeholder="Title">
 							</div>
 							<div class="field">
-								<div class="ui fluid multiple search normal selection dropdown">
+								<div class="ui fluid clearable multiple search normal selection dropdown">
 									<input type="hidden" name="categoryIds" value="${categoryIds}">
 									<i class="dropdown icon"></i>
-									<div class="default text">Categories</div>
+									<div class="default text">Category</div>
 									<div class="menu">
 										<c:forEach var="category" items="${categories}">
 											<div class="item" data-value="${category.id}"><c:out value="${category.name}" /></div>
@@ -36,10 +36,10 @@
 								</div>
 							</div>
 							<div class="field">
-								<div class="ui fluid multiple search normal selection dropdown">
+								<div class="ui fluid clearable multiple search normal selection dropdown">
 									<input type="hidden" name="tagIds" value="${tagIds}">
 									<i class="dropdown icon"></i>
-									<div class="default text">Tags</div>
+									<div class="default text">Tag</div>
 									<div class="menu">
 										<c:forEach var="tag" items="${tags}">
 											<div class="item" data-value="${tag.id}"><c:out value="${tag.name}" /></div>
@@ -69,10 +69,10 @@
 								</div>
 							</div>
 							<div class="field">
-								<div class="ui fluid multiple search normal selection dropdown">
+								<div class="ui fluid clearable multiple search normal selection dropdown">
 									<input type="hidden" name="userIds" value="${userIds}">
 									<i class="dropdown icon"></i>
-									<div class="default text">Users</div>
+									<div class="default text">User</div>
 									<div class="menu">
 										<c:forEach var="user" items="${users}">
 											<div class="item" data-value="${user.id}" data-text="${user.userName}">
