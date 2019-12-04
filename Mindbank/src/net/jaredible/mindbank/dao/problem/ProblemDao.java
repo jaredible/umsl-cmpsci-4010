@@ -2,19 +2,19 @@ package net.jaredible.mindbank.dao.problem;
 
 import java.util.List;
 
-import net.jaredible.mindbank.model.problem.Problem;
+import net.jaredible.mindbank.model.problem.ProblemModel;
 
 public interface ProblemDao {
 
-	Problem getProblemById(long id);
+	ProblemModel getProblemById(long id);
 
-	Problem getProblemByTitle(String title);
+	ProblemModel getProblemByTitle(String title);
 
-	List<Problem> getAllProblems();
+	List<ProblemModel> getAllProblems();
 
-	List<Problem> getProblemsByFields(String titleLike, String categoryIdsRegex, String tagIdsRegex, String contentLike, String dateCreatedStart, String dateCreatedEnd, String userIdsRegex);
+	List<ProblemModel> getProblemsByFields(String titleLike, String categoryIdsRegex, String tagIdsRegex, String contentLike, String dateCreatedStart, String dateCreatedEnd, String userIdsRegex);
 
-	long addProblem(Problem problem);
+	long addProblem(ProblemModel problem);
 
 	boolean getProblemExistsById(long id);
 

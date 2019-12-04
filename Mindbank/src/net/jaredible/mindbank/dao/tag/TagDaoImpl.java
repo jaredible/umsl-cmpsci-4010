@@ -9,7 +9,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jaredible.mindbank.model.tag.Tag;
+import net.jaredible.mindbank.model.tag.TagModel;
 import net.jaredible.mindbank.util.DbUtil;
 
 public class TagDaoImpl implements TagDao {
@@ -21,7 +21,7 @@ public class TagDaoImpl implements TagDao {
 	private PreparedStatement addTag;
 
 	@Override
-	public Tag getTagById(long id) {
+	public TagModel getTagById(long id) {
 		ResultSet rs = null;
 
 		try {
@@ -55,7 +55,7 @@ public class TagDaoImpl implements TagDao {
 	}
 
 	@Override
-	public Tag getTagByName(String name) {
+	public TagModel getTagByName(String name) {
 		ResultSet rs = null;
 
 		try {
@@ -89,7 +89,7 @@ public class TagDaoImpl implements TagDao {
 	}
 
 	@Override
-	public List<Tag> getAllTags() {
+	public List<TagModel> getAllTags() {
 		ResultSet rs = null;
 
 		try {
@@ -102,7 +102,7 @@ public class TagDaoImpl implements TagDao {
 
 			rs = getAllTags.executeQuery();
 
-			List<Tag> tags = new ArrayList<Tag>();
+			List<TagModel> tags = new ArrayList<TagModel>();
 
 			while (rs.next()) {
 				tags.add(extractTagFromResultSet(rs));
@@ -125,7 +125,7 @@ public class TagDaoImpl implements TagDao {
 	}
 
 	@Override
-	public long addTag(Tag tag) {
+	public long addTag(TagModel tag) {
 		ResultSet rs = null;
 
 		try {
@@ -165,8 +165,8 @@ public class TagDaoImpl implements TagDao {
 		return -1;
 	}
 
-	private Tag extractTagFromResultSet(ResultSet rs) throws SQLException {
-		Tag tag = new Tag();
+	private TagModel extractTagFromResultSet(ResultSet rs) throws SQLException {
+		TagModel tag = new TagModel();
 
 		tag.setId(rs.getInt("ID"));
 		tag.setName(rs.getString("Name"));

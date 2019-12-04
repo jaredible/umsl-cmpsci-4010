@@ -9,7 +9,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jaredible.mindbank.model.category.Category;
+import net.jaredible.mindbank.model.category.CategoryModel;
 import net.jaredible.mindbank.util.DbUtil;
 
 public class CategoryDaoImpl implements CategoryDao {
@@ -22,7 +22,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	private PreparedStatement addCategory;
 
 	@Override
-	public Category getCategoryById(long id) {
+	public CategoryModel getCategoryById(long id) {
 		ResultSet rs = null;
 
 		try {
@@ -56,7 +56,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public Category getCategoryByName(String name) {
+	public CategoryModel getCategoryByName(String name) {
 		ResultSet rs = null;
 
 		try {
@@ -90,7 +90,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public List<Category> getAllCategories() {
+	public List<CategoryModel> getAllCategories() {
 		ResultSet rs = null;
 
 		try {
@@ -103,7 +103,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 			rs = getAllCategories.executeQuery();
 
-			List<Category> categories = new ArrayList<Category>();
+			List<CategoryModel> categories = new ArrayList<CategoryModel>();
 
 			while (rs.next()) {
 				categories.add(extractCategoryFromResultSet(rs));
@@ -126,7 +126,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public List<Category> getCategoriesByProblemId(long id) {
+	public List<CategoryModel> getCategoriesByProblemId(long id) {
 		ResultSet rs = null;
 
 		try {
@@ -141,7 +141,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 			rs = getCategoriesByProblemId.executeQuery();
 
-			List<Category> categories = new ArrayList<Category>();
+			List<CategoryModel> categories = new ArrayList<CategoryModel>();
 
 			while (rs.next()) {
 				categories.add(extractCategoryFromResultSet(rs));
@@ -164,7 +164,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public long addCategory(Category category) {
+	public long addCategory(CategoryModel category) {
 		ResultSet rs = null;
 
 		try {
@@ -204,8 +204,8 @@ public class CategoryDaoImpl implements CategoryDao {
 		return -1;
 	}
 
-	private Category extractCategoryFromResultSet(ResultSet rs) throws SQLException {
-		Category category = new Category();
+	private CategoryModel extractCategoryFromResultSet(ResultSet rs) throws SQLException {
+		CategoryModel category = new CategoryModel();
 
 		category.setId(rs.getInt("ID"));
 		category.setName(rs.getString("Name"));

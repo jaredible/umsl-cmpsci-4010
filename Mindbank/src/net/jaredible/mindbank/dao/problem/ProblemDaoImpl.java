@@ -12,7 +12,7 @@ import java.util.List;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import net.jaredible.mindbank.model.problem.Problem;
+import net.jaredible.mindbank.model.problem.ProblemModel;
 import net.jaredible.mindbank.util.DbUtil;
 
 public class ProblemDaoImpl implements ProblemDao {
@@ -24,7 +24,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	private PreparedStatement addProblem;
 
 	@Override
-	public Problem getProblemById(long id) {
+	public ProblemModel getProblemById(long id) {
 		ResultSet rs = null;
 
 		try {
@@ -57,7 +57,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	}
 
 	@Override
-	public Problem getProblemByTitle(String title) {
+	public ProblemModel getProblemByTitle(String title) {
 		ResultSet rs = null;
 
 		try {
@@ -90,7 +90,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	}
 
 	@Override
-	public List<Problem> getAllProblems() {
+	public List<ProblemModel> getAllProblems() {
 		ResultSet rs = null;
 
 		try {
@@ -102,7 +102,7 @@ public class ProblemDaoImpl implements ProblemDao {
 
 			rs = getAllProblems.executeQuery();
 
-			List<Problem> problems = new ArrayList<Problem>();
+			List<ProblemModel> problems = new ArrayList<ProblemModel>();
 
 			while (rs.next()) {
 				problems.add(extractProblemFromResultSet(rs));
@@ -125,7 +125,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	}
 
 	@Override
-	public List<Problem> getProblemsByFields(String titleLike, String categoryIdsRegex, String tagIdsRegex, String contentLike, String dateCreatedStart, String dateCreatedEnd, String userIdsRegex) {
+	public List<ProblemModel> getProblemsByFields(String titleLike, String categoryIdsRegex, String tagIdsRegex, String contentLike, String dateCreatedStart, String dateCreatedEnd, String userIdsRegex) {
 		ResultSet rs = null;
 
 		try {
@@ -145,7 +145,7 @@ public class ProblemDaoImpl implements ProblemDao {
 
 			rs = getProblemsByFields.executeQuery();
 
-			List<Problem> problems = new ArrayList<Problem>();
+			List<ProblemModel> problems = new ArrayList<ProblemModel>();
 
 			while (rs.next()) {
 				problems.add(extractProblemFromResultSet(rs));
@@ -168,7 +168,7 @@ public class ProblemDaoImpl implements ProblemDao {
 	}
 
 	@Override
-	public long addProblem(Problem problem) {
+	public long addProblem(ProblemModel problem) {
 		ResultSet rs = null;
 
 		try {
@@ -213,8 +213,8 @@ public class ProblemDaoImpl implements ProblemDao {
 		return getProblemById(id) != null;
 	}
 
-	private Problem extractProblemFromResultSet(ResultSet rs) throws SQLException {
-		Problem problem = new Problem();
+	private ProblemModel extractProblemFromResultSet(ResultSet rs) throws SQLException {
+		ProblemModel problem = new ProblemModel();
 
 		problem.setId(rs.getInt("ID"));
 		problem.setTitle(rs.getString("Title"));
@@ -223,29 +223,6 @@ public class ProblemDaoImpl implements ProblemDao {
 		problem.setCreatedByUserId(rs.getInt("CreatedByUserID"));
 
 		return problem;
-	}
-
-	@Override
-	protected void finalize() {
-		try {
-			if (getProblemById != null && !getProblemById.isClosed()) {
-				getProblemById.close();
-			}
-			if (getProblemByTitle != null && !getProblemByTitle.isClosed()) {
-				getProblemByTitle.close();
-			}
-			if (getAllProblems != null && !getAllProblems.isClosed()) {
-				getAllProblems.close();
-			}
-			if (getProblemsByFields != null && !getProblemsByFields.isClosed()) {
-				getProblemsByFields.close();
-			}
-			if (addProblem != null && !addProblem.isClosed()) {
-				addProblem.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 }

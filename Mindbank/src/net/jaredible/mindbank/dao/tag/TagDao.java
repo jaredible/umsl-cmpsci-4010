@@ -2,16 +2,16 @@ package net.jaredible.mindbank.dao.tag;
 
 import java.util.List;
 
-import net.jaredible.mindbank.model.tag.Tag;
+import net.jaredible.mindbank.model.tag.TagModel;
 
 public interface TagDao {
 
-	Tag getTagById(long id);
+	TagModel getTagById(long id);
 
-	Tag getTagByName(String name);
+	TagModel getTagByName(String name);
 
-	List<Tag> getAllTags();
+	List<TagModel> getAllTags();
 
-	long addTag(Tag tag);
+	long addTag(TagModel tag);
 
 }

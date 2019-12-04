@@ -2,7 +2,7 @@ package net.jaredible.mindbank.model.category;
 
 import java.sql.Timestamp;
 
-public class Category {
+public class CategoryModel {
 
 	private long id;
 	private String name;

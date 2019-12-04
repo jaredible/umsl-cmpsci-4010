@@ -3,97 +3,77 @@ package net.jaredible.mindbank.servlet.problem;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.buf.StringUtils;
-
-import net.jaredible.mindbank.dao.category.CategoryDao;
-import net.jaredible.mindbank.dao.category.CategoryDaoImpl;
-import net.jaredible.mindbank.dao.problem.ProblemDao;
-import net.jaredible.mindbank.dao.problem.ProblemDaoImpl;
-import net.jaredible.mindbank.dao.tag.TagDao;
-import net.jaredible.mindbank.dao.tag.TagDaoImpl;
-import net.jaredible.mindbank.model.problem.Problem;
+import net.jaredible.mindbank.model.problem.NewProblemModel;
 import net.jaredible.mindbank.model.user.User;
+import net.jaredible.mindbank.service.CategoryService;
+import net.jaredible.mindbank.service.ProblemService;
+import net.jaredible.mindbank.service.TagService;
+import net.jaredible.mindbank.util.StringUtil;
 
 @WebServlet("/problem/new")
 public class NewProblemServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 9071369870989511847L;
+
+	private ProblemService problemService;
+	private CategoryService categoryService;
+	private TagService tagService;
 
 	public NewProblemServlet() {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CategoryDao categoryDao = new CategoryDaoImpl();
-		TagDao tagDao = new TagDaoImpl();
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		problemService = new ProblemService();
+		categoryService = new CategoryService();
+		tagService = new TagService();
+	}
 
-		request.setAttribute("categories", categoryDao.getAllCategories());
-		request.setAttribute("tags", tagDao.getAllTags());
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("categories", categoryService.getAllCategories());
+		request.setAttribute("tags", tagService.getAllTags());
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/newProblem.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String title = request.getParameter("title");
-		String[] categoryIds = request.getParameterValues("categoryIds");
-		String[] tagIds = request.getParameterValues("tagIds");
+		String categoryIds = request.getParameter("categoryIds");
+		String tagIds = request.getParameter("tagIds");
 		String content = request.getParameter("content");
 
-		ProblemDao problemDao = new ProblemDaoImpl();
-		CategoryDao categoryDao = new CategoryDaoImpl();
-		TagDao tagDao = new TagDaoImpl();
+		NewProblemModel newProblem = new NewProblemModel();
+		newProblem.setTitle(title);
+		newProblem.setContent(content);
+		newProblem.setCreatedTime(new Timestamp(new Date().getTime()));
+		newProblem.setCreatedByUserId(((User) request.getSession(false).getAttribute("user")).getId());
+		newProblem.setCategoryIds(StringUtil.convertStringToIntArray(categoryIds));
+		newProblem.setTagIds(StringUtil.convertStringToIntArray(tagIds));
 
-		Map<String, String> errors = new HashMap<String, String>();
+		newProblem.validate(problemService, categoryService, tagService);
 
-		if (title == null || title.isEmpty()) {
-			errors.put("title", "This field is required");
-		} else if (title.length() > 50) {
-			errors.put("title", "Max 50 characters");
-		} else if (problemDao.getProblemByTitle(title) != null) {
-			errors.put("title", "Already exists");
-		}
-
-		if (categoryIds == null || (categoryIds.length == 1 && categoryIds[0].isEmpty())) {
-			errors.put("categoryIds", "This field is required");
-		}
-
-		if (tagIds == null || (tagIds.length == 1 && tagIds[0].isEmpty())) {
-			errors.put("tagIds", "This field is required");
-		}
-
-		if (content == null || content.isEmpty()) {
-			errors.put("content", "This field is required");
-		}
-
-		if (errors.isEmpty()) {
-			Problem problem = new Problem();
-
-			problem.setTitle(title);
-			problem.setContent(content);
-			problem.setCreatedTime(new Timestamp(new Date().getTime()));
-			problem.setCreatedByUserId(((User) request.getSession(false).getAttribute("user")).getId());
-
-			problemDao.addProblem(problem);
+		if (newProblem.isValid()) {
+			problemService.addProblem(newProblem);
 
 			response.sendRedirect(getServletContext().getContextPath() + "/problem/" + title);
 		} else {
-			request.setAttribute("title", title);
-			request.setAttribute("categoryIds", StringUtils.join(categoryIds));
-			request.setAttribute("tagIds", StringUtils.join(tagIds));
-			request.setAttribute("content", content);
-			request.setAttribute("categories", categoryDao.getAllCategories());
-			request.setAttribute("tags", tagDao.getAllTags());
-			request.setAttribute("errors", errors);
-			getServletContext().getRequestDispatcher("/WEB-INF/jsp/problem/newProblem.jsp").forward(request, response);
+			request.setAttribute("newProblem", newProblem);
+			doGet(request, response);
 		}
+	}
+
+	public void destroy() {
+		problemService = null;
+		categoryService = null;
+		tagService = null;
 	}
 
 }

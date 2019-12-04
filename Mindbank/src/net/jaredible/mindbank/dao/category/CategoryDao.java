@@ -2,18 +2,18 @@ package net.jaredible.mindbank.dao.category;
 
 import java.util.List;
 
-import net.jaredible.mindbank.model.category.Category;
+import net.jaredible.mindbank.model.category.CategoryModel;
 
 public interface CategoryDao {
 
-	Category getCategoryById(long id);
+	CategoryModel getCategoryById(long id);
 
-	Category getCategoryByName(String name);
+	CategoryModel getCategoryByName(String name);
 
-	List<Category> getAllCategories();
+	List<CategoryModel> getAllCategories();
 
-	List<Category> getCategoriesByProblemId(long id);
+	List<CategoryModel> getCategoriesByProblemId(long id);
 
-	long addCategory(Category category);
+	long addCategory(CategoryModel category);
 
 }

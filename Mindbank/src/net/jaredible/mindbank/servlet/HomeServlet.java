@@ -22,7 +22,7 @@ import net.jaredible.mindbank.dao.tag.TagDao;
 import net.jaredible.mindbank.dao.tag.TagDaoImpl;
 import net.jaredible.mindbank.dao.user.UserDao;
 import net.jaredible.mindbank.dao.user.UserDaoImpl;
-import net.jaredible.mindbank.model.problem.Problem;
+import net.jaredible.mindbank.model.problem.ProblemModel;
 
 @WebServlet("")
 public class HomeServlet extends HttpServlet {
@@ -97,7 +97,7 @@ public class HomeServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		List<Problem> problems = problemDao.getProblemsByFields(titleLike, categoryIdsRegex, tagIdsRegex, contentLike, dateCreatedStart, dateCreatedEnd, userIdsRegex);
+		List<ProblemModel> problems = problemDao.getProblemsByFields(titleLike, categoryIdsRegex, tagIdsRegex, contentLike, dateCreatedStart, dateCreatedEnd, userIdsRegex);
 
 		request.setAttribute("title", title);
 		request.setAttribute("categoryIds", StringUtils.join(categoryIds));

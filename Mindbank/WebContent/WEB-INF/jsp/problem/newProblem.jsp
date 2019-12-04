@@ -23,17 +23,17 @@
 										<h3 class="ui header">New problem</h3>
 									</div>
 									<form class="ui form raised stacked bottom attached segment" action="${pageContext.request.contextPath}/problem/new" method="post" >
-										<div class="ui required field ${(errors.title != null) ? 'error' : ''}">
+										<div class="ui required field ${(newProblem.titleError != null) ? 'error' : ''}">
 											<label>Title</label>
-											<input type="text" name="title" value="${title}">
-											<c:if test="${errors.title != null}">
-												<div class="ui pointing above red basic label"><c:out value="${errors.title}" /></div>
+											<input type="text" name="title" value="${newProblem.title}">
+											<c:if test="${newProblem.titleError != null}">
+												<div class="ui pointing above red basic label"><c:out value="${newProblem.titleError}" /></div>
 											</c:if>
 										</div>
-										<div class="ui required field ${(errors.categoryIds != null) ? 'error' : ''}">
+										<div class="ui required field ${(newProblem.categoryIdsError != null) ? 'error' : ''}">
 											<label>Categories</label>
 											<div class="ui fluid multiple search normal selection dropdown">
-												<input type="hidden" name="categoryIds" value="${categoryIds}">
+												<input type="hidden" name="categoryIds" value="${newProblem.categoryIdsAsString}">
 												<i class="dropdown icon"></i>
 												<div class="default text"></div>
 												<div class="menu">
@@ -42,14 +42,14 @@
 													</c:forEach>
 												</div>
 											</div>
-											<c:if test="${errors.categoryIds != null}">
-												<div class="ui pointing above red basic label"><c:out value="${errors.categoryIds}" /></div>
+											<c:if test="${newProblem.categoryIdsError != null}">
+												<div class="ui pointing above red basic label"><c:out value="${newProblem.categoryIdsError}" /></div>
 											</c:if>
 										</div>
-										<div class="ui required field ${(errors.tagIds != null) ? 'error' : ''}">
+										<div class="ui required field ${(newProblem.tagIdsError != null) ? 'error' : ''}">
 											<label>Tags</label>
 											<div class="ui fluid multiple search normal selection dropdown">
-												<input type="hidden" name="tagIds" value="${tagIds}">
+												<input type="hidden" name="tagIds" value="${newProblem.tagIdsAsString}">
 												<i class="dropdown icon"></i>
 												<div class="default text"></div>
 												<div class="menu">
@@ -58,15 +58,15 @@
 													</c:forEach>
 												</div>
 											</div>
-											<c:if test="${errors.tagIds != null}">
-												<div class="ui pointing above red basic label"><c:out value="${errors.tagIds}" /></div>
+											<c:if test="${newProblem.tagIdsError != null}">
+												<div class="ui pointing above red basic label"><c:out value="${newProblem.tagIdsError}" /></div>
 											</c:if>
 										</div>
-										<div class="ui required field ${(errors.content != null) ? 'error' : ''}">
+										<div class="ui required field ${(newProblem.contentError != null) ? 'error' : ''}">
 											<label>Content</label>
-											<textarea name="content">${content}</textarea>
-											<c:if test="${errors.content != null}">
-												<div class="ui pointing above red basic label"><c:out value="${errors.content}" /></div>
+											<textarea name="content">${newProblem.content}</textarea>
+											<c:if test="${newProblem.contentError != null}">
+												<div class="ui pointing above red basic label"><c:out value="${newProblem.contentError}" /></div>
 											</c:if>
 										</div>
 										<div class="ui center aligned basic segment">

@@ -2,58 +2,48 @@ package net.jaredible.mindbank.model.problem;
 
 import java.sql.Timestamp;
 
-public class NewProblemModel {
+import net.jaredible.mindbank.service.CategoryService;
+import net.jaredible.mindbank.service.ProblemService;
+import net.jaredible.mindbank.service.TagService;
+import net.jaredible.mindbank.util.StringUtil;
 
-	private long id;
-	private String title;
-	private String content;
-	private Timestamp createdTime;
-	private long createdByUserId;
+public class NewProblemModel extends ProblemModel {
+
+	private static final long serialVersionUID = -3312328940368075771L;
+
 	private int[] categoryIds;
 	private int[] tagIds;
 
-	public long getId() {
-		return id;
+	private String categoryIdsError;
+	private String tagIdsError;
+
+	public NewProblemModel() {
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public NewProblemModel(long id, String title, String content, Timestamp createdTime, long createdByUserId, int[] categoryIds, int[] tagIds) {
+		super(id, title, content, createdTime, createdByUserId);
+		this.categoryIds = categoryIds;
+		this.tagIds = tagIds;
 	}
 
-	public String getTitle() {
-		return title;
-	}
+	public void validate(ProblemService problemService, CategoryService categoryService, TagService tagService) {
+		super.validate(problemService);
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+		if (categoryIds == null || categoryIds.length == 0) {
+			categoryIdsError = "This field is required";
+		}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public Timestamp getCreatedTime() {
-		return createdTime;
-	}
-
-	public void setCreatedTime(Timestamp createdTime) {
-		this.createdTime = createdTime;
-	}
-
-	public long getCreatedByUserId() {
-		return createdByUserId;
-	}
-
-	public void setCreatedByUserId(long createdByUserId) {
-		this.createdByUserId = createdByUserId;
+		if (tagIds == null || tagIds.length == 0) {
+			tagIdsError = "This field is required";
+		}
 	}
 
 	public int[] getCategoryIds() {
 		return categoryIds;
+	}
+
+	public String getCategoryIdsAsString() {
+		return StringUtil.convertIntArrayToString(categoryIds);
 	}
 
 	public void setCategoryIds(int[] categoryIds) {
@@ -64,8 +54,28 @@ public class NewProblemModel {
 		return tagIds;
 	}
 
+	public String getTagIdsAsString() {
+		return StringUtil.convertIntArrayToString(tagIds);
+	}
+
 	public void setTagIds(int[] tagIds) {
 		this.tagIds = tagIds;
+	}
+
+	public String getCategoryIdsError() {
+		return categoryIdsError;
+	}
+
+	public String getTagIdsError() {
+		return tagIdsError;
+	}
+
+	public boolean isValid() {
+		return super.isValid() && categoryIdsError == null && tagIdsError == null;
+	}
+
+	public ProblemModel getProblemModel() {
+		return new ProblemModel(this);
 	}
 
 }
