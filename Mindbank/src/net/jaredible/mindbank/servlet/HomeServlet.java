@@ -22,7 +22,7 @@ import net.jaredible.mindbank.dao.tag.TagDao;
 import net.jaredible.mindbank.dao.tag.TagDaoImpl;
 import net.jaredible.mindbank.dao.user.UserDao;
 import net.jaredible.mindbank.dao.user.UserDaoImpl;
-import net.jaredible.mindbank.model.Problem;
+import net.jaredible.mindbank.model.problem.Problem;
 
 @WebServlet("")
 public class HomeServlet extends HttpServlet {

@@ -1,12 +1,11 @@
-package net.jaredible.mindbank.model;
+package net.jaredible.mindbank.model.category;
 
 import java.sql.Timestamp;
 
-public class Problem {
+public class Category {
 
 	private long id;
-	private String title;
-	private String content;
+	private String name;
 	private Timestamp createdTime;
 	private long createdByUserId;
 
@@ -18,20 +17,12 @@ public class Problem {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Timestamp getCreatedTime() {

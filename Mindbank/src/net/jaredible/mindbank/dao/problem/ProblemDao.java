@@ -2,7 +2,7 @@ package net.jaredible.mindbank.dao.problem;
 
 import java.util.List;
 
-import net.jaredible.mindbank.model.Problem;
+import net.jaredible.mindbank.model.problem.Problem;
 
 public interface ProblemDao {
 

@@ -1,4 +1,4 @@
-package net.jaredible.mindbank.model;
+package net.jaredible.mindbank.model.user;
 
 import java.sql.Blob;
 import java.sql.Timestamp;

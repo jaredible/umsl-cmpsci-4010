@@ -7,6 +7,8 @@ import java.util.Properties;
 
 public class DbUtil {
 
+	public static final String CONTEXT_NAME = "java:comp/env/jdbc/mindbank";
+
 	private static String driver;
 	private static String url;
 	private static String name;

@@ -20,8 +20,8 @@ import net.jaredible.mindbank.dao.problem.ProblemDao;
 import net.jaredible.mindbank.dao.problem.ProblemDaoImpl;
 import net.jaredible.mindbank.dao.tag.TagDao;
 import net.jaredible.mindbank.dao.tag.TagDaoImpl;
-import net.jaredible.mindbank.model.Problem;
-import net.jaredible.mindbank.model.User;
+import net.jaredible.mindbank.model.problem.Problem;
+import net.jaredible.mindbank.model.user.User;
 
 @WebServlet("/problem/new")
 public class NewProblemServlet extends HttpServlet {
@@ -80,7 +80,7 @@ public class NewProblemServlet extends HttpServlet {
 			problem.setContent(content);
 			problem.setCreatedTime(new Timestamp(new Date().getTime()));
 			problem.setCreatedByUserId(((User) request.getSession(false).getAttribute("user")).getId());
-			
+
 			problemDao.addProblem(problem);
 
 			response.sendRedirect(getServletContext().getContextPath() + "/problem/" + title);

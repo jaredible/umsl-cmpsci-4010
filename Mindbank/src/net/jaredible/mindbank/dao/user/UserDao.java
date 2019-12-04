@@ -2,7 +2,7 @@ package net.jaredible.mindbank.dao.user;
 
 import java.util.List;
 
-import net.jaredible.mindbank.model.User;
+import net.jaredible.mindbank.model.user.User;
 
 public interface UserDao {
 

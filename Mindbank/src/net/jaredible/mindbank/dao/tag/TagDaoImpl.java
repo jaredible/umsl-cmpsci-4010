@@ -9,7 +9,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jaredible.mindbank.model.Tag;
+import net.jaredible.mindbank.model.tag.Tag;
 import net.jaredible.mindbank.util.DbUtil;
 
 public class TagDaoImpl implements TagDao {

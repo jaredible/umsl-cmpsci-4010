@@ -18,7 +18,7 @@ import org.apache.commons.io.IOUtils;
 
 import net.jaredible.mindbank.dao.user.UserDao;
 import net.jaredible.mindbank.dao.user.UserDaoImpl;
-import net.jaredible.mindbank.model.User;
+import net.jaredible.mindbank.model.user.User;
 
 @WebServlet("/settings/profile")
 @MultipartConfig(maxFileSize = 16777216)

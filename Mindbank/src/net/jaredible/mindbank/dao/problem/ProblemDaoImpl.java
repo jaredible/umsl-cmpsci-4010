@@ -9,12 +9,14 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jaredible.mindbank.model.Problem;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import net.jaredible.mindbank.model.problem.Problem;
 import net.jaredible.mindbank.util.DbUtil;
 
 public class ProblemDaoImpl implements ProblemDao {
 
-	private Connection connection;
 	private PreparedStatement getProblemById;
 	private PreparedStatement getProblemByTitle;
 	private PreparedStatement getAllProblems;
@@ -26,9 +28,8 @@ public class ProblemDaoImpl implements ProblemDao {
 		ResultSet rs = null;
 
 		try {
-			if (connection == null) {
-				connection = DbUtil.openConnection();
-			}
+			Connection connection = ((DataSource) new InitialContext().lookup(DbUtil.CONTEXT_NAME)).getConnection();
+
 			if (getProblemById == null) {
 				getProblemById = connection.prepareStatement("SELECT * FROM Problem WHERE ID = ?;");
 			}
@@ -60,9 +61,8 @@ public class ProblemDaoImpl implements ProblemDao {
 		ResultSet rs = null;
 
 		try {
-			if (connection == null) {
-				connection = DbUtil.openConnection();
-			}
+			Connection connection = ((DataSource) new InitialContext().lookup(DbUtil.CONTEXT_NAME)).getConnection();
+
 			if (getProblemByTitle == null) {
 				getProblemByTitle = connection.prepareStatement("SELECT * FROM Problem WHERE Title = ?;");
 			}
@@ -94,9 +94,8 @@ public class ProblemDaoImpl implements ProblemDao {
 		ResultSet rs = null;
 
 		try {
-			if (connection == null) {
-				connection = DbUtil.openConnection();
-			}
+			Connection connection = ((DataSource) new InitialContext().lookup(DbUtil.CONTEXT_NAME)).getConnection();
+
 			if (getAllProblems == null) {
 				getAllProblems = connection.prepareStatement("SELECT * FROM Problem ORDER BY CreatedTime DESC, Title ASC;");
 			}
@@ -130,9 +129,8 @@ public class ProblemDaoImpl implements ProblemDao {
 		ResultSet rs = null;
 
 		try {
-			if (connection == null) {
-				connection = DbUtil.openConnection();
-			}
+			Connection connection = ((DataSource) new InitialContext().lookup(DbUtil.CONTEXT_NAME)).getConnection();
+
 			if (getProblemsByFields == null) {
 				getProblemsByFields = connection.prepareStatement("SELECT Problem.* FROM Problem LEFT OUTER JOIN ProblemCategory ON ProblemCategory.ProblemID = Problem.ID LEFT OUTER JOIN ProblemTag ON ProblemTag.ProblemID = Problem.ID WHERE Problem.Title LIKE ? AND ProblemCategory.CategoryID REGEXP ? AND ProblemTag.TagID REGEXP ? AND Problem.Content LIKE ? AND Problem.CreatedTime BETWEEN ? AND ? AND Problem.CreatedByUserID REGEXP ? GROUP BY Problem.ID ORDER BY Problem.CreatedTime DESC, Problem.Title ASC;");
 			}
@@ -174,9 +172,8 @@ public class ProblemDaoImpl implements ProblemDao {
 		ResultSet rs = null;
 
 		try {
-			if (connection == null) {
-				connection = DbUtil.openConnection();
-			}
+			Connection connection = ((DataSource) new InitialContext().lookup(DbUtil.CONTEXT_NAME)).getConnection();
+
 			if (addProblem == null) {
 				addProblem = connection.prepareStatement("INSERT INTO Problem (ID, Title, Content, CreatedTime, CreatedByUserID) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 			}
@@ -231,9 +228,6 @@ public class ProblemDaoImpl implements ProblemDao {
 	@Override
 	protected void finalize() {
 		try {
-			if (connection != null && !connection.isClosed()) {
-				connection.close();
-			}
 			if (getProblemById != null && !getProblemById.isClosed()) {
 				getProblemById.close();
 			}

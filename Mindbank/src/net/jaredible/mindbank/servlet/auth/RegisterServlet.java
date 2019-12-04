@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.jaredible.mindbank.dao.user.UserDao;
 import net.jaredible.mindbank.dao.user.UserDaoImpl;
-import net.jaredible.mindbank.model.User;
+import net.jaredible.mindbank.model.user.User;
 import net.jaredible.mindbank.util.SecurityUtil;
 
 @WebServlet("/register")

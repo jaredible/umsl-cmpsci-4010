@@ -2,7 +2,7 @@ package net.jaredible.mindbank.dao.category;
 
 import java.util.List;
 
-import net.jaredible.mindbank.model.Category;
+import net.jaredible.mindbank.model.category.Category;
 
 public interface CategoryDao {
 

@@ -2,7 +2,7 @@ package net.jaredible.mindbank.dao.tag;
 
 import java.util.List;
 
-import net.jaredible.mindbank.model.Tag;
+import net.jaredible.mindbank.model.tag.Tag;
 
 public interface TagDao {
 

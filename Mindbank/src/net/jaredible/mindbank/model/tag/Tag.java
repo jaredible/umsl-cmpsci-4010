@@ -1,4 +1,4 @@
-package net.jaredible.mindbank.model;
+package net.jaredible.mindbank.model.tag;
 
 import java.sql.Timestamp;
 

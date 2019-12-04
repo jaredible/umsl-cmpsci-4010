@@ -9,7 +9,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jaredible.mindbank.model.User;
+import net.jaredible.mindbank.model.user.User;
 import net.jaredible.mindbank.util.DbUtil;
 
 public class UserDaoImpl implements UserDao {

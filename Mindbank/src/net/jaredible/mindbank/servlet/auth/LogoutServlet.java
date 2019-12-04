@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import net.jaredible.mindbank.dao.user.UserDao;
 import net.jaredible.mindbank.dao.user.UserDaoImpl;
-import net.jaredible.mindbank.model.User;
+import net.jaredible.mindbank.model.user.User;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
