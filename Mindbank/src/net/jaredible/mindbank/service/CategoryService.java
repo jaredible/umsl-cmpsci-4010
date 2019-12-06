@@ -2,8 +2,8 @@ package net.jaredible.mindbank.service;
 
 import java.util.List;
 
-import net.jaredible.mindbank.dao.category.CategoryDao;
-import net.jaredible.mindbank.dao.category.CategoryDaoImpl;
+import net.jaredible.mindbank.db.category.CategoryDao;
+import net.jaredible.mindbank.db.category.CategoryDaoImpl;
 import net.jaredible.mindbank.model.category.CategoryModel;
 
 public class CategoryService {

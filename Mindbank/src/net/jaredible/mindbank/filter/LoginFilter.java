@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import net.jaredible.mindbank.dao.user.UserDao;
-import net.jaredible.mindbank.dao.user.UserDaoImpl;
+import net.jaredible.mindbank.db.user.UserDao;
+import net.jaredible.mindbank.db.user.UserDaoImpl;
 import net.jaredible.mindbank.model.user.User;
 import net.jaredible.mindbank.util.SecurityUtil;
 import net.jaredible.mindbank.util.TimeUtil;

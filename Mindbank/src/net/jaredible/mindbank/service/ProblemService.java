@@ -1,7 +1,7 @@
 package net.jaredible.mindbank.service;
 
-import net.jaredible.mindbank.dao.problem.ProblemDao;
-import net.jaredible.mindbank.dao.problem.ProblemDaoImpl;
+import net.jaredible.mindbank.db.problem.ProblemDao;
+import net.jaredible.mindbank.db.problem.ProblemDaoImpl;
 import net.jaredible.mindbank.model.problem.NewProblemModel;
 import net.jaredible.mindbank.model.problem.ProblemModel;
 
