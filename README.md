@@ -80,6 +80,6 @@ https://umsl.jaredible.net/Project1
 <br>
 https://umsl.jaredible.net/Project2
 <br>
-https://mathbank.jaredible.net (Unfinished)
+https://mathbank.jaredible.net
 <br>
-https://mindbank.jaredible.net (Coming soon)
+https://mindbank.jaredible.net
