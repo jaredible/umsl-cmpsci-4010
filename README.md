@@ -74,7 +74,7 @@ Add additional notes about how to deploy this on a live system
 
 * [canvas-nest.js](https://github.com/hustcc/canvas-nest.js/) - The background particle/nest library used
 * [README-Template.md](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* Inspiration: **TODO**
+* Inspiration: *TODO*
 
 ## Links to live demos
 * [https://mathbank.jaredible.net](https://mathbank.jaredible.net)
