@@ -58,13 +58,13 @@ Add additional notes about how to deploy this on a live system
 
 ## Build with
 
-* [Apache Tomcat](http://tomcat.apache.org/) - The web server technology used
-* [JQuery 3+](https://jquery.com/) - The helpful JavaScript library
-* [MathJax 3+](https://www.mathjax.org/) The math typography library used
-* [Bootstrap 4+](https://getbootstrap.com/docs/4.0/getting-started/introduction/) - Used for web page style and functionality
-* [Fomantic-UI](https://fomantic-ui.com/introduction/new.html#/twoeight) - Used for web page style and functionality
+* [Apache Tomcat 9](http://tomcat.apache.org/) - The web server technology used
+* [JQuery 3.4.1](https://jquery.com/) - The helpful JavaScript library
+* [MathJax 3.0](https://www.mathjax.org/) The math typography library used
+* [Bootstrap 4.4](https://getbootstrap.com/docs/4.0/getting-started/introduction/) - Used for web page style and functionality
+* [Fomantic-UI 2.8](https://fomantic-ui.com/introduction/new.html#/twoeight) - Used for web page style and functionality
 
-## Authors
+## Author
 
 * **Jared Diehl** - [Jaredible](https://github.com/Jaredible)
 
