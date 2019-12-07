@@ -4,7 +4,7 @@ These projects were intended to test my ability to create simple Java web applic
 
 ## Getting started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](https://github.com/jaredible/umsl-cmpsci-4010#user-content-deployment) for notes on how to deploy these projects on a live system.
 
 ### Prerequisites
 
