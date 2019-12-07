@@ -58,6 +58,7 @@ Add additional notes about how to deploy this on a live system
 
 ## Build with
 
+* [Eclipse IDE for Java EE Developers](https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-java-ee-developers) - The IDE used
 * [Apache Tomcat 9](http://tomcat.apache.org/) - The web server technology used
 * [JQuery 3.4.1](https://jquery.com/) - The helpful JavaScript library
 * [MathJax 3.0](https://www.mathjax.org/) The math typography library used
