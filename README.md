@@ -1,4 +1,4 @@
-# UMSL CMPSCI 4010 Projects (In-dev)
+# UMSL CMPSCI 4010 Projects (Indev)
 ###### Instructor: [Wenjie He](https://www.umsl.edu/mathcs/about/People/Faculty/WenjieHe/index.html)
 
 These projects were intended to test my ability in creating create simple Java web applications. Although I did more than was expected, so I researched more topics related to Java web applications. Our professor did not teach us about design patterns, so I had to learn them on my own because I felt that they were essential in building scalable, modular, and practical web applications. The overall goal of these projects was to make a web interface for math problems. The original name of the final project is [Mathbank](https://mathbank.jaredible.net), but I have changed it to focus on problems in general. The new name of the final project is [Mindbank](https://mindbank.jaredible.net).
