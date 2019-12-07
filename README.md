@@ -76,10 +76,7 @@ Add additional notes about how to deploy this on a live system
 * README-Template.md (https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
 
 ## Links to live demos
-https://umsl.jaredible.net/Project1
-<br>
-https://umsl.jaredible.net/Project2
-<br>
-https://mathbank.jaredible.net
-<br>
-https://mindbank.jaredible.net
+* [https://umsl.jaredible.net/Project1](https://umsl.jaredible.net/Project1)
+* [https://umsl.jaredible.net/Project2](https://umsl.jaredible.net/Project2)
+* [https://mathbank.jaredible.net](https://mathbank.jaredible.net)
+* [https://mindbank.jaredible.net](https://mindbank.jaredible.net)
