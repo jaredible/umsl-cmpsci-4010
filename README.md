@@ -1,6 +1,6 @@
 # UMSL CMPSCI 4010 Projects
 
-These projects were intended to test my ability to create simple Java web applications. Although I did more than was expected, so I researched more topics related to Java web applications. Our professor did not teach us about design patterns, so I had to learn them on my own because I felt that they were essential in building scalable, modular, and practical web applications. The overall goal of these projects was to make a web interface for math problems. The original name is Mathbank, but I have adapted the final project to include not just math problems, but problems in general. The name of the final project is [Mindbank](https://mindbank.jaredible.net).
+These projects were intended to test my ability to create simple Java web applications. Although I did more than was expected, so I researched more topics related to Java web applications. Our professor did not teach us about design patterns, so I had to learn them on my own because I felt that they were essential in building scalable, modular, and practical web applications. The overall goal of these projects was to make a web interface for math problems. The original name is [Mathbank](https://mathbank.jaredible.net), but I have adapted the final project to include not just math problems, but problems in general. The name of the final project is [Mindbank](https://mindbank.jaredible.net).
 
 ## Getting started
 
