@@ -75,7 +75,7 @@ Add additional notes about how to deploy this on a live system
 * Inspiration
 * README-Template.md (https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
 
-## Links to the live demos
+## Links to live demos
 https://umsl.jaredible.net/Project1
 <br>
 https://umsl.jaredible.net/Project2
