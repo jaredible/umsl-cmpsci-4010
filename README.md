@@ -1,6 +1,6 @@
 # UMSL CMPSCI 4010 Projects
 
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+These projects were intended to test my ability to create simple Java web applications. Although I did more than was expected, so I researched more topics related to Java web applications. Our professor did not teach us about design patterns, so I had to learn them on my own because I felt that they were essential in building scalable, modular, and practical web applications. The overall goal of these projects was to make a web interface for math problems. The original name is Mathbank, but I have adapted the final project to include not just math problems, but problems in general. The name of the final project is [Mindbank(https://mindbank.jaredible.net).
 
 ## Getting started
 
@@ -58,7 +58,7 @@ Add additional notes about how to deploy this on a live system
 
 ## Build with
 
-* [Eclipse IDE for Java EE Developers](https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-java-ee-developers) - The IDE used
+* [Eclipse IDE for Java EE Developers](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-enterprise-java-developers) - The IDE used
 * [Apache Tomcat 9](http://tomcat.apache.org/) - The web server technology used
 * [JQuery 3.4.1](https://jquery.com/) - The helpful JavaScript library
 * [MathJax 3.0](https://www.mathjax.org/) The math typography library used
@@ -75,7 +75,7 @@ Add additional notes about how to deploy this on a live system
 * Inspiration
 * README-Template.md (https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
 
-## Links
+## Links to the live demos
 https://umsl.jaredible.net/Project1
 <br>
 https://umsl.jaredible.net/Project2
