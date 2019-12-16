@@ -62,8 +62,8 @@
 			</div>
 		</c:when>
 		<c:otherwise>
-			<a class="ui button" href="<c:url value='/login' />">Log in</a>
-			<a class="ui button" href="<c:url value='/register' />">Register</a>
+			<a class="item" href="<c:url value='/login' />">Log in</a>
+			<a class="item" href="<c:url value='/register' />">Register</a>
 		</c:otherwise>
 	</c:choose>
 </div>
