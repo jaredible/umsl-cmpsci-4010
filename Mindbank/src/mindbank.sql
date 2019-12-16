@@ -123,7 +123,11 @@ INSERT INTO ProblemCategory (ProblemCategoryID, ProblemID, CategoryID) VALUES
 (NULL, 4, 1),
 (NULL, 4, 3),
 (NULL, 4, 6),
-(NULL, 4, 7);
+(NULL, 4, 7),
+(NULL, 5, 1),
+(NULL, 5, 3),
+(NULL, 5, 6),
+(NULL, 5, 7);
 
 INSERT INTO ProblemTag (ProblemTagID, ProblemID, TagID) VALUES
 (NULL, 1, 1),
@@ -141,4 +145,8 @@ INSERT INTO ProblemTag (ProblemTagID, ProblemID, TagID) VALUES
 (NULL, 4, 1),
 (NULL, 4, 3),
 (NULL, 4, 6),
-(NULL, 4, 7);
+(NULL, 4, 7),
+(NULL, 5, 1),
+(NULL, 5, 3),
+(NULL, 5, 6),
+(NULL, 5, 7);
