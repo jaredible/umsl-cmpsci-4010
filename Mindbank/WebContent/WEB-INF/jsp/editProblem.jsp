@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="pageTitle" scope="request">
-	<c:out value="Edit Problem (${title})" default="Edit Problem" />
+	<c:out value="Edit Problem - ${title}" default="Edit Problem" />
 </c:set>
 
 <!DOCTYPE html>

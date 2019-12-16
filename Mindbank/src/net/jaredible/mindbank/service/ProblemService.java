@@ -30,12 +30,6 @@ public class ProblemService {
 	}
 
 	public Problem addNewProblem(String title, String content, String categories, String tags, Long createdByUserId) {
-		System.out.println("New problem");
-		System.out.println("Title: " + title);
-		System.out.println("Content: " + content);
-		System.out.println("Categories: " + categories);
-		System.out.println("Tags: " + tags);
-
 		Problem problem = new Problem();
 		problem.setTitle(title);
 		problem.setContent(content);
@@ -61,11 +55,6 @@ public class ProblemService {
 	}
 
 	public void updateProblem(Long id, String content, String categories, String tags) {
-		System.out.println("Edit problem");
-		System.out.println("Content: " + content);
-		System.out.println("Categories: " + categories);
-		System.out.println("Tags: " + tags);
-
 		Problem problem = problemDAO.find(id);
 		problem.setContent(content);
 		problemDAO.update(problem);
