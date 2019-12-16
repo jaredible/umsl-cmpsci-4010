@@ -146,7 +146,7 @@ public class ProblemDAOImpl implements ProblemDAO {
 				p.setContent(rs.getString("Problem.Content"));
 				p.setEdited(rs.getBoolean("Problem.Edited"));
 				p.setCreatedByUserId(rs.getInt("Problem.CreatedByUserID"));
-				p.setCreatedTimestamp(rs.getTimestamp("Problem.CreatedTimestamp"));
+				p.setCreatedTimestamp(rs.getTimestamp("Problem.CreatedTime"));
 
 				u.setId(rs.getInt("User.ID"));
 				u.setRoleId(rs.getInt("User.RoleID"));
@@ -158,7 +158,7 @@ public class ProblemDAOImpl implements ProblemDAO {
 				u.setPasswordHash(rs.getString("User.PasswordHash"));
 				u.setEmailVerified(rs.getBoolean("User.EmailVerified"));
 				u.setPhoneNumberVerified(rs.getBoolean("User.PhoneNumberVerified"));
-				u.setRegistrationTimestamp(rs.getTimestamp("User.RegistrationTimestamp"));
+				u.setRegistrationTimestamp(rs.getTimestamp("User.RegistrationTime"));
 				u.setLoginTimestamp(rs.getTimestamp("User.LoginTimestamp"));
 
 				pi.setProblem(p);

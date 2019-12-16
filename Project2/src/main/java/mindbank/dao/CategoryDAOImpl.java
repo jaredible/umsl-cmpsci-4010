@@ -81,7 +81,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 				Category c = new Category();
 				c.setId(rs.getInt("ID"));
 				c.setName(rs.getString("Name"));
-				c.setDescription(rs.getString("Description"));
 				cl.add(c);
 			}
 			return cl;

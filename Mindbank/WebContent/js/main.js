@@ -11,7 +11,7 @@ $('.message .close').on('click', function() {
 
 $(".ui.dropdown").dropdown();
 
-$("#tag .ui.dropdown").dropdown({
+$(".ui.filter.dropdown").dropdown({
 	maxSelections : 3
 });
 
@@ -22,7 +22,7 @@ $('#datetimeRangeEnd').calendar({
 	startCalendar : $('#datetimeRangeStart')
 });
 
-$("#profileEdit").click(function() {
+$("#profilePicture").click(function() {
 	$("input[name='profileImage'").trigger("click");
 });
 

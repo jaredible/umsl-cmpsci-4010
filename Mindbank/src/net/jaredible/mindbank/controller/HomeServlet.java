@@ -1,9 +1,7 @@
 package net.jaredible.mindbank.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,105 +10,60 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.buf.StringUtils;
-
-import net.jaredible.mindbank.db.category.CategoryDao;
-import net.jaredible.mindbank.db.category.CategoryDaoImpl;
-import net.jaredible.mindbank.db.problem.ProblemDao;
-import net.jaredible.mindbank.db.problem.ProblemDaoImpl;
-import net.jaredible.mindbank.db.tag.TagDao;
-import net.jaredible.mindbank.db.tag.TagDaoImpl;
-import net.jaredible.mindbank.db.user.UserDao;
-import net.jaredible.mindbank.db.user.UserDaoImpl;
-import net.jaredible.mindbank.model.problem.ProblemModel;
+import net.jaredible.mindbank.model.Problem;
+import net.jaredible.mindbank.model.ProblemDetail;
+import net.jaredible.mindbank.service.CategoryService;
+import net.jaredible.mindbank.service.ProblemService;
+import net.jaredible.mindbank.service.TagService;
+import net.jaredible.mindbank.service.UserService;
 
 @WebServlet("")
 public class HomeServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	private UserService userService = UserService.getInstance();
+	private ProblemService problemService = ProblemService.getInstance();
+	private CategoryService categoryService = CategoryService.getInstance();
+	private TagService tagService = TagService.getInstance();
+
 	public HomeServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProblemDao problemDao = new ProblemDaoImpl();
-		CategoryDao categoryDao = new CategoryDaoImpl();
-		TagDao tagDao = new TagDaoImpl();
-		UserDao userDao = new UserDaoImpl();
+		String categories = request.getParameter("cid");
+		String tags = request.getParameter("tid");
+		String users = request.getParameter("uid");
 
-		request.setAttribute("problems", problemDao.getAllProblems());
-		request.setAttribute("categories", categoryDao.getAllCategories());
-		request.setAttribute("tags", tagDao.getAllTags());
-		request.setAttribute("users", userDao.getAllUsers());
+		if ((categories != null && categories.isEmpty()) && (tags != null && tags.isEmpty()) && (users != null && users.isEmpty())) {
+			response.sendRedirect(request.getContextPath());
+			return;
+		}
+
+		List<ProblemDetail> problemDetails = new ArrayList<ProblemDetail>();
+		List<Problem> problems = problemService.listProblemsByCategoriesTagsUsers(categories, tags, users);
+		for (Problem problem : problems) {
+			ProblemDetail problemDetail = new ProblemDetail();
+			problemDetail.setProblem(problem);
+			problemDetail.setCreatedByUser(userService.getUserById(problem.getCreatedByUserId()));
+			problemDetail.setCategories(categoryService.listCategoriesByProblemId(problem.getId()));
+			problemDetail.setTags(tagService.listCategoriesByProblemId(problem.getId()));
+			problemDetails.add(problemDetail);
+		}
+
+		request.setAttribute("cid", categories);
+		request.setAttribute("tid", tags);
+		request.setAttribute("uid", users);
+		request.setAttribute("problemDetails", problemDetails);
+		request.setAttribute("categories", categoryService.listAllCategories());
+		request.setAttribute("tags", tagService.listAllTags());
+		request.setAttribute("users", userService.listAllUsers());
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
-		String[] categoryIds = request.getParameterValues("categoryIds");
-		String[] tagIds = request.getParameterValues("tagIds");
-		String content = request.getParameter("content");
-		String datetimeStart = request.getParameter("datetimeStart");
-		String datetimeEnd = request.getParameter("datetimeEnd");
-		String[] userIds = request.getParameterValues("userIds");
-
-		ProblemDao problemDao = new ProblemDaoImpl();
-		CategoryDao categoryDao = new CategoryDaoImpl();
-		TagDao tagDao = new TagDaoImpl();
-		UserDao userDao = new UserDaoImpl();
-
-		String titleLike = title;
-		String categoryIdsRegex = StringUtils.join(Arrays.asList(categoryIds)).replaceAll(",", "|"); // TODO
-		String tagIdsRegex = StringUtils.join(Arrays.asList(tagIds)).replaceAll(",", "|"); // TODO
-		String contentLike = content;
-		String dateCreatedStart = "1000-01-01 00:00:00.000000";
-		String dateCreatedEnd = "9999-12-31 23:59:59.999999";
-		String userIdsRegex = StringUtils.join(Arrays.asList(userIds)).replaceAll(",", "|"); // TODO
-
-		try {
-			String oldFormat = "MMM d, yyyy hh:mm aa";
-			String newFormat = "yyyy-MM-dd HH:mm:ss";
-
-			SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
-
-			Date dateStart = null;
-			Date dateEnd = null;
-
-			if (datetimeStart != null && !datetimeStart.isEmpty()) {
-				dateStart = sdf.parse(datetimeStart);
-			}
-			if (datetimeEnd != null && !datetimeEnd.isEmpty()) {
-				dateEnd = sdf.parse(datetimeEnd);
-			}
-
-			if (dateStart != null) {
-				sdf.applyPattern(newFormat);
-				dateCreatedStart = sdf.format(dateStart);
-			}
-			sdf.applyPattern(oldFormat);
-			if (dateEnd != null) {
-				sdf.applyPattern(newFormat);
-				dateCreatedEnd = sdf.format(dateEnd);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		List<ProblemModel> problems = problemDao.getProblemsByFields(titleLike, categoryIdsRegex, tagIdsRegex, contentLike, dateCreatedStart, dateCreatedEnd, userIdsRegex);
-
-		request.setAttribute("title", title);
-		request.setAttribute("categoryIds", StringUtils.join(categoryIds));
-		request.setAttribute("tagIds", StringUtils.join(tagIds));
-		request.setAttribute("content", content);
-		request.setAttribute("datetimeStart", datetimeStart);
-		request.setAttribute("datetimeEnd", datetimeEnd);
-		request.setAttribute("userIds", StringUtils.join(userIds));
-		request.setAttribute("problems", problems);
-		request.setAttribute("categories", categoryDao.getAllCategories());
-		request.setAttribute("tags", tagDao.getAllTags());
-		request.setAttribute("users", userDao.getAllUsers());
-		getServletContext().getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
+		doGet(request, response);
 	}
 
 }

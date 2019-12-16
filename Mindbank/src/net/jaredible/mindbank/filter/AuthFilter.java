@@ -17,7 +17,7 @@ public class AuthFilter implements Filter {
 	public AuthFilter() {
 	}
 
-	public void destroy() {
+	public void init(FilterConfig fConfig) throws ServletException {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -25,16 +25,16 @@ public class AuthFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 
-		boolean loggedIn = session != null && session.getAttribute("user") != null;
+		boolean loggedIn = session != null && session.getAttribute("userName") != null;
 
 		if (loggedIn) {
 			chain.doFilter(req, res);
 		} else {
-			res.sendRedirect(req.getServletContext().getContextPath() + "/login");
+			res.sendRedirect(req.getContextPath() + "/login");
 		}
 	}
 
-	public void init(FilterConfig fConfig) throws ServletException {
+	public void destroy() {
 	}
 
 }

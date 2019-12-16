@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-	id="WebApp_ID" version="4.0">
 
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
 	<display-name>Mindbank</display-name>
 
 	<welcome-file-list>
@@ -22,9 +19,9 @@
 	</resource-ref>
 
 	<filter>
-		<display-name>LoginFilter</display-name>
-		<filter-name>LoginFilter</filter-name>
-		<filter-class>net.jaredible.mindbank.filter.LoginFilter</filter-class>
+		<display-name>AutoLoginFilter</display-name>
+		<filter-name>AutoLoginFilter</filter-name>
+		<filter-class>net.jaredible.mindbank.filter.AutoLoginFilter</filter-class>
 	</filter>
 	<filter>
 		<display-name>AuthFilter</display-name>
@@ -36,54 +33,36 @@
 		<filter-name>NoAuthFilter</filter-name>
 		<filter-class>net.jaredible.mindbank.filter.NoAuthFilter</filter-class>
 	</filter>
-	<filter>
-		<display-name>AdminFilter</display-name>
-		<filter-name>AdminFilter</filter-name>
-		<filter-class>net.jaredible.mindbank.filter.AdminFilter</filter-class>
-	</filter>
-	<filter>
-		<display-name>VerifiedFilter</display-name>
-		<filter-name>VerifiedFilter</filter-name>
-		<filter-class>net.jaredible.mindbank.filter.VerifiedFilter</filter-class>
-	</filter>
 
 	<filter-mapping>
-		<filter-name>LoginFilter</filter-name>
-		<url-pattern>/</url-pattern>
-		<url-pattern>/problem/*</url-pattern>
-		<url-pattern>/category/*</url-pattern>
-		<url-pattern>/tag/*</url-pattern>
-		<url-pattern>/settings/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
+		<filter-name>AutoLoginFilter</filter-name>
+		<url-pattern>/profile</url-pattern>
+		<url-pattern>/account</url-pattern>
+		<url-pattern>/logout</url-pattern>
+		<url-pattern>/problem</url-pattern>
 		<url-pattern>/problem/new</url-pattern>
 		<url-pattern>/problem/edit</url-pattern>
 		<url-pattern>/category/new</url-pattern>
 		<url-pattern>/tag/new</url-pattern>
-		<url-pattern>/settings/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>AuthFilter</filter-name>
+		<url-pattern>/profile</url-pattern>
+		<url-pattern>/account</url-pattern>
 		<url-pattern>/logout</url-pattern>
+		<url-pattern>/problem/new</url-pattern>
+		<url-pattern>/problem/edit</url-pattern>
+		<url-pattern>/category/new</url-pattern>
+		<url-pattern>/tag/new</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>NoAuthFilter</filter-name>
 		<url-pattern>/login</url-pattern>
 		<url-pattern>/register</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
-		<filter-name>VerifiedFilter</filter-name>
-		<url-pattern>/problem/new</url-pattern>
-		<url-pattern>/problem/edit</url-pattern>
-		<url-pattern>/category/new</url-pattern>
-		<url-pattern>/tag/new</url-pattern>
-		<url-pattern>/settings/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>AdminFilter</filter-name>
-		<url-pattern>/admin/*</url-pattern>
-	</filter-mapping>
 
 	<error-page>
-		<location>/WEB-INF/jsp/error/404.jsp</location>
+		<location>/error.html</location>
 	</error-page>
 
 </web-app>

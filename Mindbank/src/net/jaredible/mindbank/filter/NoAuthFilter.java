@@ -17,7 +17,7 @@ public class NoAuthFilter implements Filter {
 	public NoAuthFilter() {
 	}
 
-	public void destroy() {
+	public void init(FilterConfig fConfig) throws ServletException {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -25,16 +25,16 @@ public class NoAuthFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 
-		boolean loggedIn = session != null && session.getAttribute("user") != null;
+		boolean loggedIn = session != null && session.getAttribute("userName") != null;
 
 		if (loggedIn) {
-			res.sendRedirect(req.getServletContext().getContextPath());
+			res.sendRedirect(req.getContextPath());
 		} else {
 			chain.doFilter(req, res);
 		}
 	}
 
-	public void init(FilterConfig fConfig) throws ServletException {
+	public void destroy() {
 	}
 
 }
